@@ -39,6 +39,9 @@ bind --mode=normal l tabnext
 bind --mode=normal H back
 bind --mode=normal L forward
 
+bind --mode=normal p clipboard tabopen
+bind --mode=normal P clipboard open
+
 bind --mode=normal <C-v> nmode ignore 1 mode normal
 bind --mode=normal <C-z> mode ignore
 
