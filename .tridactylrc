@@ -1,0 +1,227 @@
+" ╭─────────╮
+" │ General │
+" ╰─────────╯
+
+sanitise tridactyllocal tridactylsync
+
+jsb -s ~/.tridactyl/utils.js
+jsb -s ~/.tridactyl/S.js
+jsb tri.utils = utils
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────╮
+" │ Settings │
+" ╰──────────╯
+
+" General Settings
+"
+jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{urls:["<all_urls>"],types:["main_frame"]},["blocking","responseHeaders"])
+
+setpref browser.aboutConfig.showWarning false
+setpref browser.urlbar.speculativeConnect.enabled false
+setpref privacy.trackingprotection.enabled true
+
+" ─────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────────────╮
+" │ Normal mode key bindings │
+" ╰──────────────────────────╯
+
+bind --mode=normal <CA-h> scrollpx -50
+bind --mode=normal <CA-l> scrollpx +50
+bind --mode=normal j scrollline +5*
+bind --mode=normal k scrollline -5*
+
+bind --mode=normal h tabprev
+bind --mode=normal l tabnext
+
+bind --mode=normal H back
+bind --mode=normal L forward
+
+bind --mode=normal <C-v> nmode ignore 1 mode normal
+bind --mode=normal <C-z> mode ignore
+
+unbind --mode=normal <C-x>
+bind --mode=normal <C-x><C-c> quitall
+bind --mode=normal <C-x><C-x> restart
+
+bind --mode=normal <A-=> urlincrement 1
+bind --mode=normal <A--> urlincrement -1
+
+" ╭───────────╮
+" │ b -- tabs │
+" ╰───────────╯
+unbind --mode=normal b
+
+command tabremove jsb -p utils.tabRemove(t=>(S.matchSmartCase(JS_ARG, t.url)));
+
+bind --mode=normal bb fillcmdline tab
+bind --mode=normal bp pin
+bind --mode=normal bdo tabonly
+bind --mode=normal bmm fillcmdline tabmove
+bind --mode=normal b> tabclosealltoright
+bind --mode=normal b< tabclosealltoleft
+
+bind --mode=normal C tabduplicate
+bind --mode=normal <C-k> composite tabclosealltoright ; tabclose
+bind --mode=normal <C-K> composite tabclosealltoleft ; tabclose
+bind --mode=normal <A-;> buffer #
+bind --mode=normal <A-:> composite quit ; buffer #
+
+" ╭─────────────────────╮
+" │ w -- window/browser │
+" ╰─────────────────────╯
+unbind --mode=normal w
+command wincloseindex js -p browser.windows.getAll().then(v=>console.log(v[JS_ARG]))
+bind --mode=normal wc fillcmdline wincloseindex
+bind --mode=normal ww fillcmdline winopen
+bind --mode=normal wr source ~/.tridactyl/.tridactylrc
+" toggle tab bar
+bind --mode=normal wtt ! xdotool key ctrl+B
+
+" ╭─────────────╮
+" │ s -- search │
+" ╰─────────────╯
+unbind --mode=normal s
+unbind --mode=normal /
+
+bind --mode=normal ss fillcmdline open search
+bind --mode=normal s/ fillcmdline find
+
+bind --mode=normal n findnext
+bind --mode=normal N findnext
+bind --mode=normal ? fillcmdline find -?
+bind --mode=normal <C-/> clearsearchhighlight
+
+" ╭───────────────╮
+" │ <C-h> -- help │
+" ╰───────────────╯
+bind --mode=normal <C-h><C-h> fillcmdline help
+bind --mode=normal <C-h>i tabopen moz-extension://926899c1-24a3-4569-9789-2f53b837f92e/static/docs/globals.html
+bind --mode=normal <C-h>d tabopen about:devtools-toolbox?id=tridactyl.vim.betas%40cmcaine.co.uk&type=extension
+
+" ╭───────────╮
+" │ y -- yank │
+" ╰───────────╯
+bind --mode=normal y? jsb tri.excmds.yank(JSON.stringify(tri.config.USERCONFIG))
+
+" ╭───────────╮
+" │ e -- goto │
+" ╰───────────╯
+bind --mode=normal ea tabopen about:addons
+bind --mode=normal ec tabopen about:config
+bind --mode=normal ed tabopen about:downloads
+bind --mode=normal eD tabopen about:debugging
+
+bind --mode=normal eldw  tabopen ~/Downloads
+bind --mode=normal eldc  tabopen ~/Documents
+
+bind --mode=normal ele/  tabopen ~/ebooks
+bind --mode=normal elec  tabopen ~/ebooks/coding
+bind --mode=normal eled  tabopen ~/ebooks/dl
+bind --mode=normal elel  tabopen ~/.readinglist
+bind --mode=normal eles  tabopen ~/ebooks/css
+bind --mode=normal elea  tabopen ~/ebooks/articles
+
+bind --mode=normal elhe  tabopen ~/.emacs.d/private
+bind --mode=normal elhh  tabopen ~
+bind --mode=normal elhp  tabopen ~/.pentadactyl
+bind --mode=normal elhr  tabopen ~/repos
+bind --mode=normal elhs  tabopen ~/source
+bind --mode=normal elhp  tabopen ~/.tridactyl
+
+bind --mode=normal elo/  tabopen /opt
+bind --mode=normal eloc  tabopen /opt/chrome-extensions
+bind --mode=normal elod  tabopen /opt/deb
+bind --mode=normal elof  tabopen /opt/ff-addons
+bind --mode=normal elos  tabopen /opt/scripts
+bind --mode=normal elou  tabopen /opt/userscripts
+bind --mode=normal eloU  tabopen /opt/userstyles
+bind --mode=normal elow  tabopen /opt/webapps
+
+bind --mode=normal elp/   tabopen ~/Pictures
+bind --mode=normal elpa   tabopen ~/Pictures/art
+bind --mode=normal elpd   tabopen ~/Pictures/downloads
+bind --mode=normal elpv   tabopen ~/Pictures/vlc-snapshot
+bind --mode=normal elud   tabopen /usr/share/doc/
+bind --mode=normal eluld  tabopen /usr/local/share/doc/
+
+" ╭───────────╮
+" │ a -- apps │
+" ╰───────────╯
+command withurl composite get_current_url |
+unbind --mode=normal a
+bind --mode=normal ac withurl ! /usr/local/bin/google-chrome
+bind --mode=normal af withurl ! /opt/waterfox/waterfox --new-tab
+
+" ╭─────────────╮
+" │ , -- leader │
+" ╰─────────────╯
+bind --mode=normal ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word
+
+command convertunits jsb -d¦utils.convertUnitsWrapper(JS_ARGS).then(s=>tri.excmds.fillcmdline_nofocus(s));¦
+bind --mode=normal ,vv fillcmdline convertunits
+" adapted from tridactyl source for ;x ;X
+bind --mode=normal ,;x hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool click 2")}
+bind --mode=normal ,;X hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool keydown ctrl+shift; xdotool click 2; xdotool keyup ctrl+shift")}
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────────────────────╮
+" │ ex/insert/input-mode keybindings │
+" ╰──────────────────────────────────╯
+
+bind --mode=ex      <C-a>    text.beginning_of_line
+bind --mode=insert  <C-a>    text.beginning_of_line
+bind --mode=input   <C-a>    text.beginning_of_line
+bind --mode=ex      <C-e>    text.end_of_line
+bind --mode=insert  <C-e>    text.end_of_line
+bind --mode=input   <C-e>    text.end_of_line
+bind --mode=ex      <C-f>    text.forward_char
+bind --mode=insert  <C-f>    text.forward_char
+bind --mode=input   <C-f>    text.forward_char
+bind --mode=ex      <C-b>    text.backward_char
+bind --mode=insert  <C-b>    text.backward_char
+bind --mode=input   <C-b>    text.backward_char
+bind --mode=ex      <C-k>    text.kill_line
+bind --mode=insert  <C-k>    text.kill_line
+bind --mode=input   <C-k>    text.kill_line
+bind --mode=ex      <C-u>    text.backward_kill_line
+bind --mode=insert  <C-u>    text.backward_kill_line
+bind --mode=input   <C-u>    text.backward_kill_line
+bind --mode=ex      <C-l>    text.forward_kill_char
+bind --mode=insert  <C-l>    text.forward_kill_char
+bind --mode=input   <C-l>    text.forward_kill_char
+bind --mode=ex      <C-d>    text.forward_kill_char
+bind --mode=insert  <C-d>    text.forward_kill_char
+bind --mode=input   <C-d>    text.forward_kill_char
+bind --mode=ex      <C-h>    text.backward_kill_char
+bind --mode=insert  <C-h>    text.backward_kill_char
+bind --mode=input   <C-h>    text.backward_kill_char
+bind --mode=ex      <C-y>    composite getclip selection | text.insert_text
+bind --mode=insert  <C-y>    composite getclip selection | text.insert_text
+bind --mode=input   <C-y>    composite getclip selection | text.insert_text
+bind --mode=ex      <A-w>    ex.execute_ex_on_completion_args | clipboard yank
+bind --mode=insert  <A-w>    ex.execute_ex_on_completion_args | clipboard yank
+bind --mode=input   <A-w>    ex.execute_ex_on_completion_args | clipboard yank
+
+bind --mode=ex  <C-n>      ex.next_history
+bind --mode=ex  <C-p>      ex.prev_history
+bind --mode=ex  <Tab>      ex.next_completion
+bind --mode=ex  <S-Tab>    ex.prev_completion
+bind --mode=ex  <C-/>      ex.deselect_completion
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────────────────────╮
+" │ Site-specific functionality │
+" ╰─────────────────────────────╯
+
+" ╭────────────╮
+" │ medium.com │
+" ╰────────────╯
+" https://discord.com/channels/854326924402622474/854326925031374860#message-username-907364171652399204
+autocmd DocStart ^https?://(?:.*\.)*(?<!link\.)medium\.com(/.*)?$ urlmodify -r ^https?://(?:.*\.)*(?<!link\.)medium\.com(/.*)?$ https://scribe.rip$1
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────╮
+" │ Finalize │
+" ╰──────────╯
+fillcmdline_nofocus tridactylrc: FINISHED
