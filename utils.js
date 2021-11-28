@@ -25,6 +25,22 @@ window.utils = {
         }
     },
 
+    message: function(s, opts={}) {
+        var s_ = (opts.prefix || "") + s;
+        if (opts.temp) {
+            let t = opts.duration || 3000;
+            tri.excmds.fillcmdline_tmp(s_, t);
+        } else {
+            tri.excmds.fillcmdline_nofocus(s_);
+        }
+        return s;
+    },
+
+    sunriseSunset: function(lat, long) {
+        var times = SunCalc.getTimes(new Date(), lat, long);
+        return [sunrise, sunset] = [times.sunrise, times.sunset].map(t=>t.toTimeString());
+    },
+
     tabRemove: async function(pred) {
         const tabs = await browser.tabs.query({pinned: false, currentWindow: true});
         const atab = await activeTab();
@@ -33,6 +49,12 @@ window.utils = {
     },
     tabFilter: function(pred) {
         return tabRemove(!pred);
+    },
+
+    yankWithMsg: function(s, opts={}) {
+        tri.excmds.yank(s);
+        if (!("prefix" in opts)) opts.prefix = "Copied: ";
+        this.message(s, opts);
     },
 
 }
