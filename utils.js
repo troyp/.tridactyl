@@ -1,4 +1,4 @@
-window.utils = {
+var utils = {
 
     convertUnits: function(args) {
         args = args.filter(a=> a.trim()!== "");
@@ -58,3 +58,5 @@ window.utils = {
     },
 
 }
+
+window.utils = utils;
