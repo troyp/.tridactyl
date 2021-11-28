@@ -1,2 +1,3 @@
 working.*
-personal
+/personal/*
+!/personal/personal_skeleton.js
