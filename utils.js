@@ -73,6 +73,22 @@ var utils = {
 
     },
 
+    tri: {
+
+        gotoCommandSource: function(s) {
+            var repo = "~/source/git-repos/tridactyl";
+            var cmd = `grep -inP 'export (async )?function ${s}[(]' ${repo}/src/excmds.ts`;
+            tri.native.run(cmd).then(
+                l=> {
+                    var n = parseInt(l.content);
+                    var url = `https://github.com/tridactyl/tridactyl/blob/master/src/excmds.ts#L${n}`;
+                    return tri.excmds.tabopen(url);
+                }
+            );
+        },
+
+    },
+
     yankWithMsg: function(s, opts={}) {
         tri.excmds.yank(s);
         if (!("prefix" in opts)) opts.prefix = "Copied: ";

@@ -163,6 +163,10 @@ bind --mode=normal elpv   tabopen ~/Pictures/vlc-snapshot
 bind --mode=normal elud   tabopen /usr/share/doc/
 bind --mode=normal eluld  tabopen /usr/local/share/doc/
 
+command gotoCommandSource jsb -p utils.tri.gotoCommandSource(JS_ARG);
+
+bind --mode=normal etc fillcmdline gotoCommandSource
+
 " ╭───────────╮
 " │ a -- apps │
 " ╰───────────╯
