@@ -43,6 +43,15 @@ var utils = {
 
     tab: {
 
+        getAll: async function(opts={}) {
+            if (! ("currentWindow" in opts)) opts.currentWindow = true;
+            return ( await browser.tabs.query(opts) );
+        },
+
+        getNumber: async function(opts={}) {
+            return this.getAll(opts).then(tt => tt.length);
+        },
+
         remove: async function(pred) {
             const tabs = await browser.tabs.query({pinned: false, currentWindow: true});
             const atab = await activeTab();
@@ -51,6 +60,15 @@ var utils = {
         },
         filter: function(pred) {
             return tabRemove(!pred);
+        },
+
+        select: async function(index) {
+            if (index=="$") index = 0; else index = Number(index);
+            var n = await this.getNumber();
+            var i = (index-1).mod(n) + 1;
+            browser.tabs.query({currentWindow: true, index: i-1}).then(
+                tt=> browser.tabs.update(tt[0].id, { active: true })
+            );
         },
 
     },
