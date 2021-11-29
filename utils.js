@@ -41,14 +41,18 @@ var utils = {
         return [sunrise, sunset] = [times.sunrise, times.sunset].map(t=>t.toTimeString());
     },
 
-    tabRemove: async function(pred) {
-        const tabs = await browser.tabs.query({pinned: false, currentWindow: true});
-        const atab = await activeTab();
-        const ids = tabs.filter(pred).map(tab => tab.id);
-        return browser.tabs.remove(ids);
-    },
-    tabFilter: function(pred) {
-        return tabRemove(!pred);
+    tab: {
+
+        remove: async function(pred) {
+            const tabs = await browser.tabs.query({pinned: false, currentWindow: true});
+            const atab = await activeTab();
+            const ids = tabs.filter(pred).map(tab => tab.id);
+            return browser.tabs.remove(ids);
+        },
+        filter: function(pred) {
+            return tabRemove(!pred);
+        },
+
     },
 
     yankWithMsg: function(s, opts={}) {

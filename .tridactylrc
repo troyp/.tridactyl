@@ -57,7 +57,7 @@ bind --mode=normal <A--> urlincrement -1
 " ╰───────────╯
 unbind --mode=normal b
 
-command tabremove jsb -p utils.tabRemove(t=>(S.matchSmartCase(JS_ARG, t.url)));
+command tabremove jsb -p utils.tab.remove(t=>(S.matchSmartCase(JS_ARG, t.url)));
 
 bind --mode=normal bb fillcmdline tab
 bind --mode=normal bp pin
