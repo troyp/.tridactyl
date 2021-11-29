@@ -61,6 +61,7 @@ command tabremove jsb -p utils.tab.remove(t=>(S.matchSmartCase(JS_ARG, t.url)));
 
 bind --mode=normal bb fillcmdline tab
 bind --mode=normal bp pin
+bind --mode=normal bdm fillcmdline tabremove
 bind --mode=normal bdo tabonly
 bind --mode=normal bmm fillcmdline tabmove
 bind --mode=normal b> tabclosealltoright
