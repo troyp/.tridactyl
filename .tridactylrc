@@ -58,10 +58,12 @@ bind --mode=normal <A--> urlincrement -1
 unbind --mode=normal b
 
 command tabremove jsb -p utils.tab.remove(t=>(S.matchSmartCase(JS_ARG, t.url)));
+command tabfilter jsb -p utils.tab.filter(t=>(S.matchSmartCase(JS_ARG, t.url)));
 
 bind --mode=normal bb fillcmdline tab
 bind --mode=normal bp pin
 bind --mode=normal bdm fillcmdline tabremove
+bind --mode=normal bd;m fillcmdline tabfilter
 bind --mode=normal bdo tabonly
 bind --mode=normal bmm fillcmdline tabmove
 bind --mode=normal b> tabclosealltoright
