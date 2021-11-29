@@ -75,6 +75,16 @@ bind --mode=normal <C-K> composite tabclosealltoleft ; tabclose
 bind --mode=normal <A-;> buffer #
 bind --mode=normal <A-:> composite quit ; buffer #
 
+bind --mode=normal <AC-1> tabmove 1
+bind --mode=normal <AC-2> tabmove 2
+bind --mode=normal <AC-3> tabmove 3
+bind --mode=normal <AC-4> tabmove 4
+bind --mode=normal <AC-5> tabmove 5
+bind --mode=normal <AC-6> tabmove 6
+bind --mode=normal <AC-7> tabmove 7
+bind --mode=normal <AC-8> tabmove 8
+bind --mode=normal <AC-9> tabmove 9
+
 " ╭─────────────────────╮
 " │ w -- window/browser │
 " ╰─────────────────────╯
