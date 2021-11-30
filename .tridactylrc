@@ -17,6 +17,8 @@ jsb tri.utils = utils
 
 " General Settings
 "
+set tabclosepinned false
+
 jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{urls:["<all_urls>"],types:["main_frame"]},["blocking","responseHeaders"])
 
 setpref browser.aboutConfig.showWarning false
