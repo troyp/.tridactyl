@@ -18,10 +18,15 @@ jsb tri.utils = utils
 " General Settings
 "
 set tabclosepinned false
+set relatedopenpos related
+set tabopenpos last
+
+" guiset_quiet statuspanel top-right
 
 jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{urls:["<all_urls>"],types:["main_frame"]},["blocking","responseHeaders"])
 
 setpref browser.aboutConfig.showWarning false
+setpref browser.compactmode.show true
 setpref browser.urlbar.speculativeConnect.enabled false
 setpref privacy.trackingprotection.enabled true
 
