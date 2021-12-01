@@ -181,6 +181,7 @@ bind --mode=normal eluld  tabopen /usr/local/share/doc/
 
 command gotoCommandSource jsb -p utils.tri.gotoCommandSource(JS_ARG);
 
+bind --mode=normal es tabopen about:support
 bind --mode=normal etc fillcmdline gotoCommandSource
 
 " ╭───────────╮
