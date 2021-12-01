@@ -69,6 +69,9 @@ unbind --mode=normal b
 command tabremove jsb -p utils.tab.remove(t=>(S.matchSmartCase(JS_ARG, t.url)));
 command tabfilter jsb -p utils.tab.filter(t=>(S.matchSmartCase(JS_ARG, t.url)));
 
+jsb tri.excmds.bind("--mode=normal", "<", "tabfirst")
+bind --mode=normal > tablast
+
 bind --mode=normal bb fillcmdline tab
 bind --mode=normal bp pin
 bind --mode=normal bdm fillcmdline tabremove
