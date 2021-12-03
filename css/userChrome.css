@@ -1,0 +1,40 @@
+/* Firefox userChrome.css */
+
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+.tab-content[selected="true"] {
+  font-weight: bold !important;
+  background: rgba(100, 255, 0, 0.3) !important;
+  margin: 5px;
+  border: solid grey 1px;
+  border-radius: 15px;
+  height: 2.2em;
+}
+
+.tab-background[selected="true"] {
+  background-color: #DDFFFF !important;
+  background-image: none !important;
+}
+
+#statuspanel {
+  top: 2em;
+  z-index: 2;
+  right: 0;
+  display: inline;
+}
+
+#tabbrowser-tabs {
+    counter-reset: n_tabs 0;
+}
+.tabbrowser-tab .tab-content {
+    -moz-padding-start: 0px;
+}
+.tabbrowser-tab .tab-content::before {
+    display: -moz-box;
+    -moz-padding-end: 4px;
+    counter-increment: n_tabs;
+    content: counter(n_tabs);
+    font-weight: bold !important;
+    font-size: 10px !important;
+    margin-top: -2px !important;
+}

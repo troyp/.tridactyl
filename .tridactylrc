@@ -27,6 +27,7 @@ jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{url
 
 setpref browser.aboutConfig.showWarning false
 setpref browser.compactmode.show true
+setpref browser.tabs.tabMinWidth 120
 setpref browser.urlbar.speculativeConnect.enabled false
 setpref privacy.trackingprotection.enabled true
 
@@ -103,12 +104,17 @@ bind --mode=normal <AC-l> tabmove +1
 " │ w -- window/browser │
 " ╰─────────────────────╯
 unbind --mode=normal w
+
+command copyuserchrome ! cp -v ~/.tridactyl/css/userChrome.css `echo ~/.mozilla/firefox/*.default`
 command wincloseindex js -p browser.windows.getAll().then(v=>console.log(v[JS_ARG]))
+
 bind --mode=normal wc fillcmdline wincloseindex
 bind --mode=normal wm mute toggle
 bind --mode=normal wM mute all
 bind --mode=normal ww fillcmdline winopen
 bind --mode=normal wr source ~/.tridactyl/.tridactylrc
+bind --mode=normal wsu copyuserchrome
+bind --mode=normal wsU composite copyuserchrome ; restart
 " toggle tab bar
 bind --mode=normal wtt ! xdotool key ctrl+B
 
