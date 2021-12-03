@@ -50,6 +50,17 @@ bind --mode=normal L forward
 bind --mode=normal p clipboard tabopen
 bind --mode=normal P clipboard open
 
+command myfocusinput jsb -d¦ utils.tri.myfocusinput(JS_ARGS.join(" "))¦
+bind --mode=normal gi myfocusinput
+
+unbind --mode=normal g;
+bind --mode=normal g;; changelistjump -1
+bind --mode=normal g;i focusinput 2
+bind --mode=normal g;b focusinput -b
+bind --mode=normal g;n focusinput -n
+bind --mode=normal g;N focusinput -N
+bind --mode=normal g;p focusinput -p
+
 bind --mode=normal gh composite tabduplicate ; back
 
 bind --mode=normal <C-v> nmode ignore 1 mode normal
