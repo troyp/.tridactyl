@@ -226,6 +226,7 @@ bind --mode=normal ,;X hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); 
 " │ ex/insert/input-mode keybindings │
 " ╰──────────────────────────────────╯
 
+" src/libs/editor.ts
 bind --mode=ex      <C-a>    text.beginning_of_line
 bind --mode=insert  <C-a>    text.beginning_of_line
 bind --mode=input   <C-a>    text.beginning_of_line
@@ -244,27 +245,40 @@ bind --mode=input   <C-k>    text.kill_line
 bind --mode=ex      <C-u>    text.backward_kill_line
 bind --mode=insert  <C-u>    text.backward_kill_line
 bind --mode=input   <C-u>    text.backward_kill_line
-bind --mode=ex      <C-l>    text.forward_kill_char
-bind --mode=insert  <C-l>    text.forward_kill_char
-bind --mode=input   <C-l>    text.forward_kill_char
-bind --mode=ex      <C-d>    text.forward_kill_char
-bind --mode=insert  <C-d>    text.forward_kill_char
-bind --mode=input   <C-d>    text.forward_kill_char
-bind --mode=ex      <C-h>    text.backward_kill_char
-bind --mode=insert  <C-h>    text.backward_kill_char
-bind --mode=input   <C-h>    text.backward_kill_char
+bind --mode=ex      <C-l>    text.delete_char
+bind --mode=insert  <C-l>    text.delete_char
+bind --mode=input   <C-l>    text.delete_char
+bind --mode=ex      <C-d>    text.delete_char
+bind --mode=insert  <C-d>    text.delete_char
+bind --mode=input   <C-d>    text.delete_char
+bind --mode=ex      <C-h>    text.delete_backward_char
+bind --mode=insert  <C-h>    text.delete_backward_char
+bind --mode=input   <C-h>    text.delete_backward_char
 bind --mode=ex      <C-y>    composite getclip selection | text.insert_text
 bind --mode=insert  <C-y>    composite getclip selection | text.insert_text
 bind --mode=input   <C-y>    composite getclip selection | text.insert_text
-bind --mode=ex      <A-w>    ex.execute_ex_on_completion_args | clipboard yank
-bind --mode=insert  <A-w>    ex.execute_ex_on_completion_args | clipboard yank
-bind --mode=input   <A-w>    ex.execute_ex_on_completion_args | clipboard yank
 
+" src/libs/commandline_cmds.ts
 bind --mode=ex  <C-n>      ex.next_history
 bind --mode=ex  <C-p>      ex.prev_history
 bind --mode=ex  <Tab>      ex.next_completion
 bind --mode=ex  <S-Tab>    ex.prev_completion
 bind --mode=ex  <C-/>      ex.deselect_completion
+bind --mode=ex  <A-w>      ex.execute_ex_on_completion clipboard yank
+
+bind --mode=input  <C-m>    composite jsb user.email      | text.insert_text
+bind --mode=input  <C-M>    composite jsb user.email2     | text.insert_text
+bind --mode=input  <C-I>    composite jsb user.name       | text.insert_text
+bind --mode=input  <C-T>    composite jsb user.firstname  | text.insert_text
+bind --mode=input  <C-L>    composite jsb user.lastname   | text.insert_text
+bind --mode=input  <C-A>    composite jsb user.street     | text.insert_text
+bind --mode=input  <C-S>    composite jsb user.suburb     | text.insert_text
+bind --mode=input  <C-D>    composite jsb user.address    | text.insert_text
+bind --mode=input  <C-P>    composite jsb user.phone      | text.insert_text
+bind --mode=input  <C-B>    composite jsb user.mobile     | text.insert_text
+bind --mode=input  <C-Z>    composite jsb user.postcode   | text.insert_text
+bind --mode=input  <C-Q>    composite jsb user.masterpw   | text.insert_text
+bind --mode=input  <C-C>    composite jsb user.creditcard | text.insert_text
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────────────────╮
