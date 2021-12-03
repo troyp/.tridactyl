@@ -1,3 +1,7 @@
+// ╭─────────────────────────────────────────────╮
+// │ utils -- utility functions for .tridactylrc │
+// ╰─────────────────────────────────────────────╯
+
 var utils = {
 
     message: function(s, opts={}) {
@@ -11,60 +15,66 @@ var utils = {
         return s;
     },
 
-    tab: {
-
-        getAll: async function(opts={}) {
-            if (! ("currentWindow" in opts)) opts.currentWindow = true;
-            return ( await browser.tabs.query(opts) );
-        },
-
-        getNumber: async function(opts={}) {
-            return this.getAll(opts).then(tt => tt.length);
-        },
-
-        remove: async function(pred) {
-            const tabs = await browser.tabs.query({pinned: false, currentWindow: true});
-            const atab = await activeTab();
-            const ids = tabs.filter(pred).map(tab => tab.id);
-            return browser.tabs.remove(ids);
-        },
-        filter: function(pred) {
-            return tabRemove(!pred);
-        },
-
-        select: async function(index) {
-            if (index=="$") index = 0; else index = Number(index);
-            var n = await this.getNumber();
-            var i = (index-1).mod(n) + 1;
-            browser.tabs.query({currentWindow: true, index: i-1}).then(
-                tt=> browser.tabs.update(tt[0].id, { active: true })
-            );
-        },
-
-    },
-
-    tri: {
-
-        gotoCommandSource: function(s) {
-            var repo = "~/source/git-repos/tridactyl";
-            var cmd = `grep -inP 'export (async )?function ${s}[(]' ${repo}/src/excmds.ts`;
-            tri.native.run(cmd).then(
-                l=> {
-                    var n = parseInt(l.content);
-                    var url = `https://github.com/tridactyl/tridactyl/blob/master/src/excmds.ts#L${n}`;
-                    return tri.excmds.tabopen(url);
-                }
-            );
-        },
-
-    },
-
     yankWithMsg: function(s, opts={}) {
         tri.excmds.yank(s);
         if (!("prefix" in opts)) opts.prefix = "Copied: ";
         this.message(s, opts);
     },
 
-}
+};
+
+// ───────────────────────────────────────────────────────────────────────────────
+// ╭─────────────────────────────╮
+// │ utils.tab -- tabs utilities │
+// ╰─────────────────────────────╯
+
+utils.tab = {
+    getAll: async function(opts={}) {
+        if (! ("currentWindow" in opts)) opts.currentWindow = true;
+        return ( await browser.tabs.query(opts) );
+    },
+
+    getNumber: async function(opts={}) {
+        return this.getAll(opts).then(tt => tt.length);
+    },
+
+    remove: async function(pred) {
+        const tabs = await browser.tabs.query({pinned: false, currentWindow: true});
+        const atab = await activeTab();
+        const ids = tabs.filter(pred).map(tab => tab.id);
+        return browser.tabs.remove(ids);
+    },
+    filter: function(pred) {
+        return tabRemove(!pred);
+    },
+
+    select: async function(index) {
+        if (index=="$") index = 0; else index = Number(index);
+        var n = await this.getNumber();
+        var i = (index-1).mod(n) + 1;
+        browser.tabs.query({currentWindow: true, index: i-1}).then(
+            tt=> browser.tabs.update(tt[0].id, { active: true })
+        );
+    },
+};
+
+// ───────────────────────────────────────────────────────────────────────────────
+// ╭─────────────────────────────────────────────────────────────────╮
+// │ utils.tri -- utilities related to tridactyl source and features │
+// ╰─────────────────────────────────────────────────────────────────╯
+
+utils.tri = {
+    gotoCommandSource: function(s) {
+        var repo = "~/source/git-repos/tridactyl";
+        var cmd = `grep -inP 'export (async )?function ${s}[(]' ${repo}/src/excmds.ts`;
+        tri.native.run(cmd).then(
+            l=> {
+                var n = parseInt(l.content);
+                var url = `https://github.com/tridactyl/tridactyl/blob/master/src/excmds.ts#L${n}`;
+                return tri.excmds.tabopen(url);
+            }
+        );
+    },
+};
 
 window.utils = utils;
