@@ -56,6 +56,27 @@ utils.tab = {
             tt=> browser.tabs.update(tt[0].id, { active: true })
         );
     },
+
+    /* Returns 0-based index of tab(s) chosen */
+    rofiChoose: async function (prompt="Select tabs (S-Enter): ") {
+        var alltabs = await this.getAll();
+        var alltabsitems = alltabs.map((t, i)=>`${i+1}: ${t.label}    <${t.url}>`);
+        var dmenuInput = alltabsitems.join("\n");
+        var cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -format i -p "${prompt}" -multi-select -i`;
+        return tri.native.run(cmd).then(
+            res => res.content.trim("\n").split("\n")
+        );
+    },
+
+    rofiChooseByRegex: async function (prompt="Construct regex [enter]: ") {
+        var alltabs = await this.getAll();
+        var alltabsitems = alltabs.map((t, i)=>`${i+1}: ${t.label}    <${t.url}>`);
+        var dmenuInput = alltabsitems.join("\n");
+        var cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -regex -format f -p "${prompt}" -i`;
+        return tri.native.run(cmd).then(
+            res => alltabs.filter(t=>t.url.match(res.content.trim("\n")))
+        );
+    },
 };
 
 // ───────────────────────────────────────────────────────────────────────────────
@@ -76,5 +97,7 @@ utils.tri = {
         );
     },
 };
+
+// ───────────────────────────────────────────────────────────────────────────────
 
 window.utils = utils;
