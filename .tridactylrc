@@ -9,7 +9,6 @@ jsb -s ~/.tridactyl/apps.js
 jsb -s ~/.tridactyl/S.js
 jsb -s ~/.tridactyl/js/suncalc.js
 jsb -s ~/.tridactyl/personal/personal.js
-jsb tri.utils = utils
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮
