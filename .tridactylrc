@@ -217,6 +217,10 @@ bind --mode=normal ,cr composite fillcmdline_notrail ; ex.prev_history ; text.be
 
 command convertunits jsb -d¦ apps.convertUnits(JS_ARGS).then(s=>tri.excmds.fillcmdline_nofocus(s))¦
 bind --mode=normal ,vv fillcmdline convertunits
+
+command copytablecols composite js -s ~/.tridactyl/cutils.js ; js -d¦ tri.excmds.fillcmdline(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}]), {useAlert:true})`)¦
+bind --mode=normal ,xtc fillcmdline copytablecols
+
 " adapted from tridactyl source for ;x ;X
 bind --mode=normal ,;x hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool click 2")}
 bind --mode=normal ,;X hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool keydown ctrl+shift; xdotool click 2; xdotool keyup ctrl+shift")}
