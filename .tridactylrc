@@ -5,6 +5,7 @@
 sanitise tridactyllocal tridactylsync
 
 jsb -s ~/.tridactyl/utils.js
+jsb -s ~/.tridactyl/apps.js
 jsb -s ~/.tridactyl/S.js
 jsb -s ~/.tridactyl/js/suncalc.js
 jsb -s ~/.tridactyl/personal/personal.js
@@ -195,10 +196,10 @@ bind --mode=normal af withurl ! /opt/waterfox/waterfox --new-tab
 " ╭─────────────╮
 " │ , -- leader │
 " ╰─────────────╯
-bind --mode=normal ,aws jsb var [sr,ss]=utils.sunriseSunset(...user.latlong); utils.yankWithMsg(`SUNRISE: ${sr}\nSUNSET:  ${ss}`);
+bind --mode=normal ,aws jsb var [sr,ss]=apps.sunriseSunset(...user.latlong); utils.yankWithMsg(`SUNRISE: ${sr}\nSUNSET:  ${ss}`);
 bind --mode=normal ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word
 
-command convertunits jsb -d¦utils.convertUnitsWrapper(JS_ARGS).then(s=>tri.excmds.fillcmdline_nofocus(s));¦
+command convertunits jsb -d¦ apps.convertUnits(JS_ARGS).then(s=>tri.excmds.fillcmdline_nofocus(s))¦
 bind --mode=normal ,vv fillcmdline convertunits
 " adapted from tridactyl source for ;x ;X
 bind --mode=normal ,;x hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool click 2")}
