@@ -2,7 +2,7 @@ var apps = {
 
     convertUnits: function(args) {
         args = args.filter(a=> a.trim()!== "");
-        var n, unit1, unit2;
+        var n=1, unit1="", unit2="";
         if (args.length==1) {
             return tri.native.run(`units -t ${args[0]}`).then(
                 res => res.content
@@ -11,8 +11,12 @@ var apps = {
             if (args.length==2) {
                 var match = String(args[0]).match(/([0-9.*/+-]*)(.*)/);
                 n = match[1]||"1";
-                unit1 = match[2];
-                unit2 = args[1];
+                if (match[2]) {
+                    unit1 = match[2];
+                    unit2 = args[1];
+                } else {
+                    unit1 = args[1];
+                }
             } else {
                 [n, unit1, unit2] = args;
             }
