@@ -45,7 +45,7 @@ utils.tab = {
         return browser.tabs.remove(ids);
     },
     filter: function(pred) {
-        return tabRemove(!pred);
+        return tab.remove(!pred);
     },
 
     select: async function(index) {
