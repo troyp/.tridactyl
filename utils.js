@@ -48,11 +48,11 @@ utils.tab = {
         return tab.remove(!pred);
     },
 
-    select: async function(index) {
-        if (index=="$") index = 0; else index = Number(index);
-        var n = await this.getNumber();
-        var i = (index-1).mod(n) + 1;
-        browser.tabs.query({currentWindow: true, index: i-1}).then(
+    switch: async function(tabnum) {
+        if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
+        var N = await this.getNumber();
+        var n = (tabnum-1).mod(N) + 1;
+        browser.tabs.query({currentWindow: true, tabnum: n-1}).then(
             tt=> browser.tabs.update(tt[0].id, { active: true })
         );
     },
