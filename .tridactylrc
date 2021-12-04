@@ -61,7 +61,7 @@ bind --mode=normal g;n focusinput -n
 bind --mode=normal g;N focusinput -N
 bind --mode=normal g;p focusinput -p
 
-bind --mode=normal gh composite tabduplicate ; back
+bind --mode=normal gh jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goBack(t.id));
 
 bind --mode=normal <C-v> nmode ignore 1 mode normal
 bind --mode=normal <C-z> mode ignore
