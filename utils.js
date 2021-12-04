@@ -3,7 +3,6 @@
 // ╰─────────────────────────────────────────────╯
 
 var utils = {
-
     message: function(s, opts={}) {
         var s_ = (opts.prefix || "") + s;
         if (opts.temp) {
@@ -17,10 +16,9 @@ var utils = {
 
     yankWithMsg: function(s, opts={}) {
         tri.excmds.yank(s);
-        if (!("prefix" in opts)) opts.prefix = "Copied: ";
+        opts.prefix = opts.prefix ?? "Copied: ";
         this.message(s, opts);
     },
-
 };
 
 // ───────────────────────────────────────────────────────────────────────────────
