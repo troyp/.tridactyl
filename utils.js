@@ -62,7 +62,7 @@ utils.tab = {
         var dmenuInput = alltabsitems.join("\n");
         var cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -format i -p "${prompt}" -multi-select -i`;
         return tri.native.run(cmd).then(
-            res => res.content.trim("\n").split("\n")
+            res => res.content.trim().split("\n")
         );
     },
 
@@ -72,7 +72,7 @@ utils.tab = {
         var dmenuInput = alltabsitems.join("\n");
         var cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -regex -format f -p "${prompt}" -i`;
         return tri.native.run(cmd).then(
-            res => alltabs.filter(t=>t.url.match(res.content.trim("\n")))
+            res => alltabs.filter(t=>t.url.match(res.content.trim()))
         );
     },
 };
