@@ -215,6 +215,14 @@ bind --mode=normal af withurl ! /opt/waterfox/waterfox --new-tab
 bind --mode=normal ,aws jsb var [sr,ss]=apps.sunriseSunset(...user.latlong); utils.yankWithMsg(`SUNRISE: ${sr}\nSUNSET:  ${ss}`);
 bind --mode=normal ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word
 
+" | ,e -- javascript |
+command jse js -d¦ alert(eval(JS_ARGS.join(" ")))¦
+command jsbe jsb -d¦ tri.excmds.jsb(`tri.excmds.fillcmdline_nofocus(${JS_ARGS.join(" ")})`)¦
+command getselector js -d¦ alert([...document.querySelectorAll(JS_ARGS.join(" "))].map(t=>t.tagName+"\t"+t.innerText.slice(0,50).replace("\n","\t")).join("\n"))¦
+bind --mode=normal ,eb fillcmdline jsbe
+bind --mode=normal ,ee fillcmdline jse
+bind --mode=normal ,es fillcmdline getselector
+
 command convertunits jsb -d¦ apps.convertUnits(JS_ARGS).then(s=>tri.excmds.fillcmdline_nofocus(s))¦
 bind --mode=normal ,vv fillcmdline convertunits
 
