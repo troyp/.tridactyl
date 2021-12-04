@@ -27,6 +27,16 @@ var utils = {
 // ╰─────────────────────────────╯
 
 utils.tab = {
+    get: async function(tabnum, opts={}) {
+        var res = await browser.tabs.query({index: tabnum-1});
+        return res[0];
+    },
+
+    getid: async function(tabnum, opts={}) {
+        var t = await this.get(tabnum-1, opts);
+        return t.id;
+    },
+
     getAll: async function(opts={}) {
         if (! ("currentWindow" in opts)) opts.currentWindow = true;
         return ( await browser.tabs.query(opts) );
