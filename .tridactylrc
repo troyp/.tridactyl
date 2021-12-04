@@ -219,7 +219,10 @@ command convertunits jsb -d¦ apps.convertUnits(JS_ARGS).then(s=>tri.excmds.fill
 bind --mode=normal ,vv fillcmdline convertunits
 
 command copytablecols composite js -s ~/.tridactyl/cutils.js ; js -d¦ tri.excmds.fillcmdline(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}]), {useAlert:true})`)¦
+command copytablecols_strict composite js -s ~/.tridactyl/cutils.js ; js -d¦ tri.excmds.fillcmdline(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}], {strict:true}), {useAlert:true})`)¦
+
 bind --mode=normal ,xtc fillcmdline copytablecols
+bind --mode=normal ,xtC fillcmdline copytablecols_strict
 
 " adapted from tridactyl source for ;x ;X
 bind --mode=normal ,;x hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool click 2")}

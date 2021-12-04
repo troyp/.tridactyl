@@ -3,21 +3,18 @@
 // ╰───────────────────────────────────────────────────────────╯
 
 var cutils = {
-    extractTableColumns: function(table, columns, {strict=false}={}) {
+    extractTableColumns: function(table, columns, opts={}) {
         var output = "";
         var rows = Array.from(table.rows).slice(1);
         var n = rows[0].cells.length;
         for (var row of rows) {
             var cells = Array.from(row.cells);
-            if (strict && cells.length < Math.max.apply(null, columns))
+            if (opts.strict && cells.length < Math.max(...columns))
                 continue;
             function processCols(i) {
                 if (i < 0) { i = n+1-i; }
                 var cellValue = cells[i-1] && cells[i-1].innerText.trim();
-                if ( typeof(cellValue)=="string" &&
-                     cellValue.startsWith('"') &&
-                     cellValue.endsWith('"') )
-                    cellValue = cellValue.slice(1, -1).trim();
+                if (cellValue.match?.(/^".*"$/)) cellValue = cellValue.slice(1, -1).trim();
                 return cellValue;
             }
             var colstrs = Array.from(columns).map(processCols);
