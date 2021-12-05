@@ -20,6 +20,8 @@ jsb -s ~/.tridactyl/personal/personal.js
 set tabclosepinned false
 set relatedopenpos related
 set tabopenpos last
+set followpagepatterns.next \\b(forward|next|more|older)\\b|(>>|»)$|(>|»|▸|►)$|次|下|后
+set followpagepatterns.prev \\b(back|prev(ious)?|less|newer)\\b|(<|«|◂|◄)$|前|上
 
 " guiset_quiet statuspanel top-right
 
