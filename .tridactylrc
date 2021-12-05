@@ -247,6 +247,12 @@ bind --mode=normal ,xtC fillcmdline copytablecols_strict
 bind --mode=normal ,;x hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool click 2")}
 bind --mode=normal ,;X hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool keydown ctrl+shift; xdotool click 2; xdotool keyup ctrl+shift")}
 
+" ╭────────────╮
+" │ ; -- hints │
+" ╰────────────╯
+bind --mode=normal ;c hint -c [class*="expand"],[class="togg"]
+
+
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────────────────╮
 " │ ex/insert/input-mode keybindings │
