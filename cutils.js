@@ -3,6 +3,51 @@
 // ╰───────────────────────────────────────────────────────────╯
 
 var cutils = {
+
+    /**   $$(SELECTOR)
+     *    $$(SELECTOR, {context: CONTEXT})
+     *    $$(SELECTOR, CONTEXT)
+     *  Return an array of elements in subtree CONTEXT matching SELECTOR.
+     *  if CONTEXT is omitted, the root document and all frames are searched.
+     */
+    $$: function(selector, opts={}) {
+        if (opts instanceof Node) opts = {context: opts};
+        var getElems = (sel, top) => [...top.querySelectorAll(sel)];
+        if (opts.context) {
+            return getElems(selector, opts.context);
+        } else {
+            let res = getElems(selector, document);
+            let frames = tri.dom.getAllDocumentFrames();
+            for (f of frames) {
+                try {
+                    res.push(getElems(selector, frame.contentDocument||frame.contentWindow.document));
+                } catch(_) {};
+            }
+            return res;
+        }
+    },
+
+    /** Return an element in subtree CONTEXT matching SELECTOR, or null if there are none.
+     *  See $$ above.
+     */
+    $1: function(selector, opts={}) {
+        if (opts instanceof Node) opts = {context: opts};
+        var getElem = (sel, top) => top.querySelector(sel);
+        var res = getElem(selector, opts.context||document);
+        if (res || opts.context) {
+            return res;
+        } else {
+            let frames = tri.dom.getAllDocumentFrames();
+            for (f of frames) {
+                try {
+                    let res = getElem(selector, frame.contentDocument||frame.contentWindow.document);
+                    if (res) return res;
+                } catch(_) {};
+            }
+        }
+        return null;
+    },
+
     extractTableColumns: function(table, columns, opts={}) {
         var output = "";
         var rows = Array.from(table.rows).slice(1);
@@ -45,3 +90,5 @@ var cutils = {
 };
 
 window.cutils = cutils;
+window.$$ = cutils.$$;
+window.$1 = cutils.$1;
