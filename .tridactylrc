@@ -209,6 +209,9 @@ unbind --mode=normal a
 bind --mode=normal ac withurl ! /usr/local/bin/google-chrome
 bind --mode=normal af withurl ! /opt/waterfox/waterfox --new-tab
 
+bind --mode=normal a;c composite hint -pipe a href | ! /usr/local/bin/google-chrome
+bind --mode=normal a;f composite hint -pipe a href | ! /opt/waterfox/waterfox
+
 " ╭─────────────╮
 " │ , -- leader │
 " ╰─────────────╯
