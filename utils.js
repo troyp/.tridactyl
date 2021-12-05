@@ -42,7 +42,7 @@ utils.tab = {
         return ( await browser.tabs.query(opts) );
     },
 
-    getNumber: async function(opts={}) {
+    getN: async function(opts={}) {
         return this.getAll(opts).then(tt => tt.length);
     },
 
@@ -58,7 +58,7 @@ utils.tab = {
 
     switch: async function(tabnum) {
         if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
-        var N = await this.getNumber();
+        var N = await this.getN();
         var n = (tabnum-1).mod(N) + 1;
         browser.tabs.query({currentWindow: true, tabnum: n-1}).then(
             tt=> browser.tabs.update(tt[0].id, { active: true })
