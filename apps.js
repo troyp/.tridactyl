@@ -1,3 +1,7 @@
+// ╭────────────────────────────────────────────╮
+// │ apps.js -- Application code for .tridactyl │
+// ╰────────────────────────────────────────────╯
+
 var apps = {
 
     convertUnits: function(args) {
