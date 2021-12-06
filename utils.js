@@ -38,7 +38,7 @@ utils.tab = {
     },
 
     getAll: async function(opts={}) {
-        if (! ("currentWindow" in opts)) opts.currentWindow = true;
+        opts.currentWindow = opts.currentWindow ?? true;
         return ( await browser.tabs.query(opts) );
     },
 
