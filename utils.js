@@ -56,15 +56,6 @@ utils.tab = {
         return tab.remove(!pred);
     },
 
-    switch: async function(tabnum) {
-        if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
-        var N = await this.getN();
-        var n = (tabnum-1).mod(N) + 1;
-        browser.tabs.query({currentWindow: true, tabnum: n-1}).then(
-            tt=> browser.tabs.update(tt[0].id, { active: true })
-        );
-    },
-
     /* Returns 0-based index of tab(s) chosen */
     rofiChoose: async function (prompt="Select tabs (S-Enter): ") {
         var alltabs = await this.getAll();
@@ -83,6 +74,15 @@ utils.tab = {
         var cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -regex -format f -p "${prompt}" -i`;
         return tri.native.run(cmd).then(
             res => alltabs.filter(t=>t.url.match(res.content.trim()))
+        );
+    },
+
+    switch: async function(tabnum) {
+        if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
+        var N = await this.getN();
+        var n = (tabnum-1).mod(N) + 1;
+        browser.tabs.query({currentWindow: true, index: n-1}).then(
+            tt=> browser.tabs.update(tt[0].id, { active: true })
         );
     },
 
