@@ -85,6 +85,21 @@ utils.tab = {
             res => alltabs.filter(t=>t.url.match(res.content.trim()))
         );
     },
+
+    /* taken from tridactyl src/lib/webext.ts -- author: Oliver Blanthorn */
+ 	  tabCreateWrapper: async function (options) {
+        const tab = await browserBg.tabs.create(options);
+        const answer = new Promise(resolve => {
+            /* can't run in content scripts */
+            browserBg.runtime.onMessage.addListener((message, sender) => {
+                if (message !== "dom_loaded_background" || sender?.tab?.id !== tab.id) return;
+                browserBg.runtime.onMessage.removeListener(listener);
+                resolve(tab);
+            });
+        });
+        /* Return on slow- / extremely quick- loading pages anyway */
+        return Promise.race([answer, (async () => {await sleep(750); return tab;})(),]);
+    },
 };
 
 // ───────────────────────────────────────────────────────────────────────────────
