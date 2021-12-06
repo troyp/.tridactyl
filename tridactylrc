@@ -125,7 +125,7 @@ bind --mode=normal wc fillcmdline wincloseindex
 bind --mode=normal wm mute toggle
 bind --mode=normal wM mute all
 bind --mode=normal ww fillcmdline winopen
-bind --mode=normal wr source ~/.tridactyl/.tridactylrc
+bind --mode=normal wr source ~/.tridactyl/tridactylrc
 bind --mode=normal wsu copyuserchrome
 bind --mode=normal wsU composite copyuserchrome ; restart
 " toggle tab bar
