@@ -160,6 +160,10 @@ bind --mode=normal y? jsb tri.excmds.yank(JSON.stringify(tri.config.USERCONFIG))
 " ╭───────────╮
 " │ e -- goto │
 " ╰───────────╯
+command openorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
+command tabopenorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"last"});
+command adjopenorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"related"});
+
 bind --mode=normal ea tabopen about:addons
 bind --mode=normal ec tabopen about:config
 bind --mode=normal ed tabopen about:downloads

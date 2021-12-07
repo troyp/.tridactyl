@@ -46,6 +46,62 @@ utils.tab = {
         return this.getAll(opts).then(tt => tt.length);
     },
 
+    open: async function(url, opts={}) {
+        /*   open(URL, { OPTIONS... })
+         *   open(URL, WHERE)
+         * opts.where ["here" (default), "related", "next", "last"]: where to open new tab (if any)
+         * opts.background: don't switch to new tab
+         */
+        if (typeof opts == "string") opts = {where: opts};
+        switch (opts.where) {
+            /* TODO: allow incomplete URL like example.com for where!="here"
+             *       use tri.webext.queryAndURLwrangler([...ss])
+             */
+        case "last":
+            return tri.webext.openInNewTab(url, {active: !opts.background}).then(
+                t => browser.tabs.move(t.id));
+            break;
+        case "related":
+            return tri.webext.openInNewTab(url, {active: !opts.background, related: true});
+            break;
+        case "next":
+            tri.webext.activeTab().then(
+                thisTab => this.tabCreateWrapper({
+                    url:url,
+                    index:thisTab.index+1,
+                    active:!opts.background,
+                }));
+            break;
+        case "here":
+        default:
+            return tri.excmds.open(url);
+            break;
+        }
+    },
+
+    openOrSwitch: async function (url, opts={}) {
+        /*   openOrSwitch(URL, { OPTIONS... })
+         *   openOrSwitch(URL, WHERE)
+         * opts.where ["last" (default), "here", "related", "next"]: where to open new tab (if any)
+         * opts.regex: regex to test if existing tab qualifies
+         * opts.reload: whether to reload existing tab
+         * opts.closeCurrent [default: true if where=="here"]: whether to close current tab
+         */
+        if (!url) return;
+        if (typeof opts == "string") opts = {where: opts};
+        opts.closeCurrent ??= (opts.where=="here");
+        var currentTab = await tri.webext.activeTab();
+        var alltabs = await this.getAll();
+        var testfn = opts.regex ? (t=> t.url.match(opts.regex)) : (t=> t.url.indexOf(url)>=0);
+        var existingTab = alltabs.find(testfn);
+        if (existingTab) {
+            this.switch(existingTab.index+1).then(()=>{
+                if (opts.closeCurrent) browser.tabs.remove(currentTab.id);
+                if (opts.reload) browser.tabs.reload(existingTab.id);
+            });
+        } else this.open(url, { where: opts.where||"related" });
+    },
+
     remove: async function(pred) {
         const tabs = await browser.tabs.query({pinned: false, currentWindow: true});
         const atab = await activeTab();
