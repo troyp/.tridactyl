@@ -16,7 +16,7 @@ var utils = {
 
     yankWithMsg: function(s, opts={}) {
         tri.excmds.yank(s);
-        opts.prefix = opts.prefix ?? "Copied: ";
+        opts.prefix ??= "Copied: ";
         this.message(s, opts);
     },
 };
@@ -38,7 +38,7 @@ utils.tab = {
     },
 
     getAll: async function(opts={}) {
-        opts.currentWindow = opts.currentWindow ?? true;
+        opts.currentWindow ??= true;
         return ( await browser.tabs.query(opts) );
     },
 

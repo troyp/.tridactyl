@@ -84,7 +84,7 @@ var cutils = {
     yankWithMsg: function(s, opts={}) {
         tri.excmds.yank(s);
         var defaultPrefix = "Copied" + (opts.useAlert ? "...\n" : ": ");
-        opts.prefix = opts.prefix ?? defaultPrefix;
+        opts.prefix ??= defaultPrefix;
         this.message(s, opts);
     },
 };
