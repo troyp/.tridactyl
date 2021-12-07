@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# ───────────────────────────────────────────────────────────────────────────────
+# ╭────────────╮
+# │            │
+# │  KWSEARCH  │
+# │            │
+# ╰────────────╯
+
+# ╭─────────╮
+# │ options │
+# ╰─────────╯
+if [[ "$1" =~ ^-h$|^--help$ ]]; then
+    cat <<EOF
+USAGE: kwsearch [OPTION...]
+    Access keyword bookmarks from bookmarks.json file. The bookmarks file can
+    specified with the environment variable BMARKFILE.
+
+Options:
+  -f RE  --filter RE          filter bookmarks with RE
+  -h,    --help               show help
+  -k     --keyword-only       keyword bookmarks only
+  -K KW  --find-keyword KW    find bookmark with keyword KW
+  -m     --multi-select       choose multiple bookmarks with Rofi
+  -s     --select             choose bookmark with Rofi
+  -u     --url                print URL only
+EOF
+    exit 0; fi;
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        (-f | --filter) filter="$2"; shift 2; ;;
+        (-k | --keyword-only) kwonly=t; shift; ;;
+        (-K | --find-keyword) kw="$2"; shift 2; ;;
+        (-m | --multi-select) multi="t"; shift; ;;
+        (-s | --select) select="t"; shift; ;;
+        (-u | --url) url=t; shift; ;;
+        (*) echo "unrecognized option: $1" >&2 ; exit 1; ;;
+    esac
+done
+
+# ╭────────────╮
+# │ main logic │
+# ╰────────────╯
+cat "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | jq -rc '
+            recurse(.children[]?)
+            | select(.uri)
+            | {title: .title, url: .uri, keyword: .keyword}
+' | {
+    if [[ -n $kwonly ]]; then
+        jq -c 'select(.keyword)';
+    else cat;
+    fi;
+} | {
+    if [[ -n $kw ]]; then
+        jq -c "select(.keyword == \"$kw\")";
+    else
+        {
+            if [[ -n filter ]]; then grep -iP "$filter";
+            else cat;
+            fi;
+        } | {
+            if [[ -n $select ]]; then
+                rofi -dmenu -i;
+            elif [[ -n $multi ]]; then
+                rofi -dmenu -i -multi-select;
+            else cat
+            fi;
+        }
+    fi;
+} | {
+    if [[ -n $url ]]; then
+        jq -r '.url';
+    else
+        cat;
+    fi;
+}
