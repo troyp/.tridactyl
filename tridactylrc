@@ -169,38 +169,38 @@ bind --mode=normal ec tabopen about:config
 bind --mode=normal ed tabopen about:downloads
 bind --mode=normal eD tabopen about:debugging
 
-bind --mode=normal eldw  tabopen ~/Downloads
-bind --mode=normal eldc  tabopen ~/Documents
+bind --mode=normal eldw  tabopenorswitch file:///home/troy/Downloads
+bind --mode=normal eldc  tabopenorswitch file:///home/troy/Documents
 
-bind --mode=normal ele/  tabopen ~/ebooks
-bind --mode=normal elec  tabopen ~/ebooks/coding
-bind --mode=normal eled  tabopen ~/ebooks/dl
-bind --mode=normal elel  tabopen ~/.readinglist
-bind --mode=normal eles  tabopen ~/ebooks/css
-bind --mode=normal elea  tabopen ~/ebooks/articles
+bind --mode=normal ele/  tabopenorswitch file:///home/troy/ebooks
+bind --mode=normal elec  tabopenorswitch file:///home/troy/ebooks/coding
+bind --mode=normal eled  tabopenorswitch file:///home/troy/ebooks/dl
+bind --mode=normal elel  tabopenorswitch file:///home/troy/.readinglist
+bind --mode=normal eles  tabopenorswitch file:///home/troy/ebooks/css
+bind --mode=normal elea  tabopenorswitch file:///home/troy/ebooks/articles
 
-bind --mode=normal elhe  tabopen ~/.emacs.d/private
-bind --mode=normal elhh  tabopen ~
-bind --mode=normal elhp  tabopen ~/.pentadactyl
-bind --mode=normal elhr  tabopen ~/repos
-bind --mode=normal elhs  tabopen ~/source
-bind --mode=normal elhp  tabopen ~/.tridactyl
+bind --mode=normal elhe  tabopenorswitch file:///home/troy/.emacs.d/private
+bind --mode=normal elhh  tabopenorswitch file:///home/troy
+bind --mode=normal elhp  tabopenorswitch file:///home/troy/.pentadactyl
+bind --mode=normal elhr  tabopenorswitch file:///home/troy/repos
+bind --mode=normal elhs  tabopenorswitch file:///home/troy/source
+bind --mode=normal elhp  tabopenorswitch file:///home/troy/.tridactyl
 
-bind --mode=normal elo/  tabopen /opt
-bind --mode=normal eloc  tabopen /opt/chrome-extensions
-bind --mode=normal elod  tabopen /opt/deb
-bind --mode=normal elof  tabopen /opt/ff-addons
-bind --mode=normal elos  tabopen /opt/scripts
-bind --mode=normal elou  tabopen /opt/userscripts
-bind --mode=normal eloU  tabopen /opt/userstyles
-bind --mode=normal elow  tabopen /opt/webapps
+bind --mode=normal elo/  tabopenorswitch file:///opt
+bind --mode=normal eloc  tabopenorswitch file:///opt/chrome-extensions
+bind --mode=normal elod  tabopenorswitch file:///opt/deb
+bind --mode=normal elof  tabopenorswitch file:///opt/ff-addons
+bind --mode=normal elos  tabopenorswitch file:///opt/scripts
+bind --mode=normal elou  tabopenorswitch file:///opt/userscripts
+bind --mode=normal eloU  tabopenorswitch file:///opt/userstyles
+bind --mode=normal elow  tabopenorswitch file:///opt/webapps
 
-bind --mode=normal elp/   tabopen ~/Pictures
-bind --mode=normal elpa   tabopen ~/Pictures/art
-bind --mode=normal elpd   tabopen ~/Pictures/downloads
-bind --mode=normal elpv   tabopen ~/Pictures/vlc-snapshot
-bind --mode=normal elud   tabopen /usr/share/doc/
-bind --mode=normal eluld  tabopen /usr/local/share/doc/
+bind --mode=normal elp/   tabopenorswitch file:///home/troy/Pictures
+bind --mode=normal elpa   tabopenorswitch file:///home/troy/Pictures/art
+bind --mode=normal elpd   tabopenorswitch file:///home/troy/Pictures/downloads
+bind --mode=normal elpv   tabopenorswitch file:///home/troy/Pictures/vlc-snapshot
+bind --mode=normal elud   tabopenorswitch file:///usr/share/doc/
+bind --mode=normal eluld  tabopenorswitch file:///usr/local/share/doc/
 
 command gotoCommandSource jsb -p utils.tri.gotoCommandSource(JS_ARG);
 
