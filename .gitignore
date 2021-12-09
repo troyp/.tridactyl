@@ -1,3 +1,4 @@
 working.*
 /personal/*
+/build/*
 !/personal/personal_skeleton.js
