@@ -10,8 +10,17 @@
 # ╭─────────╮
 # │ options │
 # ╰─────────╯
-if [[ "$1" =~ ^-h$|^--help$ ]]; then
-    cat <<EOF
+SHORT="f:,k,K:,m,s,t,u,y"
+LONG="filter:,keyword-only,find-keyword:,multi-select,select,tridactyl,url,yank"
+PARSED=$(getopt -a -n kwsearch --options "$SHORT" --longoptions "$LONG" -- "$@")
+
+eval set -- "$PARSED"
+
+while :
+do
+    case "$1" in
+        -h | --help)
+            cat <<EOF
 USAGE: kwsearch [OPTION...]
     Access keyword bookmarks from bookmarks.json file. The bookmarks file can
     specified with the environment variable BMARKFILE.
@@ -23,19 +32,22 @@ Options:
   -K KW  --find-keyword KW    find bookmark with keyword KW
   -m     --multi-select       choose multiple bookmarks with Rofi
   -s     --select             choose bookmark with Rofi
+  -t     -tridactyl           format as tridactyl searchurl setting
   -u     --url                print URL only
+  -y     --yank               copy output to clipboard
 EOF
-    exit 0; fi;
-
-while [[ $# -gt 0 ]]; do
-    case "$1" in
+            exit 0
+            ;;
         (-f | --filter) filter="$2"; shift 2; ;;
         (-k | --keyword-only) kwonly=t; shift; ;;
         (-K | --find-keyword) kw="$2"; shift 2; ;;
         (-m | --multi-select) multi="t"; shift; ;;
         (-s | --select) select="t"; shift; ;;
+        (-t | --tridactyl) tri="t"; shift; ;;
         (-u | --url) url=t; shift; ;;
-        (*) echo "unrecognized option: $1" >&2 ; exit 1; ;;
+        (-y | --yank) yank=t; shift; ;;
+        (--) shift; break ;;
+        (*)  echo "unrecognized option: $1" >&2 ; exit 1; ;;
     esac
 done
 
@@ -71,6 +83,14 @@ cat "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | jq -rc '
 } | {
     if [[ -n $url ]]; then
         jq -r '.url';
+    elif [[ -n $tri ]]; then
+        \perl -pe 's/{"title":"(.*)","url":"(.*)","keyword":"(.*)"}/set searchurls.$3 $2/';
+    else
+        cat;
+    fi;
+} | {
+    if [[ -n $yank ]]; then
+        tee >(xsel -ib);
     else
         cat;
     fi;
