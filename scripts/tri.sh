@@ -75,7 +75,6 @@ ENDHELP
     {
         if [[ -n $tree ]]; then
             \tree -af -I .git "$dir";
-            echo $tree+$re
         elif [[ -n $files ]]; then
             \rgrep -ilP --exclude-dir '.git' "$re" "$dir";
             page="";
@@ -87,8 +86,7 @@ ENDHELP
         sed "s|$dir/||"
     } | {
         if [[ -n $tree && -n $re ]]; then
-            \grep -iP --color=always "$.*re.*";
-            echo $tree+$re
+            \grep -iP --color=always "(.*$re.*|)";
         else
             \grep -iP --color=always "$re";
         fi
