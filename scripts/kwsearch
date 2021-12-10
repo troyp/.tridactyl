@@ -22,8 +22,12 @@ do
         -h | --help)
             cat <<EOF
 USAGE: kwsearch [OPTION...]
-    Access keyword bookmarks from bookmarks.json file. The bookmarks file can
-    specified with the environment variable BMARKFILE.
+       kwsearch [-k] [-m|-s] [-y] [SEARCHTERM...]
+       kwsearch [-K KW] [-y] [SEARCHTERM...]
+    Access keyword (and other) bookmarks from bookmarks.json file. The bookmarks
+    file can specified with the environment variable BMARKFILE.
+    If SEARCHTERMs are specified, resolve search bookmarks by replacing %s with
+    the SEARCHTERMs (escaping not yet supported).
 
 Options:
   -f RE  --filter RE          filter bookmarks with RE
@@ -50,6 +54,12 @@ EOF
         (*)  echo "unrecognized option: $1" >&2 ; exit 1; ;;
     esac
 done
+
+# handle additional arguments
+if [[ $# -gt 0 ]]; then
+    args=t;
+    url=t;
+fi;
 
 # ╭────────────╮
 # │ main logic │
@@ -94,6 +104,15 @@ cat "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | jq -rc '
         \perl -pe 's/{"title":"(.*)","url":"(.*)","keyword":"(.*)"}/set searchurls.$3 $2/';
     else
         # JSON
+        cat;
+    fi;
+} | {
+    # arguments: resolve search bookmark URLs
+    if [[ -n args ]]; then
+        # TODO: handle | in arguments
+        # TODO: handle escaping in search URL
+        sed "s|%s|$*|";
+    else
         cat;
     fi;
 } | {
