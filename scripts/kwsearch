@@ -59,19 +59,23 @@ cat "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | jq -rc '
             | select(.uri)
             | {title: .title, url: .uri, keyword: .keyword}
 ' | {
+    # --keyword-only
     if [[ -n $kwonly ]]; then
         jq -c 'select(.keyword)';
     else cat;
     fi;
 } | {
+    # select by --find-keyword ?
     if [[ -n $kw ]]; then
         jq -c "select(.keyword == \"$kw\")";
-    else
-        {
+    else {
+        # filter results
+            # filter with regex
             if [[ -n filter ]]; then grep -iP "$filter";
             else cat;
             fi;
         } | {
+            # select with rofi
             if [[ -n $select ]]; then
                 rofi -dmenu -i;
             elif [[ -n $multi ]]; then
@@ -81,15 +85,20 @@ cat "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | jq -rc '
         }
     fi;
 } | {
+    # output format
     if [[ -n $url ]]; then
+        # URL only
         jq -r '.url';
     elif [[ -n $tri ]]; then
+        # tridactyl searchurl
         \perl -pe 's/{"title":"(.*)","url":"(.*)","keyword":"(.*)"}/set searchurls.$3 $2/';
     else
+        # JSON
         cat;
     fi;
 } | {
     if [[ -n $yank ]]; then
+        # put results in clipboard
         tee >(xsel -ib);
     else
         cat;
