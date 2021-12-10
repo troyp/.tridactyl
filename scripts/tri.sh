@@ -11,7 +11,7 @@ tri() {
     local dir="";
     local files="";
     local re="";
-    local page=t;
+    local page="";
     local tree="";
 
     TRI_CONFIG_DIR=${TRI_CONFIG_DIR:-$HOME/.config/tridactyl};
@@ -22,7 +22,7 @@ tri() {
     # │ options │
     # ╰─────────╯
     SHORT=c,h,f,p,r:,s,t
-    LONG=config-dir,help,files,no-pager,regex:,source-dir,tree
+    LONG=config-dir,help,files,pager,regex:,source-dir,tree
     PARSED=$(getopt -a -n tri --options $SHORT --longoptions $LONG -- "$@")
 
     eval set -- "$PARSED"
@@ -41,7 +41,7 @@ Options:
   -c     --config-dir       change to config directory
   -h     --help             show help
   -f     --files            show matching files only
-  -p     --no-pager         don't show tree/line output in pager
+  -p     --pager            show output in pager
   -r RE  --regex RE         search for lines (or files with -f) matching the regex RE
   -s     --source-dir       change to source directory
   -t     --tree             view directory tree (current directory when under $TRI_CONFIG_DIR
@@ -50,7 +50,7 @@ ENDHELP
                 return; ;;
             (-c | --config-dir)     cd $TRI_CONFIG_DIR; return; ;;
             (-f | --files)          files=t; shift; ;;
-            (-p | --no-pager)       page=""; shift; ;;
+            (-p | --pager)          page=t; shift; ;;
             (-r | --regex)          re="$2"; shift 2; ;;
             (-s | --source-dir)     cd $TRI_SRC_DIR; return; ;;
             (-t | --tree)           tree=t; shift; ;;
@@ -77,7 +77,6 @@ ENDHELP
             \tree -af -I .git "$dir";
         elif [[ -n $files ]]; then
             \rgrep -ilP --exclude-dir '.git' "$re" "$dir";
-            page="";
         elif [[ -n $re ]]; then
             \rgrep -inP --exclude-dir '.git' "$re" "$dir";
         else { echo else; return 0; }
