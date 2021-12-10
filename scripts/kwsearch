@@ -32,7 +32,7 @@ Options:
   -K KW  --find-keyword KW    find bookmark with keyword KW
   -m     --multi-select       choose multiple bookmarks with Rofi
   -s     --select             choose bookmark with Rofi
-  -t     -tridactyl           format as tridactyl searchurl setting
+  -t     --tridactyl          format as tridactyl searchurl setting
   -u     --url                print URL only
   -y     --yank               copy output to clipboard
 EOF
