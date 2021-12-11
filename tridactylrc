@@ -8,7 +8,10 @@ jsb -s ~/.tridactyl/utils.js
 jsb -s ~/.tridactyl/apps.js
 jsb -s ~/.tridactyl/S.js
 jsb -s ~/.tridactyl/js/suncalc.js
+jsb -s ~/.tridactyl/js/sprintf.js
 jsb -s ~/.tridactyl/personal/personal.js
+
+tri.sprintf = sprintf
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮
