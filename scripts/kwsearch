@@ -10,8 +10,8 @@
 # ╭─────────╮
 # │ options │
 # ╰─────────╯
-SHORT="f:,k,K:,m,s,t,u,y"
-LONG="filter:,keyword-only,find-keyword:,multi-select,select,tridactyl,url,yank"
+SHORT="f:,k,K:,m,s,S,t,u,y,Y"
+LONG="filter:,keyword-only,find-keyword:,multi-select,select,select-keyword,tridactyl,url,yank,yank-only"
 PARSED=$(getopt -a -n kwsearch --options "$SHORT" --longoptions "$LONG" -- "$@")
 
 eval set -- "$PARSED"
@@ -36,9 +36,11 @@ Options:
   -K KW  --find-keyword KW    find bookmark with keyword KW
   -m     --multi-select       choose multiple bookmarks with Rofi
   -s     --select             choose bookmark with Rofi
+  -S     --select-keyword     choose bookmark keyword with Rofi
   -t     --tridactyl          format as tridactyl searchurl setting
   -u     --url                print URL only
   -y     --yank               copy output to clipboard
+  -Y     --yank-only          send output to clipboard, no output
 EOF
             exit 0
             ;;
@@ -47,9 +49,11 @@ EOF
         (-K | --find-keyword) kw="$2"; shift 2; ;;
         (-m | --multi-select) multi="t"; shift; ;;
         (-s | --select) select="t"; shift; ;;
+        (-S | --select-keyword) kwonly=t; select="kw"; shift; ;;
         (-t | --tridactyl) tri="t"; shift; ;;
         (-u | --url) url=t; shift; ;;
         (-y | --yank) yank=t; shift; ;;
+        (-Y | --yank-only) yank=only; shift; ;;
         (--) shift; break ;;
         (*)  echo "unrecognized option: $1" >&2 ; exit 1; ;;
     esac
@@ -60,6 +64,14 @@ if [[ $# -gt 0 ]]; then
     args=t;
     url=t;
 fi;
+
+# ╭──────────────╮
+# │ dependencies │
+# ╰──────────────╯
+# is grep -P supported? If not, use grep -E
+RETYPE=$(echo | grep -P "" &>/dev/null && printf P || printf E);
+# env var for yank command
+KWSEARCH_YANKCMD=${KWSEARCH_YANKCMD:-xsel -ib};
 
 # ╭────────────╮
 # │ main logic │
@@ -81,15 +93,19 @@ cat "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | jq -rc '
     else {
         # filter results
             # filter with regex
-            if [[ -n filter ]]; then grep -iP "$filter";
+            if [[ -n filter ]]; then grep -i -$RETYPE "$filter";
             else cat;
             fi;
         } | {
             # select with rofi
             if [[ -n $select ]]; then
-                rofi -dmenu -i;
+                if [[ $select == kw ]]; then
+                    rofi -dmenu -i -no-custom;
+                else
+                    rofi -dmenu -i -no-custom;
+                fi;
             elif [[ -n $multi ]]; then
-                rofi -dmenu -i -multi-select;
+                rofi -dmenu -i -no-custom -multi-select;
             else cat
             fi;
         }
@@ -118,7 +134,11 @@ cat "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | jq -rc '
 } | {
     if [[ -n $yank ]]; then
         # put results in clipboard
-        tee >(xsel -ib);
+        if [[ $yank == only ]]; then
+            eval $KWSEARCH_YANKCMD;
+        else
+            tee >(eval $KWSEARCH_YANKCMD);
+        fi;
     else
         cat;
     fi;
