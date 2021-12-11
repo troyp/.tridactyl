@@ -93,6 +93,9 @@ bind --mode=normal P clipboard open
 command myfocusinput jsb -d¦ utils.tri.myfocusinput(JS_ARGS.join(" "))¦
 bind --mode=normal gi myfocusinput
 
+unbind x
+bind --mode=normal X stop
+
 unbind --mode=normal g;
 bind --mode=normal g;; changelistjump -1
 bind --mode=normal g;i focusinput 2
@@ -260,6 +263,19 @@ bind --mode=normal af withurl ! /opt/waterfox/waterfox --new-tab
 
 bind --mode=normal a;c composite hint -pipe a href | ! /usr/local/bin/google-chrome
 bind --mode=normal a;f composite hint -pipe a href | ! /opt/waterfox/waterfox
+
+" ╭─────────────────╮
+" │ x -- extensions │
+" ╰─────────────────╯
+" |xr -- rikairebuilt |
+" rikairebuilt toggle
+bind --mode=normal xrr xdotool mousemove 1861 111 click 1
+" addon page
+bind --mode=normal xra tabopenorswitch https://addons.mozilla.org/en-GB/firefox/addon/rikaihan/
+" source page
+bind --mode=normal xrs tabopenorswitch https://github.com/Garethp/RikaiRebuilt
+" config page
+bind --mode=normal xrc winopen moz-extension://41d2b8bf-2a97-4468-87c8-f6243594c04c/options/options.html
 
 " ╭─────────────╮
 " │ , -- leader │
