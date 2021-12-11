@@ -113,21 +113,26 @@ utils.tab = {
     },
 
     /* Returns 0-based index of tab(s) chosen */
-    rofiChoose: async function (prompt="Select tabs (S-Enter): ") {
+    rofiChoose: async function (opts={}) {
+        opts.prompt ??= "Select tabs (S-Enter): ";
+        opts.format ||= "i";
         var alltabs = await this.getAll();
-        var alltabsitems = alltabs.map((t, i)=>`${i+1}: ${t.label}    <${t.url}>`);
+        const formatter = (t,i)=>sprintf("%-3d  %-40s    <%s>", i+1, S.ellipsize(t.title, 40), t.url);
+        var alltabsitems = alltabs.map(formatter);
         var dmenuInput = alltabsitems.join("\n");
-        var cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -format i -p "${prompt}" -multi-select -i`;
+        var cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -width 80 -format ${opts.format} -p "${opts.prompt}" -multi-select -i`;
         return tri.native.run(cmd).then(
             res => res.content.trim().split("\n")
         );
     },
 
-    rofiChooseByRegex: async function (prompt="Construct regex [enter]: ") {
+    rofiChooseByRegex: async function (opts={}) {
+        opts.prompt ??= "Construct regex [enter]: ";
         var alltabs = await this.getAll();
-        var alltabsitems = alltabs.map((t, i)=>`${i+1}: ${t.label}    <${t.url}>`);
+        const formatter = (t,i)=>sprintf("%-3d  %-40s    <%s>", i+1, S.ellipsize(t.title, 40), t.url);
+        var alltabsitems = alltabs.map(formatter);
         var dmenuInput = alltabsitems.join("\n");
-        var cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -regex -format f -p "${prompt}" -i`;
+        var cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -width 80 -regex -format f -p "${opts.prompt}" -i`;
         return tri.native.run(cmd).then(
             res => alltabs.filter(t=>t.url.match(res.content.trim()))
         );
