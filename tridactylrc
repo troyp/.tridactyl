@@ -20,13 +20,18 @@ tri.sprintf = sprintf
 
 " General Settings
 "
+set gimode nextinput
 set tabclosepinned false
 set relatedopenpos related
 set tabopenpos last
 set followpagepatterns.next \\b(forward|next|more|older)\\b|(>>|»)$|(>|»|▸|►)$|次|下|后
 set followpagepatterns.prev \\b(back|prev(ious)?|less|newer)\\b|(<|«|◂|◄)$|前|上
+set hintchars hjklasdfgyuiopqwertnmzxcvb
+set hintfiltermode vimperator-reflow
 
-" guiset_quiet statuspanel top-right
+
+guiset_quiet statuspanel right
+guiset_quiet tabs count
 
 jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{urls:["<all_urls>"],types:["main_frame"]},["blocking","responseHeaders"])
 
