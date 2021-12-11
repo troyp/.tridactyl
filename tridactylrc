@@ -113,6 +113,11 @@ bind --mode=normal <C-x><C-x> restart
 bind --mode=normal <A-=> urlincrement 1
 bind --mode=normal <A--> urlincrement -1
 
+" ╭──────────────────╮
+" │ general commands │
+" ╰──────────────────╯
+command xdotool jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
+
 " ╭───────────╮
 " │ b -- tabs │
 " ╰───────────╯
