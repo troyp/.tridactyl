@@ -187,6 +187,16 @@ bind --mode=normal wtt xdotool key ctrl+B
 unbind --mode=normal s
 unbind --mode=normal /
 
+command kwsearch       jsb -d¦ apps.kwsearch(JS_ARGS.join(" "))¦
+command kwsearch_adj   jsb -d¦ apps.kwsearch(JS_ARGS.join(" "), {where: "related"})¦
+command kwsearch_bg    jsb -d¦ apps.kwsearch(JS_ARGS.join(" "), {where: "related", background: true})¦
+command kwsearch_here  jsb -d¦ apps.kwsearch(JS_ARGS.join(" "), {where: "here"})¦
+
+bind --mode=normal ska fillcmdline kwsearch_adj
+bind --mode=normal skb fillcmdline kwsearch_bg
+bind --mode=normal skk fillcmdline kwsearch
+bind --mode=normal sko fillcmdline kwsearch_here
+
 bind --mode=normal ss fillcmdline open search
 bind --mode=normal s/ fillcmdline find
 

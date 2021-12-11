@@ -33,6 +33,11 @@ var apps = {
         }
     },
 
+    kwsearch(argstr, opts={where: "last"}) {
+        return tri.native.run(`kwsearch -K ${argstr}`).then(
+            res => utils.tab.open(res.content, opts));
+    },
+
     sunriseSunset: function(lat, long) {
         var times = SunCalc.getTimes(new Date(), lat, long);
         return [sunrise, sunset] = [times.sunrise, times.sunset].map(t=>t.toTimeString());
