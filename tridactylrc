@@ -11,6 +11,9 @@ jsb -s ~/.tridactyl/js/suncalc.js
 jsb -s ~/.tridactyl/js/sprintf.js
 jsb -s ~/.tridactyl/personal/personal.js
 
+window.utils = utils
+window.apps = apps
+window.S = S
 tri.sprintf = sprintf
 
 " ───────────────────────────────────────────────────────────────────────────────
