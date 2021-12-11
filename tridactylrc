@@ -282,7 +282,21 @@ bind --mode=normal xrc winopen moz-extension://41d2b8bf-2a97-4468-87c8-f6243594c
 " │ , -- leader │
 " ╰─────────────╯
 " | ,a -- apps |
+
+" | ,am -- mail/contacts |
+bind --mode=normal ,amc tabopenorswitch https://contacts.google.com/?hl=en&tab=mC
+bind --mode=normal ,amC tabopenorswitch https://mail.google.com/mail/u/0/h/k4067n2i55u9/?&v=cl
+bind --mode=normal ,amm tabopenorswitch https://mail.google.com/mail/u/0/h/1f0xqcpo2pdl3/?f=1
+bind --mode=normal ,amM tabopenorswitch https://mail.google.com/mail/u/0/#inbox
+bind --mode=normal ,amy tabopenorswitch https://au.mail.yahoo.com/d/folders/1
+
+" | ,aw -- web/weather |
+" Show Goonellabah Sunrise and Sunset Times
 bind --mode=normal ,aws jsb var [sr,ss]=apps.sunriseSunset(...user.latlong); utils.yankWithMsg(`SUNRISE: ${sr}\nSUNSET:  ${ss}`);
+" Open Lismore Weather (BoM)
+bind --mode=normal ,aww tabopenorswitch http://www.bom.gov.au/nsw/forecasts/lismore.shtml
+" Open Goonellabah Weather (timeanddate.com)
+bind --mode=normal ,awt tabopenorswitch https://www.timeanddate.com/weather/@2164966
 
 " | ,c -- command-line |
 bind --mode=normal ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word
