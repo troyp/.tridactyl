@@ -67,8 +67,14 @@ set searchurls.ffus https://www.google.com/search?q=%28userscript+OR+bookmarklet
 
 " ─────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────────╮
-" │ Normal mode key bindings │
+" │ Browser-mode keybindings │
 " ╰──────────────────────────╯
+bind --mode=browser <A-,> tab #
+
+" ─────────────────────────────────────────────────────────────────────────────
+" ╭─────────────────────────╮
+" │ Normal-mode keybindings │
+" ╰─────────────────────────╯
 
 bind --mode=normal <CA-h> scrollpx -50
 bind --mode=normal <CA-l> scrollpx +50
