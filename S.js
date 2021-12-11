@@ -69,7 +69,7 @@ S = {
         return lines_;
     },
     toSmartCase: function (s) {
-        return (s.toLowerCase()===s) ? S.toStartCase(s) : s;
+        return (s.toLowerCase()===s) ? this.toStartCase(s) : s;
     },
     toStartCase: function (s) {
         var words = s.split(/\s+/);
@@ -78,7 +78,7 @@ S = {
     toLength: function (s, n, pad=" ") {
         n = parseInt(n);
         if (s.length > n) return s.slice(0,n);
-        else return S.padEnd(s, n, pad);
+        else return this.padEnd(s, n, pad);
     },
     titleCaseExceptionWords: ["a", "an", "the", "and", "or", "but", "nor",
                               "yet", "so", "for", "in", "to", "of", "at",
@@ -97,6 +97,13 @@ S = {
     isAlphaAt: function (s, i) {
         ord = s.charCodeAt(i);
         return (ord.inRange(97, 123));
+    },
+    ellipsize: function (s, n, ellipsis="…") {
+        const ellipsisLn = ellipsis.length;
+        if (s.length > n)
+            return s.slice(0, n-ellipsisLn)+ellipsis;
+        else
+            return s;
     },
     firstLineEllipsis: function (s) {
         var s = String(s);
