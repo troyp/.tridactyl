@@ -246,7 +246,7 @@ bind --mode=normal elhh  tabopenorswitch file:///home/troy
 bind --mode=normal elhp  tabopenorswitch file:///home/troy/.pentadactyl
 bind --mode=normal elhr  tabopenorswitch file:///home/troy/repos
 bind --mode=normal elhs  tabopenorswitch file:///home/troy/source
-bind --mode=normal elhp  tabopenorswitch file:///home/troy/.tridactyl
+bind --mode=normal elht  tabopenorswitch file:///home/troy/.tridactyl
 
 bind --mode=normal elo/  tabopenorswitch file:///opt
 bind --mode=normal eloc  tabopenorswitch file:///opt/chrome-extensions
