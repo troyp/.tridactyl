@@ -316,12 +316,13 @@ bind --mode=normal ,awt tabopenorswitch https://www.timeanddate.com/weather/@216
 " | ,c -- command-line |
 bind --mode=normal ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word
 
-" | ,e -- javascript |
+" | ,e -- javascript eval |
 command jse js -d¦ alert(eval(JS_ARGS.join(" ")))¦
 command getproperties js -d¦ alert(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
 command jsbe jsb -d¦ tri.excmds.jsb(`tri.excmds.fillcmdline_nofocus(${JS_ARGS.join(" ")})`)¦
 command getselector js -d¦ alert([...document.querySelectorAll(JS_ARGS.join(" "))].map(t=>t.tagName+"\t"+t.innerText.slice(0,50).replace("\n","\t")).join("\n"))¦
 bind --mode=normal ,eb fillcmdline jsbe
+bind --mode=normal ,ec js -s ~/.tridactyl/cutils.js
 bind --mode=normal ,ee fillcmdline jse
 bind --mode=normal ,ep fillcmdline getproperties
 bind --mode=normal ,es fillcmdline getselector
