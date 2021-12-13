@@ -395,17 +395,6 @@ bind --mode=ex  <S-Tab>    ex.prev_completion
 bind --mode=ex  <C-/>      ex.deselect_completion
 bind --mode=ex  <A-w>      ex.execute_ex_on_completion clipboard yank
 
-
-" ───────────────────────────────────────────────────────────────────────────────
-" ╭─────────────────────────────╮
-" │ Site-specific functionality │
-" ╰─────────────────────────────╯
-
-" ╭────────────╮
-" │ medium.com │
-" ╰────────────╯
-" https://discord.com/channels/854326924402622474/854326925031374860#message-username-907364171652399204
-autocmd DocStart ^https?://(?:.*\.)*(?<!link\.)medium\.com(/.*)?$ urlmodify -r ^https?://(?:.*\.)*(?<!link\.)medium\.com(/.*)?$ https://scribe.rip$1
 bind --mode=insert  <C-m>    composite jsb user.email      | text.insert_text
 bind --mode=insert  <C-M>    composite jsb user.email2     | text.insert_text
 bind --mode=insert  <C-I>    composite jsb user.name       | text.insert_text
