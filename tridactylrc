@@ -182,6 +182,9 @@ bind --mode=normal wsu copyuserchrome
 bind --mode=normal wsU composite copyuserchrome ; restart
 " toggle tab bar
 bind --mode=normal wtt xdo key ctrl+B
+" dismiss update notification
+bind --mode=normal wx xdo mousemove 1740 230 click 1
+
 
 " ╭─────────────╮
 " │ s -- search │
