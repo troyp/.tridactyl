@@ -181,7 +181,7 @@ utils.tri = {
         );
     },
 
-    myfocusinput(arg) { var n = Number(arg)||"-l"; tri.excmds.focusinput(n); }
+    myfocusinput: function(arg) { var n = Number(arg)||"-l"; tri.excmds.focusinput(n); },
 };
 
 // ───────────────────────────────────────────────────────────────────────────────
