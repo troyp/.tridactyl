@@ -124,7 +124,7 @@ bind --mode=normal <A--> urlincrement -1
 " ╰──────────────────╯
 command urltoggle withcutils js -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
 command withcutils composite js -s ~/.tridactyl/cutils.js ;
-command xdotool jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
+command xdo jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
 
 " ╭───────────╮
 " │ b -- tabs │
@@ -181,7 +181,7 @@ bind --mode=normal wr source ~/.tridactyl/tridactylrc
 bind --mode=normal wsu copyuserchrome
 bind --mode=normal wsU composite copyuserchrome ; restart
 " toggle tab bar
-bind --mode=normal wtt xdotool key ctrl+B
+bind --mode=normal wtt xdo key ctrl+B
 
 " ╭─────────────╮
 " │ s -- search │
@@ -285,7 +285,7 @@ bind --mode=normal a;f composite hint -pipe a href | ! /opt/waterfox/waterfox
 " ╰─────────────────╯
 " |xr -- rikairebuilt |
 " rikairebuilt toggle
-bind --mode=normal xrr xdotool mousemove 1861 111 click 1
+bind --mode=normal xrr xdo mousemove 1861 111 click 1
 " addon page
 bind --mode=normal xra tabopenorswitch https://addons.mozilla.org/en-GB/firefox/addon/rikaihan/
 " source page
