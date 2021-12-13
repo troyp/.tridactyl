@@ -32,6 +32,12 @@ utils.tab = {
         return res[0];
     },
 
+    getAlternate: async function(n=1) {
+        n = parseInt(n);
+        var sorted = await this.sortedByAccess();
+        return sorted[n];
+    },
+
     getid: async function(tabnum, opts={}) {
         var t = await this.get(tabnum-1, opts);
         return t.id;
@@ -164,6 +170,11 @@ utils.tab = {
         );
     },
 
+    sortedByAccess: async function() {
+        var tabs = await browser.tabs.query({currentWindow: true});
+        return tabs.sort((t1,t2) => t2.lastAccessed-t1.lastAccessed);
+    },
+
     switch: async function(tabnum) {
         if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
         var N = await this.getN();
@@ -171,6 +182,11 @@ utils.tab = {
         browser.tabs.query({currentWindow: true, index: n-1}).then(
             tt=> browser.tabs.update(tt[0].id, { active: true })
         );
+    },
+
+    switchAlternate: async function(n) {
+        const alt = await this.getAlternate(n);
+        return browser.tabs.update(alt.id, {active: true});
     },
 
     /* taken from tridactyl src/lib/webext.ts -- author: Oliver Blanthorn */

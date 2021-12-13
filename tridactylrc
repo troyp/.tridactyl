@@ -133,6 +133,7 @@ unbind --mode=normal b
 
 command tabremove jsb -p utils.tab.remove(t=>(S.matchSmartCase(JS_ARG, t.url)));
 command tabfilter jsb -p utils.tab.filter(t=>(S.matchSmartCase(JS_ARG, t.url)));
+command tabswitchprev jsb -d¦ utils.tab.switchAlternate(JS_ARGS[1]||1)¦
 
 jsb tri.excmds.bind("--mode=normal", "<", "tabfirst")
 bind --mode=normal > tablast
@@ -149,7 +150,7 @@ bind --mode=normal b< tabclosealltoleft
 bind --mode=normal C tabduplicate
 bind --mode=normal <C-k> composite tabclosealltoright ; tabclose
 bind --mode=normal <C-K> composite tabclosealltoleft ; tabclose
-bind --mode=normal <A-;> buffer #
+bind --mode=normal <A-;> tabswitchprev
 bind --mode=normal <A-:> composite quit ; buffer #
 
 bind --mode=normal <AC-1> tabmove 1
