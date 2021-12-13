@@ -122,6 +122,8 @@ bind --mode=normal <A--> urlincrement -1
 " ╭──────────────────╮
 " │ general commands │
 " ╰──────────────────╯
+command urltoggle withcutils js -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
+command withcutils composite js -s ~/.tridactyl/cutils.js ;
 command xdotool jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
 
 " ╭───────────╮
