@@ -10,8 +10,8 @@
 # ╭─────────╮
 # │ options │
 # ╰─────────╯
-SHORT="f:,k,K:,m,s,S,t,u,y,Y"
-LONG="filter:,keyword-only,find-keyword:,multi-select,select,select-keyword,tridactyl,url,yank,yank-only"
+SHORT="h,f:,k,K:,m,s,S,t,u,y,Y"
+LONG="help,filter:,keyword-only,find-keyword:,multi-select,select,select-keyword,tridactyl,url,yank,yank-only"
 PARSED=$(getopt -a -n kwsearch --options "$SHORT" --longoptions "$LONG" -- "$@")
 
 eval set -- "$PARSED"
