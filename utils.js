@@ -53,30 +53,55 @@ utils.tab = {
          * opts.background: don't switch to new tab
          */
         if (typeof opts == "string") opts = {where: opts};
-        switch (opts.where) {
-            /* TODO: allow incomplete URL like example.com for where!="here"
-             *       use tri.webext.queryAndURLwrangler([...ss])
-             */
-        case "last":
-            return tri.webext.openInNewTab(url, {active: !opts.background}).then(
-                t => browser.tabs.move(t.id));
-            break;
-        case "related":
-            return tri.webext.openInNewTab(url, {active: !opts.background, related: true});
-            break;
-        case "next":
-            tri.webext.activeTab().then(
-                thisTab => this.tabCreateWrapper({
-                    url:url,
-                    index:thisTab.index+1,
-                    active:!opts.background,
-                }));
-            break;
-        case "here":
-        default:
-            return tri.excmds.open(url);
-            break;
+        var thisTab = await tri.webext.activeTab();
+        var legal = url.match(/^https?:'/);
+        /* can't open special URLs in current tab */
+        if (!legal && opts.where==="here") opts.where="next";
+        var initurl = legal ? url : "https://google.com";
+        var active = !opts.background;
+        var newTab;
+        /* https?: URLs */
+        if (legal) {
+            switch (opts.where) {
+              case "last":
+                  var N = await this.getN();
+                  newTab = await this.tabCreateWrapper(initurl, {active: active, index: N-1});
+                  break;
+              case "related":
+                  newTab = await tri.webext.openInNewTab(initurl, {active: active, related: true});
+                  break;
+              case "next":
+                  var i = thisTab.index;
+                  newTab = await tri.webext.openInNewTab(initurl, {active: active, related: true, index: i+1});
+                  break;
+              case "here":
+              default:
+                  newTab = thisTab;
+                  await tri.controller.acceptExCmd(`open ${url}`);
+            }
+        } else {
+            /* special URLs */
+            if (opts.where=="last" && opts.background)
+                await tri.controller.acceptExCmd(`tabopen -b ${url}`);
+            else
+                await tri.controller.acceptExCmd(`tabopen ${url}`);
+            /* TODO: identify correct tab using .url and .lastAccessed properties */
+            /* currently assumes last tab (ie. tabopenpos == "last") */
+            var tt = await this.getAll();
+            newTab = tt.slice(-1)[0];
+            var i = thisTab.index;
+            if (["related", "next"].includes(opts.where)) {
+                /* TODO: handle related separately */
+                /* TODO: don't set alternate tab */
+                if (opts.background)
+                    await browser.tabs.move(newTab.id, {index: i+1}).then(t=>this.switch(thisTab.index+1));
+                else
+                    await browser.tabs.move(newTab.id, {index: i+1});
+            } else if (opts.where=="last" && opts.background) {
+                await this.switch(thisTab.index+1);
+            }
         }
+        return newTab;
     },
 
     openOrSwitch: async function (url, opts={}) {
@@ -87,7 +112,7 @@ utils.tab = {
          * opts.reload: whether to reload existing tab
          * opts.closeCurrent [default: true if where=="here"]: whether to close current tab
          */
-        if (!url) return;
+        if (!url) return null;
         if (typeof opts == "string") opts = {where: opts};
         opts.closeCurrent ??= (opts.where=="here");
         var currentTab = await tri.webext.activeTab();
@@ -95,11 +120,12 @@ utils.tab = {
         var testfn = opts.regex ? (t=> t.url.match(opts.regex)) : (t=> t.url.indexOf(url)>=0);
         var existingTab = alltabs.find(testfn);
         if (existingTab) {
-            this.switch(existingTab.index+1).then(()=>{
-                if (opts.closeCurrent) browser.tabs.remove(currentTab.id);
-                if (opts.reload) browser.tabs.reload(existingTab.id);
+            return this.switch(existingTab.index+1).then(async ()=>{
+                if (opts.closeCurrent) await browser.tabs.remove(currentTab.id);
+                if (opts.reload) await browser.tabs.reload(existingTab.id);
+                return existingTab;
             });
-        } else this.open(url, { where: opts.where||"related" });
+        } else return this.open(url, {where: opts.where||"related"});
     },
 
     remove: async function(pred) {
