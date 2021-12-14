@@ -184,8 +184,10 @@ utils.tab = {
         );
     },
 
-    switchAlternate: async function(n) {
+    switchAlternate: async function(n, opts={}) {
+        const thisTab = await tri.webext.activeTab();
         const alt = await this.getAlternate(n);
+        if (opts.removeCurrent) browser.tabs.remove(thisTab.id);
         return browser.tabs.update(alt.id, {active: true});
     },
 
