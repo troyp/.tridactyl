@@ -138,8 +138,8 @@ command tabswitchprev! jsb -d¦ utils.tab.switchAlternate(JS_ARGS[1]||1, {remove
 command tabsummon jsb -d¦ utils.tab.summon(JS_ARGS[1]||"$")¦
 command tabsummonalt jsb -d¦ utils.tab.summonAlternate(JS_ARGS[1]||1)¦
 
-jsb tri.excmds.bind("--mode=normal", "<", "tabfirst")
-bind --mode=normal > tablast
+bind --mode=normal <C-a> tabfirst
+bind --mode=normal <C-e> tablast
 
 bind --mode=normal bb fillcmdline tab
 bind --mode=normal bp pin
