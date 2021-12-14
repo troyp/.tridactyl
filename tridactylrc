@@ -125,6 +125,7 @@ bind --mode=normal <A--> urlincrement -1
 command urltoggle withcutils js -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
 command withcutils composite js -s ~/.tridactyl/cutils.js ;
 command xdo jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
+command xdoelem jsb -d¦ utils.xdoelemWrapper(JS_ARGS.join(" "))¦
 
 " ╭───────────╮
 " │ b -- tabs │
@@ -359,9 +360,9 @@ bind --mode=normal ,xtC fillcmdline copytablecols_strict
 " ╰─────────────╯
 bind --mode=normal ,,c hint -c [class*="expand"],[class="togg"]
 
-" middle and right click using xdotool (adapted from tridactyl source for ;x in lib/config.ts)
-bind --mode=normal ,,x hint -F e => {const pos=tri.dom.getAbsoluteCentre(e), dpr=window.devicePixelRatio; tri.native.run(`xdotool mousemove ${dpr*pos.x} ${dpr*pos.y}; xdotool click 2`)}
-bind --mode=normal ,,m hint -F e => {const pos=tri.dom.getAbsoluteCentre(e), dpr=window.devicePixelRatio; tri.native.run(`xdotool mousemove ${dpr*pos.x} ${dpr*pos.y}; xdotool click 3`)}
+" middle and right click using xdotool
+bind --mode=normal ,,x xdoelem -F -e click 2
+bind --mode=normal ,,m xdoelem -F -e click 3
 
 " | ,,f -- numeric hints: allow alphabetic filtering |
 bind --mode=normal ,,fb  composite set hintchars 0123456789 ; hint -b ; unset hintchars

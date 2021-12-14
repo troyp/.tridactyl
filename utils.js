@@ -14,6 +14,28 @@ var utils = {
         return s;
     },
 
+    /* adapted from tridactyl source for ;x in lib/config.ts */
+    xdoelem: async function(selector, xdocmd) {
+        /* xdoelem(selector, xdocmd)
+             Move mouse to first element matching selector, then execute further commands.
+             selector: string of arguments to `hint`, may be options and/or selectors (`-c` may be
+                 omitted if a selector is the initial argument).
+             xdocmd: xdotool commands. Optionally, other shell commands may follow, separated by
+                 semicolons (must be escaped if surrounded by spaces).
+        */
+        if (!selector.startsWith("-")) selector = "-c " + selector;
+        const excmd = `hint ${selector} -F e => {` +
+            "const pos=tri.dom.getAbsoluteCentre(e), dpr=window.devicePixelRatio; tri.native.run(" +
+            "`xdotool mousemove ${dpr*pos.x} ${dpr*pos.y};" +
+            `xdotool ${xdocmd}` + "`)}";
+        return tri.controller.acceptExCmd(excmd);
+    },
+    xdoelemWrapper: async function(argstr) {
+        const [selector, xdocmd] = argstr.split(/ +-e +/).map(s=>s.trim());
+        return this.xdoelem(selector, xdocmd);
+    },
+
+
     yankWithMsg: function(s, opts={}) {
         tri.excmds.yank(s);
         opts.prefix ??= "Copied: ";
