@@ -124,7 +124,7 @@ cat "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | jq -rc '
     fi;
 } | {
     # arguments: resolve search bookmark URLs
-    if [[ -n args ]]; then
+    if [[ -n $args ]]; then
         # TODO: handle | in arguments
         # TODO: handle escaping in search URL
         sed "s|%s|$*|";
