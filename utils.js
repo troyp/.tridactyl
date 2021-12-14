@@ -184,7 +184,7 @@ utils.tab = {
         );
     },
 
-    switchAlternate: async function(n, opts={}) {
+    switchAlternate: async function(n=1, opts={}) {
         const thisTab = await tri.webext.activeTab();
         const alt = await this.getAlternate(n);
         if (opts.removeCurrent) browser.tabs.remove(thisTab.id);
