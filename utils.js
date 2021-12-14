@@ -191,6 +191,36 @@ utils.tab = {
         return browser.tabs.update(alt.id, {active: true});
     },
 
+    summonAlternate: async function(n=1, opts={}) {
+        const thisTab = await tri.webext.activeTab();
+        const alt = await this.getAlternate(n);
+        const d = opts.delta || 1;
+        var d_adj;
+        if (d > 0)
+            d_adj = (alt.index < thisTab.index) ? d-1 : d;
+        else
+            d_adj = (alt.index < thisTab.index) ? d : d+1;
+        return browser.tabs.move(alt.id, {index: thisTab.index+d_adj});
+    },
+
+
+    summon: async function(tabnum, opts={}) {
+        if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
+        const N = await this.getN();
+        const n = (tabnum-1).mod(N) + 1;
+        const thisTab = await tri.webext.activeTab();
+        const d = opts.delta || 1;
+        var d_adj;
+        if (d > 0)
+            d_adj = (tabNum <= thisTab.index) ? d-1 : d;
+        else
+            d_adj = (tabNum <= thisTab.index) ? d : d+1;
+        return browser.tabs.query({currentWindow: true, index: n-1}).then(
+            tt=> browser.tabs.move(tt[0].id, {index: thisTab.index+d_adj})
+        );
+    },
+
+
     /* taken from tridactyl src/lib/webext.ts -- author: Oliver Blanthorn */
  	  tabCreateWrapper: async function (options) {
         const tab = await browserBg.tabs.create(options);

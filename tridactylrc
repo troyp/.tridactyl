@@ -135,16 +135,25 @@ command tabremove jsb -p utils.tab.remove(t=>(S.matchSmartCase(JS_ARG, t.url)));
 command tabfilter jsb -p utils.tab.filter(t=>(S.matchSmartCase(JS_ARG, t.url)));
 command tabswitchprev jsb -d¦ utils.tab.switchAlternate(JS_ARGS[1]||1)¦
 command tabswitchprev! jsb -d¦ utils.tab.switchAlternate(JS_ARGS[1]||1, {removeCurrent: true})¦
+command tabsummon jsb -d¦ utils.tab.summon(JS_ARGS[1]||"$")¦
+command tabsummonalt jsb -d¦ utils.tab.summonAlternate(JS_ARGS[1]||1)¦
 
 jsb tri.excmds.bind("--mode=normal", "<", "tabfirst")
 bind --mode=normal > tablast
 
 bind --mode=normal bb fillcmdline tab
 bind --mode=normal bp pin
+
+" | bd -- tabs : delete |
 bind --mode=normal bdm fillcmdline tabremove
 bind --mode=normal bd;m fillcmdline tabfilter
 bind --mode=normal bdo tabonly
+
+" | bm -- tabs : move |
+bind --mode=normal bmA tabsummonalt
 bind --mode=normal bmm fillcmdline tabmove
+bind --mode=normal bms tabsummon
+
 bind --mode=normal b> tabclosealltoright
 bind --mode=normal b< tabclosealltoleft
 
