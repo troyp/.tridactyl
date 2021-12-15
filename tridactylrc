@@ -234,6 +234,9 @@ bind --mode=normal <C-/> clearsearchhighlight
 " │ <C-h> -- help │
 " ╰───────────────╯
 bind --mode=normal <C-h><C-h> fillcmdline help
+command showkeys fillcmdline_notrail bind
+command showkeysurl fillcmdline_notrail bindurl
+
 bind --mode=normal <C-h>i tabopen moz-extension://926899c1-24a3-4569-9789-2f53b837f92e/static/docs/globals.html
 bind --mode=normal <C-h>d tabopen about:devtools-toolbox?id=tridactyl.vim.betas%40cmcaine.co.uk&type=extension
 
