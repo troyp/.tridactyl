@@ -35,7 +35,6 @@ var utils = {
         return this.xdoelem(selector, xdocmd);
     },
 
-
     yankWithMsg: function(s, opts={}) {
         tri.excmds.yank(s);
         opts.prefix ??= "Copied: ";
@@ -131,6 +130,27 @@ utils.tab = {
         }
         return newTab;
     },
+
+    openOrSummon: async function(url, opts={}) {
+        /*
+         * opts.where ["last" (default), "here", "related", "next"]: where to open new tab (if any)
+         * opts.regex: regex to test if existing tab qualifies
+         * opts.reload: whether to reload existing tab
+         * opts.background: whether to leave new/summoned tab in background, or make active
+         */
+        if (!url) return null;
+        if (typeof opts == "string") opts = {where: opts};
+        var currentTab = await tri.webext.activeTab();
+        var alltabs = await this.getAll();
+        var testfn = opts.regex ? (t=> t.url.match(opts.regex)) : (t=> t.url.indexOf(url)>=0);
+        var existingTab = alltabs.find(testfn);
+        if (existingTab) {
+            if (opts.reload) await browser.tabs.reload(existingTab.id);
+            await this.summon(existingTab.index+1, {background: opts.background, delta: opts.delta||1});
+            return existingTab;
+        } else return this.open(url, {where: opts.where||"related", background: opts.background});
+    },
+
 
     openOrSwitch: async function (url, opts={}) {
         /*   openOrSwitch(URL, { OPTIONS... })
@@ -234,12 +254,14 @@ utils.tab = {
         const d = opts.delta || 1;
         var d_adj;
         if (d > 0)
-            d_adj = (tabNum <= thisTab.index) ? d-1 : d;
+            d_adj = (tabnum <= thisTab.index) ? d-1 : d;
         else
-            d_adj = (tabNum <= thisTab.index) ? d : d+1;
-        return browser.tabs.query({currentWindow: true, index: n-1}).then(
-            tt=> browser.tabs.move(tt[0].id, {index: thisTab.index+d_adj})
-        );
+            d_adj = (tabnum <= thisTab.index) ? d : d+1;
+        const tt = await browser.tabs.query({currentWindow: true, index: n-1});
+        const t = tt[0];
+        await browser.tabs.move(t.id, {index: thisTab.index+d_adj});
+        if (!opts.background) await browser.tabs.update(t.id, { active: true });
+        return t;
     },
 
 
