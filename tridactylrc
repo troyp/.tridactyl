@@ -122,6 +122,14 @@ bind --mode=normal <A--> urlincrement -1
 " ╭──────────────────╮
 " │ general commands │
 " ╰──────────────────╯
+command openorswitch jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"related":"here"})¦
+command tabopenorswitch jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"here":"last"})¦
+command openorswitch_here jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
+command openorswitch_last jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"last"});
+command openorswitch_adjacent jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"related"});
+command openorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"});
+command openorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related", background: true});
+
 command urltoggle withcutils js -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
 command withcutils composite js -s ~/.tridactyl/cutils.js ;
 command xdo jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
@@ -237,12 +245,6 @@ bind --mode=normal y? jsb tri.excmds.yank(JSON.stringify(tri.config.USERCONFIG))
 " ╭───────────╮
 " │ e -- goto │
 " ╰───────────╯
-command openorswitch jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"related":"here"})¦
-command tabopenorswitch jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"here":"last"})¦
-command openorswitch_here jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
-command openorswitch_last jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"last"});
-command openorswitch_adjacent jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"related"});
-
 bind --mode=normal ea tabopen about:addons
 bind --mode=normal ec tabopen about:config
 bind --mode=normal ed tabopen about:downloads
