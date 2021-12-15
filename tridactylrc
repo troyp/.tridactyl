@@ -257,7 +257,7 @@ bind --mode=normal ele/  tabopenorswitch file:///home/troy/ebooks
 bind --mode=normal elec  tabopenorswitch file:///home/troy/ebooks/coding
 bind --mode=normal eled  tabopenorswitch file:///home/troy/ebooks/dl
 bind --mode=normal elel  tabopenorswitch file:///home/troy/.readinglist
-bind --mode=normal eles  tabopenorswitch file:///home/troy/ebooks/css
+bind --mode=normal eles  tabopenorswitch file:///home/troy/ebooks/cs
 bind --mode=normal elea  tabopenorswitch file:///home/troy/ebooks/articles
 
 bind --mode=normal elhe  tabopenorswitch file:///home/troy/.emacs.d/private
