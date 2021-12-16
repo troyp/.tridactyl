@@ -33,8 +33,9 @@ var apps = {
         }
     },
 
-    kwsearch(argstr, opts={where: "last"}) {
-        return tri.native.run(`kwsearch -K ${argstr}`).then(
+    kwsearch: async function(args, opts={where: "last"}) {
+        const [kw, ...rest] = utils.tri.parseArgs(args);
+        return tri.native.run(`kwsearch -K ${kw} ${rest.join(" ")||"''"}`).then(
             res => utils.tab.open(res.content, opts));
     },
 

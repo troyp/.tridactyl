@@ -212,10 +212,10 @@ bind --mode=normal wx xdo mousemove 1740 230 click 1
 unbind --mode=normal s
 unbind --mode=normal /
 
-command kwsearch       jsb -d¦ apps.kwsearch(JS_ARGS.join(" "))¦
-command kwsearch_adj   jsb -d¦ apps.kwsearch(JS_ARGS.join(" "), {where: "related"})¦
-command kwsearch_bg    jsb -d¦ apps.kwsearch(JS_ARGS.join(" "), {where: "related", background: true})¦
-command kwsearch_here  jsb -d¦ apps.kwsearch(JS_ARGS.join(" "), {where: "here"})¦
+command kwsearch       jsb -d¦ apps.kwsearch(JS_ARGS)¦
+command kwsearch_adj   jsb -d¦ apps.kwsearch(JS_ARGS, {where: "related"})¦
+command kwsearch_bg    jsb -d¦ apps.kwsearch(JS_ARGS, {where: "related", background: true})¦
+command kwsearch_here  jsb -d¦ apps.kwsearch(JS_ARGS, {where: "here"})¦
 
 bind --mode=normal ska fillcmdline kwsearch_adj
 bind --mode=normal skb fillcmdline kwsearch_bg
