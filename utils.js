@@ -118,7 +118,7 @@ utils.tab = {
          */
         if (typeof opts == "string") opts = {where: opts};
         var thisTab = await tri.webext.activeTab();
-        var legal = url.match(/^https?:'/);
+        var legal = url.match(/^https?:/);
         /* can't open special URLs in current tab */
         if (!legal && opts.where==="here") opts.where="next";
         var initurl = legal ? url : "https://google.com";
