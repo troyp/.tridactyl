@@ -312,6 +312,9 @@ bind --mode=normal el<C-h> showkeys el
 bind --mode=normal elud   tabopenorswitch file:///usr/share/doc/
 bind --mode=normal eluld  tabopenorswitch file:///usr/local/share/doc/
 
+" | ey -- goto/dactyl |
+bind --mode=normal eyss fillcmdline_notrail tabopenorswitch https://github.com/tridactyl/tridactyl/tree/master/src/
+
 command gotoCommandSource jsb -p utils.tri.gotoCommandSource(JS_ARG);
 
 bind --mode=normal es tabopen about:support
