@@ -133,24 +133,30 @@ utils.tab = {
 
     openOrSummon: async function(url, opts={}) {
         /*
-         * opts.where ["last" (default), "here", "related", "next"]: where to open new tab (if any)
+         * opts.where ["here", "related" (default), "next"]: where to open new tab (if any)
          * opts.regex: regex to test if existing tab qualifies
          * opts.reload: whether to reload existing tab
          * opts.background: whether to leave new/summoned tab in background, or make active
+         * opts.closeCurrent [default: true if where=="here"]: whether to close current tab
          */
         if (!url) return null;
         if (typeof opts == "string") opts = {where: opts};
+        opts.closeCurrent ??= (opts.where=="here");
         var currentTab = await tri.webext.activeTab();
-        var alltabs = await this.getAll();
         var testfn = opts.regex ? (t=> t.url.match(opts.regex)) : (t=> t.url.indexOf(url)>=0);
-        var existingTab = alltabs.find(testfn);
-        if (existingTab) {
-            if (opts.reload) await browser.tabs.reload(existingTab.id);
-            await this.summon(existingTab.index+1, {background: opts.background, delta: opts.delta||1});
-            return existingTab;
-        } else return this.open(url, {where: opts.where||"related", background: opts.background});
+        if (testfn(currentTab)) return currentTab;
+        else  {
+            var alltabs = await this.getAll();
+            var existingTab = alltabs.find(testfn);
+            if (existingTab) {
+                const targetIdx = (where=="here") ? existingTab.index : existingTab.index+1;
+                if (opts.reload) await browser.tabs.reload(existingTab.id);
+                await this.summon(targetIdx, {background: opts.background, delta: opts.delta||1});
+                if (opts.closeCurrent) await browser.tabs.remove(currentTab.id);
+                return existingTab;
+            } else return this.open(url, {where: opts.where||"related", background: opts.background});
+        }
     },
-
 
     openOrSwitch: async function (url, opts={}) {
         /*   openOrSwitch(URL, { OPTIONS... })
@@ -164,16 +170,19 @@ utils.tab = {
         if (typeof opts == "string") opts = {where: opts};
         opts.closeCurrent ??= (opts.where=="here");
         var currentTab = await tri.webext.activeTab();
-        var alltabs = await this.getAll();
         var testfn = opts.regex ? (t=> t.url.match(opts.regex)) : (t=> t.url.indexOf(url)>=0);
-        var existingTab = alltabs.find(testfn);
-        if (existingTab) {
-            return this.switch(existingTab.index+1).then(async ()=>{
-                if (opts.closeCurrent) await browser.tabs.remove(currentTab.id);
-                if (opts.reload) await browser.tabs.reload(existingTab.id);
-                return existingTab;
-            });
-        } else return this.open(url, {where: opts.where||"related"});
+        if (testfn(currentTab)) return currentTab;
+        else {
+            var alltabs = await this.getAll();
+            var existingTab = alltabs.find(testfn);
+            if (existingTab) {
+                return this.switch(existingTab.index+1).then(async ()=>{
+                    if (opts.closeCurrent) await browser.tabs.remove(currentTab.id);
+                    if (opts.reload) await browser.tabs.reload(existingTab.id);
+                    return existingTab;
+                });
+            } else return this.open(url, {where: opts.where||"related"});
+        }
     },
 
     remove: async function(pred) {
