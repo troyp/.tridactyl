@@ -300,6 +300,28 @@ utils.tri = {
     },
 
     myfocusinput: function(arg) { var n = Number(arg)||"-l"; tri.excmds.focusinput(n); },
+
+    parseArgs: function(args, opts={}) {
+        if (typeof opts === "string") opts = { type: opts };
+        var argstr = args.join(" ").trim();
+        switch (opts.type) {
+          case "string":
+              return argstr; break;
+          case "array":
+          default:
+              return argstr.split(/ +/); break;
+        }
+    },
+
+    parseArgsAndCount: function(args, opts={}) {
+        const n = args.length - 1;
+        const hasCount = parseInt(args[n]) > 0;
+        const countElem = hasCount && args.pop();
+        const count = countElem && parseInt(countElem);
+        return [this.parseArgs(args, opts), count];
+    },
+
+
 };
 
 // ───────────────────────────────────────────────────────────────────────────────
