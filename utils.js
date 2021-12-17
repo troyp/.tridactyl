@@ -106,7 +106,7 @@ utils.tab = {
         const thisTab = await tri.webext.activeTab();
         const targetIdx = await this.parseTabnum(tabnum);
         const nPinned = (await this.getPinned()).length;
-        const i = Math.max(targetIdx, nPinned);
+        const i = thisTab.pinned ? Math.min(targetIdx, nPinned-1) : Math.max(targetIdx, nPinned);
         return browser.tabs.move(thisTab.id, {index: i});
     },
 
