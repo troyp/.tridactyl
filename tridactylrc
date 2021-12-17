@@ -164,8 +164,8 @@ bind --mode=normal bdo tabonly
 " | bm -- tabs : move |
 bind --mode=normal bm<C-h> showkeys bm
 bind --mode=normal bmA tabsummonalt
-bind --mode=normal bmm fillcmdline tabmove
-bind --mode=normal bms tabsummon
+bind --mode=normal bmm fillcmdline tabmove!
+bind --mode=normal bms fillcmdline tabsummon
 bind --mode=normal bm> tabmove 0
 bind --mode=normal bm< tabmove 1
 
