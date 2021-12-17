@@ -59,6 +59,10 @@ utils.tab = {
         return sorted[n];
     },
 
+    getPinned: async function() {
+        return browser.tabs.query({currentWindow: true, pinned: true});
+    },
+
     getid: async function(tabnum, opts={}) {
         var t = await this.get(tabnum-1, opts);
         return t.id;
@@ -71,6 +75,39 @@ utils.tab = {
 
     getN: async function(opts={}) {
         return this.getAll(opts).then(tt => tt.length);
+    },
+
+    parseTabnum: async function(n) {
+        const N = await this.getN();
+        switch(n) {
+          case "$":
+          case "0":
+              n = N;
+              break;
+          case "^":
+              n = 1;
+              break;
+          case "#":
+              const alt = await this.getAlternate();
+              n = alt.index+1;
+              break;
+          case "%":
+          case ".":
+              const thisTab = await tri.webext.activeTab();
+              n = thisTab.index+1;
+              break;
+        }
+        return (parseInt(n)-1) % N;
+    },
+
+    /* Move current tab to TABNUM. If TABNUM is a pinned tab, move to first nonpinned position
+     */
+    move: async function(tabnum=0) {
+        const thisTab = await tri.webext.activeTab();
+        const targetIdx = await this.parseTabnum(tabnum);
+        const nPinned = (await this.getPinned()).length;
+        const i = Math.max(targetIdx, nPinned);
+        return browser.tabs.move(thisTab.id, {index: i});
     },
 
     open: async function(url, opts={}) {

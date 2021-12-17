@@ -147,6 +147,7 @@ command tabswitchprev jsb -d¦ utils.tab.switchAlternate(JS_ARGS[1]||1)¦
 command tabswitchprev! jsb -d¦ utils.tab.switchAlternate(JS_ARGS[1]||1, {removeCurrent: true})¦
 command tabsummon jsb -d¦ utils.tab.summon(JS_ARGS[1]||"$")¦
 command tabsummonalt jsb -d¦ utils.tab.summonAlternate(JS_ARGS[1]||1)¦
+command tabmove! jsb -p utils.tab.move(JS_ARG);
 
 bind --mode=normal <C-a> tabfirst
 bind --mode=normal <C-e> tablast
@@ -178,16 +179,16 @@ bind --mode=normal <C-K> composite tabclosealltoleft ; tabclose
 bind --mode=normal <A-;> tabswitchprev
 bind --mode=normal <A-:> tabswitchprev!
 
-bind --mode=normal <AC-1> tabmove 1
-bind --mode=normal <AC-2> tabmove 2
-bind --mode=normal <AC-3> tabmove 3
-bind --mode=normal <AC-4> tabmove 4
-bind --mode=normal <AC-5> tabmove 5
-bind --mode=normal <AC-6> tabmove 6
-bind --mode=normal <AC-7> tabmove 7
-bind --mode=normal <AC-8> tabmove 8
-bind --mode=normal <AC-9> tabmove 9
-bind --mode=normal <AC-0> tabmove 0
+bind --mode=normal <AC-1> tabmove! 1
+bind --mode=normal <AC-2> tabmove! 2
+bind --mode=normal <AC-3> tabmove! 3
+bind --mode=normal <AC-4> tabmove! 4
+bind --mode=normal <AC-5> tabmove! 5
+bind --mode=normal <AC-6> tabmove! 6
+bind --mode=normal <AC-7> tabmove! 7
+bind --mode=normal <AC-8> tabmove! 8
+bind --mode=normal <AC-9> tabmove! 9
+bind --mode=normal <AC-0> tabmove! 0
 bind --mode=normal <AC-h> tabmove -1
 bind --mode=normal <AC-l> tabmove +1
 
