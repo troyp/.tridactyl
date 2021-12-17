@@ -153,7 +153,6 @@ bind --mode=normal <C-e> tablast
 
 bind --mode=normal b<C-h> showkeys b
 bind --mode=normal bb fillcmdline tab
-bind --mode=normal bp pin
 
 " | bd -- tabs : delete |
 bind --mode=normal bd<C-h> showkeys bd
@@ -166,7 +165,10 @@ bind --mode=normal bm<C-h> showkeys bm
 bind --mode=normal bmA tabsummonalt
 bind --mode=normal bmm fillcmdline tabmove
 bind --mode=normal bms tabsummon
+bind --mode=normal bm> tabmove 0
+bind --mode=normal bm< tabmove 1
 
+bind --mode=normal bp pin
 bind --mode=normal b> tabclosealltoright
 bind --mode=normal b< tabclosealltoleft
 
@@ -185,6 +187,7 @@ bind --mode=normal <AC-6> tabmove 6
 bind --mode=normal <AC-7> tabmove 7
 bind --mode=normal <AC-8> tabmove 8
 bind --mode=normal <AC-9> tabmove 9
+bind --mode=normal <AC-0> tabmove 0
 bind --mode=normal <AC-h> tabmove -1
 bind --mode=normal <AC-l> tabmove +1
 
