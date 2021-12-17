@@ -100,6 +100,7 @@ unbind x
 bind --mode=normal X stop
 
 unbind --mode=normal g;
+bind --mode=normal g<C-h> showkeys g
 bind --mode=normal g;; changelistjump -1
 bind --mode=normal g;i focusinput 2
 bind --mode=normal g;b focusinput -b
@@ -150,15 +151,18 @@ command tabsummonalt jsb -d¦ utils.tab.summonAlternate(JS_ARGS[1]||1)¦
 bind --mode=normal <C-a> tabfirst
 bind --mode=normal <C-e> tablast
 
+bind --mode=normal b<C-h> showkeys b
 bind --mode=normal bb fillcmdline tab
 bind --mode=normal bp pin
 
 " | bd -- tabs : delete |
+bind --mode=normal bd<C-h> showkeys bd
 bind --mode=normal bdm fillcmdline tabremove
 bind --mode=normal bd;m fillcmdline tabfilter
 bind --mode=normal bdo tabonly
 
 " | bm -- tabs : move |
+bind --mode=normal bm<C-h> showkeys bm
 bind --mode=normal bmA tabsummonalt
 bind --mode=normal bmm fillcmdline tabmove
 bind --mode=normal bms tabsummon
@@ -217,6 +221,8 @@ command kwsearch_adj   jsb -d¦ apps.kwsearch(JS_ARGS, {where: "related"})¦
 command kwsearch_bg    jsb -d¦ apps.kwsearch(JS_ARGS, {where: "related", background: true})¦
 command kwsearch_here  jsb -d¦ apps.kwsearch(JS_ARGS, {where: "here"})¦
 
+bind --mode=normal s<C-h> showkeys s
+bind --mode=normal sk<C-h> showkeys sk
 bind --mode=normal ska fillcmdline kwsearch_adj
 bind --mode=normal skb fillcmdline kwsearch_bg
 bind --mode=normal skk fillcmdline kwsearch
@@ -233,29 +239,36 @@ bind --mode=normal <C-/> clearsearchhighlight
 " ╭───────────────╮
 " │ <C-h> -- help │
 " ╰───────────────╯
-bind --mode=normal <C-h><C-h> fillcmdline help
 command showkeys fillcmdline_notrail bind
 command showkeysurl fillcmdline_notrail bindurl
 
+bind --mode=normal <C-h><C-h> showkeys <C-h>
+bind --mode=normal <C-h>h fillcmdline help
 bind --mode=normal <C-h>i tabopen moz-extension://926899c1-24a3-4569-9789-2f53b837f92e/static/docs/globals.html
 bind --mode=normal <C-h>d tabopen about:devtools-toolbox?id=tridactyl.vim.betas%40cmcaine.co.uk&type=extension
 
 " ╭───────────╮
 " │ y -- yank │
 " ╰───────────╯
+bind --mode=normal y<C-h> showkeys y
 bind --mode=normal y? jsb tri.excmds.yank(JSON.stringify(tri.config.USERCONFIG))
 
 " ╭───────────╮
 " │ e -- goto │
 " ╰───────────╯
+bind --mode=normal e<C-h> showkeys e
 bind --mode=normal ea tabopen about:addons
 bind --mode=normal ec tabopen about:config
 bind --mode=normal ed tabopen about:downloads
 bind --mode=normal eD tabopen about:debugging
 
+" | el -- goto/local |
+bind --mode=normal el<C-h> showkeys el
 bind --mode=normal eldw  tabopenorswitch file:///home/troy/Downloads
 bind --mode=normal eldc  tabopenorswitch file:///home/troy/Documents
 
+" | el -- goto/local/ebooks |
+bind --mode=normal el<C-h> showkeys el
 bind --mode=normal ele/  tabopenorswitch file:///home/troy/ebooks
 bind --mode=normal elec  tabopenorswitch file:///home/troy/ebooks/coding
 bind --mode=normal eled  tabopenorswitch file:///home/troy/ebooks/dl
@@ -263,6 +276,8 @@ bind --mode=normal elel  tabopenorswitch file:///home/troy/.readinglist
 bind --mode=normal eles  tabopenorswitch file:///home/troy/ebooks/cs
 bind --mode=normal elea  tabopenorswitch file:///home/troy/ebooks/articles
 
+" | el -- goto/local/home |
+bind --mode=normal el<C-h> showkeys el
 bind --mode=normal elhe  tabopenorswitch file:///home/troy/.emacs.d/private
 bind --mode=normal elhh  tabopenorswitch file:///home/troy
 bind --mode=normal elhp  tabopenorswitch file:///home/troy/.pentadactyl
@@ -270,6 +285,8 @@ bind --mode=normal elhr  tabopenorswitch file:///home/troy/repos
 bind --mode=normal elhs  tabopenorswitch file:///home/troy/source
 bind --mode=normal elht  tabopenorswitch file:///home/troy/.tridactyl
 
+" | el -- goto/local/opt |
+bind --mode=normal el<C-h> showkeys el
 bind --mode=normal elo/  tabopenorswitch file:///opt
 bind --mode=normal eloc  tabopenorswitch file:///opt/chrome-extensions
 bind --mode=normal elod  tabopenorswitch file:///opt/deb
@@ -279,10 +296,15 @@ bind --mode=normal elou  tabopenorswitch file:///opt/userscripts
 bind --mode=normal eloU  tabopenorswitch file:///opt/userstyles
 bind --mode=normal elow  tabopenorswitch file:///opt/webapps
 
+" | el -- goto/local/pictures |
+bind --mode=normal el<C-h> showkeys el
 bind --mode=normal elp/   tabopenorswitch file:///home/troy/Pictures
 bind --mode=normal elpa   tabopenorswitch file:///home/troy/Pictures/art
 bind --mode=normal elpd   tabopenorswitch file:///home/troy/Pictures/downloads
 bind --mode=normal elpv   tabopenorswitch file:///home/troy/Pictures/vlc-snapshot
+
+" | el -- goto/local/usr |
+bind --mode=normal el<C-h> showkeys el
 bind --mode=normal elud   tabopenorswitch file:///usr/share/doc/
 bind --mode=normal eluld  tabopenorswitch file:///usr/local/share/doc/
 
@@ -295,17 +317,25 @@ bind --mode=normal etc fillcmdline gotoCommandSource
 " │ a -- apps │
 " ╰───────────╯
 command withurl composite get_current_url |
+
 unbind --mode=normal a
+bind --mode=normal a<C-h> showkeys a
 bind --mode=normal ac withurl ! /usr/local/bin/google-chrome
 bind --mode=normal af withurl ! /opt/waterfox/waterfox --new-tab
 
+
+" | a; -- apps/hints |
+bind --mode=normal a;<C-h> showkeys a;
 bind --mode=normal a;c composite hint -pipe a href | ! /usr/local/bin/google-chrome
 bind --mode=normal a;f composite hint -pipe a href | ! /opt/waterfox/waterfox
 
 " ╭─────────────────╮
 " │ x -- extensions │
 " ╰─────────────────╯
+bind --mode=normal x<C-h> showkeys x
+
 " |xr -- rikairebuilt |
+bind --mode=normal xr<C-h> showkeys xr
 " rikairebuilt toggle
 bind --mode=normal xrr xdo mousemove 1861 111 click 1
 " addon page
@@ -318,9 +348,13 @@ bind --mode=normal xrc winopen moz-extension://41d2b8bf-2a97-4468-87c8-f6243594c
 " ╭─────────────╮
 " │ , -- leader │
 " ╰─────────────╯
+bind --mode=normal ,<C-h> showkeys ,
+
 " | ,a -- apps |
+bind --mode=normal ,a<C-h> showkeys ,a
 
 " | ,am -- mail/contacts |
+bind --mode=normal ,am<C-h> showkeys ,am
 bind --mode=normal ,amc tabopenorswitch https://contacts.google.com/?hl=en&tab=mC
 bind --mode=normal ,amC tabopenorswitch https://mail.google.com/mail/u/0/h/k4067n2i55u9/?&v=cl
 bind --mode=normal ,amm tabopenorswitch https://mail.google.com/mail/u/0/h/1f0xqcpo2pdl3/?f=1
@@ -328,6 +362,7 @@ bind --mode=normal ,amM tabopenorswitch https://mail.google.com/mail/u/0/#inbox
 bind --mode=normal ,amy tabopenorswitch https://au.mail.yahoo.com/d/folders/1
 
 " | ,aw -- web/weather |
+bind --mode=normal ,aw<C-h> showkeys ,aw
 " Show Goonellabah Sunrise and Sunset Times
 bind --mode=normal ,aws jsb var [sr,ss]=apps.sunriseSunset(...user.latlong); utils.yankWithMsg(`SUNRISE: ${sr}\nSUNSET:  ${ss}`);
 " Open Lismore Weather (BoM)
@@ -336,6 +371,8 @@ bind --mode=normal ,aww tabopenorswitch http://www.bom.gov.au/nsw/forecasts/lism
 bind --mode=normal ,awt tabopenorswitch https://www.timeanddate.com/weather/@2164966
 
 " | ,c -- command-line |
+
+bind --mode=normal ,c<C-h> showkeys ,c
 bind --mode=normal ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word
 
 " | ,e -- javascript eval |
@@ -343,6 +380,8 @@ command jse js -d¦ alert(eval(JS_ARGS.join(" ")))¦
 command getproperties js -d¦ alert(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
 command jsbe jsb -d¦ tri.excmds.jsb(`tri.excmds.fillcmdline_nofocus(${JS_ARGS.join(" ")})`)¦
 command getselector js -d¦ alert([...document.querySelectorAll(JS_ARGS.join(" "))].map(t=>t.tagName+"\t"+t.innerText.slice(0,50).replace("\n","\t")).join("\n"))¦
+
+bind --mode=normal ,j<C-h> showkeys ,j
 bind --mode=normal ,eb fillcmdline jsbe
 bind --mode=normal ,ec js -s ~/.tridactyl/cutils.js
 bind --mode=normal ,ee fillcmdline jse
@@ -357,12 +396,15 @@ command copytablecols composite js -s ~/.tridactyl/cutils.js ; js -d¦ tri.contr
 command copytablecols_strict composite js -s ~/.tridactyl/cutils.js ; js -d¦ tri.excmds.fillcmdline(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}], {strict:true}), {useAlert:true})`)¦
 
 " | ,x -- miscellaneous |
+bind --mode=normal ,x<C-h> showkeys ,x
+bind --mode=normal ,xt<C-h> showkeys ,xt
 bind --mode=normal ,xtc fillcmdline copytablecols
 bind --mode=normal ,xtC fillcmdline copytablecols_strict
 
 " ╭─────────────╮
 " │ ,, -- hints │
 " ╰─────────────╯
+bind --mode=normal ,,<C-h> showkeys ,,
 bind --mode=normal ,,c hint -c [class*="expand"],[class="togg"]
 
 " middle and right click using xdotool
@@ -370,6 +412,7 @@ bind --mode=normal ,,x xdoelem -F -e click 2
 bind --mode=normal ,,m xdoelem -F -e click 3
 
 " | ,,f -- numeric hints: allow alphabetic filtering |
+bind --mode=normal ,,f<C-h> showkeys ,,f
 bind --mode=normal ,,fb  composite set hintchars 0123456789 ; hint -b ; unset hintchars
 bind --mode=normal ,,ff  composite set hintchars 0123456789 ; hint ; unset hintchars
 bind --mode=normal ,,ft  composite set hintchars 0123456789 ; hint -t ; unset hintchars
