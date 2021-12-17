@@ -1,0 +1,55 @@
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────╮
+" │ Github.com │
+" ╰────────────╯
+command ghopenorsummon jsb -d¦ sites.gh.openOrSummon(JS_ARGS)¦
+
+bindurl github.com c<C-h> showkeys c
+bindurl github.com cc xdoelem .pl-en -e click 1
+
+" | cm -- Github/My |
+" My comments
+bindurl github.com cmC ghopenorsummon https://github.com/search?utf8=✓&q=+is:issue+commenter:${a};
+" My gists
+bindurl github.com cmg ghopenorsummon https://gist.github.com/${a}
+" My starred gists
+bindurl github.com cmG ghopenorsummon https://gist.github.com/${a}/starred
+" My profile
+bindurl github.com cmm ghopenorsummon https://github.com/${a}
+" My repositories
+bindurl github.com cmr ghopenorsummon https://github.com/${a}?tab=repositories
+" My stars
+bindurl github.com cms ghopenorsummon https://github.com/${a}?tab=stars
+
+" | co -- Github/Open |
+" Open commits
+bindurl github.com cmc ghopenorsummon https://github.com/${u/r}/commits
+" Open gists
+bindurl github.com cog ghopenorsummon https://gist.github.com/${u}
+" Open issues
+bindurl github.com coi ghopenorsummon https://github.com/${u/r}/issues
+" Open issues.csv
+bindurl github.com coI ghopenorsummon https://api.github.com/repos/${u/r}/issues
+" User's comments
+bindurl github.com com openorsummon https://github.com/search?utf8=✓&q=+is:issue+commenter:${u}
+" Open profile (overview)
+bindurl github.com coo ghopenorsummon https://github.com/${u}
+" Open PRs
+bindurl github.com cop ghopenorsummon https://github.com/${u/r}/pulls
+" Open repositories
+bindurl github.com cor ghopenorsummon https://github.com/${u}?tab=repositories
+" Open settings
+bindurl github.com cos openorsummon https://github.com/settings
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────╮
+" │ Medium.com │
+" ╰────────────╯
+autocmd DocStart ^https?://medium\.com(/|$) urlmodify -r https?://medium\.com/? https://scribe.rip/
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────╮
+" │ Reddit.com │
+" ╰────────────╯
+bindurl reddit.com/ c<C-h> showkeys c
+bindurl reddit.com/ cto urltoggle https://www.reddit.com https://old.reddit.com

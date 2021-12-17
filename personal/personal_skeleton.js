@@ -21,6 +21,9 @@ var user = {
     creditcard: "",
     openexchangeratesappid: "",
     currencyconverterapikey: "",
+    uname: {
+        github: "",
+    },
 }
 
 window.user = user;

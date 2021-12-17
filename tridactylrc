@@ -4,16 +4,20 @@
 
 sanitise tridactyllocal tridactylsync
 
+source ~/.tridactyl/sites.tri
+
 jsb -s ~/.tridactyl/utils.js
 jsb -s ~/.tridactyl/apps.js
 jsb -s ~/.tridactyl/S.js
 jsb -s ~/.tridactyl/js/suncalc.js
 jsb -s ~/.tridactyl/js/sprintf.js
+jsb -s ~/.tridactyl/sites.js
 jsb -s ~/.tridactyl/personal/personal.js
 
 jsb window.utils = utils
 jsb window.apps = apps
 jsb window.S = S
+jsb window.sites = sites
 jsb tri.sprintf = sprintf
 
 " ───────────────────────────────────────────────────────────────────────────────
@@ -57,6 +61,7 @@ set searchurls.philsep http://plato.stanford.edu/search/searcher.py?query=%s
 set searchurls.u http://graphemica.com/search?q=%s
 set searchurls.diu https://www.urbandictionary.com/define.php?term=%s
 set searchurls.wb http://web.archive.org/web/%s
+set searchurls.gh https://github.com/search?utf8=✓&q=%s&type=Repositories&ref=searchresults
 set searchurls.yt https://www.youtube.com/results?search_query=%s
 set searchurls.gt https://translate.google.com.au/#auto/en/%s
 set searchurls.j http://jisho.org/search/%s
