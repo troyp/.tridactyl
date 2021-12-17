@@ -33,7 +33,7 @@ var sites = {
             }
         },
 
-        format: function(formatStr) {
+        format: function(formatStr, opts={}) {
             /* format(formatStr)
                    Return String formed by replacing ${u},${r},${a} with user, repo and
                    accountUser. Also permits ${u/r};
@@ -44,14 +44,29 @@ var sites = {
                 replace(/\$\{u\}/g, u).
                 replace(/\$\{r\}/g, r).
                 replace(/\$\{a\}/g, a).
-                replace(/\$\{u\/r\}/g, u+"/"+r);
+                replace(/\$\{u\/r\}/g, u+"/"+r).
+                replace(/\$\{s\}/g, opts.query||"");
         },
 
-        openOrSummon(args, formatStr) {
+        openOrSummon(args) {
             const [f_url, count] = utils.tri.parseArgsAndCount(args, {type: "string"});
             const url = this.format(f_url);
             return utils.tab.openOrSummon(url, {where: count?"related":"here"});
         },
+
+        search(description, query, opts={}) {
+            const url = this.format(window._ghsearchurl, {query: query});
+            return utils.tab.openOrSummon(url, {where: opts.where||"related"});
+        },
+
+        searchWrapper: function(allargs) {
+            const [args, count] = utils.tri.parseArgsAndCount(allargs);
+            var descript = args;
+            const f_url = descript.pop();
+            window._ghsearchurl = f_url;
+            return tri.excmds.fillcmdline(`ghsearch${count?"here":""} <${descript.join("_").slice(1,-1)}>`);
+        },
+
     },
 };
 

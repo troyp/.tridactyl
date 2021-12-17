@@ -3,13 +3,18 @@
 " │ Github.com │
 " ╰────────────╯
 command ghopenorsummon jsb -d¦ sites.gh.openOrSummon(JS_ARGS)¦
+command ghsearch jsb -d¦ sites.gh.search(JS_ARGS[1], JS_ARGS.slice(2).join(" "))¦
+command ghsearchhere jsb -d¦ sites.gh.search(JS_ARGS[1], JS_ARGS.slice(2).join(" "), opts={where: "here"})¦
+command ghsearchwrapper jsb -d¦ sites.gh.searchWrapper(JS_ARGS)¦
 
-bindurl github.com c<C-h> showkeys c
+bindurl github.com c<C-h> showkeysurl github.com c
 bindurl github.com cc xdoelem .pl-en -e click 1
 
 " | cm -- Github/My |
 " My comments
 bindurl github.com cmC ghopenorsummon https://github.com/search?utf8=✓&q=+is:issue+commenter:${a};
+" My forks
+bindurl github.com cmr ghopenorsummon https://github.com/${a}?tab=repositories&type=fork
 " My gists
 bindurl github.com cmg ghopenorsummon https://gist.github.com/${a}
 " My starred gists
@@ -17,7 +22,8 @@ bindurl github.com cmG ghopenorsummon https://gist.github.com/${a}/starred
 " My profile
 bindurl github.com cmm ghopenorsummon https://github.com/${a}
 " My repositories
-bindurl github.com cmr ghopenorsummon https://github.com/${a}?tab=repositories
+bindurl github.com cmr ghopenorsummon https://github.com/${a}?tab=repositories&type=source
+bindurl github.com cmR ghopenorsummon https://github.com/${a}?tab=repositories
 " My stars
 bindurl github.com cms ghopenorsummon https://github.com/${a}?tab=stars
 
@@ -40,6 +46,16 @@ bindurl github.com cop ghopenorsummon https://github.com/${u/r}/pulls
 bindurl github.com cor ghopenorsummon https://github.com/${u}?tab=repositories
 " Open settings
 bindurl github.com cos openorsummon https://github.com/settings
+
+" | cs -- Github/Search |
+bindurl github.com cs<C-h> showkeys cs
+bindurl github.com css ghsearchwrapper "search Github" https://github.com/search?utf8=✓&q=${s}&type=Repositories&ref=searchresults
+bindurl github.com csf ghsearchwrapper "search my forks" https://github.com/${a}?tab=repositories&type=fork&q=${s}
+bindurl github.com csg ghsearchwrapper "search gists" https://gist.github.com/search?q=${s}
+bindurl github.com csi ghsearchwrapper "search issues" https://github.com/tridactyl/tridactyl/issues?q=is:issue+${s}
+bindurl github.com csp ghsearchwrapper "search PRs" https://github.com/${u/r}/pulls?q=${s}
+bindurl github.com csr ghsearchwrapper "search repos" https://github.com/${u}?tab=repositories&q=${s}
+bindurl github.com cs* ghsearchwrapper "search my stars" https://github.com/${a}?tab=stars&q=${s}
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
