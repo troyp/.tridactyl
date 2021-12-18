@@ -1,4 +1,5 @@
 working.*
 /personal/*
 /build/*
+/misc_ignore/*
 !/personal/personal_skeleton.js
