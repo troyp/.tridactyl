@@ -119,7 +119,7 @@ bind <C-v> nmode ignore 1 mode normal
 bind <C-z> mode ignore
 
 unbind <C-x>
-bind <C-x><C-c> quitall
+bind <C-x><C-c> qall
 bind <C-x><C-x> restart
 
 bind <A-=> urlincrement 1
