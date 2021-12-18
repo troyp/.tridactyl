@@ -2,60 +2,93 @@
 " ╭────────────╮
 " │ Github.com │
 " ╰────────────╯
-command ghopenorsummon jsb -d¦ sites.gh.openOrSummon(JS_ARGS)¦
-command ghsearch jsb -d¦ sites.gh.search(JS_ARGS[1], JS_ARGS.slice(2).join(" "))¦
-command ghsearchhere jsb -d¦ sites.gh.search(JS_ARGS[1], JS_ARGS.slice(2).join(" "), opts={where: "here"})¦
+command ghbind bindurl github.com
+command ghopenorsummon jsb -p sites.gh.openOrSummon(JS_ARG);
+command ghtabopenorsummon jsb -p sites.gh.openOrSummon(JS_ARG, {where: "related"});
+command ghsearch jsb -d¦ sites.gh.search(window._ghsearchurl, JS_ARGS[1], JS_ARGS.slice(2).join(" "))¦
+command ghtabsearch jsb -d¦ sites.gh.search(window._ghsearchurl, JS_ARGS[1], JS_ARGS.slice(2).join(" "), {where: "related"})¦
 command ghsearchwrapper jsb -d¦ sites.gh.searchWrapper(JS_ARGS)¦
+command ghtabsearchwrapper jsb -d¦ sites.gh.searchWrapper(JS_ARGS, {where: "related"})¦
 
-bindurl github.com c<C-h> showkeysurl github.com c
-bindurl github.com cc xdoelem .pl-en -e click 1
+ghbind c<C-h> showkeysurl github.com c
+ghbind cc xdoelem .pl-en -e click 1
 
 " | cm -- Github/My |
 " My comments
-bindurl github.com cmC ghopenorsummon https://github.com/search?utf8=✓&q=+is:issue+commenter:${a};
+ghbind cmC ghopenorsummon https://github.com/search?utf8=✓&q=+is:issue+commenter:${a};
 " My forks
-bindurl github.com cmr ghopenorsummon https://github.com/${a}?tab=repositories&type=fork
+ghbind cmr ghopenorsummon https://github.com/${a}?tab=repositories&type=fork
 " My gists
-bindurl github.com cmg ghopenorsummon https://gist.github.com/${a}
+ghbind cmg ghopenorsummon https://gist.github.com/${a}
 " My starred gists
-bindurl github.com cmG ghopenorsummon https://gist.github.com/${a}/starred
+ghbind cmG ghopenorsummon https://gist.github.com/${a}/starred
 " My profile
-bindurl github.com cmm ghopenorsummon https://github.com/${a}
+ghbind cmm ghopenorsummon https://github.com/${a}
 " My repositories
-bindurl github.com cmr ghopenorsummon https://github.com/${a}?tab=repositories&type=source
-bindurl github.com cmR ghopenorsummon https://github.com/${a}?tab=repositories
+ghbind cmr ghopenorsummon https://github.com/${a}?tab=repositories&type=source
+ghbind cmR ghopenorsummon https://github.com/${a}?tab=repositories
 " My stars
-bindurl github.com cms ghopenorsummon https://github.com/${a}?tab=stars
+ghbind cms ghopenorsummon https://github.com/${a}?tab=stars
+ghbind cm;s ghtabopenorsummon https://github.com/${a}?tab=stars
+" | cm; -- Github/My/New Tab |
+ghbind cm;C ghtabopenorsummon https://github.com/search?utf8=✓&q=+is:issue+commenter:${a};
+ghbind cm;r ghtabopenorsummon https://github.com/${a}?tab=repositories&type=fork
+ghbind cm;g ghtabopenorsummon https://gist.github.com/${a}
+ghbind cm;G ghtabopenorsummon https://gist.github.com/${a}/starred
+ghbind cm;m ghtabopenorsummon https://github.com/${a}
+ghbind cm;r ghtabopenorsummon https://github.com/${a}?tab=repositories&type=source
+ghbind cm;R ghtabopenorsummon https://github.com/${a}?tab=repositories
+ghbind cm;s ghtabopenorsummon https://github.com/${a}?tab=stars
 
 " | co -- Github/Open |
 " Open commits
-bindurl github.com cmc ghopenorsummon https://github.com/${u/r}/commits
+ghbind cmc ghopenorsummon https://github.com/${u/r}/commits
 " Open gists
-bindurl github.com cog ghopenorsummon https://gist.github.com/${u}
+ghbind cog ghopenorsummon https://gist.github.com/${u}
 " Open issues
-bindurl github.com coi ghopenorsummon https://github.com/${u/r}/issues
+ghbind coi ghopenorsummon https://github.com/${u/r}/issues
 " Open issues.csv
-bindurl github.com coI ghopenorsummon https://api.github.com/repos/${u/r}/issues
+ghbind coI ghopenorsummon https://api.github.com/repos/${u/r}/issues
 " User's comments
-bindurl github.com com openorsummon https://github.com/search?utf8=✓&q=+is:issue+commenter:${u}
+ghbind com ghopenorsummon https://github.com/search?utf8=✓&q=+is:issue+commenter:${u}
 " Open profile (overview)
-bindurl github.com coo ghopenorsummon https://github.com/${u}
+ghbind coo ghopenorsummon https://github.com/${u}
 " Open PRs
-bindurl github.com cop ghopenorsummon https://github.com/${u/r}/pulls
+ghbind cop ghopenorsummon https://github.com/${u/r}/pulls
 " Open repositories
-bindurl github.com cor ghopenorsummon https://github.com/${u}?tab=repositories
+ghbind cor ghopenorsummon https://github.com/${u}?tab=repositories
 " Open settings
-bindurl github.com cos openorsummon https://github.com/settings
+ghbind cos ghopenorsummon https://github.com/settings
+" | co; -- Github/Open/New Tab |
+ghbind cm;c ghtabopenorsummon https://github.com/${u/r}/commits
+ghbind co;g ghtabopenorsummon https://gist.github.com/${u}
+ghbind co;i ghtabopenorsummon https://github.com/${u/r}/issues
+ghbind co;I ghtabopenorsummon https://api.github.com/repos/${u/r}/issues
+ghbind co;m ghtabopenorsummon https://github.com/search?utf8=✓&q=+is:issue+commenter:${u}
+ghbind co;o ghtabopenorsummon https://github.com/${u}
+ghbind co;p ghtabopenorsummon https://github.com/${u/r}/pulls
+ghbind co;r ghtabopenorsummon https://github.com/${u}?tab=repositories
+ghbind co;s ghtabopenorsummon https://github.com/settings
 
 " | cs -- Github/Search |
-bindurl github.com cs<C-h> showkeys cs
-bindurl github.com css ghsearchwrapper "search Github" https://github.com/search?utf8=✓&q=${s}&type=Repositories&ref=searchresults
-bindurl github.com csf ghsearchwrapper "search my forks" https://github.com/${a}?tab=repositories&type=fork&q=${s}
-bindurl github.com csg ghsearchwrapper "search gists" https://gist.github.com/search?q=${s}
-bindurl github.com csi ghsearchwrapper "search issues" https://github.com/tridactyl/tridactyl/issues?q=is:issue+${s}
-bindurl github.com csp ghsearchwrapper "search PRs" https://github.com/${u/r}/pulls?q=${s}
-bindurl github.com csr ghsearchwrapper "search repos" https://github.com/${u}?tab=repositories&q=${s}
-bindurl github.com cs* ghsearchwrapper "search my stars" https://github.com/${a}?tab=stars&q=${s}
+ghbind cs<C-h> showkeys cs
+ghbind css ghsearchwrapper "search Github" https://github.com/search?utf8=✓&q=${s}&type=Repositories&ref=searchresults
+ghbind csf ghsearchwrapper "search my forks" https://github.com/${a}?tab=repositories&type=fork&q=${s}
+ghbind csg ghsearchwrapper "search gists" https://gist.github.com/search?q=${s}
+ghbind csi ghsearchwrapper "search issues" https://github.com/tridactyl/tridactyl/issues?q=is:issue+${s}
+ghbind csp ghsearchwrapper "search PRs" https://github.com/${u/r}/pulls?q=${s}
+ghbind csr ghsearchwrapper "search repos" https://github.com/${u}?tab=repositories&q=${s}
+ghbind cs* ghsearchwrapper "search my stars" https://github.com/${a}?tab=stars&q=${s}
+
+" | cs; -- Github/Search/New Tab |
+ghbind cs;<C-h> showkeys cs
+ghbind cs;s ghtabsearchwrapper "search Github [new tab]" https://github.com/search?utf8=✓&q=${s}&type=Repositories&ref=searchresults
+ghbind cs;f ghtabsearchwrapper "search my forks [new tab]" https://github.com/${a}?tab=repositories&type=fork&q=${s}
+ghbind cs;g ghtabsearchwrapper "search gists [new tab]" https://gist.github.com/search?q=${s}
+ghbind cs;i ghtabsearchwrapper "search issues [new tab]" https://github.com/tridactyl/tridactyl/issues?q=is:issue+${s}
+ghbind cs;p ghtabsearchwrapper "search PRs [new tab]" https://github.com/${u/r}/pulls?q=${s}
+ghbind cs;r ghtabsearchwrapper "search repos [new tab]" https://github.com/${u}?tab=repositories&q=${s}
+ghbind cs;* ghtabsearchwrapper "search my stars [new tab]" https://github.com/${a}?tab=stars&q=${s}
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮

@@ -48,23 +48,22 @@ var sites = {
                 replace(/\$\{s\}/g, opts.query||"");
         },
 
-        openOrSummon(args) {
-            const [f_url, count] = utils.tri.parseArgsAndCount(args, {type: "string"});
+        openOrSummon(f_url, opts={}) {
             const url = this.format(f_url);
-            return utils.tab.openOrSummon(url, {where: count?"related":"here"});
+            return utils.tab.openOrSummon(url, {where: opts.where||"here"});
         },
 
-        search(description, query, opts={}) {
+        search(f_url, description, query, opts={}) {
             const url = this.format(window._ghsearchurl, {query: query});
-            return utils.tab.openOrSummon(url, {where: opts.where||"related"});
+            return utils.tab.openOrSummon(url, {where: opts.where||"here"});
         },
 
-        searchWrapper: function(allargs) {
-            const [args, count] = utils.tri.parseArgsAndCount(allargs);
-            var descript = args;
-            const f_url = descript.pop();
+        searchWrapper: function(args, opts={}) {
+            const pref = opts.where=="related" ? "tab" : "";
+            const descript = args.slice(1, -1).join("_").slice(1,-1);
+            const f_url = args.slice(-1)[0];
             window._ghsearchurl = f_url;
-            return tri.excmds.fillcmdline(`ghsearch${count?"here":""} <${descript.join("_").slice(1,-1)}>`);
+            return tri.excmds.fillcmdline(`gh${pref}search <${descript}>`);
         },
 
     },
