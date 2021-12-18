@@ -128,13 +128,14 @@ bind <A--> urlincrement -1
 " ╭──────────────────╮
 " │ general commands │
 " ╰──────────────────╯
-command openorswitch jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"related":"here"})¦
-command tabopenorswitch jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"here":"last"})¦
-command openorswitch_here jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
-command openorswitch_last jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"last"});
-command openorswitch_adjacent jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"related"});
-command openorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"});
-command openorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related", background: true});
+command openorswitchc jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"related":"here"})¦
+command tabopenorswitchc jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"here":"last"})¦
+command openorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
+command tabopenorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"last"});
+command tabopenorswitch_adj jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"related"});
+command openorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"here"});
+command tabopenorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"});
+command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related", background: true});
 
 command urltoggle withcutils js -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
 command withcutils composite js -s ~/.tridactyl/cutils.js ;
@@ -273,52 +274,52 @@ bind eD tabopen about:debugging
 
 " | el -- goto/local |
 bind el<C-h> showkeys el
-bind eldw  tabopenorswitch file:///home/troy/Downloads
-bind eldc  tabopenorswitch file:///home/troy/Documents
+bind eldw  tabopenorswitchc file:///home/troy/Downloads
+bind eldc  tabopenorswitchc file:///home/troy/Documents
 
 " | el -- goto/local/ebooks |
 bind el<C-h> showkeys el
-bind ele/  tabopenorswitch file:///home/troy/ebooks
-bind elec  tabopenorswitch file:///home/troy/ebooks/coding
-bind eled  tabopenorswitch file:///home/troy/ebooks/dl
-bind elel  tabopenorswitch file:///home/troy/.readinglist
-bind eles  tabopenorswitch file:///home/troy/ebooks/cs
-bind elea  tabopenorswitch file:///home/troy/ebooks/articles
+bind ele/  tabopenorswitchc file:///home/troy/ebooks
+bind elec  tabopenorswitchc file:///home/troy/ebooks/coding
+bind eled  tabopenorswitchc file:///home/troy/ebooks/dl
+bind elel  tabopenorswitchc file:///home/troy/.readinglist
+bind eles  tabopenorswitchc file:///home/troy/ebooks/cs
+bind elea  tabopenorswitchc file:///home/troy/ebooks/articles
 
 " | el -- goto/local/home |
 bind el<C-h> showkeys el
-bind elhe  tabopenorswitch file:///home/troy/.emacs.d/private
-bind elhh  tabopenorswitch file:///home/troy
-bind elhp  tabopenorswitch file:///home/troy/.pentadactyl
-bind elhr  tabopenorswitch file:///home/troy/repos
-bind elhs  tabopenorswitch file:///home/troy/source
-bind elht  tabopenorswitch file:///home/troy/.tridactyl
+bind elhe  tabopenorswitchc file:///home/troy/.emacs.d/private
+bind elhh  tabopenorswitchc file:///home/troy
+bind elhp  tabopenorswitchc file:///home/troy/.pentadactyl
+bind elhr  tabopenorswitchc file:///home/troy/repos
+bind elhs  tabopenorswitchc file:///home/troy/source
+bind elht  tabopenorswitchc file:///home/troy/.tridactyl
 
 " | el -- goto/local/opt |
 bind el<C-h> showkeys el
-bind elo/  tabopenorswitch file:///opt
-bind eloc  tabopenorswitch file:///opt/chrome-extensions
-bind elod  tabopenorswitch file:///opt/deb
-bind elof  tabopenorswitch file:///opt/ff-addons
-bind elos  tabopenorswitch file:///opt/scripts
-bind elou  tabopenorswitch file:///opt/userscripts
-bind eloU  tabopenorswitch file:///opt/userstyles
-bind elow  tabopenorswitch file:///opt/webapps
+bind elo/  tabopenorswitchc file:///opt
+bind eloc  tabopenorswitchc file:///opt/chrome-extensions
+bind elod  tabopenorswitchc file:///opt/deb
+bind elof  tabopenorswitchc file:///opt/ff-addons
+bind elos  tabopenorswitchc file:///opt/scripts
+bind elou  tabopenorswitchc file:///opt/userscripts
+bind eloU  tabopenorswitchc file:///opt/userstyles
+bind elow  tabopenorswitchc file:///opt/webapps
 
 " | el -- goto/local/pictures |
 bind el<C-h> showkeys el
-bind elp/   tabopenorswitch file:///home/troy/Pictures
-bind elpa   tabopenorswitch file:///home/troy/Pictures/art
-bind elpd   tabopenorswitch file:///home/troy/Pictures/downloads
-bind elpv   tabopenorswitch file:///home/troy/Pictures/vlc-snapshot
+bind elp/   tabopenorswitchc file:///home/troy/Pictures
+bind elpa   tabopenorswitchc file:///home/troy/Pictures/art
+bind elpd   tabopenorswitchc file:///home/troy/Pictures/downloads
+bind elpv   tabopenorswitchc file:///home/troy/Pictures/vlc-snapshot
 
 " | el -- goto/local/usr |
 bind el<C-h> showkeys el
-bind elud   tabopenorswitch file:///usr/share/doc/
-bind eluld  tabopenorswitch file:///usr/local/share/doc/
+bind elud   tabopenorswitchc file:///usr/share/doc/
+bind eluld  tabopenorswitchc file:///usr/local/share/doc/
 
 " | ey -- goto/dactyl |
-bind eyss fillcmdline_notrail tabopenorswitch https://github.com/tridactyl/tridactyl/tree/master/src/
+bind eyss fillcmdline_notrail tabopenorswitchc https://github.com/tridactyl/tridactyl/tree/master/src/
 
 command gotoCommandSource jsb -p utils.tri.gotoCommandSource(JS_ARG);
 
@@ -351,9 +352,9 @@ bind xr<C-h> showkeys xr
 " rikairebuilt toggle
 bind xrr xdo mousemove 1861 111 click 1
 " addon page
-bind xra tabopenorswitch https://addons.mozilla.org/en-GB/firefox/addon/rikaihan/
+bind xra tabopenorswitchc https://addons.mozilla.org/en-GB/firefox/addon/rikaihan/
 " source page
-bind xrs tabopenorswitch https://github.com/Garethp/RikaiRebuilt
+bind xrs tabopenorswitchc https://github.com/Garethp/RikaiRebuilt
 " config page
 bind xrc winopen moz-extension://41d2b8bf-2a97-4468-87c8-f6243594c04c/options/options.html
 
@@ -367,20 +368,20 @@ bind ,a<C-h> showkeys ,a
 
 " | ,am -- mail/contacts |
 bind ,am<C-h> showkeys ,am
-bind ,amc tabopenorswitch https://contacts.google.com/?hl=en&tab=mC
-bind ,amC tabopenorswitch https://mail.google.com/mail/u/0/h/k4067n2i55u9/?&v=cl
-bind ,amm tabopenorswitch https://mail.google.com/mail/u/0/h/1f0xqcpo2pdl3/?f=1
-bind ,amM tabopenorswitch https://mail.google.com/mail/u/0/#inbox
-bind ,amy tabopenorswitch https://au.mail.yahoo.com/d/folders/1
+bind ,amc tabopenorswitchc https://contacts.google.com/?hl=en&tab=mC
+bind ,amC tabopenorswitchc https://mail.google.com/mail/u/0/h/k4067n2i55u9/?&v=cl
+bind ,amm tabopenorswitchc https://mail.google.com/mail/u/0/h/1f0xqcpo2pdl3/?f=1
+bind ,amM tabopenorswitchc https://mail.google.com/mail/u/0/#inbox
+bind ,amy tabopenorswitchc https://au.mail.yahoo.com/d/folders/1
 
 " | ,aw -- web/weather |
 bind ,aw<C-h> showkeys ,aw
 " Show Goonellabah Sunrise and Sunset Times
 bind ,aws jsb var [sr,ss]=apps.sunriseSunset(...user.latlong); utils.yankWithMsg(`SUNRISE: ${sr}\nSUNSET:  ${ss}`);
 " Open Lismore Weather (BoM)
-bind ,aww tabopenorswitch http://www.bom.gov.au/nsw/forecasts/lismore.shtml
+bind ,aww tabopenorswitchc http://www.bom.gov.au/nsw/forecasts/lismore.shtml
 " Open Goonellabah Weather (timeanddate.com)
-bind ,awt tabopenorswitch https://www.timeanddate.com/weather/@2164966
+bind ,awt tabopenorswitchc https://www.timeanddate.com/weather/@2164966
 
 " | ,c -- command-line |
 
