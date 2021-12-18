@@ -40,7 +40,7 @@ var apps = {
     },
 
     sunriseSunset: function(lat, long) {
-        var times = SunCalc.getTimes(new Date(), lat, long);
+        const times = SunCalc.getTimes(new Date(), lat, long);
         return [sunrise, sunset] = [times.sunrise, times.sunset].map(t=>t.toTimeString());
     },
 

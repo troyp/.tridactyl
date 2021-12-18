@@ -4,9 +4,9 @@
 
 var utils = {
     message: function(s, opts={}) {
-        var s_ = (opts.prefix || "") + s;
+        const s_ = (opts.prefix || "") + s;
         if (opts.temp) {
-            let t = opts.duration || 3000;
+            const t = opts.duration || 3000;
             tri.excmds.fillcmdline_tmp(s_, t);
         } else {
             tri.excmds.fillcmdline_nofocus(s_);
@@ -49,13 +49,13 @@ var utils = {
 
 utils.tab = {
     get: async function(tabnum, opts={}) {
-        var res = await browser.tabs.query({index: tabnum-1});
+        const res = await browser.tabs.query({index: tabnum-1});
         return res[0];
     },
 
     getAlternate: async function(n=1) {
         n = parseInt(n);
-        var sorted = await this.sortedByAccess();
+        const sorted = await this.sortedByAccess();
         return sorted[n];
     },
 
@@ -64,7 +64,7 @@ utils.tab = {
     },
 
     getid: async function(tabnum, opts={}) {
-        var t = await this.get(tabnum-1, opts);
+        const t = await this.get(tabnum-1, opts);
         return t.id;
     },
 
@@ -179,12 +179,12 @@ utils.tab = {
         if (!url) return null;
         if (typeof opts == "string") opts = {where: opts};
         opts.closeCurrent ??= (opts.where=="here");
-        var currentTab = await tri.webext.activeTab();
-        var testfn = opts.regex ? (t=> t.url.match(opts.regex)) : (t=> t.url.indexOf(url)>=0);
+        const currentTab = await tri.webext.activeTab();
+        const testfn = opts.regex ? (t=> t.url.match(opts.regex)) : (t=> t.url.indexOf(url)>=0);
         if (testfn(currentTab)) return currentTab;
         else  {
-            var alltabs = await this.getAll();
-            var existingTab = alltabs.find(testfn);
+            const alltabs = await this.getAll();
+            const existingTab = alltabs.find(testfn);
             if (existingTab) {
                 const targetIdx = (where=="here") ? existingTab.index : existingTab.index+1;
                 if (opts.reload) await browser.tabs.reload(existingTab.id);
@@ -206,12 +206,12 @@ utils.tab = {
         if (!url) return null;
         if (typeof opts == "string") opts = {where: opts};
         opts.closeCurrent ??= (opts.where=="here");
-        var currentTab = await tri.webext.activeTab();
-        var testfn = opts.regex ? (t=> t.url.match(opts.regex)) : (t=> t.url.indexOf(url)>=0);
+        const currentTab = await tri.webext.activeTab();
+        const testfn = opts.regex ? (t=> t.url.match(opts.regex)) : (t=> t.url.indexOf(url)>=0);
         if (testfn(currentTab)) return currentTab;
         else {
-            var alltabs = await this.getAll();
-            var existingTab = alltabs.find(testfn);
+            const alltabs = await this.getAll();
+            const existingTab = alltabs.find(testfn);
             if (existingTab) {
                 return this.switch(existingTab.index+1).then(async ()=>{
                     if (opts.closeCurrent) await browser.tabs.remove(currentTab.id);
@@ -236,11 +236,11 @@ utils.tab = {
     rofiChoose: async function (opts={}) {
         opts.prompt ??= "Select tabs (S-Enter): ";
         opts.format ||= "i";
-        var alltabs = await this.getAll();
+        const alltabs = await this.getAll();
         const formatter = (t,i)=>sprintf("%-3d  %-40s    <%s>", i+1, S.ellipsize(t.title, 40), t.url);
-        var alltabsitems = alltabs.map(formatter);
-        var dmenuInput = alltabsitems.join("\n");
-        var cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -width 80 -format ${opts.format} -p "${opts.prompt}" -multi-select -i`;
+        const alltabsitems = alltabs.map(formatter);
+        const dmenuInput = alltabsitems.join("\n");
+        const cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -width 80 -format ${opts.format} -p "${opts.prompt}" -multi-select -i`;
         return tri.native.run(cmd).then(
             res => res.content.trim().split("\n")
         );
@@ -248,25 +248,25 @@ utils.tab = {
 
     rofiChooseByRegex: async function (opts={}) {
         opts.prompt ??= "Construct regex [enter]: ";
-        var alltabs = await this.getAll();
+        const alltabs = await this.getAll();
         const formatter = (t,i)=>sprintf("%-3d  %-40s    <%s>", i+1, S.ellipsize(t.title, 40), t.url);
-        var alltabsitems = alltabs.map(formatter);
-        var dmenuInput = alltabsitems.join("\n");
-        var cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -width 80 -regex -format f -p "${opts.prompt}" -i`;
+        const alltabsitems = alltabs.map(formatter);
+        const dmenuInput = alltabsitems.join("\n");
+        const cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -width 80 -regex -format f -p "${opts.prompt}" -i`;
         return tri.native.run(cmd).then(
             res => alltabs.filter(t=>t.url.match(res.content.trim()))
         );
     },
 
     sortedByAccess: async function() {
-        var tabs = await browser.tabs.query({currentWindow: true});
+        const tabs = await browser.tabs.query({currentWindow: true});
         return tabs.sort((t1,t2) => t2.lastAccessed-t1.lastAccessed);
     },
 
     switch: async function(tabnum) {
         if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
-        var N = await this.getN();
-        var n = (tabnum-1).mod(N) + 1;
+        const N = await this.getN();
+        const n = (tabnum-1).mod(N) + 1;
         browser.tabs.query({currentWindow: true, index: n-1}).then(
             tt=> browser.tabs.update(tt[0].id, { active: true })
         );
@@ -334,22 +334,22 @@ utils.tab = {
 
 utils.tri = {
     gotoCommandSource: function(s) {
-        var repo = "~/source/git-repos/tridactyl";
-        var cmd = `grep -inP 'export (async )?function ${s}[(]' ${repo}/src/excmds.ts`;
+        const repo = "~/source/git-repos/tridactyl";
+        const cmd = `grep -inP 'export (async )?function ${s}[(]' ${repo}/src/excmds.ts`;
         tri.native.run(cmd).then(
             l=> {
-                var n = parseInt(l.content);
-                var url = `https://github.com/tridactyl/tridactyl/blob/master/src/excmds.ts#L${n}`;
+                const n = parseInt(l.content);
+                const url = `https://github.com/tridactyl/tridactyl/blob/master/src/excmds.ts#L${n}`;
                 return tri.excmds.tabopen(url);
             }
         );
     },
 
-    myfocusinput: function(arg) { var n = Number(arg)||"-l"; tri.excmds.focusinput(n); },
+    myfocusinput: function(arg) { const n = Number(arg)||"-l"; tri.excmds.focusinput(n); },
 
     parseArgs: function(args, opts={}) {
         if (typeof opts === "string") opts = { type: opts };
-        var argstr = args.join(" ").trim();
+        const argstr = args.join(" ").trim();
         switch (opts.type) {
           case "string":
               return argstr; break;
