@@ -117,25 +117,25 @@ utils.tab = {
          * opts.background: don't switch to new tab
          */
         if (typeof opts == "string") opts = {where: opts};
-        var thisTab = await tri.webext.activeTab();
-        var legal = url.match(/^https?:/);
+        const thisTab = await tri.webext.activeTab();
+        const legal = url.match(/^https?:/);
         /* can't open special URLs in current tab */
         if (!legal && opts.where==="here") opts.where="next";
-        var initurl = legal ? url : "https://google.com";
-        var active = !opts.background;
+        const initurl = legal ? url : "https://google.com";
+        const active = !opts.background;
         var newTab;
         /* https?: URLs */
         if (legal) {
             switch (opts.where) {
               case "last":
-                  var N = await this.getN();
-                  newTab = await this.tabCreateWrapper(initurl, {active: active, index: N-1});
+                  const N = await this.getN();
+                  newTab = await this.tabCreateWrapper({url: initurl, active: active, index: N-1});
                   break;
               case "related":
                   newTab = await tri.webext.openInNewTab(initurl, {active: active, related: true});
                   break;
               case "next":
-                  var i = thisTab.index;
+                  const i = thisTab.index;
                   newTab = await tri.webext.openInNewTab(initurl, {active: active, related: true, index: i+1});
                   break;
               case "here":
@@ -151,9 +151,9 @@ utils.tab = {
                 await tri.controller.acceptExCmd(`tabopen ${url}`);
             /* TODO: identify correct tab using .url and .lastAccessed properties */
             /* currently assumes last tab (ie. tabopenpos == "last") */
-            var tt = await this.getAll();
+            const tt = await this.getAll();
             newTab = tt.slice(-1)[0];
-            var i = thisTab.index;
+            const i = thisTab.index;
             if (["related", "next"].includes(opts.where)) {
                 /* TODO: handle related separately */
                 /* TODO: don't set alternate tab */
