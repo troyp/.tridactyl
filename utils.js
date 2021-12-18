@@ -14,6 +14,14 @@ var utils = {
         return s;
     },
 
+    messageBox: async function(s, opts={}) {
+        var s_ = (opts.prefix || "") + s;
+        s_ = s_.replace(/\n/g, "\\n").replace(/\t/g, "\\t").replace(/'/g, "\\'").replace(/ /g, "\\ ");
+        tri.controller.acceptExCmd(`js alert('${s_}')`);
+        return s;
+    },
+
+
     /* adapted from tridactyl source for ;x in lib/config.ts */
     xdoelem: async function(selector, xdocmd) {
         /* xdoelem(selector, xdocmd)
@@ -367,7 +375,12 @@ utils.tri = {
         return [this.parseArgs(args, opts), count];
     },
 
-
+    /* TODO: add description system and allow searching by description
+     */
+    searchConfig: function(key, term) {
+        const conf = tri.config.get(key);
+        return Object.keys(conf).map(k=>sprintf("%-8s\t%-s", k, conf[k])).filter(s=>s.match(term));
+    },
 };
 
 // ───────────────────────────────────────────────────────────────────────────────
