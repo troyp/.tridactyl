@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [[ "$1" =~ ^-h$\|^--help$ ]]; then
+    echo "patch-firefox-nilcons-mod [FFSRCDIR]: patch FFSRCDIR/browser/omni.ja file";
+    return 0;
+fi;
+
+ffsrcdir=${1:-/usr/lib/firefox};
+
+sudo perl -i -pne 's/reserved="true"/               /g' $1/browser/omni.ja
+find ~/.cache/mozilla/firefox -type d -name startupCache | xargs rm -rf
