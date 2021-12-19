@@ -381,6 +381,24 @@ utils.tri = {
         const conf = tri.config.get(key);
         return Object.keys(conf).map(k=>sprintf("%-8s\t%-s", k, conf[k])).filter(s=>s.match(term));
     },
+
+    /* cmdYankHistory :: number|string|array -> IO string
+     */
+    cmdYankHistory: function(args) {
+        if (["number","string"].includes(typeof args)) args = [args];
+        const ns = args.map(n=>Number(n)||1);
+        const hist = tri.state.cmdHistory;
+        const N = hist.length;
+        const cmds = ns.map(n=>hist[N-n]);
+        return utils.yankWithMsg(cmds.join("\n"));
+    },
+
+    cmdYankHistoryLastN: function(n) {
+        n = Number(n)||1;
+        const cmds = tri.state.cmdHistory.slice(-n);
+        return utils.yankWithMsg(cmds.join("\n"));
+    },
+
 };
 
 // ───────────────────────────────────────────────────────────────────────────────

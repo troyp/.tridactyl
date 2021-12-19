@@ -386,8 +386,12 @@ bind ,aww tabopenorswitchc http://www.bom.gov.au/nsw/forecasts/lismore.shtml
 bind ,awt tabopenorswitchc https://www.timeanddate.com/weather/@2164966
 
 " | ,c -- command-line |
+command cmdYankHistoryItem jsb -d¦ utils.tri.cmdYankHistory(utils.tri.parseArgs(JS_ARGS))¦
+command cmdYankHistoryItems jsb -d¦ utils.tri.cmdYankHistoryLastN(JS_ARGS[1]||1)¦
 
 bind ,c<C-h> showkeys ,c
+bind ,cc cmdYankHistoryItem
+bind ,cC cmdYankHistoryItems
 bind ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word
 
 " | ,e -- javascript eval |
