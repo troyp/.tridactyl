@@ -251,7 +251,7 @@ bind <C-/> clearsearchhighlight
 " ╰───────────────╯
 command showkeys fillcmdline_notrail bind
 command showkeysurl fillcmdline_notrail bindurl
-command searchnmaps jsb -d¦ utils.messageBox(utils.tri.searchConfig("nmaps", JS_ARGS.join(" ")).join("\n"))¦
+command searchnmaps jsb -d¦ utils.tri.searchNmapsWrapper(JS_ARGS.join(" "))¦
 
 bind <C-h><C-h> showkeys <C-h>
 bind <C-h>h fillcmdline help

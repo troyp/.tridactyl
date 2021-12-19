@@ -14,9 +14,21 @@ var utils = {
         return s;
     },
 
-    messageBox: async function(s, opts={}) {
-        var s_ = (opts.prefix || "") + s;
-        s_ = s_.replace(/\n/g, "\\n").replace(/\t/g, "\\t").replace(/'/g, "\\'").replace(/ /g, "\\ ");
+    messageBox: async function(lines, opts={}) {
+        if (!Array.isArray(lines)) lines = [lines];
+        const w = parseInt(opts.width) || 50;
+        const indent = opts.contPrefix || "";
+        const d = indent.length;
+        var line, s = "";
+        for (line of lines) {
+            s += line.substring(0, w) + "\n";
+            line = line.slice(w);
+            while (line!=="") {
+                s += indent + line.substring(0, w-d) + "\n";
+                line = line.slice(w-d);
+            }
+        }
+        const s_ = s.replace(/\n/g, "\\n").replace(/\t/g, "\\t").replace(/'/g, "\\'").replace(/ /g, "\\ ");
         tri.controller.acceptExCmd(`js alert('${s_}')`);
         return s;
     },
@@ -380,6 +392,11 @@ utils.tri = {
     searchConfig: function(key, term) {
         const conf = tri.config.get(key);
         return Object.keys(conf).map(k=>sprintf("%-8s\t%-s", k, conf[k])).filter(s=>s.match(term));
+    },
+
+    searchNmapsWrapper: async function (term) {
+        const conf = this.searchConfig("nmaps", term.trim());
+        return utils.messageBox(conf, {contPrefix: "\t\t"});
     },
 
     /* cmdYankHistory :: number|string|array -> IO string
