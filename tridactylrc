@@ -137,10 +137,13 @@ command openorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"here"});
 command tabopenorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"});
 command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related", background: true});
 
+command withjs composite js
+command withjsb composite jsb
 command urltoggle withcutils js -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
 command withcutils composite js -s ~/.tridactyl/cutils.js ;
 command xdo jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
 command xdoelem jsb -d¦ utils.xdoelemWrapper(JS_ARGS.join(" "))¦
+command pastef composite jsb -p tri.excmds.getclip().then(s=>JS_ARG.replace(/\$\{s\}/g, s))
 
 " ╭───────────╮
 " │ b -- tabs │
@@ -411,8 +414,8 @@ bind ,es fillcmdline getselector
 command convertunits jsb -d¦ apps.convertUnits(JS_ARGS).then(s=>tri.excmds.fillcmdline_nofocus(s))¦
 bind ,vv fillcmdline convertunits
 
-command copytablecols composite js -s ~/.tridactyl/cutils.js ; js -d¦ tri.controller.acceptExCmd(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}]), {useAlert:true})`)¦
-command copytablecols_strict composite js -s ~/.tridactyl/cutils.js ; js -d¦ tri.excmds.fillcmdline(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}], {strict:true}), {useAlert:true})`)¦
+command copytablecols withjs -s ~/.tridactyl/cutils.js ; js -d¦ tri.controller.acceptExCmd(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}]), {useAlert:true})`)¦
+command copytablecols_strict withjs -s ~/.tridactyl/cutils.js ; js -d¦ tri.excmds.fillcmdline(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}], {strict:true}), {useAlert:true})`)¦
 
 " | ,x -- miscellaneous |
 bind ,x<C-h> showkeys ,x
@@ -481,19 +484,19 @@ bind --mode=ex  <S-Tab>    ex.prev_completion
 bind --mode=ex  <C-/>      ex.deselect_completion
 bind --mode=ex  <A-w>      ex.execute_ex_on_completion clipboard yank
 
-bind --mode=insert  <C-m>    composite jsb user.email      | text.insert_text
-bind --mode=insert  <C-M>    composite jsb user.email2     | text.insert_text
-bind --mode=insert  <C-I>    composite jsb user.name       | text.insert_text
-bind --mode=insert  <C-T>    composite jsb user.firstname  | text.insert_text
-bind --mode=insert  <C-L>    composite jsb user.lastname   | text.insert_text
-bind --mode=insert  <C-A>    composite jsb user.street     | text.insert_text
-bind --mode=insert  <C-S>    composite jsb user.suburb     | text.insert_text
-bind --mode=insert  <C-D>    composite jsb user.address    | text.insert_text
-bind --mode=insert  <C-P>    composite jsb user.phone      | text.insert_text
-bind --mode=insert  <C-B>    composite jsb user.mobile     | text.insert_text
-bind --mode=insert  <C-Z>    composite jsb user.postcode   | text.insert_text
-bind --mode=insert  <C-Q>    composite jsb user.masterpw   | text.insert_text
-bind --mode=insert  <C-C>    composite jsb user.creditcard | text.insert_text
+bind --mode=insert  <C-m>    withjsb user.email      | text.insert_text
+bind --mode=insert  <C-M>    withjsb user.email2     | text.insert_text
+bind --mode=insert  <C-I>    withjsb user.name       | text.insert_text
+bind --mode=insert  <C-T>    withjsb user.firstname  | text.insert_text
+bind --mode=insert  <C-L>    withjsb user.lastname   | text.insert_text
+bind --mode=insert  <C-A>    withjsb user.street     | text.insert_text
+bind --mode=insert  <C-S>    withjsb user.suburb     | text.insert_text
+bind --mode=insert  <C-D>    withjsb user.address    | text.insert_text
+bind --mode=insert  <C-P>    withjsb user.phone      | text.insert_text
+bind --mode=insert  <C-B>    withjsb user.mobile     | text.insert_text
+bind --mode=insert  <C-Z>    withjsb user.postcode   | text.insert_text
+bind --mode=insert  <C-Q>    withjsb user.masterpw   | text.insert_text
+bind --mode=insert  <C-C>    withjsb user.creditcard | text.insert_text
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮
