@@ -370,6 +370,12 @@ bind ,<C-h> showkeys ,
 
 " | ,a -- apps |
 bind ,a<C-h> showkeys ,a
+" Open banking
+bind ,ab withjsb user.bankurl | tabopenorswitchc
+" Open Paypal
+bind ,ap tabopenorswitchc https://www.paypal.com/myaccount/home
+" Open MyGov
+bind ,ay tabopenorswitchc https://my.gov.au/LoginServices/main/login?execution=e1s1
 
 " | ,am -- mail/contacts |
 bind ,am<C-h> showkeys ,am
@@ -388,6 +394,7 @@ bind ,aww tabopenorswitchc http://www.bom.gov.au/nsw/forecasts/lismore.shtml
 " Open Goonellabah Weather (timeanddate.com)
 bind ,awt tabopenorswitchc https://www.timeanddate.com/weather/@2164966
 
+
 " | ,c -- command-line |
 command cmdYankHistoryItem jsb -d¦ utils.tri.cmdYankHistory(utils.tri.parseArgs(JS_ARGS))¦
 command cmdYankHistoryItems jsb -d¦ utils.tri.cmdYankHistoryLastN(JS_ARGS[1]||1)¦
@@ -403,12 +410,30 @@ command getproperties js -d¦ alert(Object.getOwnPropertyNames(eval(JS_ARGS.join
 command jsbe jsb -d¦ tri.excmds.jsb(`tri.excmds.fillcmdline_nofocus(${JS_ARGS.join(" ")})`)¦
 command getselector js -d¦ alert([...document.querySelectorAll(JS_ARGS.join(" "))].map(t=>t.tagName+"\t"+t.innerText.slice(0,50).replace("\n","\t")).join("\n"))¦
 
-bind ,j<C-h> showkeys ,j
+bind ,e<C-h> showkeys ,e
 bind ,eb fillcmdline jsbe
 bind ,ec js -s ~/.tridactyl/cutils.js
 bind ,ee fillcmdline jse
 bind ,ep fillcmdline getproperties
 bind ,es fillcmdline getselector
+
+" | ,j -- japanese |
+bind ,j<C-h> showkeys ,j
+" Jisho kanji search (hints)
+bind ,jf js window._dactylargs=[jishoKanjiSearch]; hints.show('カ');
+" Jisho search (clipboard)
+bind ,jj fillcmdline tabopenorswitchc http://jisho.org/search/
+
+" | ,jk -- kanji |
+bind ,jk<C-h> showkeys ,jk
+" Google Translate handwritten input
+bind ,jkh tabopenorsummon https://translate.google.com.au/#ja/en/
+" Jisho kanji search (clipboard)
+bind ,jkp pastef http://jisho.org/search/${s}%20%23kanji | tabopenorswitchc
+" Jisho kanji radical search
+bind ,jkr tabopenorswitchc https://jisho.org/#radical
+" Visual Kanji Search - similar kanji (clipboard)
+bind ,jkv pastef https://thekanjimap.com/index.html?k=${s} | tabopenorswitchc
 
 " | ,v -- conversion |
 command convertunits jsb -d¦ apps.convertUnits(JS_ARGS).then(s=>tri.excmds.fillcmdline_nofocus(s))¦
