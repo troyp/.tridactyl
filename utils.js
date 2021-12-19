@@ -68,9 +68,18 @@ var utils = {
 // ╰─────────────────────────────╯
 
 utils.tab = {
+    filter: function(pred) {
+        return tab.remove(!pred);
+    },
+
     get: async function(tabnum, opts={}) {
         const res = await browser.tabs.query({index: tabnum-1});
         return res[0];
+    },
+
+    getAll: async function(opts={}) {
+        opts.currentWindow ??= true;
+        return ( await browser.tabs.query(opts) );
     },
 
     getAlternate: async function(n=1) {
@@ -79,45 +88,17 @@ utils.tab = {
         return sorted[n];
     },
 
-    getPinned: async function() {
-        return browser.tabs.query({currentWindow: true, pinned: true});
-    },
-
     getid: async function(tabnum, opts={}) {
         const t = await this.get(tabnum-1, opts);
         return t.id;
     },
 
-    getAll: async function(opts={}) {
-        opts.currentWindow ??= true;
-        return ( await browser.tabs.query(opts) );
+    getPinned: async function() {
+        return browser.tabs.query({currentWindow: true, pinned: true});
     },
 
     getN: async function(opts={}) {
         return this.getAll(opts).then(tt => tt.length);
-    },
-
-    parseTabnum: async function(n) {
-        const N = await this.getN();
-        switch(n) {
-          case "$":
-          case "0":
-              n = N;
-              break;
-          case "^":
-              n = 1;
-              break;
-          case "#":
-              const alt = await this.getAlternate();
-              n = alt.index+1;
-              break;
-          case "%":
-          case ".":
-              const thisTab = await tri.webext.activeTab();
-              n = thisTab.index+1;
-              break;
-        }
-        return (parseInt(n)-1) % N;
     },
 
     /* Move current tab to TABNUM. If TABNUM is a pinned tab, move to first nonpinned position
@@ -242,14 +223,34 @@ utils.tab = {
         }
     },
 
+    parseTabnum: async function(n) {
+        const N = await this.getN();
+        switch(n) {
+          case "$":
+          case "0":
+              n = N;
+              break;
+          case "^":
+              n = 1;
+              break;
+          case "#":
+              const alt = await this.getAlternate();
+              n = alt.index+1;
+              break;
+          case "%":
+          case ".":
+              const thisTab = await tri.webext.activeTab();
+              n = thisTab.index+1;
+              break;
+        }
+        return (parseInt(n)-1) % N;
+    },
+
     remove: async function(pred) {
         const tabs = await browser.tabs.query({pinned: false, currentWindow: true});
         const atab = await activeTab();
         const ids = tabs.filter(pred).map(tab => tab.id);
         return browser.tabs.remove(ids);
-    },
-    filter: function(pred) {
-        return tab.remove(!pred);
     },
 
     /* Returns 0-based index of tab(s) chosen */
@@ -283,22 +284,6 @@ utils.tab = {
         return tabs.sort((t1,t2) => t2.lastAccessed-t1.lastAccessed);
     },
 
-    switch: async function(tabnum) {
-        if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
-        const N = await this.getN();
-        const n = (tabnum-1).mod(N) + 1;
-        browser.tabs.query({currentWindow: true, index: n-1}).then(
-            tt=> browser.tabs.update(tt[0].id, { active: true })
-        );
-    },
-
-    switchAlternate: async function(n=1, opts={}) {
-        const thisTab = await tri.webext.activeTab();
-        const alt = await this.getAlternate(n);
-        if (opts.removeCurrent) browser.tabs.remove(thisTab.id);
-        return browser.tabs.update(alt.id, {active: true});
-    },
-
     summonAlternate: async function(n=1, opts={}) {
         const thisTab = await tri.webext.activeTab();
         const alt = await this.getAlternate(n);
@@ -330,6 +315,21 @@ utils.tab = {
         return t;
     },
 
+    switch: async function(tabnum) {
+          if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
+          const N = await this.getN();
+          const n = (tabnum-1).mod(N) + 1;
+          browser.tabs.query({currentWindow: true, index: n-1}).then(
+              tt=> browser.tabs.update(tt[0].id, { active: true })
+          );
+    },
+
+    switchAlternate: async function(n=1, opts={}) {
+        const thisTab = await tri.webext.activeTab();
+        const alt = await this.getAlternate(n);
+        if (opts.removeCurrent) browser.tabs.remove(thisTab.id);
+        return browser.tabs.update(alt.id, {active: true});
+    },
 
     /* taken from tridactyl src/lib/webext.ts -- author: Oliver Blanthorn */
  	  tabCreateWrapper: async function (options) {
@@ -353,6 +353,23 @@ utils.tab = {
 // ╰─────────────────────────────────────────────────────────────────╯
 
 utils.tri = {
+    /* cmdYankHistory :: number|string|array -> IO string
+     */
+    cmdYankHistory: function(args) {
+        if (["number","string"].includes(typeof args)) args = [args];
+        const ns = args.map(n=>Number(n)||1);
+        const hist = tri.state.cmdHistory;
+        const N = hist.length;
+        const cmds = ns.map(n=>hist[N-n]);
+        return utils.yankWithMsg(cmds.join("\n"));
+    },
+
+    cmdYankHistoryLastN: function(n) {
+        n = Number(n)||1;
+        const cmds = tri.state.cmdHistory.slice(-n);
+        return utils.yankWithMsg(cmds.join("\n"));
+    },
+
     gotoCommandSource: function(s) {
         const repo = "~/source/git-repos/tridactyl";
         const cmd = `grep -inP 'export (async )?function ${s}[(]' ${repo}/src/excmds.ts`;
@@ -398,24 +415,6 @@ utils.tri = {
         const conf = this.searchConfig("nmaps", term.trim());
         return utils.messageBox(conf, {contPrefix: "\t\t"});
     },
-
-    /* cmdYankHistory :: number|string|array -> IO string
-     */
-    cmdYankHistory: function(args) {
-        if (["number","string"].includes(typeof args)) args = [args];
-        const ns = args.map(n=>Number(n)||1);
-        const hist = tri.state.cmdHistory;
-        const N = hist.length;
-        const cmds = ns.map(n=>hist[N-n]);
-        return utils.yankWithMsg(cmds.join("\n"));
-    },
-
-    cmdYankHistoryLastN: function(n) {
-        n = Number(n)||1;
-        const cmds = tri.state.cmdHistory.slice(-n);
-        return utils.yankWithMsg(cmds.join("\n"));
-    },
-
 };
 
 // ───────────────────────────────────────────────────────────────────────────────
