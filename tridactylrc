@@ -51,12 +51,13 @@ setpref privacy.trackingprotection.enabled true
 " ╭────────────╮
 " │ searchurls │
 " ╰────────────╯
-set searchurls.g https://www.google.com.au/search?sclient=psy-ab&safe=off&hl=en&site=webhp&source=hp&q=%s&=&=&oq=&gs_l=&pbx=1
-set searchurls.gi https://www.google.com/search?site=imghp&tbm=isch&source=hp&biw=1920&bih=899&q=%s&=&=&oq=&gs_l=
+set searchurls.g https://www.google.com.au/search?hl=en&q=%s
+set searchurls.gi https://www.google.com/search?site=imghp&tbm=isch&biw=1920&q=%s
 set searchurls.d https://duckduckgo.com/?q=%s
-set searchurls.dgi https://duckduckgo.com/?q=%s&k1=-1&kp=-1&kam=google-maps&iar=images&ia=images&iax=images
+set searchurls.dgi https://duckduckgo.com/?q=%s&iar=images
 set searchurls.b https://www.bing.com/search?q=%s
-set searchurls.w https://en.wikipedia.org/w/index.php?search=%s&title=Special%3ASearch
+set searchurls.w https://en.wikipedia.org/w/index.php?search=%s
+set searchurls.diw https://en.wiktionary.org/w/index.php?search=%s
 set searchurls.philsep http://plato.stanford.edu/search/searcher.py?query=%s
 set searchurls.u http://graphemica.com/search?q=%s
 set searchurls.diu https://www.urbandictionary.com/define.php?term=%s
@@ -69,9 +70,6 @@ set searchurls.gj https://www.google.com.au/search?q=japanese+%s
 set searchurls.archwiki https://wiki.archlinux.org/index.php?search=%s&title=Special%3ASearch
 set searchurls.se http://stackexchange.com/search?q=%s
 set searchurls.mdn https://developer.mozilla.org/en-US/search?q=%s
-set searchurls.ffext https://addons.mozilla.org/en-US/firefox/search/?q=%s&type=extension
-set searchurls.ffgf https://greasyfork.org/en/scripts/search?q=%s
-set searchurls.ffus https://www.google.com/search?q=%28userscript+OR+bookmarklet%29+%s
 
 " ─────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────────╮
