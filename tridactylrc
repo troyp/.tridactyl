@@ -21,6 +21,23 @@ jsb window.sites = sites
 jsb tri.sprintf = sprintf
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────────────────╮
+" │ Documentation commands │
+" ╰────────────────────────╯
+" Create versions of definition commands taking descriptions
+command docdef jsb -d¦ utils.tri.docdef(JS_ARGS)¦
+" Define command with description - doesn't work with `js -d`/`jsb -d` commands
+command command: docdef command
+
+command: bind: "bind with description" docdef bind
+command: bindurl: "bind with description" docdef bindurl
+command: set: "set with description" docdef set
+command: setpref: "setpref with description" docdef setpref
+command: guiset_quiet: "guiset_quiet with description" docdef guiset_quiet
+command: commdoc "provide a description for a command definition on a separate line" js ;
+command: bdoc "provide a description for a bind definition on a separate line" js ;
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮
 " │ Settings │
 " ╰──────────╯
@@ -82,57 +99,68 @@ bind --mode=browser <A-,> tab #
 " │ Normal-mode keybindings │
 " ╰─────────────────────────╯
 
-bind <CA-h> scrollpx -50
-bind <CA-l> scrollpx +50
-bind j scrollline +5*
-bind k scrollline -5*
+bind: <CA-h> "Scroll left (50px)" scrollpx -50
+bind: <CA-l> "Scroll right (50px)" scrollpx +50
+bind: j "Scroll down" scrollline +5*
+bind: k "Scroll up" scrollline -5*
 
-bind h tabprev
-bind l tabnext
+bind: h "Move to next tab" tabprev
+bind: l "Move to previous tab" tabnext
 
-bind H back
-bind L forward
+bind: H "Move back in tab history" back
+bind: L "Move forward in tab history" forward
 
-bind p clipboard tabopen
-bind P clipboard open
+bind: p "Open url in clipboard in new tab" clipboard tabopen
+bind: P "Open url in clipboard" clipboard open
 
+commdoc myfocusinput "Focus COUNTth input field"
 command myfocusinput jsb -d¦ utils.tri.myfocusinput(JS_ARGS.join(" "))¦
-bind gi myfocusinput
+bind: gi "Focus COUNTth input field" myfocusinput
 
 unbind x
-bind X stop
+bind: X "Stop loading" stop
 
 unbind g;
 bind g<C-h> showkeys g
-bind g;; changelistjump -1
-bind g;i focusinput 2
-bind g;b focusinput -b
-bind g;n focusinput -n
-bind g;N focusinput -N
-bind g;p focusinput -p
-
+bdoc gh "Open the previous item in tab history in an adjacent tab"
 bind gh jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goBack(t.id));
 
-bind <C-v> nmode ignore 1 mode normal
-bind <C-z> mode ignore
+bind g;<C-h> showkeys g;
+bind: g;; "Focus tab containing last focused input" changelistjump -1
+bind: g;i "Focus nth input on page" focusinput 2
+bind: g;b "Focus biggest input field on page" focusinput -b
+bind: g;n "Focus input on page after last focused one" focusinput -n
+bind: g;N "Focus input on page before last focused one" focusinput -N
+bind: g;p "Focus first password input field on page" focusinput -p
+
+bind: <C-v> "Enter ignore mode (disable tridactyl bindings)" nmode ignore 1 mode normal
+bind: <C-z> "Enter ignore mode for one keybinding (disable tridactyl bindings)" mode ignore
 
 unbind <C-x>
-bind <C-x><C-c> qall
-bind <C-x><C-x> restart
+bind: <C-x><C-c> "Close all windows" qall
+bind: <C-x><C-x> "Restart browser" restart
 
-bind <A-=> urlincrement 1
-bind <A--> urlincrement -1
+bind: <A-=> "Increment current URL by 1" urlincrement 1
+bind: <A--> "Decrement current URL by 1" urlincrement -1
 
 " ╭──────────────────╮
 " │ general commands │
 " ╰──────────────────╯
+commdoc openorswitchc "Open an URL in current (with count: adjacent) tab, or switch to existing tab"
 command openorswitchc jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"related":"here"})¦
+commdoc tabopenorswitchc "Open an URL in a new final tab (count: current tab), or switch to existing tab"
 command tabopenorswitchc jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"here":"last"})¦
+commdoc openorswitch "Open an URL in current tab, or switch to existing tab"
 command openorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
+commdoc tabopenorswitch "Open an URL in a new (final) tab, or switch to existing tab"
 command tabopenorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"last"});
+commdoc tabopenorswitch_adj "Open an URL in an afjacent tab, or switch to existing tab"
 command tabopenorswitch_adj jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"related"});
+commdoc openorsummon "Open an URL in current tab, or switch to existing tab and move adjacent"
 command openorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"here"});
+commdoc tabopenorsummon "Open an URL in a new adjacent tab, or switch to existing tab and move adjacent"
 command tabopenorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"});
+commdoc tabopenorsummonbg "Open an URL in a new background adjacent tab, or move existing tab adjacent"
 command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related", background: true});
 
 command withjs composite js
@@ -140,7 +168,9 @@ command withjsb composite jsb
 command urltoggle withcutils js -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
 command withcutils composite js -s ~/.tridactyl/cutils.js ;
 command xdo jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
+commdoc xdoelem "Use xdotool to move to and act on element"
 command xdoelem jsb -d¦ utils.xdoelemWrapper(JS_ARGS.join(" "))¦
+commdoc pastef "Takes a format string and replaces ${S} with clipboard contents; used to pipe to another command"
 command pastef composite jsb -p tri.excmds.getclip().then(s=>JS_ARG.replace(/\$\{s\}/g, s))
 
 " ╭───────────╮
@@ -148,76 +178,84 @@ command pastef composite jsb -p tri.excmds.getclip().then(s=>JS_ARG.replace(/\$\
 " ╰───────────╯
 unbind b
 
-command tabremove jsb -p utils.tab.remove(t=>(S.matchSmartCase(JS_ARG, t.url)));
-command tabfilter jsb -p utils.tab.filter(t=>(S.matchSmartCase(JS_ARG, t.url)));
+command: tabremove "Close tabs matching string" jsb -p utils.tab.remove(t=>(S.matchSmartCase(JS_ARG, t.url)));
+command: tabfilter "Close tabs not matching string" jsb -p utils.tab.filter(t=>(S.matchSmartCase(JS_ARG, t.url)));
+commdoc tabswitchprev "Switch to last accessed tab"
 command tabswitchprev jsb -d¦ utils.tab.switchAlternate(JS_ARGS[1]||1)¦
+commdoc tabswitchprev! "Switch to last accessed tab and close current tab" 
 command tabswitchprev! jsb -d¦ utils.tab.switchAlternate(JS_ARGS[1]||1, {removeCurrent: true})¦
+commdoc tabsummon "Move tab adjacent to current tab"
 command tabsummon jsb -d¦ utils.tab.summon(JS_ARGS[1]||"$")¦
+commdoc tabsummonalt "Move last accessed tab adjacent to current tab" 
 command tabsummonalt jsb -d¦ utils.tab.summonAlternate(JS_ARGS[1]||1)¦
-command tabmove! jsb -p utils.tab.move(JS_ARG);
+command: tabmove! "Move current tab to specified tab number" jsb -p utils.tab.move(JS_ARG);
 
-bind <C-a> tabfirst
-bind <C-e> tablast
+bind: <C-a> "Switch to first tab" tabfirst
+bind: <C-e> "Switch to last tab" tablast
 
 bind b<C-h> showkeys b
-bind bb fillcmdline tab
+bind bb "Switch to tab from completion list" fillcmdline tab
 
 " | bd -- tabs : delete |
 bind bd<C-h> showkeys bd
-bind bdm fillcmdline tabremove
-bind bd;m fillcmdline tabfilter
-bind bdo tabonly
+bind: bdm "Close tabs matching string" fillcmdline tabremove
+bind: bd;m "Close tabs not matching string" fillcmdline tabfilter
+bind: bdo "Close other tabs" tabonly
 
 " | bm -- tabs : move |
 bind bm<C-h> showkeys bm
-bind bmA tabsummonalt
-bind bmm fillcmdline tabmove!
-bind bms fillcmdline tabsummon
-bind bm> tabmove 0
-bind bm< tabmove 1
+bind: bmA "move alternate tab after active tab" tabsummonalt
+bind: bmm "move tab to position" fillcmdline tabmove!
+bind: bms "move tab after active tab" fillcmdline tabsummon
+bind: bm> "move tab to start (first nonpinned position)" tabmove 0
+bind: bm< "move tab to end" tabmove 1
 
-bind bp pin
-bind b> tabclosealltoright
-bind b< tabclosealltoleft
+bind: bp "Pin/unpin tab" pin
+bind: b> "Close all tabs to the right" tabclosealltoright
+bind: b< "Close all tabs to the left"  tabclosealltoleft
 
-bind C tabduplicate
-bind <C-k> composite tabclosealltoright ; tabclose
-bind <C-K> composite tabclosealltoleft ; tabclose
-bind <A-;> tabswitchprev
-bind <A-:> tabswitchprev!
+bind: C "Duplicate tab" tabduplicate
+bind: <C-k> "Close all tabs to the right inclusive" composite tabclosealltoright ; tabclose
+bind: <C-K> "Close all tabs to the left inclusive"  composite tabclosealltoleft  ; tabclose
+bind: <A-;> "Switch to last accessed tab" tabswitchprev
+bind: <A-:> "Switch to last accessed tab and close current tab" tabswitchprev!
 
-bind <AC-1> tabmove! 1
-bind <AC-2> tabmove! 2
-bind <AC-3> tabmove! 3
-bind <AC-4> tabmove! 4
-bind <AC-5> tabmove! 5
-bind <AC-6> tabmove! 6
-bind <AC-7> tabmove! 7
-bind <AC-8> tabmove! 8
-bind <AC-9> tabmove! 9
-bind <AC-0> tabmove! 0
-bind <AC-h> tabmove -1
-bind <AC-l> tabmove +1
+bind: <AC-1> "Move tab to position 1" tabmove! 1
+bind: <AC-2> "Move tab to position 2" tabmove! 2
+bind: <AC-3> "Move tab to position 3" tabmove! 3
+bind: <AC-4> "Move tab to position 4" tabmove! 4
+bind: <AC-5> "Move tab to position 5" tabmove! 5
+bind: <AC-6> "Move tab to position 6" tabmove! 6
+bind: <AC-7> "Move tab to position 7" tabmove! 7
+bind: <AC-8> "Move tab to position 8" tabmove! 8
+bind: <AC-9> "Move tab to position 9" tabmove! 9
+bind: <AC-0> "Move tab to final position" tabmove! 0
+bind: <AC-h> "Move tab one position to right" tabmove -1
+bind: <AC-l> "Move tab one position to left"  tabmove +1
 
 " ╭─────────────────────╮
 " │ w -- window/browser │
 " ╰─────────────────────╯
 unbind w
 
+commdoc copyuserchrome "Copy userChrome.js from .tridactyl/css to default profile"
 command copyuserchrome ! cp -v ~/.tridactyl/css/userChrome.css `echo ~/.mozilla/firefox/*.default`
-command rmuserchrome ! rm ~/.mozilla/firefox/*.default/userChrome.css
+command: rmuserchrome "Remove userChrome.js from default profile" ! rm ~/.mozilla/firefox/*.default/userChrome.css
 
 bind wc fillcmdline wincloseindex
-bind wm mute toggle
-bind wM mute all
-bind ww fillcmdline winopen
-bind wr source ~/.tridactyl/tridactylrc
-bind wsu copyuserchrome
-bind wsU composite copyuserchrome ; restart
-" toggle tab bar
-bind wtt xdo key ctrl+B
-" dismiss update notification
-bind wx xdo mousemove 1740 230 click 1
+
+" | wk -- bookmarks |
+bind wk<C-h> showkeys wk
+
+bind: wm "Toggle mute tab" mute toggle
+bind: wM "Mute all tabs" mute all
+bind: wr "Reload tridactylrc file" source ~/.tridactyl/tridactylrc
+bind: wsu "Copy userChrome.css from .tridactyl/css to default profile directory" copyuserchrome
+bind: wsU "Copy userChrome.css and restart browser" composite copyuserchrome ; restart
+
+bind: wtt "toggle tab bar" xdo key ctrl+B
+bind: ww "Open URL in new window" fillcmdline winopen
+bind: wx "dismiss update notification" xdo mousemove 1740 230 click 1
 
 
 " ╭─────────────╮

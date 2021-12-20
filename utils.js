@@ -370,6 +370,17 @@ utils.tri = {
         return utils.yankWithMsg(cmds.join("\n"));
     },
 
+    docdef: function(args) {
+        const argstr = args.join(" ").trim();
+        const docdefRe = /^([a-zA-Z_!:]+) ([^ ]+) "([^"]*)" (.*)/;
+        const match = argstr.match(docdefRe);
+        [defCmd, key, desc, rest] = match.slice(1);
+        /* TODO: implement documentation system */
+        /* for now, extract descriptions statically from file */
+        tri.controller.acceptExCmd(`${defCmd} ${key} ${rest}`);
+    },
+
+
     gotoCommandSource: function(s) {
         const repo = "~/source/git-repos/tridactyl";
         const cmd = `grep -inP 'export (async )?function ${s}[(]' ${repo}/src/excmds.ts`;
