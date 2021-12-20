@@ -3,6 +3,14 @@
 // ╰────────────────────────────────────────────╯
 
 var apps = {
+    bmrofi: async function(args) {
+        const [where, bg, ...switches] = utils.tri.parseArgs(args);
+        const switchstr = switches?.length ? switches.join(" ") : "-s -u";
+        const cmd = `kwsearch ${switchstr}`;
+        return tri.native.run(cmd).then(
+            res => utils.tab.open(res.content, {where: where||"last", background: bg==="t"})
+        );
+    },
 
     convertUnits: function(args) {
         args = args.filter(a=> a.trim()!== "");
@@ -37,6 +45,15 @@ var apps = {
         const [kw, ...rest] = utils.tri.parseArgs(args);
         return tri.native.run(`kwsearch -K ${kw} ${rest.join(" ")||"''"}`).then(
             res => utils.tab.open(res.content, opts));
+    },
+
+    kwrofi: async function(args, opts={where: "last"}) {
+        const switches = opts?.switches || "-u -k -s";
+        const where = opts.where || "last";
+        const cmd = `kwsearch ${switches} ${args.join?.(" ")?.trim()}`;
+        return tri.native.run(cmd).then(
+            res => utils.tab.open(res.content, opts)
+        );
     },
 
     sunriseSunset: function(lat, long) {

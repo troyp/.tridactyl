@@ -241,11 +241,17 @@ unbind w
 commdoc copyuserchrome "Copy userChrome.js from .tridactyl/css to default profile"
 command copyuserchrome ! cp -v ~/.tridactyl/css/userChrome.css `echo ~/.mozilla/firefox/*.default`
 command: rmuserchrome "Remove userChrome.js from default profile" ! rm ~/.mozilla/firefox/*.default/userChrome.css
+commdoc bmrofi "[WHERE? BG? OPTS?] Open bookmark via rofi"
+command bmrofi jsb -d¦ apps.bmrofi(JS_ARGS)¦
 
 bind wc fillcmdline wincloseindex
 
 " | wk -- bookmarks |
 bind wk<C-h> showkeys wk
+bind: wkk "Open bookmark in last tab [Rofi]" bmrofi
+bind: wka "Open bookmark in adjacent tab [Rofi]" bmrofi related
+bind: wkb "Open bookmark in background adjacent tab [Rofi]" bmrofi related t
+bind: wko "Open bookmark in current tab [Rofi]" bmrofi here
 
 bind: wm "Toggle mute tab" mute toggle
 bind: wM "Mute all tabs" mute all
@@ -264,17 +270,24 @@ bind: wx "dismiss update notification" xdo mousemove 1740 230 click 1
 unbind s
 unbind /
 
-command kwsearch       jsb -d¦ apps.kwsearch(JS_ARGS)¦
-command kwsearch_adj   jsb -d¦ apps.kwsearch(JS_ARGS, {where: "related"})¦
-command kwsearch_bg    jsb -d¦ apps.kwsearch(JS_ARGS, {where: "related", background: true})¦
-command kwsearch_here  jsb -d¦ apps.kwsearch(JS_ARGS, {where: "here"})¦
+commdoc kwsearch "Keyword bookmark search in last tab"
+command kwsearch jsb -d¦ apps.kwsearch(JS_ARGS)¦
+commdoc kwsearch_adj "Keyword bookmark search in adjacent tab"
+command kwsearch_adj jsb -d¦ apps.kwsearch(JS_ARGS, {where: "related"})¦
+commdoc kwsearch_bg   "Keyword bookmark search in background adjacent tab"
+command kwsearch_bg   jsb -d¦ apps.kwsearch(JS_ARGS, {where: "related", background: true})¦
+commdoc kwsearch_here "Keyword bookmark search in current tab"
+command kwsearch_here jsb -d¦ apps.kwsearch(JS_ARGS, {where: "here"})¦
+commdoc kwrofi "Keyword bookmark search in current tab [Rofi]"
+command kwrofi jsb -d¦ apps.kwrofi(JS_ARGS)¦
 
 bind s<C-h> showkeys s
 bind sk<C-h> showkeys sk
-bind ska fillcmdline kwsearch_adj
-bind skb fillcmdline kwsearch_bg
-bind skk fillcmdline kwsearch
-bind sko fillcmdline kwsearch_here
+bind: ska "Search by bookmark keyword in adjacent tab" fillcmdline kwsearch_adj
+bind: skb "Search by bookmark keyword in background adjacent tab" fillcmdline kwsearch_bg
+bind: skk "Search by bookmark keyword in last tab" fillcmdline kwsearch
+bind: sko "Search by bookmark keyword in current tab" fillcmdline kwsearch_here
+bind: sks "Search by bookmark keyword in last tab [Rofi]" fillcmdline kwrofi
 
 bind ss fillcmdline open search
 bind s/ fillcmdline find
