@@ -206,7 +206,6 @@ unbind w
 
 command copyuserchrome ! cp -v ~/.tridactyl/css/userChrome.css `echo ~/.mozilla/firefox/*.default`
 command rmuserchrome ! rm ~/.mozilla/firefox/*.default/userChrome.css
-command wincloseindex js -p browser.windows.getAll().then(v=>console.log(v[JS_ARG]))
 
 bind wc fillcmdline wincloseindex
 bind wm mute toggle
