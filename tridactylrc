@@ -420,6 +420,15 @@ bind ,amm tabopenorswitchc https://mail.google.com/mail/u/0/h/1f0xqcpo2pdl3/?f=1
 bind ,amM tabopenorswitchc https://mail.google.com/mail/u/0/#inbox
 bind ,amy tabopenorswitchc https://au.mail.yahoo.com/d/folders/1
 
+" | ,av -- AV |
+
+bind ,av<C-h> showkeys ,av
+bind: ,ava "AccuRadio Classical" tabopenorswitchc https://www.accuradio.com/classical/
+bind: ,avd "Open Disney Plus" tabopenorswitchc https://www.disneyplus.com/en-gb/home
+bind: ,avn "Open Netflix" tabopenorswitchc https://www.netflix.com/
+bind: ,avp "Goto Amazon Prime Video" tabopenorswitchc https://www.primevideo.com/storefront/home/ref=atv_nb_logo
+bind: ,avy "Goto Youtube" tabopenorswitchc https://www.youtube.com/
+
 " | ,aw -- web/weather |
 bind ,aw<C-h> showkeys ,aw
 " Show Goonellabah Sunrise and Sunset Times
@@ -428,7 +437,6 @@ bind ,aws jsb var [sr,ss]=apps.sunriseSunset(...user.latlong); utils.yankWithMsg
 bind ,aww tabopenorswitchc http://www.bom.gov.au/nsw/forecasts/lismore.shtml
 " Open Goonellabah Weather (timeanddate.com)
 bind ,awt tabopenorswitchc https://www.timeanddate.com/weather/@2164966
-
 
 " | ,c -- command-line |
 command cmdYankHistoryItem jsb -d¦ utils.tri.cmdYankHistory(utils.tri.parseArgs(JS_ARGS))¦
