@@ -99,10 +99,12 @@ cat "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | jq -rc '
         } | {
             # select with rofi
             if [[ -n $select ]]; then
+                rofithemestr='#window {width: 80%;} #listview {lines: 25;}';
                 if [[ $select == kw ]]; then
-                    rofi -dmenu -i -no-custom;
+
+                    rofi -theme-str "$rofithemestr" -dmenu -i -no-custom -filter '"kw":"';
                 else
-                    rofi -dmenu -i -no-custom;
+                    rofi -theme-str "$rofithemestr" -dmenu -i -no-custom;
                 fi;
             elif [[ -n $multi ]]; then
                 rofi -dmenu -i -no-custom -multi-select;
