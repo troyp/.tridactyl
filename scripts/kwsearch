@@ -79,17 +79,17 @@ KWSEARCH_YANKCMD=${KWSEARCH_YANKCMD:-xsel -ib};
 cat "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | jq -rc '
             recurse(.children[]?)
             | select(.uri)
-            | {title: .title, url: .uri, keyword: .keyword}
+            | {kw: .keyword, title: .title, url: .uri}
 ' | {
     # --keyword-only
     if [[ -n $kwonly ]]; then
-        jq -c 'select(.keyword)';
+        jq -c 'select(.kw)';
     else cat;
     fi;
 } | {
     # select by --find-keyword ?
     if [[ -n $kw ]]; then
-        jq -c "select(.keyword == \"$kw\")";
+        jq -c "select(.kw == \"$kw\")";
     else {
         # filter results
             # filter with regex
@@ -117,7 +117,7 @@ cat "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | jq -rc '
         jq -r '.url';
     elif [[ -n $tri ]]; then
         # tridactyl searchurl
-        \perl -pe 's/{"title":"(.*)","url":"(.*)","keyword":"(.*)"}/set searchurls.$3 $2/';
+        \perl -pe 's/{"kw":"(.*)","title":"(.*)","url":"(.*)"}/set searchurls.$1 $3/';
     else
         # JSON
         cat;
