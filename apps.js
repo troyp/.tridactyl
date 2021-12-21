@@ -56,6 +56,31 @@ var apps = {
         );
     },
 
+    multipleEngineSearch: async function(argstr, opts={}) {
+        opts.where ||= "last";
+        opts.background ??= true;
+        const args = utils.tri.parseTerms(argstr);
+        const query = args.slice(-1)[0];
+        const searchEngines = args.slice(0, -1);
+        if (searchEngines.length==0) {
+            utils.tab.open(query, opts);
+        } else {
+            if (opts.where!=="related") searchEngines.reverse();
+            searchEngines.forEach(s => apps.kwsearch([s, query], opts));
+        }
+    },
+
+    /* TODO: should I enforce the order of tabs? Or at least statistically
+     * encourage correct order by introducing a short delay?
+     */
+    multipleQuerySearch: async function(argstr, opts={}) {
+        opts.where ||= "last";
+        opts.background ??= true;
+        const [searchEngine, ...queries] = utils.tri.parseTerms(argstr);
+        if (opts.where!=="related") queries.reverse();
+        queries.forEach(q => apps.kwsearch([searchEngine, q], opts));
+    },
+
     sunriseSunset: function(lat, long) {
         const times = SunCalc.getTimes(new Date(), lat, long);
         return [sunrise, sunset] = [times.sunrise, times.sunset].map(t=>t.toTimeString());
