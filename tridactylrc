@@ -302,6 +302,11 @@ bind N findnext
 bind ? fillcmdline find -?
 bind <C-/> clearsearchhighlight
 
+" */#: Temporary implementation using find
+" TODO: implement these properly with forwards/backwards cycling
+bind * js tri.controller.acceptExCmd(`find ${window.getSelection()+""}`);
+bind # js tri.controller.acceptExCmd(`find -? ${window.getSelection()+""}`);
+
 " ╭───────────────╮
 " │ <C-h> -- help │
 " ╰───────────────╯
