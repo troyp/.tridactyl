@@ -561,6 +561,8 @@ bind --mode=input   <C-h>    text.delete_backward_char
 bind --mode=ex      <C-y>    composite getclip selection | text.insert_text
 bind --mode=insert  <C-y>    composite getclip selection | text.insert_text
 bind --mode=input   <C-y>    composite getclip selection | text.insert_text
+ibind: <A-;> "Switch to last accessed tab" tabswitchprev
+ibind: <A-:> "Switch to last accessed tab and close current tab" tabswitchprev!
 
 " src/libs/commandline_cmds.ts
 bind --mode=ex  <C-n>      ex.next_history
@@ -569,6 +571,8 @@ bind --mode=ex  <Tab>      ex.next_completion
 bind --mode=ex  <S-Tab>    ex.prev_completion
 bind --mode=ex  <C-/>      ex.deselect_completion
 bind --mode=ex  <A-w>      ex.execute_ex_on_completion clipboard yank
+cbind: <A-;> "Switch to last accessed tab" tabswitchprev
+cbind: <A-:> "Switch to last accessed tab and close current tab" tabswitchprev!
 
 bind --mode=insert  <C-m>    withjsb user.email      | text.insert_text
 bind --mode=insert  <C-M>    withjsb user.email2     | text.insert_text
@@ -583,6 +587,13 @@ bind --mode=insert  <C-B>    withjsb user.mobile     | text.insert_text
 bind --mode=insert  <C-Z>    withjsb user.postcode   | text.insert_text
 bind --mode=insert  <C-Q>    withjsb user.masterpw   | text.insert_text
 bind --mode=insert  <C-C>    withjsb user.creditcard | text.insert_text
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────────╮
+" │ Visual-mode bindings │
+" ╰──────────────────────╯
+vbind: <A-;> "Switch to last accessed tab" tabswitchprev
+vbind: <A-:> "Switch to last accessed tab and close current tab" tabswitchprev!
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮
