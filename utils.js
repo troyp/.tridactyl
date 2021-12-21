@@ -408,6 +408,15 @@ utils.tri = {
         );
     },
 
+    generateMarkBindings: async function(markPref="m", gotoMarkPref="'") {
+        tri.R.range(97,123).
+            map(i=>String.fromCharCode(i)).
+            forEach(c=>{
+                tri.excmds.bind(gotoMarkPref+c, `js window.scrollTo(0,window._tri_reg_${c})`);
+                tri.excmds.bind(markPref+c, `js window._tri_reg_${c}=window.scrollY`)
+            });
+    },
+
     myfocusinput: function(arg) { const n = Number(arg)||"-l"; tri.excmds.focusinput(n); },
 
     parseArgs: function(args, opts={}) {
