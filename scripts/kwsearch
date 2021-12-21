@@ -7,6 +7,18 @@
 # │            │
 # ╰────────────╯
 
+# ╭───────────╮
+# │ variables │
+# ╰───────────╯
+unset kw
+
+filter=
+kwonly=
+multi=
+select=
+url=
+yank=
+
 # ╭─────────╮
 # │ options │
 # ╰─────────╯
@@ -88,7 +100,7 @@ cat "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | jq -rc '
     fi;
 } | {
     # select by --find-keyword ?
-    if [[ -n $kw ]]; then
+    if [[ -n ${kw+SET} ]]; then
         jq -c "select(.kw == \"$kw\")";
     else {
         # filter results
