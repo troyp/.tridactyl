@@ -130,7 +130,7 @@ utils.tab = {
             switch (opts.where) {
               case "last":
                   const N = await this.getN();
-                  newTab = await this.tabCreateWrapper({url: initurl, active: active, index: N-1});
+                  newTab = await this.tabCreateWrapper({url: initurl, active: active, index: N});
                   break;
               case "related":
                   newTab = await tri.webext.openInNewTab(initurl, {active: active, related: true});
