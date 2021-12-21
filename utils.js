@@ -430,6 +430,29 @@ utils.tri = {
         return [this.parseArgs(args, opts), count];
     },
 
+    /* Parse string into an array of terms by splitting on spaces except where
+     * multiple words are quoted
+     */
+    parseTerms: function(s) {
+        const words = s.split(" ");
+        var terms = [];
+        for (i=0; i<words.length; ++i) {
+            /* FIXME? case of an isolated quote surrounded by spaces */
+            /* TODO: proper parsing with escapes; decide how to treat mid-word quotes */
+            if (words[i].startsWith("\"")) {
+                const termwords = [words[i]];
+                if (words[i] == "\"") i++;
+                while (!words[i].endsWith("\"")) {
+                    i++;
+                    termwords.push(words[i]);
+                }
+                terms.push(termwords.join(" ").replace(/^"|"$/g, ""));
+            } else
+                terms.push(words[i]);
+        }
+        return terms;
+    },
+
     /* TODO: add description system and allow searching by description
      */
     searchConfig: function(key, term) {
