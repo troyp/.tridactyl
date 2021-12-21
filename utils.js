@@ -353,6 +353,21 @@ utils.tab = {
 // ╰─────────────────────────────────────────────────────────────────╯
 
 utils.tri = {
+    docBindMode: function(args) {
+        const argstr = args.join(" ").trim();
+        const bindmodeRe = /^([a-z]+) ([^ ]+) "([^"]*)" (.*)/;
+        const match = argstr.match(bindmodeRe);
+        [mode, key, desc, rest] = match.slice(1);
+        /* TODO: implement documentation system */
+        /* for now, extract descriptions statically from file */
+        if (mode=="i") {
+            tri.controller.acceptExCmd(`bind --mode=insert ${key} ${rest}`);
+            tri.controller.acceptExCmd(`bind --mode=input ${key} ${rest}`);
+        } else {
+            tri.controller.acceptExCmd(`bind --mode=${mode} ${key} ${rest}`);
+        }
+    },
+
     /* cmdYankHistory :: number|string|array -> IO string
      */
     cmdYankHistory: function(args) {

@@ -28,8 +28,13 @@ jsb tri.sprintf = sprintf
 command docdef jsb -d¦ utils.tri.docdef(JS_ARGS)¦
 " Define command with description - doesn't work with `js -d`/`jsb -d` commands
 command command: docdef command
+commdoc docbindmode "bind for mode with description"
+command docbindmode jsb -d¦ utils.tri.docBindMode(JS_ARGS)¦
 
 command: bind: "bind with description" docdef bind
+command: ibind: "bind for insert/input-mode with description" docbindmode i
+command: vbind: "bind for visual-mode with description" docbindmode visual
+command: cbind: "bind for ex-mode with description" docbindmode ex
 command: bindurl: "bind with description" docdef bindurl
 command: set: "set with description" docdef set
 command: setpref: "setpref with description" docdef setpref
