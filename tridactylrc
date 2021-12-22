@@ -219,6 +219,13 @@ bind: bms "move tab after active tab" fillcmdline tabsummon
 bind: bm> "move tab to start (first nonpinned position)" tabmove 0
 bind: bm< "move tab to end" tabmove 1
 
+" | br -- tabs/reload |
+bind br<C-h> showkeys br
+bind: bra "Reload all tabs" reloadall
+bind: brd "Reload dead tabs" reloaddead
+bind: bra "Reload all tabs except current" reloadallbut
+bind: brr "Reload COUNT tabs" reload
+bind: brR "Reload COUNT tabs and bypass cache" reloadhard
 
 bind: C "Duplicate tab" tabduplicate
 bind: <C-k> "Close all tabs to the right inclusive" composite tabclosealltoright ; tabclose
