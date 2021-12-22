@@ -417,7 +417,7 @@ utils.tri = {
             });
     },
 
-    myfocusinput: function(arg) { const n = Number(arg)||"-l"; tri.excmds.focusinput(n); },
+    myfocusinput: function(arg) { const n = arg ? Number(arg)-1 : "-l"; tri.excmds.focusinput(n); },
 
     parseArgs: function(args, opts={}) {
         if (typeof opts === "string") opts = { type: opts };

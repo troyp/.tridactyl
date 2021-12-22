@@ -118,10 +118,6 @@ bind: L "Move forward in tab history" forward
 bind: p "Open url in clipboard in new tab" clipboard tabopen
 bind: P "Open url in clipboard" clipboard open
 
-commdoc myfocusinput "Focus COUNTth input field"
-command myfocusinput jsb -d¦ utils.tri.myfocusinput(JS_ARGS.join(" "))¦
-bind: gi "Focus COUNTth input field" myfocusinput
-
 unbind x
 bind: X "Stop loading" stop
 
@@ -130,6 +126,11 @@ bind g<C-h> showkeys g
 bdoc gh "Open the previous item in tab history in an adjacent tab"
 bind gh jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goBack(t.id));
 
+commdoc myfocusinput "Focus last used (or COUNTth) input field"
+command myfocusinput jsb -d¦ utils.tri.myfocusinput(JS_ARGS.join(" "))¦
+bind: gi "Focus COUNTth input field" myfocusinput
+
+" | g; -- focus |
 bind g;<C-h> showkeys g;
 bind: g;; "Focus tab containing last focused input" changelistjump -1
 bind: g;i "Focus nth input on page" focusinput 2
