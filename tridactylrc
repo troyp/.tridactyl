@@ -178,6 +178,8 @@ commdoc xdoelem "Use xdotool to move to and act on element"
 command xdoelem jsb -d¦ utils.xdoelemWrapper(JS_ARGS.join(" "))¦
 commdoc pastef "Takes a format string and replaces ${S} with clipboard contents; used to pipe to another command"
 command pastef composite jsb -p tri.excmds.getclip().then(s=>JS_ARG.replace(/\$\{s\}/g, s))
+commdoc expaste "Execute commands in clipboard"
+command expaste jsb utils.cbread().then(s=>s.split("\n").forEach(c=>tri.controller.acceptExCmd(c)));
 
 " ╭───────────╮
 " │ b -- tabs │
