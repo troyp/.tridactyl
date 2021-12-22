@@ -27,7 +27,7 @@ var utils = {
         const indent = opts.contPrefix || "";
         const d = indent.length;
         var line, s = "";
-        for (line of lines) {
+        for (line of lines.map(String)) {
             s += line.substring(0, w) + "\n";
             line = line.slice(w);
             while (line!=="") {
@@ -436,6 +436,8 @@ utils.tri = {
         switch (opts.type) {
           case "string":
               return argstr; break;
+          case "number":
+              return Number(argstr) || null;
           case "array":
           default:
               return argstr.split(/ +/); break;
