@@ -85,9 +85,9 @@ var cutils = {
      * urltoggle(s1, s2, url, {re1, re2})    Replace regex1 with s2, or else regex2 with s1
      */
     urltoggle: function(s1, s2, url, opts={}) {
-        var patt1 = opts.re1 || s1;
-        var patt2 = opts.re2 || s2;
-        if (url.includes(patt1))
+        const patt1 = opts.re1 || s1;
+        const patt2 = opts.re2 || s2;
+        if (opts.re1 ? url.match(opts.re1) : url.includes(s1))
             return url.replace(patt1, s2);
         else
             return url.replace(patt2, s1);
