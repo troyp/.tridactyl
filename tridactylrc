@@ -421,7 +421,8 @@ unbind a
 bind a<C-h> showkeys a
 bind ac withurl ! /usr/local/bin/google-chrome
 bind af withurl ! /opt/waterfox/waterfox --new-tab
-
+bdoc aw "Toggle wayback machine"
+bind aw urltoggle https://web.archive.org/web/https: https: https?://web.archive.org/web/[^:]+/https?: https?:
 
 " | a; -- apps/hints |
 bind a;<C-h> showkeys a;
