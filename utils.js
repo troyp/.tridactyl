@@ -28,7 +28,11 @@ var utils = {
                 line = line.slice(w-d);
             }
         }
-        const s_ = s.replace(/\n/g, "\\n").replace(/\t/g, "\\t").replace(/'/g, "\\'").replace(/ /g, "\\ ");
+        const s_ = s
+              .replace(/\n/g, "\\n")
+              .replace(/\t/g, "\\t")
+              .replace(/'/g, "\\'")
+              .replace(/ /g, "\\ ");
         tri.controller.acceptExCmd(`js alert('${s_}')`);
         return s;
     },
@@ -413,7 +417,7 @@ utils.tri = {
             map(i=>String.fromCharCode(i)).
             forEach(c=>{
                 tri.excmds.bind(gotoMarkPref+c, `js window.scrollTo(0,window._tri_reg_${c})`);
-                tri.excmds.bind(markPref+c, `js window._tri_reg_${c}=window.scrollY`)
+                tri.excmds.bind(markPref+c, `js window._tri_reg_${c}=window.scrollY`);
             });
     },
 

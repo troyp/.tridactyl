@@ -201,14 +201,17 @@ bind: <C-e> "Switch to last tab" tablast
 
 bind b<C-h> showkeys b
 bind: bb "Switch to tab from completion list" fillcmdline tab
+bind: bp "Pin/unpin tab" pin
+bind: b> "Close all tabs to the right" tabclosealltoright
+bind: b< "Close all tabs to the left"  tabclosealltoleft
 
-" | bd -- tabs : delete |
+" | bd -- tabs/delete |
 bind bd<C-h> showkeys bd
 bind: bdm "Close tabs matching string" fillcmdline tabremove
 bind: bd;m "Close tabs not matching string" fillcmdline tabfilter
 bind: bdo "Close other tabs" tabonly
 
-" | bm -- tabs : move |
+" | bm -- tabs/move |
 bind bm<C-h> showkeys bm
 bind: bmA "move alternate tab after active tab" tabsummonalt
 bind: bmm "move tab to position" fillcmdline tabmove!
@@ -216,9 +219,6 @@ bind: bms "move tab after active tab" fillcmdline tabsummon
 bind: bm> "move tab to start (first nonpinned position)" tabmove 0
 bind: bm< "move tab to end" tabmove 1
 
-bind: bp "Pin/unpin tab" pin
-bind: b> "Close all tabs to the right" tabclosealltoright
-bind: b< "Close all tabs to the left"  tabclosealltoleft
 
 bind: C "Duplicate tab" tabduplicate
 bind: <C-k> "Close all tabs to the right inclusive" composite tabclosealltoright ; tabclose
