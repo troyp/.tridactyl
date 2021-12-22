@@ -286,10 +286,14 @@ commdoc kwsearch_here "Keyword bookmark search in current tab"
 command kwsearch_here jsb -d¦ apps.kwsearch(JS_ARGS, {where: "here"})¦
 commdoc kwrofi "Keyword bookmark search in current tab [Rofi]"
 command kwrofi jsb -d¦ apps.kwrofi(JS_ARGS)¦
-command multisearch jsb -d¦ apps.multipleQuerySearch(JS_ARGS.join(" ").trim())¦
-command multienginesearch jsb -d¦ apps.multipleEngineSearch(JS_ARGS.join(" ").trim())¦
-command multisearch_adj jsb -d¦ apps.multipleQuerySearch(JS_ARGS.join(" ").trim(), {where: "related"})¦
-command multienginesearch_adj jsb -d¦ apps.multipleEngineSearch(JS_ARGS.join(" ").trim(), {where: "related"})¦
+commdoc multisearch "Search multiple queries"
+command multisearch jsb -d¦ apps.multipleQuerySearch(JS_ARGS)¦
+commdoc multienginesearch "Search multiple engines with same query"
+command multienginesearch jsb -d¦ apps.multipleEngineSearch(JS_ARGS)¦
+commdoc multisearch_adj "Search multiple queries in adjacent tabs"
+command multisearch_adj jsb -d¦ apps.multipleQuerySearch(JS_ARGS, {where: "related"})¦
+commdoc multienginesearch_adj "Search multiple engines with same query in adjacent tabs"
+command multienginesearch_adj jsb -d¦ apps.multipleEngineSearch(JS_ARGS, {where: "related"})¦
 
 bind s<C-h> showkeys s
 bind sk<C-h> showkeys sk

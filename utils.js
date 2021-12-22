@@ -446,8 +446,9 @@ utils.tri = {
     /* Parse string into an array of terms by splitting on spaces except where
      * multiple words are quoted
      */
-    parseTerms: function(s) {
-        const words = s.split(" ");
+    parseTerms: function(args) {
+        const argstr = typeof args==="string" ? args : args.join(" ").trim();
+        const words = argstr.split(" ");
         var terms = [];
         for (i=0; i<words.length; ++i) {
             /* FIXME? case of an isolated quote surrounded by spaces */

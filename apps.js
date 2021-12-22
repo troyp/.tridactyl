@@ -56,10 +56,10 @@ var apps = {
         );
     },
 
-    multipleEngineSearch: async function(argstr, opts={}) {
+    multipleEngineSearch: async function(rawargs, opts={}) {
         opts.where ||= "last";
         opts.background ??= true;
-        const args = utils.tri.parseTerms(argstr);
+        const args = utils.tri.parseTerms(rawargs);
         const query = args.slice(-1)[0];
         const searchEngines = args.slice(0, -1);
         if (searchEngines.length==0) {
@@ -73,10 +73,10 @@ var apps = {
     /* TODO: should I enforce the order of tabs? Or at least statistically
      * encourage correct order by introducing a short delay?
      */
-    multipleQuerySearch: async function(argstr, opts={}) {
+    multipleQuerySearch: async function(rawargs, opts={}) {
         opts.where ||= "last";
         opts.background ??= true;
-        const [searchEngine, ...queries] = utils.tri.parseTerms(argstr);
+        const [searchEngine, ...queries] = utils.tri.parseTerms(rawargs);
         if (opts.where!=="related") queries.reverse();
         queries.forEach(q => apps.kwsearch([searchEngine, q], opts));
     },
