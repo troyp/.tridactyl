@@ -3,6 +3,13 @@
 // ╰─────────────────────────────────────────────╯
 
 var utils = {
+    cbread: async function (index=0, options={}) {
+        const s = ( index )
+              ? (await tri.native.run(`copyq read ${index}`)).content
+              : await tri.native.clipboard("get");
+        return options.notrim ? s : s.trim();
+    },
+
     message: function(s, opts={}) {
         const s_ = (opts.prefix || "") + s;
         if (opts.temp) {
