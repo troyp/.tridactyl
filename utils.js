@@ -476,6 +476,20 @@ utils.tri = {
         return terms;
     },
 
+    pasten: async function(args, opts={}) {
+        if (typeof opts == "string") opts = {where: opts};
+        opts.where ??= "last";
+        const n = this.parseArgs(args, {type: "number"})||1;
+        if (opts.where=="here") {
+            utils.cbread(0).then(s=>utils.tab.open(s, "here"));
+            for (i=1; i<(n||1); ++i)
+                utils.cbread(i).then(s=>utils.tab.open(s, {where: "related", background: true}));
+        } else {
+            for (i=0; i<(n||1); ++i)
+                utils.cbread(i).then(s=>utils.tab.open(s, opts));
+        }
+    },
+
     /* TODO: add description system and allow searching by description
      */
     searchConfig: function(key, term) {
