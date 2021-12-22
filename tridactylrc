@@ -200,7 +200,7 @@ bind: <C-a> "Switch to first tab" tabfirst
 bind: <C-e> "Switch to last tab" tablast
 
 bind b<C-h> showkeys b
-bind bb "Switch to tab from completion list" fillcmdline tab
+bind: bb "Switch to tab from completion list" fillcmdline tab
 
 " | bd -- tabs : delete |
 bind bd<C-h> showkeys bd
