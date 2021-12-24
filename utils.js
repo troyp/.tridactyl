@@ -54,7 +54,7 @@ var utils = {
              xdocmd: xdotool commands. Optionally, other shell commands may follow, separated by
                  semicolons (must be escaped if surrounded by spaces).
         */
-        if (!selector.startsWith("-")) selector = "-c " + selector;
+        if (selector && !selector.startsWith("-")) selector = "-c " + selector;
         const excmd = `hint ${selector} -F e => {` +
             "const pos=tri.dom.getAbsoluteCentre(e), dpr=window.devicePixelRatio; tri.native.run(" +
             "`xdotool mousemove ${dpr*pos.x} ${dpr*pos.y};" +
