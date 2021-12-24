@@ -274,7 +274,7 @@ utils.tab = {
         const dmenuInput = alltabsitems.join("\n");
         const cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -width 80 -format ${opts.format} -p "${opts.prompt}" -multi-select -i`;
         return tri.native.run(cmd).then(
-            res => res.content.trim().split("\n")
+            res => res.content.trim().split("\n").map(Number)
         );
     },
 
