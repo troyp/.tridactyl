@@ -137,19 +137,6 @@ bind g<C-h> showkeys g
 bdoc gh "Open the previous item in tab history in an adjacent tab"
 bind gh jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goBack(t.id));
 
-commdoc myfocusinput "Focus COUNTth input field"
-command myfocusinput jsb -d¦ utils.tri.myfocusinput(JS_ARGS.join(" "))¦
-bind: gi "Focus COUNTth input field" myfocusinput
-
-" | g; -- focus |
-bind g;<C-h> showkeys g;
-bind: g;; "Focus tab containing last focused input" changelistjump -1
-bind: g;i "Focus nth input on page" focusinput 2
-bind: g;b "Focus biggest input field on page" focusinput -b
-bind: g;n "Focus input on page after last focused one" focusinput -n
-bind: g;N "Focus input on page before last focused one" focusinput -N
-bind: g;p "Focus first password input field on page" focusinput -p
-
 bind: <C-v> "Enter ignore mode (disable tridactyl bindings)" nmode ignore 1 mode normal
 bind: <C-z> "Enter ignore mode for one keybinding (disable tridactyl bindings)" mode ignore
 
@@ -159,6 +146,21 @@ bind: <C-x><C-x> "Restart browser" restart
 
 bind: <A-=> "Increment current URL by 1" urlincrement 1
 bind: <A--> "Decrement current URL by 1" urlincrement -1
+
+" ╭─────────────╮
+" │ g; -- focus │
+" ╰─────────────╯
+commdoc myfocusinput "Focus COUNTth input field"
+command myfocusinput jsb -d¦ utils.tri.myfocusinput(JS_ARGS.join(" "))¦
+bind: gi "Focus COUNTth input field" myfocusinput
+
+bind g;<C-h> showkeys g;
+bind: g;; "Focus tab containing last focused input" changelistjump -1
+bind: g;i "Focus nth input on page" focusinput 2
+bind: g;b "Focus biggest input field on page" focusinput -b
+bind: g;n "Focus input on page after last focused one" focusinput -n
+bind: g;N "Focus input on page before last focused one" focusinput -N
+bind: g;p "Focus first password input field on page" focusinput -p
 
 " ╭──────────────────╮
 " │ general commands │
@@ -461,7 +463,9 @@ bind xrc winopen moz-extension://41d2b8bf-2a97-4468-87c8-f6243594c04c/options/op
 " ╰─────────────╯
 bind ,<C-h> showkeys ,
 
-" | ,a -- apps |
+" ╭────────────╮
+" │ ,a -- apps │
+" ╰────────────╯
 bind ,a<C-h> showkeys ,a
 " Open banking
 bind ,ab withjsb user.bankurl | tabopenorswitchc
@@ -470,7 +474,9 @@ bind ,ap tabopenorswitchc https://www.paypal.com/myaccount/home
 " Open MyGov
 bind ,ay tabopenorswitchc https://my.gov.au/LoginServices/main/login?execution=e1s1
 
-" | ,am -- mail/contacts |
+" ╭──────────────────────╮
+" │ ,am -- mail/contacts │
+" ╰──────────────────────╯
 bind ,am<C-h> showkeys ,am
 bind ,amc tabopenorswitchc https://contacts.google.com/?hl=en&tab=mC
 bind ,amC tabopenorswitchc https://mail.google.com/mail/u/0/h/k4067n2i55u9/?&v=cl
@@ -478,8 +484,9 @@ bind ,amm tabopenorswitchc https://mail.google.com/mail/u/0/h/1f0xqcpo2pdl3/?f=1
 bind ,amM tabopenorswitchc https://mail.google.com/mail/u/0/#inbox
 bind ,amy tabopenorswitchc https://au.mail.yahoo.com/d/folders/1
 
-" | ,av -- AV |
-
+" ╭───────────╮
+" │ ,av -- AV │
+" ╰───────────╯
 bind ,av<C-h> showkeys ,av
 bind: ,ava "AccuRadio Classical" tabopenorswitchc https://www.accuradio.com/classical/
 bind: ,avd "Open Disney Plus" tabopenorswitchc https://www.disneyplus.com/en-gb/home
@@ -487,7 +494,9 @@ bind: ,avn "Open Netflix" tabopenorswitchc https://www.netflix.com/
 bind: ,avp "Goto Amazon Prime Video" tabopenorswitchc https://www.primevideo.com/storefront/home/ref=atv_nb_logo
 bind: ,avy "Goto Youtube" tabopenorswitchc https://www.youtube.com/
 
-" | ,aw -- web/weather |
+" ╭────────────────────╮
+" │ ,aw -- web/weather │
+" ╰────────────────────╯
 bind ,aw<C-h> showkeys ,aw
 " Show Goonellabah Sunrise and Sunset Times
 bind ,aws jsb var [sr,ss]=apps.sunriseSunset(...user.latlong); utils.yankWithMsg(`SUNRISE: ${sr}\nSUNSET:  ${ss}`);
@@ -496,7 +505,9 @@ bind ,aww tabopenorswitchc http://www.bom.gov.au/nsw/forecasts/lismore.shtml
 " Open Goonellabah Weather (timeanddate.com)
 bind ,awt tabopenorswitchc https://www.timeanddate.com/weather/@2164966
 
-" | ,c -- command-line |
+" ╭────────────────────╮
+" │ ,c -- command-line │
+" ╰────────────────────╯
 command cmdYankHistoryItem jsb -d¦ utils.tri.cmdYankHistory(utils.tri.parseArgs(JS_ARGS))¦
 command cmdYankHistoryItems jsb -d¦ utils.tri.cmdYankHistoryLastN(JS_ARGS[1]||1)¦
 
@@ -505,7 +516,9 @@ bind ,cc cmdYankHistoryItem
 bind ,cC cmdYankHistoryItems
 bind ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word
 
-" | ,e -- javascript eval |
+" ╭───────────────────────╮
+" │ ,e -- javascript eval │
+" ╰───────────────────────╯
 command jse js -d¦ alert(eval(JS_ARGS.join(" ")))¦
 command getproperties js -d¦ alert(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
 command jsbe jsb -d¦ tri.excmds.jsb(`tri.excmds.fillcmdline_nofocus(${JS_ARGS.join(" ")})`)¦
@@ -518,7 +531,9 @@ bind ,ee fillcmdline jse
 bind ,ep fillcmdline getproperties
 bind ,es fillcmdline getselector
 
-" | ,j -- japanese |
+" ╭────────────────╮
+" │ ,j -- japanese │
+" ╰────────────────╯
 bind ,j<C-h> showkeys ,j
 " Jisho kanji search (hints)
 bind ,jf js window._dactylargs=[jishoKanjiSearch]; hints.show('カ');
@@ -536,14 +551,18 @@ bind ,jkr tabopenorswitchc https://jisho.org/#radical
 " Visual Kanji Search - similar kanji (clipboard)
 bind ,jkv pastef https://thekanjimap.com/index.html?k=${s} | tabopenorswitchc
 
-" | ,v -- conversion |
+" ╭──────────────────╮
+" │ ,v -- conversion │
+" ╰──────────────────╯
 command convertunits jsb -d¦ apps.convertUnits(JS_ARGS).then(s=>tri.excmds.fillcmdline_nofocus(s))¦
 bind ,vv fillcmdline convertunits
 
 command copytablecols withjs -s ~/.tridactyl/cutils.js ; js -d¦ tri.controller.acceptExCmd(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}]), {useAlert:true})`)¦
 command copytablecols_strict withjs -s ~/.tridactyl/cutils.js ; js -d¦ tri.excmds.fillcmdline(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}], {strict:true}), {useAlert:true})`)¦
 
-" | ,x -- miscellaneous |
+" ╭─────────────────────╮
+" │ ,x -- miscellaneous │
+" ╰─────────────────────╯
 bind ,x<C-h> showkeys ,x
 bind ,xt<C-h> showkeys ,xt
 bind ,xtc fillcmdline copytablecols
@@ -559,7 +578,9 @@ bind ,,c hint -c [class*="expand"],[class="togg"]
 bind ,,x xdoelem -F -e click 2
 bind ,,m xdoelem -F -e click 3
 
-" | ,,f -- numeric hints: allow alphabetic filtering |
+" ╭──────────────────────────────────────────────────╮
+" │ ,,f -- numeric hints: allow alphabetic filtering │
+" ╰──────────────────────────────────────────────────╯
 bind ,,f<C-h> showkeys ,,f
 bind ,,fb  composite set hintchars 0123456789 ; hint -b ; unset hintchars
 bind ,,ff  composite set hintchars 0123456789 ; hint ; unset hintchars
