@@ -575,8 +575,8 @@ bind ,,<C-h> showkeys ,,
 bind ,,c hint -c [class*="expand"],[class="togg"]
 
 " middle and right click using xdotool
-bind ,,x xdoelem -F -e click 2
-bind ,,m xdoelem -F -e click 3
+bind ,,x xdoelem -e click 2
+bind ,,m xdoelem -e click 3
 
 " ╭──────────────────────────────────────────────────╮
 " │ ,,f -- numeric hints: allow alphabetic filtering │
