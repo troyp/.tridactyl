@@ -1,0 +1,69 @@
+#! /bin/bash
+
+# ───────────────────────────────────────────────────────────────────────────────
+# ╭───────╮
+# │ setup │
+# ╰───────╯
+
+cd ${TRI_CONFIG_DIR:-$XDG_CONFIG_HOME}
+
+categories=
+
+# ───────────────────────────────────────────────────────────────────────────────
+# ╭─────────╮
+# │ options │
+# ╰─────────╯
+
+SHORT="h,b,c,p,s"
+LONG="help,bindings,commands,prefix-headings,sections"
+PARSED=$(getopt -a -n kwsearch --options "$SHORT" --longoptions "$LONG" -- "$@")
+
+eval set -- "$PARSED"
+
+while :
+do
+    case "$1" in
+        (-h | --help)
+            cat <<EOF
+USAGE: tridoc [OPTION...]
+    Access tridactyl config documentation
+
+Options:
+  -h  --help               show help
+  -b  --bindings           show bindings
+  -c  --commands           show commands
+  -p  --prefix-headings    show prefix headings
+  -s  --sections           show sections
+EOF
+            exit 0
+            ;;
+        (-b | --bindings)           categories=${categories}b; shift ;;
+        (-c | --commands)           categories=${categories}c; shift ;;
+        (-p | --prefix-headings)    categories=${categories}p; shift ;;
+        (-s | --sections)           categories=${categories}s; shift ;;
+        (--) shift; break ;;
+        (*)  echo "unrecognized option: $1" >&2 ; exit 1 ;;
+    esac
+done
+
+# ───────────────────────────────────────────────────────────────────────────────
+# ╭───────────╮
+# │ main loop │
+# ╰───────────╯
+
+echo $categories | while read -n1 -r c && [[ -n $c ]]; do
+    case $c in
+        (b) echo TODO ;;
+        (c) echo TODO ;;
+        (p) for f in tridactylrc *.tri; do
+                if ! git check-ignore $f >/dev/null; then
+                    sed -nr 's/^"( [|│])? ([^ ]+) -- (.+[^|│])( [|│])?/\2 -- \3/p' $f
+                fi
+            done ;;
+        (s) for f in tridactylrc *.tri; do
+                if ! git check-ignore $f >/dev/null; then
+                    sed -nr 's/^"( [|│]) (.*)( [|│])/\2/p' $f
+                fi
+            done ;;
+    esac
+done
