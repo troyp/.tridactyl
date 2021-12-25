@@ -31,7 +31,7 @@ eval set -- "$PARSED"
 while :
 do
     case "$1" in
-        -h | --help)
+        (-h | --help)
             cat <<EOF
 USAGE: kwsearch [OPTION...]
        kwsearch [-k] [-m|-s] [-y] [SEARCHTERM...]
@@ -43,7 +43,7 @@ USAGE: kwsearch [OPTION...]
 
 Options:
   -f RE  --filter RE          filter bookmarks with RE
-  -h,    --help               show help
+  -h     --help               show help
   -k     --keyword-only       keyword bookmarks only
   -K KW  --find-keyword KW    find bookmark with keyword KW
   -m     --multi-select       choose multiple bookmarks with Rofi
