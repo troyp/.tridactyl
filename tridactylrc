@@ -30,6 +30,8 @@ command docdef jsb -d¦ utils.tri.docdef(JS_ARGS)¦
 command command: docdef command
 commdoc docbindmode "bind for mode with description"
 command docbindmode jsb -d¦ utils.tri.docBindMode(JS_ARGS)¦
+commdoc docbindurl "bindurl with description"
+command docbindurl jsb -d¦ utils.tri.docBindUrl(JS_ARGS)¦
 
 command: bind: "bind with description" docdef bind
 command: ibind: "bind for insert/input-mode with description" docbindmode i

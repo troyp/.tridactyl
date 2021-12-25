@@ -364,20 +364,6 @@ utils.tab = {
 // ╰─────────────────────────────────────────────────────────────────╯
 
 utils.tri = {
-    docBindMode: function(args) {
-        const argstr = args.join(" ").trim();
-        const bindmodeRe = /^([a-z]+) ([^ ]+) "([^"]*)" (.*)/;
-        const match = argstr.match(bindmodeRe);
-        [mode, key, desc, rest] = match.slice(1);
-        /* TODO: implement documentation system */
-        /* for now, extract descriptions statically from file */
-        if (mode=="i") {
-            tri.controller.acceptExCmd(`bind --mode=insert ${key} ${rest}`);
-            tri.controller.acceptExCmd(`bind --mode=input ${key} ${rest}`);
-        } else {
-            tri.controller.acceptExCmd(`bind --mode=${mode} ${key} ${rest}`);
-        }
-    },
 
     /* cmdYankHistory :: number|string|array -> IO string
      */
@@ -394,6 +380,28 @@ utils.tri = {
         n = Number(n)||1;
         const cmds = tri.state.cmdHistory.slice(-n);
         return utils.yankWithMsg(cmds.join("\n"));
+    },
+
+    docBindMode: function(args) {
+        const argstr = args.join(" ").trim();
+        const bindmodeRe = /^([a-z]+) ([^ ]+) "([^"]*)" (.*)/;
+        const match = argstr.match(bindmodeRe);
+        [mode, key, desc, rest] = match.slice(1);
+        /* TODO: implement documentation system */
+        /* for now, extract descriptions statically from file */
+        if (mode=="i") {
+            tri.controller.acceptExCmd(`bind --mode=insert ${key} ${rest}`);
+            tri.controller.acceptExCmd(`bind --mode=input ${key} ${rest}`);
+        } else {
+            tri.controller.acceptExCmd(`bind --mode=${mode} ${key} ${rest}`);
+        }
+    },
+
+    docBindUrl: function(args) {
+        const argstr = args.join(" ").trim();
+        const bindurlRe = /^([^ ]+) ([^ ]+) "([^"]*)" (.*)/;
+        const [site, key, desc, rest] = argstr.match(bindurlRe).slice(1);
+        tri.controller.acceptExCmd(`bindurl ${site} ${key} ${rest}`);
     },
 
     docdef: function(args) {
