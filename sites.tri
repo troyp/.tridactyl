@@ -81,6 +81,15 @@ ghbind cs;* ghtabsearchwrapper "search my stars [new tab]" https://github.com/${
 autocmd DocStart ^https?://medium\.com(/|$) urlmodify -r https?://medium\.com/? https://scribe.rip/
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────────╮
+" │ PrimeVideo.com │
+" ╰────────────────╯
+command: primevbind "Bind key for www.primevideo.com" bindurl https://www.primevideo.com
+command: primevbind: "Bind key with description for www.primevideo.com" docbindurl https://www.primevideo.com
+primevbind c<C-h> showkeysurl primevideo.com/ c
+primevbind: cc "Show episode" withcutils js fillcmdline_nofocus($1(".contentTitlePanel .subtitle").textContent)
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
 " │ Reddit.com │
 " ╰────────────╯
