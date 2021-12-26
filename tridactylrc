@@ -2,23 +2,26 @@
 " │ General │
 " ╰─────────╯
 
-sanitise tridactyllocal tridactylsync
-
-source ~/.tridactyl/sites.tri
-
-jsb -s ~/.tridactyl/utils.js
-jsb -s ~/.tridactyl/apps.js
+" general libraries
 jsb -s ~/.tridactyl/S.js
-jsb -s ~/.tridactyl/js/suncalc.js
 jsb -s ~/.tridactyl/js/sprintf.js
+" tridactyl-specific libraries
+jsb -s ~/.tridactyl/utils.js
+" app-specific libraries
+jsb -s ~/.tridactyl/js/suncalc.js
+" app-specific code
+jsb -s ~/.tridactyl/apps.js
+" site-specific code
 jsb -s ~/.tridactyl/sites.js
+source ~/.tridactyl/sites.tri
+" personal info
 jsb -s ~/.tridactyl/personal/personal.js
 
+jsb window.S = S
 jsb window.utils = utils
 jsb window.apps = apps
-jsb window.S = S
 jsb window.sites = sites
-jsb tri.sprintf = sprintf
+jsb window.sprintf = sprintf
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────────────────╮
@@ -449,7 +452,7 @@ bind: a;f "Open link in Waterfox" composite hint -pipe a href | ! /opt/waterfox/
 " ╰─────────────────╯
 bind x<C-h> showkeys x
 
-" |xr -- rikairebuilt |
+" | xr -- rikairebuilt |
 bind xr<C-h> showkeys xr
 " rikairebuilt toggle
 bind xrr xdo mousemove 1861 111 click 1
