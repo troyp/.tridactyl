@@ -48,6 +48,48 @@ var cutils = {
         return null;
     },
 
+    /**   $$t(SELECTOR, TEXT)
+     *    $$t(SELECTOR, TEXT, {context: CONTEXT})
+     *    $$t(SELECTOR, TEXT, CONTEXT)
+     *  Return an array of elements in subtree CONTEXT matching SELECTOR and matching TEXT.
+     *  TEXT may be either a string or a regular expression.
+     */
+    $$t: function(selector, text, opts={}) {
+        if (opts instanceof Node) opts = {context: opts};
+        const elems = this.$$(selector, opts);
+        return elems.filter(e=>e[opts.useInnerText ? "innerText" : "textContent"].match(text));
+    },
+
+    /** Return an element in subtree CONTEXT matching SELECTOR and matching TEXT.
+     */
+    $1t: function(selector, text, opts={}) {
+        if (opts instanceof Node) opts = {context: opts};
+        const elems = this.$$(selector, opts);
+        return elems.find(e=>e[opts.useInnerText ? "innerText" : "textContent"].match(text));
+    },
+
+    /** Clicks matching element(s). If successful, returns an array of clicked items.
+     *  If unsuccessful, returns null.
+     */
+    click: function(selector, opts={}) {
+        const elts = opts.match
+              ? $$(selector)
+              : $$t(selector, opts.match, {useInnerText: opts.useInnerText});
+        if (elts.length) {
+            if (opts.all) {
+                elts.forEach(e=>e.click());
+                return elts;
+            }
+            else {
+                elts[0].click();
+                return elts.slice(0,1);
+            }
+        } else {
+            return null;
+        }
+    },
+
+
     extractTableColumns: function(table, columns, opts={}) {
         var output = "";
         var rows = Array.from(table.rows).slice(1);
@@ -117,3 +159,5 @@ var cutils = {
 window.cutils = cutils;
 window.$$ = cutils.$$;
 window.$1 = cutils.$1;
+window.$$t = cutils.$$t;
+window.$1t = cutils.$1t;
