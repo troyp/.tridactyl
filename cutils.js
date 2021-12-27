@@ -125,6 +125,51 @@ var cutils = {
         return s;
     },
 
+    /**    rm(selector, opts):                     Remove matching elements
+     *     rm(selector, context:HTMLElement):      Remove matching elements under CONTEXT
+     *     rm(selector, ["firstMatch"]:[string]):  Remove first matching element
+     *     rm(selector, filter:e=>Bool):             Remove matching elements satisfying predicate FILTER
+     *     rm(selector, pattern:string|RegExp):    Remove matching elements with text matching PATTERN
+     *  opts.filter:        predicate that selected elements must satisfy
+     *  opts.firstMatch:    only remove the first matching element
+     *  opts.context:       the root element of the search; null for whole document
+     *  opts.match:         a regex or string that selected elements must match;
+     *  opts.useInnerText   opts.match tests against elements' innerText property rather than textContent
+     */
+    rm: function(selector, opts={}) {
+        /* selector */
+        if (Array.isArray(selector))
+            selector = selector.join(",");
+        /* opts */
+        if (Array.isArray(opts)) opts = opts.reduce((acc,e)=>(acc[e]=true) && acc, {});
+        else if (opts instanceof HTMLElement) opts = { context: opts };
+        else if (opts instanceof RegExp)      opts = { match: opts };
+        else if (typeof opts === "function")  opts = { filter: opts };
+        else if (typeof opts === "string")    opts = { match: opts };
+        /* pred */
+        function pred(e) {
+            const textProp = opts.useInnerText ? "innerText" : "textContent";
+            const match_ok  = !opts.match  || e[textProp].match(opts.match);
+            const filter_ok = !opts.filter || opts.filter(e);
+            return match_ok && filter_ok;
+        }
+        /* main logic */
+        if (opts.firstMatch) {
+            if ((elt = $$(selector, opts.context).find(pred))) {
+                elt.remove();
+                return elt;
+            } else
+                return null;
+        }
+        else {
+            const elts = $$(selector, opts.context).filter(pred);
+            elts.forEach(e=>e.remove());
+            return elts.length ? elts : null;
+        }
+    },
+
+    rmall: (...selectors)=>rm(selectors),
+
     /* urltoggle(s1, s2, url)                Replace s1 with s2, or else s2 with s1
      * urltoggle(s1, s2, url, {re1, re2})    Replace regex1 with s2, or else regex2 with s1
      */
