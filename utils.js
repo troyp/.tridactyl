@@ -439,7 +439,7 @@ utils.tri = {
     myfocusinput: function(arg) { const n = arg ? Number(arg)-1 : "-l"; tri.excmds.focusinput(n); },
 
     parseArgs: function(args, opts={}) {
-        if (typeof opts === "string") opts = { type: opts };
+        opts = this.parseOpts(opts, {castString: "type"});
         const argstr = args.join(" ").trim();
         switch (opts.type) {
           case "string":
@@ -458,6 +458,28 @@ utils.tri = {
         const countElem = hasCount && args.pop();
         const count = countElem && parseInt(countElem);
         return [this.parseArgs(args, opts), count];
+    },
+
+    /** options.castString:               if a string is passed for opts rather than an array, it
+     *                                    represents the value of the property opts[options.castString].
+     *  options.defaults.key=val:         if key if falsey, set to value
+     *  options.nullishDefaults.key=val:  if key is nullish, set to value
+     */
+    parseOpts: function(opts, options={}) {
+        if (options.castString && typeof opts == "string") {
+            const opts_ = {};
+            opts_[options.castString] = opts;
+            opts = opts_;
+        }
+        options.defaults ||= {};
+        options.nullishDefaults ||= {};
+        for (k in Object.keys(options.defaults)) {
+            opts[k] ||= options.defaults[k];
+        }
+        for (k in Object.keys(options.nullishDefaults)) {
+            opts[k] ??= options.nullishDefaults[k];
+        }
+        return opts;
     },
 
     /* Parse string into an array of terms by splitting on spaces except where
