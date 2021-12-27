@@ -67,6 +67,17 @@ var sites = {
         },
 
     },
+
+    wp: {
+        _site: "github.com",
+
+        episodeList: async function (s, opts={}) {
+            opts = utils.tri.parseOpts(opts, {castString:"where", defaults:{where: "last"}});
+            const sConv = S.toTitleCase(s, {forceInitialCapital: true}).replace(/\s+/, "_");
+            const url = `https://en.wikipedia.org/wiki/List_of_${sConv}_episodes`;
+            utils.tab.open(url, opts);
+        },
+    },
 };
 
 window.sites = sites;

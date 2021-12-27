@@ -556,6 +556,14 @@ bind ,jkr tabopenorswitchc https://jisho.org/#radical
 " Visual Kanji Search - similar kanji (clipboard)
 bind ,jkv pastef https://thekanjimap.com/index.html?k=${s} | tabopenorswitchc
 
+" ╭─────────────────╮
+" │ ,r -- reference │
+" ╰─────────────────╯
+command wpeplist jsb -d¦ sites.wp.episodeList(JS_ARGS.join(" "))¦
+
+" | ,rw -- wikipedia |
+bind ,rwe fillcmdline wpeplist
+
 " ╭───────────────╮
 " │ ,t -- toggles │
 " ╰───────────────╯
