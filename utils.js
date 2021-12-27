@@ -128,6 +128,7 @@ utils.tab = {
          * opts.where ["here" (default), "related", "next", "last"]: where to open new tab (if any)
          * opts.background: don't switch to new tab
          */
+        opts = this.parseOpts(opts, {castString: "where"});
         if (typeof opts == "string") opts = {where: opts};
         const thisTab = await tri.webext.activeTab();
         const legal = url.match(/^https?:/);
@@ -189,8 +190,7 @@ utils.tab = {
          * opts.closeCurrent [default: true if where=="here"]: whether to close current tab
          */
         if (!url) return null;
-        if (typeof opts == "string") opts = {where: opts};
-        opts.closeCurrent ??= (opts.where=="here");
+        opts = this.parseOpts(opts, {castString: "where", nullishDefaults:{where:"here"}});
         const currentTab = await tri.webext.activeTab();
         const testfn = opts.regex ? (t=> t.url.match(opts.regex)) : (t=> t.url.indexOf(url)>=0);
         if (testfn(currentTab)) return currentTab;
@@ -473,10 +473,10 @@ utils.tri = {
         }
         options.defaults ||= {};
         options.nullishDefaults ||= {};
-        for (k in Object.keys(options.defaults)) {
+        for (k of Object.keys(options.defaults)) {
             opts[k] ||= options.defaults[k];
         }
-        for (k in Object.keys(options.nullishDefaults)) {
+        for (k of Object.keys(options.nullishDefaults)) {
             opts[k] ??= options.nullishDefaults[k];
         }
         return opts;
@@ -507,8 +507,7 @@ utils.tri = {
     },
 
     pasten: async function(args, opts={}) {
-        if (typeof opts == "string") opts = {where: opts};
-        opts.where ??= "last";
+        opts = this.parseOpts(opts, {castString: "where", nullishDefaults:{where:"last"}});
         const n = this.parseArgs(args, {type: "number"})||1;
         if (opts.where=="here") {
             utils.cbread(0).then(s=>utils.tab.open(s, "here"));
