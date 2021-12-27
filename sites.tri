@@ -95,3 +95,46 @@ primevbind: cc "Show episode" cujs fillcmdline_nofocus($1(".contentTitlePanel .s
 " ╰────────────╯
 bindurl reddit.com/ c<C-h> showkeys c
 bindurl reddit.com/ cto urltoggle https://www.reddit.com https://old.reddit.com
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────────────╮
+" │ Woolworths.com.au │
+" ╰───────────────────╯
+command: woolbind "Bind key for woolworths.com.au" bindurl https://www.woolworths.com.au/
+command: woolbind: "Bind key with description for woolworths.com.au" docbindurl https://www.woolworths.com.au/
+command: woolbdoc "Provide a description on a separate line" js ;
+
+commdoc woolsearch "Search woolworths"
+command woolsearch jsb -d¦ sites.wool.search(JS_ARGS, "here")¦
+commdoc woolsearch_adj "Search woolworths (adjacent tab)"
+command woolsearch_adj jsb -d¦ sites.wool.search(JS_ARGS, "related")¦
+
+woolbind c<C-h> showkeysurl https://www.woolworths.com.au/ c
+
+" | co -- woolworths/open |
+woolbind co<C-h> showkeysurl https://www.woolworths.com.au/ co
+bdoc coc "Goto cart"
+woolbind coc cujs if (!cutils.click("button.close-button")) cutils.click("#header-checkout-cart-button")
+woolbind: coC "Goto checkout" openorsummon https://www.woolworths.com.au/shop/checkout
+woolbind: coo "Goto orders" openorsummon https://www.woolworths.com.au/shop/myaccount/myorders
+woolbind: cot "Open tracking in Chrome" jsb sites.wool.openTracking();
+
+" | cos -- woolworths/open/specials |
+woolbind cos<C-h> showkeysurl https://www.woolworths.com.au/ cos
+woolbdoc cosp "Goto pantry specials"
+woolbind cosp openorsummon https://www.woolworths.com.au/shop/browse/pantry/pantry-specials?pageNumber=1
+woolbind: cosh "Goto half-price specials" openorsummon https://www.woolworths.com.au/shop/browse/specials/half-price
+woolbind: coss "Goto specials" openorsummon "https://www.woolworths.com.au/shop/browse/specials"
+
+woolbdoc cn "Set no substitutions message for each item"
+woolbind cn cujs $$("input[type=checkbox]", $1("wow-checkout-cart")).forEach(e=> e.checked && e.click())
+
+" | cs -- woolworths/search |
+woolbind cs<C-h> showkeysurl https://www.woolworths.com.au/ cs
+woolbind: css "Search products in current tab" fillcmdline woolsearch
+woolbind: csa "Search products in adjacent tab" fillcmdline woolsearch_adj
+
+" | cx -- woolworths/miscellaneous |
+woolbind cx<C-h> showkeysurl https://www.woolworths.com.au/ cx
+woolbdoc cxh "Show only half-price products"
+woolbind cxh cujs $$(".product-grid--tile").forEach(e=>{!$1('img[alt="Half Price"]', e) && e.remove()});

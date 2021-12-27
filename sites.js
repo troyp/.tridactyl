@@ -1,5 +1,7 @@
 var sites = {
     gh: {
+        _site: "github.com",
+
         getAccountUser: function() {
             return user.username.github;
         },
@@ -66,6 +68,23 @@ var sites = {
             return tri.excmds.fillcmdline(`gh${pref}search <${descript}>`);
         },
 
+    },
+
+    wool: {
+        _site: "woolworths.com.au",
+
+        search: async function(args, opts={}) {
+            const term = utils.tri.parseArgs(args, "string");
+            const url = `https://www.woolworths.com.au/shop/search/products?searchTerm=${term}`;
+            return utils.tab.openOrSummon(url, opts);
+        },
+
+        openTracking: async function() {
+            const urlRe = /https:\/\/www\.woolworths\.com\.au\/shop\/myaccount\/myorders\/(\d+)/;
+            const orderNumber = tri.contentLocation.href.match(urlRe)?.[1];
+            const trackUrl = `https://www.woolworths.com.au/shop/myaccount/trackmyorder?ordernumber=${orderNumber}`;
+            return tri.excmds.exclaim(`google-chrome ${trackUrl}`);
+        },
     },
 
     wp: {
