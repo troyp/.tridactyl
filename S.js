@@ -45,6 +45,9 @@ S = {
     capitalize: function(s) {
         return s.replace(/\b\w/g, function (c) { return c.toUpperCase(); });
     },
+    capitalizeInitial: function(s) {
+        return s[0].toUpperCase() + s.slice(1);
+    },
     strip: function (s) {
         return s.replace(/^\s+|\s+$/g, "");
     },
@@ -83,15 +86,18 @@ S = {
     titleCaseExceptionWords: ["a", "an", "the", "and", "or", "but", "nor",
                               "yet", "so", "for", "in", "to", "of", "at",
                               "by", "for", "off", "on", "as", "x"],
-    toTitleCase: function (s, excWords=this.titleCaseExceptionWords) {
-        var words = s.split(/\s+/);
-        var tcWords = words.map(w => excWords.includes(w) ? w : this.capitalize(w));
-
-        " If first word is capitalized, leave it capitalized even if an exception word "
-        var initialLetter = s.slice(0, 1);
-        var hasInitialCap = this.isUpperCase(initialLetter);
-        if (hasInitialCap) tcWords[0] = words[0];
-
+    toTitleCase: function (s, opts={}) {
+        /* opts.exceptionWords:       custom list of uncapitalized words
+         * opts.forceInitialCapital:  First letter of string is capitalized even if an exception word
+         */
+        opts.exceptionWords ||= this.titleCaseExceptionWords;
+        const words = s.split(/\s+/);
+        var tcWords = words.map(w => opts.exceptionWords.includes(w) ? w : this.capitalize(w));
+        /*  If first word is capitalized, leave it capitalized even if an exception word  */
+        const initialLetter = s.slice(0, 1);
+        const hasInitialCap = this.isUpperCase(initialLetter);
+        if (hasInitialCap||opts.forceInitialCapital)
+            tcWords[0] = this.capitalize(words[0]);
         return tcWords.join(" ");
     },
     isAlphaAt: function (s, i) {
