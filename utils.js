@@ -15,6 +15,8 @@ var utils = {
         if (opts.temp) {
             const t = opts.duration || 3000;
             tri.excmds.fillcmdline_tmp(s_, t);
+        } else if (opts.useAlert) {
+            this.messageBox(s_.split("\n"), opts);
         } else {
             tri.excmds.fillcmdline_nofocus(s_);
         }
@@ -68,7 +70,8 @@ var utils = {
 
     yankWithMsg: function(s, opts={}) {
         tri.excmds.yank(s);
-        opts.prefix ??= "Copied: ";
+        var defaultPrefix = "Copied" + (opts.useAlert ? "...\n" : ": ");
+        opts.prefix ??= defaultPrefix;
         this.message(s, opts);
     },
 };
