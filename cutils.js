@@ -92,28 +92,30 @@ var cutils = {
 
     extractTableColumns: function(table, columns, opts={}) {
         var output = "";
-        var rows = Array.from(table.rows).slice(1);
-        var n = rows[0].cells.length;
-        for (var row of rows) {
-            var cells = Array.from(row.cells);
+        const rows = Array.from(table.rows).slice(1);
+        const n = rows[0].cells.length;
+        for (const row of rows) {
+            const cells = Array.from(row.cells);
             if (opts.strict && cells.length < Math.max(...columns))
                 continue;
             function processCols(i) {
                 if (i < 0) { i = n+1-i; }
-                var cellValue = cells[i-1] && cells[i-1].innerText.trim();
-                if (cellValue.match?.(/^".*"$/)) cellValue = cellValue.slice(1, -1).trim();
-                return cellValue;
+                const cellValue = cells[i-1] && cells[i-1].innerText.trim();
+                if (cellValue.match?.(/^".*"$/))
+                    return cellValue.slice(1, -1).trim();
+                else
+                    return cellValue;
             }
-            var colstrs = Array.from(columns).map(processCols);
+            const colstrs = Array.from(columns).map(processCols);
             output += colstrs.join("\t") + "\n";
         }
         return output;
     },
 
     message: function(s, opts={}) {
-        var s_ = (opts.prefix || "") + s;
+        const s_ = (opts.prefix || "") + s;
         if (opts.temp) {
-            let t = opts.duration || 3000;
+            const t = opts.duration || 3000;
             tri.excmds.fillcmdline_tmp(s_, t);
         } else if (opts.useAlert) {
             alert(s_);
@@ -136,21 +138,23 @@ var cutils = {
     },
 
     urltoggleWrapper: function(argstr) {
-        var args = argstr.trim().split(/ +/);
+        const args = argstr.trim().split(/ +/);
         [s1, s2, ...opts] = args;
         var restr1, flags1, restr2, flags2;
-        if (opts.length==4) [restr1, flags1, restr2, flags2] = opts;
-        else [restr1, restr2, flags1, flags2] = opts;
-        var re1 = restr1 ? RegExp(restr1, flags1||"") : null;
-        var re2 = restr2 ? RegExp(restr2, flags2||"") : null;
-        var url = window.location.href;
-        var newUrl = this.urltoggle(s1, s2, url, {re1: re1, re2: re2});
+        if (opts.length==4)
+            [restr1, flags1, restr2, flags2] = opts;
+        else
+            [restr1, restr2, flags1, flags2] = opts;
+        const re1 = restr1 ? RegExp(restr1, flags1||"") : null;
+        const re2 = restr2 ? RegExp(restr2, flags2||"") : null;
+        const url = window.location.href;
+        const newUrl = this.urltoggle(s1, s2, url, {re1: re1, re2: re2});
         if (newUrl && newUrl!==url) window.location.replace(newUrl);
     },
 
     yankWithMsg: function(s, opts={}) {
         tri.excmds.yank(s);
-        var defaultPrefix = "Copied" + (opts.useAlert ? "...\n" : ": ");
+        const defaultPrefix = "Copied" + (opts.useAlert ? "...\n" : ": ");
         opts.prefix ??= defaultPrefix;
         this.message(s, opts);
     },
