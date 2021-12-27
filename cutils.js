@@ -12,12 +12,12 @@ var cutils = {
      */
     $$: function(selector, opts={}) {
         if (opts instanceof Node) opts = {context: opts};
-        var getElems = (sel, top) => [...top.querySelectorAll(sel)];
+        const getElems = (sel, top) => [...top.querySelectorAll(sel)];
         if (opts.context) {
             return getElems(selector, opts.context);
         } else {
-            let res = getElems(selector, document);
-            let frames = tri.dom.getAllDocumentFrames();
+            const res = getElems(selector, document);
+            const frames = tri.dom.getAllDocumentFrames();
             for (f of frames) {
                 try {
                     res.push(getElems(selector, frame.contentDocument||frame.contentWindow.document));
@@ -32,15 +32,15 @@ var cutils = {
      */
     $1: function(selector, opts={}) {
         if (opts instanceof Node) opts = {context: opts};
-        var getElem = (sel, top) => top.querySelector(sel);
-        var res = getElem(selector, opts.context||document);
+        const getElem = (sel, top) => top.querySelector(sel);
+        const res = getElem(selector, opts.context||document);
         if (res || opts.context) {
             return res;
         } else {
-            let frames = tri.dom.getAllDocumentFrames();
+            const frames = tri.dom.getAllDocumentFrames();
             for (f of frames) {
                 try {
-                    let res = getElem(selector, frame.contentDocument||frame.contentWindow.document);
+                    const res = getElem(selector, frame.contentDocument||frame.contentWindow.document);
                     if (res) return res;
                 } catch(_) {};
             }
