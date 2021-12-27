@@ -189,8 +189,8 @@ command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"
 
 command withjs composite js
 command withjsb composite jsb
-command urltoggle withcutils js -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
-command withcutils composite js -s ~/.tridactyl/cutils.js ;
+command urltoggle cujs -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
+command cujs composite js -s ~/.tridactyl/cutils.js ; js
 command xdo jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
 commdoc xdoelem "Use xdotool to move to and act on element"
 command xdoelem jsb -d¦ utils.xdoelemWrapper(JS_ARGS.join(" "))¦
