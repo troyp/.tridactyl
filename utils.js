@@ -203,7 +203,7 @@ utils.tab = {
                 await this.summon(targetIdx, {background: opts.background, delta: opts.delta||1});
                 if (opts.closeCurrent) await browser.tabs.remove(currentTab.id);
                 return existingTab;
-            } else return this.open(url, {where: opts.where||"related", background: opts.background});
+            } else return this.open(url, {where: opts.where, background: opts.background});
         }
     },
 
