@@ -230,6 +230,8 @@ bind bd<C-h> showkeys bd
 bind: bdm "Close tabs matching string" fillcmdline tabremove
 bind: bd;m "Close tabs not matching string" fillcmdline tabfilter
 bind: bdo "Close other tabs" tabonly
+bind: bds "Select tabs to close with rofi" jsb utils.tab.removeWithRofi();
+bind: bd;s "Select tabs to keep with rofi; close others" jsb utils.tab.removeWithRofi({invert:true});
 
 " | bm -- tabs/move |
 bind bm<C-h> showkeys bm
