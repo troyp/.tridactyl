@@ -524,7 +524,7 @@ bind ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_lin
 " ╭───────────────────────╮
 " │ ,e -- javascript eval │
 " ╰───────────────────────╯
-command jse js -d¦ alert(eval(JS_ARGS.join(" ")))¦
+command jse composite js -s ~/.tridactyl/cutils.js ; js -d¦ alert(eval(JS_ARGS.join(" ")))¦
 command getproperties js -d¦ alert(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
 command jsbe jsb -d¦ tri.excmds.jsb(`tri.excmds.fillcmdline_nofocus(${JS_ARGS.join(" ")})`)¦
 command getselector js -d¦ alert([...document.querySelectorAll(JS_ARGS.join(" "))].map(t=>t.tagName+"\t"+t.innerText.slice(0,50).replace("\n","\t")).join("\n"))¦
@@ -533,6 +533,7 @@ bind ,e<C-h> showkeys ,e
 bind ,eb fillcmdline jsbe
 bind ,ec js -s ~/.tridactyl/cutils.js
 bind ,ee fillcmdline jse
+bind ,ej fillcmdline cujs
 bind ,ep fillcmdline getproperties
 bind ,es fillcmdline getselector
 
