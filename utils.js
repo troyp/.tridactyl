@@ -267,6 +267,20 @@ utils.tab = {
         return browser.tabs.remove(ids);
     },
 
+    removeWithRofi: async function(opts={}) {
+        const indexes = await this.rofiChoose(opts);
+        const N = await this.getN();
+        const nPinned = (await this.getPinned()).length;
+        const rmindexes = opts.invert ?
+              tri.R.difference(tri.R.range(nPinned, N), indexes)
+              : indexes.slice(nPinned);
+        const ns = rmindexes.map(i=>i+1);
+        if (opts.review)
+            tri.excmds.fillcmdline(`tabclose ${ns.join(" ")}`);
+        else
+            tri.controller.acceptExCmd(`tabclose ${ns.join(" ")}`);
+    },
+
     /* Returns 0-based index of tab(s) chosen */
     rofiChoose: async function (opts={}) {
         opts.prompt ??= "Select tabs (S-Enter): ";
