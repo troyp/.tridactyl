@@ -2,6 +2,8 @@
 // │ cutils.js -- utility functions for content script context │
 // ╰───────────────────────────────────────────────────────────╯
 
+R = tri.R;
+
 var cutils = {
 
     /**   $$(SELECTOR)
@@ -214,6 +216,7 @@ var cutils = {
 };
 
 window.cutils = cutils;
+window.R = R;
 for (k of Object.keys(cutils))
     window[k] = cutils[k];
 
