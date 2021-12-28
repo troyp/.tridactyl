@@ -112,6 +112,14 @@ var cutils = {
         return output;
     },
 
+    isolate: function(...selectors) {
+        const keepElts = $$(["head", ...selectors].join(","));
+        for (elt of $$("*")) {
+            if (keepElts.every(k => !k.contains(elt) && !elt.contains(k)))
+                elt.remove();
+        }
+    },
+
     message: function(s, opts={}) {
         const s_ = (opts.prefix || "") + s;
         if (opts.temp) {
