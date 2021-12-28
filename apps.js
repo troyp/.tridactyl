@@ -41,6 +41,17 @@ var apps = {
         }
     },
 
+    /** A version of exclaim that uses fillcmdline_nofocus
+     *  Adapted from tridactyl source: excmds.ts
+     */
+    exclaim_: async function(args) {
+        let done = Promise.resolve();
+        if (await tri.native.nativegate()) {
+            done = tri.excmds.fillcmdline_nofocus((await tri.native.run(args.join(" "))).content);
+        }
+        return done;
+    },
+
     kwsearch: async function(args, opts={where: "last"}) {
         const [kw, ...rest] = utils.tri.parseArgs(args);
         return tri.native.run(`kwsearch -K ${kw} ${rest.join(" ")||"''"}`).then(
