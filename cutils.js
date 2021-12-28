@@ -206,7 +206,6 @@ var cutils = {
 };
 
 window.cutils = cutils;
-window.$$ = cutils.$$;
-window.$1 = cutils.$1;
-window.$$t = cutils.$$t;
-window.$1t = cutils.$1t;
+for (k of Object.keys(cutils))
+    window[k] = cutils[k];
+
