@@ -131,7 +131,7 @@ utils.tab = {
          * opts.where ["here" (default), "related", "next", "last"]: where to open new tab (if any)
          * opts.background: don't switch to new tab
          */
-        opts = this.parseOpts(opts, {castString: "where"});
+        opts = utils.tri.parseOpts(opts, {castString: "where"});
         if (typeof opts == "string") opts = {where: opts};
         const thisTab = await tri.webext.activeTab();
         const legal = url.match(/^https?:/);
@@ -193,7 +193,7 @@ utils.tab = {
          * opts.closeCurrent [default: true if where=="here"]: whether to close current tab
          */
         if (!url) return null;
-        opts = this.parseOpts(opts, {castString: "where", nullishDefaults:{where:"here"}});
+        opts = utils.tri.parseOpts(opts, {castString: "where", nullishDefaults:{where:"here"}});
         const currentTab = await tri.webext.activeTab();
         const testfn = opts.regex ? (t=> t.url.match(opts.regex)) : (t=> t.url.indexOf(url)>=0);
         if (testfn(currentTab)) return currentTab;
