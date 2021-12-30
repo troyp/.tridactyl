@@ -189,6 +189,7 @@ command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"
 
 command withjs composite js
 command withjsb composite jsb
+commdoc urltoggle "Toggle a component of the current URL"
 command urltoggle cujs -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
 command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
 command xdo jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
@@ -443,7 +444,7 @@ bind etc fillcmdline gotoCommandSource
 " ╭───────────╮
 " │ a -- apps │
 " ╰───────────╯
-command: withurl "Load cutils.js and run command" composite get_current_url |
+command: withurl "Pass current URL into command" composite get_current_url |
 
 unbind a
 bind a<C-h> showkeys a
@@ -523,12 +524,15 @@ bind ,awt tabopenorswitchc https://www.timeanddate.com/weather/@2164966
 " ╭────────────────────╮
 " │ ,c -- command-line │
 " ╰────────────────────╯
+commdoc cmdYankHistoryItem "Yank the Nth last command-line history item"
 command cmdYankHistoryItem jsb -d¦ utils.tri.cmdYankHistory(utils.tri.parseArgs(JS_ARGS))¦
+commdoc cmdYankHistoryItems "Yank the last N command-line history items"
 command cmdYankHistoryItems jsb -d¦ utils.tri.cmdYankHistoryLastN(JS_ARGS[1]||1)¦
 
 bind ,c<C-h> showkeys ,c
-bind ,cc cmdYankHistoryItem
-bind ,cC cmdYankHistoryItems
+bind: ,cc "Yank the Nth last command-line history item" cmdYankHistoryItem
+bind: ,cC "Yank the last N command-line history items" cmdYankHistoryItems
+bdoc ,cr "Open command-line with previous command, replacing first argument"
 bind ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word
 
 " ╭───────────────────────╮
