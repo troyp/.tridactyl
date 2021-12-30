@@ -372,7 +372,10 @@ bind <C-h>u fillcmdline bindurl
 " │ y -- yank │
 " ╰───────────╯
 bind y<C-h> showkeys y
+bdoc y? "Yank the current tridactyl config as JSON"
 bind y? jsb tri.excmds.yank(JSON.stringify(tri.config.USERCONFIG))
+bdoc ym "Yank the current mouse position [X Y]"
+bind ym !! xdotool getmouselocation | perl -pe 's/x:(\d+) y:(\d+) .*/$1 $2/' | tee xsel -i
 
 " ╭───────────╮
 " │ e -- goto │
