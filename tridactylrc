@@ -3,19 +3,19 @@
 " ╰─────────╯
 
 " general libraries
-jsb -s ~/.tridactyl/S.js
-jsb -s ~/.tridactyl/js/sprintf.js
+jsb -r S.js
+jsb -r js/sprintf.js
 " tridactyl-specific libraries
-jsb -s ~/.tridactyl/utils.js
+jsb -r utils.js
 " app-specific libraries
-jsb -s ~/.tridactyl/js/suncalc.js
+jsb -r js/suncalc.js
 " app-specific code
-jsb -s ~/.tridactyl/apps.js
+jsb -r apps.js
 " site-specific code
-jsb -s ~/.tridactyl/sites.js
+jsb -r sites.js
 source ~/.tridactyl/sites.tri
 " personal info
-jsb -s ~/.tridactyl/personal/personal.js
+jsb -r personal/personal.js
 
 jsb window.S = S
 jsb window.utils = utils
@@ -190,7 +190,7 @@ command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"
 command withjs composite js
 command withjsb composite jsb
 command urltoggle cujs -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
-command cujs composite js -s ~/.tridactyl/cutils.js ; js
+command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
 command xdo jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
 commdoc xdoelem "Use xdotool to move to and act on element"
 command xdoelem jsb -d¦ utils.xdoelemWrapper(JS_ARGS.join(" "))¦
@@ -529,14 +529,14 @@ bind ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_lin
 " ╭───────────────────────╮
 " │ ,e -- javascript eval │
 " ╰───────────────────────╯
-command jse composite js -s ~/.tridactyl/cutils.js ; js -d¦ alert(eval(JS_ARGS.join(" ")))¦
+command jse composite js -r cutils.js ; js -d¦ alert(eval(JS_ARGS.join(" ")))¦
 command getproperties js -d¦ alert(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
 command jsbe jsb -d¦ tri.excmds.jsb(`tri.excmds.fillcmdline_nofocus(${JS_ARGS.join(" ")})`)¦
 command getselector js -d¦ alert([...document.querySelectorAll(JS_ARGS.join(" "))].map(t=>t.tagName+"\t"+t.innerText.slice(0,50).replace("\n","\t")).join("\n"))¦
 
 bind ,e<C-h> showkeys ,e
 bind ,eb fillcmdline jsbe
-bind ,ec js -s ~/.tridactyl/cutils.js
+bind ,ec js -r cutils.js
 bind ,ee fillcmdline jse
 bind ,ej fillcmdline cujs
 bind ,ep fillcmdline getproperties
@@ -582,8 +582,8 @@ bind: ,ts "Toggle HTTPS:" urltoggle https:// http://
 command convertunits jsb -d¦ apps.convertUnits(JS_ARGS).then(s=>tri.excmds.fillcmdline_nofocus(s))¦
 bind ,vv fillcmdline convertunits
 
-command copytablecols withjs -s ~/.tridactyl/cutils.js ; js -d¦ tri.controller.acceptExCmd(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}]), {useAlert:true})`)¦
-command copytablecols_strict withjs -s ~/.tridactyl/cutils.js ; js -d¦ tri.excmds.fillcmdline(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}], {strict:true}), {useAlert:true})`)¦
+command copytablecols withjs -r cutils.js ; js -d¦ tri.controller.acceptExCmd(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}]), {useAlert:true})`)¦
+command copytablecols_strict withjs -r cutils.js ; js -d¦ tri.excmds.fillcmdline(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}], {strict:true}), {useAlert:true})`)¦
 
 " ╭─────────────────────╮
 " │ ,x -- miscellaneous │
