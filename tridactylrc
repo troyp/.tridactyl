@@ -529,9 +529,12 @@ command cmdYankHistoryItem jsb -d¦ utils.tri.cmdYankHistory(utils.tri.parseArgs
 commdoc cmdYankHistoryItems "Yank the last N command-line history items"
 command cmdYankHistoryItems jsb -d¦ utils.tri.cmdYankHistoryLastN(JS_ARGS[1]||1)¦
 
+bind: ! "Open command line with exclaim command" fillcmdline !!
+
 bind ,c<C-h> showkeys ,c
 bind: ,cc "Yank the Nth last command-line history item" cmdYankHistoryItem
 bind: ,cC "Yank the last N command-line history items" cmdYankHistoryItems
+bind: ,cp "Execute commands in clipboard" expaste
 bdoc ,cr "Open command-line with previous command, replacing first argument"
 bind ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word
 
