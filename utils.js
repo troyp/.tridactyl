@@ -48,7 +48,7 @@ var utils = {
 
 
     /* adapted from tridactyl source for ;x in lib/config.ts */
-    xdoelem: async function(selector, xdocmd) {
+    xdoelem: async function(selector, xdocmd, opts={}) {
         /* xdoelem(selector, xdocmd)
              Move mouse to first element matching selector, then execute further commands.
              selector: string of arguments to `hint`, may be options and/or selectors (`-c` may be
@@ -57,15 +57,23 @@ var utils = {
                  semicolons (must be escaped if surrounded by spaces).
         */
         if (selector && !selector.startsWith("-")) selector = "-c " + selector;
+        const xyres = await tri.native.run(
+            `xdotool getmouselocation | perl -pe 's/x:(\\d+) y:(\\d+) .*/$1 $2/';`);
+        const [x, y] = xyres.content.trim().split(" ");
         const excmd = `hint ${selector} -F e => {` +
             "const pos=tri.dom.getAbsoluteCentre(e), dpr=window.devicePixelRatio; tri.native.run(" +
             "`xdotool mousemove ${dpr*pos.x} ${dpr*pos.y};" +
             `xdotool ${xdocmd}` + "`)}";
-        return tri.controller.acceptExCmd(excmd);
+        if (opts.return) {
+            return tri.controller.acceptExCmd(excmd).then(
+                _=>tri.controller.acceptExCmd(`exclaim_quiet xdotool mousemove ${x} ${y}`)
+            );
+        } else
+            return tri.controller.acceptExCmd(excmd);
     },
-    xdoelemWrapper: async function(argstr) {
+    xdoelemWrapper: async function(argstr, opts={}) {
         const [selector, xdocmd] = argstr.split(/ +-e +/).map(s=>s.trim());
-        return this.xdoelem(selector, xdocmd);
+        return this.xdoelem(selector, xdocmd, opts);
     },
 
     yankWithMsg: function(s, opts={}) {
