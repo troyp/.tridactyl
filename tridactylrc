@@ -193,6 +193,10 @@ commdoc urltoggle "Toggle a component of the current URL"
 command urltoggle cujs -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
 command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
 command xdo jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
+commdoc xdoclick "Click element at point X Y with button N and return pointer to original position"
+command xdoclick jsb -d¦ utils.xdoclickWrapper(JS_ARGS, {return:true})¦
+commdoc xdoclick! "Click element at point X Y with button N"
+command xdoclick! jsb -d¦ utils.xdoclickWrapper(JS_ARGS)¦
 commdoc xdoelem "Use xdotool to move the mouse pointer and act on element"
 command xdoelem jsb -d¦ utils.xdoelemWrapper(JS_ARGS.join(" "), {return:true})¦
 commdoc xdoelem! "Use xdotool to move the mouse to act on element and return pointer to original position"
@@ -468,7 +472,7 @@ bind x<C-h> showkeys x
 " | xr -- rikairebuilt |
 bind xr<C-h> showkeys xr
 " rikairebuilt toggle
-bind xrr xdo mousemove 1861 111 click 1
+bind xrr xdoclick 1861 111 1
 " addon page
 bind xra tabopenorswitchc https://addons.mozilla.org/en-GB/firefox/addon/rikaihan/
 " source page

@@ -46,6 +46,25 @@ var utils = {
         return s;
     },
 
+    xdoclick: async function(x, y, button=1, opts={}) {
+        const xyres = await tri.native.run(
+            `xdotool getmouselocation | perl -pe 's/x:(\\d+) y:(\\d+) .*/$1 $2/';`);
+        const [x0, y0] = xyres.content.trim().split(" ");
+        const excmd = `exclaim_quiet xdotool mousemove ${x} ${y} click ${button}`;
+        if (opts.return) {
+            return tri.controller.acceptExCmd(excmd).then(
+                _=>tri.controller.acceptExCmd(`exclaim_quiet xdotool mousemove ${x0} ${y0}`)
+            );
+        } else
+            return tri.controller.acceptExCmd(excmd);
+    },
+
+    xdoclickWrapper: async function(args, opts={}) {
+        const [x, y, n] = args.join(" ").trim().split(" ");
+        const button = n || 1;
+        return this.xdoclick(x, y, button, opts);
+    },
+
 
     /* adapted from tridactyl source for ;x in lib/config.ts */
     xdoelem: async function(selector, xdocmd, opts={}) {
