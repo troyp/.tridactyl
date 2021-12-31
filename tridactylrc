@@ -378,9 +378,21 @@ bind <C-h>u fillcmdline bindurl
 " ╭───────────╮
 " │ y -- yank │
 " ╰───────────╯
+commdoc bmyank "Yank bookmark data from bookmarks.json file"
+command bmyank jsb -d¦ apps.bmyank(JS_ARGS, {decode:true, switches:""})¦
+commdoc bmrofi "Yank bookmark data from bookmarks.json file"
+command bmrofi jsb -d¦ apps.bmyank(JS_ARGS, {decode:true, switches:"-u -s"})¦
+
 bind y<C-h> showkeys y
 bdoc y? "Yank the current tridactyl config as JSON"
 bind y? jsb tri.excmds.yank(JSON.stringify(tri.config.USERCONFIG))
+
+" | yk -- yank/bookmarks |
+bind: ykk "Yank bookmark data from bookmarks.json file" fillcmdline bmyank
+bind: ykK "Yank keyword bookmark URL" fillcmdline bmyank -uK
+bind: yks "Yank bookmark URL with rofi from bookmarks.json file" bmrofi
+bind: ykS "Yank keyword bookmark URL with rofi from bookmarks.json file" fillcmdline bmrofi -k
+
 bdoc ym "Yank the current mouse position [X Y]"
 bind ym !! xdotool getmouselocation | perl -pe 's/x:(\d+) y:(\d+) .*/$1 $2/' | tee xsel -i
 

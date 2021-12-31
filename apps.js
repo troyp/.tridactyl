@@ -12,6 +12,14 @@ var apps = {
         );
     },
 
+    bmyank: async function(args=[], opts={}) {
+        opts.switches ??= "-u -s";
+        const cmd  = `kwsearch ${[opts.switches, ...args].join?.(" ")?.trim()}`;
+        return tri.native.run(cmd).then(
+            res => utils.yankWithMsg(opts.decode ? utils.decode(res.content, opts.decodeFn) : res.content)
+        );
+    },
+
     convertUnits: function(args) {
         args = args.filter(a=> a.trim()!== "");
         var n=1, unit1="", unit2="";
