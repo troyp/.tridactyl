@@ -46,6 +46,14 @@ var utils = {
         return s;
     },
 
+    decode: function(url, opts={}) {
+        opts = utils.tri.parseOpts(opts, {castFunction: "decodeFn"});
+        const decodeFn = opts.decodeFn || decodeURIComponent;
+        const components = url.split("%s");
+        return components.map(decodeFn).join("%s");
+    },
+
+
     xdoclick: async function(x, y, button=1, opts={}) {
         const xyres = await tri.native.run(
             `xdotool getmouselocation | perl -pe 's/x:(\\d+) y:(\\d+) .*/$1 $2/';`);
@@ -513,6 +521,10 @@ utils.tri = {
         if (options.castString && typeof opts == "string") {
             const opts_ = {};
             opts_[options.castString] = opts;
+            opts = opts_;
+        } else if (options.castFunction && typeof opts == "function") {
+            const opts_ = {};
+            opts_[options.castFunction] = opts;
             opts = opts_;
         }
         options.defaults ||= {};
