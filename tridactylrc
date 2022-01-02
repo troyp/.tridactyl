@@ -226,6 +226,8 @@ commdoc tabsummonalt "Move last accessed tab adjacent to current tab"
 command tabsummonalt jsb -d¦ utils.tab.summonAlternate(JS_ARGS[1]||1)¦
 command: tabmove! "Move current tab to specified tab number" jsb -p utils.tab.move(JS_ARG);
 
+bind: g;h "Choose entry in tab's backward history" xdoclick 275 114 3
+bind: g;l "Choose entry in tab's forward history" xdoclick 313 114 3
 bind: <C-a> "Switch to first tab" tabfirst
 bind: <C-e> "Switch to last tab" tablast
 
