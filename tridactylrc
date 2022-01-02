@@ -563,13 +563,19 @@ bind ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_lin
 " ╭───────────────────────╮
 " │ ,e -- javascript eval │
 " ╰───────────────────────╯
+commdoc jse "Eval expression and display in a message box"
 command jse composite js -r cutils.js ; js -d¦ alert(eval(JS_ARGS.join(" ")))¦
+commdoc jse "Eval expression to obtain object and display its properties in a message box"
 command getproperties js -d¦ alert(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
+commdoc jsbe "Eval expression and display in commandline"
 command jsbe jsb -d¦ tri.excmds.jsb(`tri.excmds.fillcmdline_nofocus(${JS_ARGS.join(" ")})`)¦
+commdoc jsbm "Eval expression and display in a message box"
+command jsbm jsb -d¦ tri.excmds.jsb(`utils.msg(${JS_ARGS.join(" ")})`)¦
+commdoc jse "Find elements matching selector and display in a message box"
 command getselector js -d¦ alert([...document.querySelectorAll(JS_ARGS.join(" "))].map(t=>t.tagName+"\t"+t.innerText.slice(0,50).replace("\n","\t")).join("\n"))¦
 
 bind ,e<C-h> showkeys ,e
-bind ,eb fillcmdline jsbe
+bind ,eb fillcmdline jsbm
 bind ,ec js -r cutils.js
 bind ,ee fillcmdline jse
 bind ,ej fillcmdline cujs
