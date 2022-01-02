@@ -10,6 +10,13 @@ var utils = {
         return options.notrim ? s : s.trim();
     },
 
+    decode: function(url, opts={}) {
+        opts = utils.tri.parseOpts(opts, {castFunction: "decodeFn"});
+        const decodeFn = opts.decodeFn || decodeURIComponent;
+        const components = url.split("%s");
+        return components.map(decodeFn).join("%s");
+    },
+
     message: function(s, opts={}) {
         const s_ = (opts.prefix || "") + s;
         if (opts.temp) {
@@ -44,13 +51,6 @@ var utils = {
               .replace(/ /g, "\\ ");
         tri.controller.acceptExCmd(`js alert('${s_}')`);
         return s;
-    },
-
-    decode: function(url, opts={}) {
-        opts = utils.tri.parseOpts(opts, {castFunction: "decodeFn"});
-        const decodeFn = opts.decodeFn || decodeURIComponent;
-        const components = url.split("%s");
-        return components.map(decodeFn).join("%s");
     },
 
 
@@ -324,7 +324,8 @@ utils.tab = {
         const formatter = (t,i)=>sprintf("%-3d  %-40s    <%s>", i+1, S.ellipsize(t.title, 40), t.url);
         const alltabsitems = alltabs.map(formatter);
         const dmenuInput = alltabsitems.join("\n");
-        const cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -width 80 -format ${opts.format} -p "${opts.prompt}" -multi-select -i`;
+        const cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | ` +
+              `rofi -dmenu -width 80 -format ${opts.format} -p "${opts.prompt}" -multi-select -i`;
         return tri.native.run(cmd).then(
             res => res.content.trim().split("\n").map(Number)
         );
@@ -336,7 +337,8 @@ utils.tab = {
         const formatter = (t,i)=>sprintf("%-3d  %-40s    <%s>", i+1, S.ellipsize(t.title, 40), t.url);
         const alltabsitems = alltabs.map(formatter);
         const dmenuInput = alltabsitems.join("\n");
-        const cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | rofi -dmenu -width 80 -regex -format f -p "${opts.prompt}" -i`;
+        const cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | ` +
+              `rofi -dmenu -width 80 -regex -format f -p "${opts.prompt}" -i`;
         return tri.native.run(cmd).then(
             res => alltabs.filter(t=>t.url.match(res.content.trim()))
         );
