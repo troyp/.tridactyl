@@ -53,6 +53,20 @@ var utils = {
         return s;
     },
 
+    msg: async function(lines, opts={}) {
+        if (typeof lines === "string")
+            lines = lines.split("\n");
+        else if (typeof lines !== "object")
+            lines = [lines];
+        else if (lines instanceof Promise)
+            lines = await lines;
+        else if (!Array.isArray(lines)) lines = [
+            String(lines), "",
+            ...Object.getOwnPropertyNames(lines)
+        ];
+        return this.messageBox(lines, opts);
+    },
+
 
     xdoclick: async function(x, y, button=1, opts={}) {
         const xyres = await tri.native.run(
