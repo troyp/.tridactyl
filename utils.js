@@ -160,6 +160,14 @@ utils.tab = {
         return browser.tabs.query({currentWindow: true, pinned: true});
     },
 
+    highlight: async function(tabnum, hl=true) {
+        /* tabnum:Int+, hl:true|false|"toggle" => Promise(Tab) */
+        const tab = await this.get(tabnum);
+        if (hl=="toggle") hl = !tab.highlighted;
+        const isActive = tab.id == await tri.webext.activeTabId();
+        return browser.tabs.update(tab.id, {highlighted: hl, active: isActive });
+    },
+
     getN: async function(opts={}) {
         return this.getAll(opts).then(tt => tt.length);
     },
