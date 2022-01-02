@@ -467,6 +467,8 @@ bind etc fillcmdline gotoCommandSource
 " │ a -- apps │
 " ╰───────────╯
 command: withurl "Pass current URL into command" composite get_current_url |
+command googletranslatepage jsb -d¦ apps.trans.page.google(...JS_ARGS)¦
+command bingtranslatepage jsb -d¦ apps.trans.page.bing(...JS_ARGS)¦
 
 unbind a
 bind a<C-h> showkeys a
@@ -479,6 +481,11 @@ bind aw urltoggle https://web.archive.org/web/https: https: https?://web.archive
 bind a;<C-h> showkeys a;
 bind: a;c "Open link in Google Chrome" composite hint -pipe a href | ! /usr/local/bin/google-chrome
 bind: a;f "Open link in Waterfox" composite hint -pipe a href | ! /opt/waterfox/waterfox
+
+" | at -- apps/translate |
+" | atp -- apps/translate/page |
+bind: atpp "Google translate page" googletranslatepage
+bind: atpb "Bing translate page" bingtranslatepage
 
 " ╭─────────────────╮
 " │ x -- extensions │

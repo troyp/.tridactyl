@@ -104,4 +104,20 @@ var apps = {
 
 }
 
+apps.trans = {
+    page: {
+        google: function(url, from="auto", to="en", opts={}) {
+            url ||= tri.contentLocation;
+            return utils.tab.open(`http://translate.google.com/translate?hl=&sl=${from}&tl=${to}&u=${url}`, opts);
+        },
+        bing: function(url, from="auto", to="en", opts={}) {
+            url ||= tri.contentLocation;
+            return utils.tab.open(
+                `http://www.microsofttranslator.com/bv.aspx?from=${from}&to=${to}&a=${url}`,
+                opts
+            );
+        },
+    },
+}
+
 window.apps = apps;
