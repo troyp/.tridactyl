@@ -138,7 +138,7 @@ utils.tab = {
     },
 
     getid: async function(tabnum, opts={}) {
-        const t = await this.get(tabnum-1, opts);
+        const t = await this.get(tabnum, opts);
         return t.id;
     },
 
