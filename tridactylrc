@@ -141,6 +141,8 @@ bind g<C-h> showkeys g
 bdoc gh "Open the previous item in tab history in an adjacent tab"
 bind gh jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goBack(t.id));
 
+bind: <C-F10> "Open hamburger menu" xdoclick 1896 115
+
 bind: <C-v> "Enter ignore mode (disable tridactyl bindings)" nmode ignore 1 mode normal
 bind: <C-z> "Enter ignore mode for one keybinding (disable tridactyl bindings)" mode ignore
 
