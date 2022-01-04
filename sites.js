@@ -42,12 +42,12 @@ var sites = {
              */
             const [u,r] = this.getUserAndRepo();
             const a = this.getAccountUser();
-            return formatStr.
-                replace(/\$\{u\}/g, u).
-                replace(/\$\{r\}/g, r).
-                replace(/\$\{a\}/g, a).
-                replace(/\$\{u\/r\}/g, u+"/"+r).
-                replace(/\$\{s\}/g, opts.query||"");
+            return formatStr
+                .replace(/\$\{u\}/g, u)
+                .replace(/\$\{r\}/g, r)
+                .replace(/\$\{a\}/g, a)
+                .replace(/\$\{u\/r\}/g, u+"/"+r)
+                .replace(/\$\{s\}/g, opts.query||"");
         },
 
         openOrSummon(f_url, opts={}) {
