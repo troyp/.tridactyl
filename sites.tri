@@ -93,6 +93,19 @@ primevbind: ct "Show episode" cujs fillcmdline_nofocus($1("div.contentTitlePanel
 primevbind: cyy "Show episode" cujs cutils.yankWithMsg($1("div.contentTitlePanel>div.subtitle").textContent)
 primevbind: cyt "Show episode" cujs cutils.yankWithMsg($1("div.contentTitlePanel>div.title").textContent)
 
+primevbind: <enter> "Play/Pause" xdoclick 943 624
+primevbind: <space> "Play/Pause" xdoclick 943 624
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────╮
+" │ RamdaJS.com │
+" ╰─────────────╯
+commdoc ramdafiltercat "Filter methods by category"
+command ramdafiltercat csites -r S.js ; js -p csites.ramda.filterCategory(S.capitalize(JS_ARG));
+
+bindurl ramdajs.com/ c<C-h> showkeys c
+bindurl: ramdajs.com/ cc "Filter methods by category" fillcmdline ramdafiltercat
+
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
 " │ Reddit.com │
