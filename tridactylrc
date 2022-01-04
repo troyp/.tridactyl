@@ -191,6 +191,7 @@ command withjsb composite jsb
 commdoc urltoggle "Toggle a component of the current URL"
 command urltoggle cujs -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
 command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
+command: csites "Load S.js, cutils.js, csites.js, run js" composite js -r cutils.js ; js -r csites.js ; js
 command xdo jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
 commdoc xdoclick "Click element at point X Y with button N and return pointer to original position"
 command xdoclick jsb -d¦ utils.xdoclickWrapper(JS_ARGS, {return:true})¦
