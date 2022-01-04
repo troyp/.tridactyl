@@ -3,7 +3,7 @@
 " │ Github.com │
 " ╰────────────╯
 command ghbind bindurl https://github.com
-command ghbind: docbindurl https://github.com
+command ghbind: bindurl: https://github.com
 command ghopenorsummon jsb -p sites.gh.openOrSummon(JS_ARG);
 command ghtabopenorsummon jsb -p sites.gh.openOrSummon(JS_ARG, {where: "related"});
 command ghsearch jsb -d¦ sites.gh.search(window._ghsearchurl, JS_ARGS[1], JS_ARGS.slice(2).join(" "))¦
@@ -85,7 +85,8 @@ autocmd DocStart ^https?://medium\.com(/|$) urlmodify -r https?://medium\.com/? 
 " │ PrimeVideo.com │
 " ╰────────────────╯
 command: primevbind "Bind key for www.primevideo.com" bindurl https://www.primevideo.com
-command: primevbind: "Bind key with description for www.primevideo.com" docbindurl https://www.primevideo.com
+command: primevbind: "Bind key with description for www.primevideo.com" bindurl: https://www.primevideo.com
+
 primevbind c<C-h> showkeysurl https://www.primevideo.com/ c
 primevbind: cc "Show episode" cujs fillcmdline_nofocus($1("div.contentTitlePanel>div.subtitle").textContent)
 primevbind: ct "Show episode" cujs fillcmdline_nofocus($1("div.contentTitlePanel>div.title").textContent)
@@ -104,7 +105,7 @@ bindurl reddit.com/ cto urltoggle https://www.reddit.com https://old.reddit.com
 " │ Woolworths.com.au │
 " ╰───────────────────╯
 command: woolbind "Bind key for woolworths.com.au" bindurl https://www.woolworths.com.au/
-command: woolbind: "Bind key with description for woolworths.com.au" docbindurl https://www.woolworths.com.au/
+command: woolbind: "Bind key with description for woolworths.com.au" bindurl: https://www.woolworths.com.au/
 command: woolbdoc "Provide a description on a separate line" js ;
 
 commdoc woolsearch "Search woolworths"
