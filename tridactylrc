@@ -532,9 +532,9 @@ bind xrc winopen moz-extension://41d2b8bf-2a97-4468-87c8-f6243594c04c/options/op
 " ╰─────────────╯
 bind ,<C-h> showkeys ,
 
-" ╭────────────╮
-" │ ,a -- apps │
-" ╰────────────╯
+" ╭───────────╮
+" │ ,a -- web │
+" ╰───────────╯
 bind ,a<C-h> showkeys ,a
 " Open banking
 bind ,ab withjsb user.bankurl | tabopenorswitchc
@@ -543,9 +543,9 @@ bind ,ap tabopenorswitchc https://www.paypal.com/myaccount/home
 " Open MyGov
 bind ,ay tabopenorswitchc https://my.gov.au/LoginServices/main/login?execution=e1s1
 
-" ╭───────────────────────────╮
-" │ ,am -- apps/mail+contacts │
-" ╰───────────────────────────╯
+" ╭──────────────────────────╮
+" │ ,am -- web/mail+contacts │
+" ╰──────────────────────────╯
 bind ,am<C-h> showkeys ,am
 bind: ,amc "Open Google Contacts" tabopenorswitchc https://contacts.google.com/?hl=en&tab=mC
 bind: ,amC "Open Gmail Contacts (basic)" tabopenorswitchc https://mail.google.com/mail/u/0/h/k4067n2i55u9/?&v=cl
@@ -553,9 +553,18 @@ bind: ,amm "Open Gmail (basic)" tabopenorswitchc https://mail.google.com/mail/u/
 bind: ,amM "Open Gmail" tabopenorswitchc https://mail.google.com/mail/u/0/#inbox
 bind: ,amy "Open Yahoo Mail" tabopenorswitchc https://au.mail.yahoo.com/d/folders/1
 
-" ╭───────────╮
-" │ ,av -- AV │
-" ╰───────────╯
+" ╭─────────────────────╮
+" │ ,as -- web/shopping │
+" ╰─────────────────────╯
+bind: ,asa "open Amazon AU" tabopenorswitch https://www.amazon.com.au/gp/cart/view.html/ref=nav_cart
+bind: ,ase "open eBay" tabopenorswitch https://cart.ebay.com.au
+bind: ,asj "open Jackson's Art" tabopenorswitch https://www.jacksonsart.com/en-au/checkout/cart/
+bind: ,asl "Open liquor specials" jsb sites.LISTS.liquor_specials.forEach(async u=>await utils.tab.openOrSummon(u));
+bind: ,asp "Open Paypal" tabopenorswitch https://www.paypal.com/myaccount/home
+
+" ╭───────────────╮
+" │ ,av -- web/AV │
+" ╰───────────────╯
 bind ,av<C-h> showkeys ,av
 bind: ,ava "AccuRadio Classical" tabopenorswitchc https://www.accuradio.com/classical/
 bind: ,avd "Open Disney Plus" tabopenorswitchc https://www.disneyplus.com/en-gb/home
