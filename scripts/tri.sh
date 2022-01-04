@@ -16,13 +16,14 @@ tri() {
 
     TRI_CONFIG_DIR=${TRI_CONFIG_DIR:-$HOME/.config/tridactyl};
     TRI_SRC_DIR=${TRI_SRC_DIR:-$TRI_REPO_DIR/src};
-    local TRI_DIR_RE="$TRI_CONFIG_DIR|$TRI_SRC_DIR";
+    TRI_NATIVE_SRC_DIR=${TRI_NATIVE_SRC_DIR:-$TRI_NATIVE_REPO_DIR/src};
+    local TRI_DIR_RE="$TRI_CONFIG_DIR|$TRI_SRC_DIR|$TRI_NATIVE_SRC_DIR";
 
     # ╭─────────╮
     # │ options │
     # ╰─────────╯
-    SHORT=c,h,f,p,r:,s,t
-    LONG=config-dir,help,files,pager,regex:,source-dir,tree
+    SHORT=c,h,f,n,p,r:,s,t
+    LONG=config-dir,help,files,native,pager,regex:,source-dir,tree
     PARSED=$(getopt -a -n tri --options $SHORT --longoptions $LONG -- "$@")
 
     eval set -- "$PARSED"
@@ -41,6 +42,7 @@ Options:
   -c     --config-dir       change to config directory
   -h     --help             show help
   -f     --files            show matching files only
+  -n     --native           change to native messenger source directory
   -p     --pager            show output in pager
   -r RE  --regex RE         search for lines (or files with -f) matching the regex RE
   -s     --source-dir       change to source directory
@@ -50,6 +52,7 @@ ENDHELP
                 return; ;;
             (-c | --config-dir)     cd $TRI_CONFIG_DIR; return; ;;
             (-f | --files)          files=t; shift; ;;
+            (-n | --native)         cd $TRI_NATIVE_SRC_DIR; return; ;;
             (-p | --pager)          page=t; shift; ;;
             (-r | --regex)          re="$2"; shift 2; ;;
             (-s | --source-dir)     cd $TRI_SRC_DIR; return; ;;
