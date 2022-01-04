@@ -383,6 +383,27 @@ utils.tab = {
         return browser.tabs.move(alt.id, {index: thisTab.index+d_adj});
     },
 
+    /** select(URL, { OPTIONS... })    select an existing tab containing URL
+     *  select(URL, WHERE)
+     *  opts.regex: regex to test if existing tab qualifies (if URL doesn't match)
+     *  opts.reload: whether to reload existing tab
+     *  opts.closeCurrent: whether to close current tab
+     */
+    select: async function (url="", opts={}) {
+        if (url || opts.regex) {
+            const currentTab = await tri.webext.activeTab();
+            const alltabs = await this.getAll();
+            const existingTab = alltabs.find(t=>t.url==url) || alltabs.find(t=>opts.regex?.test?.(t));
+            return existingTab &&
+                this.switch(existingTab.index+1).then(
+                    async ()=>{
+                        if (opts.closeCurrent) await browser.tabs.remove(currentTab.id);
+                        if (opts.reload) await browser.tabs.reload(existingTab.id);
+                        return existingTab;
+                    });
+        } else return null;
+    },
+
 
     summon: async function(tabnum, opts={}) {
         if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
