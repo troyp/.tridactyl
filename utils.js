@@ -67,6 +67,86 @@ var utils = {
         return this.messageBox(lines, opts);
     },
 
+    openHistoryItems: async function(opts={}) {
+        opts.where ||= "last";
+        opts.multiSelect ??= true;
+        const items = await this.searchHistory(opts);
+        for await (const item of items) await utils.tab.open(item.url, opts);
+        return items && items?.length;
+    },
+
+    openHistoryItemsWrapper: async function(args) {
+        args = this.tri.parseArgs(args);
+        const [where, bg, days] = args;
+        return this.openHistoryItems({
+            where: where,
+            background:this.parseBool(bg),
+            hoursAgo: 24*(days||2)
+        });
+    },
+
+    parseBool(s) {
+        if (["true", "yes", "on", "1"].includes(s)) return true;
+        else if (["false", "no", "off", "0"].includes(s)) return false;
+        else return null;
+    },
+
+    /**   Search history for TEXT and choose from results with rofi
+     *  opts.startTime:    earliest time for history results
+     *  opts.endTime:      latest time for history results
+     *  opts.hoursAgo:     alternative to startTime/endTime;
+     *                     return results from last N hours, or
+     *                     specify "N-M" for results from N hours to M hours ago
+     *  opts.maxResults:   maximum results to send to rofi (default 100)
+     *  opts.prompt:       rofi prompt
+     *  opts.format:       rofi results format option
+     *  opts.multiSelect:  run rofi in multi-select mode
+     */
+    searchHistory: async function(opts={}) {
+        opts.text ||= "";
+        /* prompt and results format */
+        opts.prompt ??= "Select tabs (S-Enter): ";
+        opts.format ||= "i";
+        /* time range of results */
+        if (!opts.hoursAgo && !opts.startTime && !opts.endTime)
+            opts.hoursAgo = 48;
+        if (opts.hoursAgo) {
+            if (opts.startTime || opts.endTime) {
+                this.message("ERROR: conflicting options");
+                return null;
+            }
+            else if (typeof opts.hoursAgo === "number")
+                opts.startTime = new Date() - 3600000 * opts.hoursAgo;
+            else {
+                const [startHoursAgo, endHoursAgo] = opts.hoursAgo.split("-").map(Number);
+                opts.startTime = new Date() - 3600000 * startHoursAgo;
+                opts.endTime   = new Date() - 3600000 * endHoursAgo;
+            }
+        }
+        const startTime = opts.startTime && new Date(opts.startTime);
+        const endTime = opts.endTime && new Date(opts.endTime);
+        /* number of results */
+        opts.maxResults ||= Number.MAX_SAFE_INTEGER;
+        /* main */
+        const items = await browser.history.search({
+            text: opts.text,
+            startTime: startTime,
+            endTime: endTime,
+            maxResults: opts.maxResults
+        });
+        const datestr = h=>new Date(h.lastVisitTime)
+              .toLocaleString()
+              .replace(/(\d\d\/\d\d)\/\d\d(\d\d), (\d\d?:\d\d):\d\d ([ap]m)/, "$1/$2, $3 $4");
+        const formatter = h=>sprintf("%18s\t%-40s\t<%s>", datestr(h), S.ellipsize(h.title, 40), h.url);
+        const dmenuInput = items.map(formatter).join("\n");
+        const dmenuOpts = opts.multiSelect ? "-multi-select -i" : "-i";
+        const rofithemestr='#window {width: 80%;} #listview {lines: 25;}';
+        const cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | ` +
+              `rofi -dmenu -theme-str "${rofithemestr}" -format ${opts.format} -p "${opts.prompt}" ${dmenuOpts}`;
+        return tri.native.run(cmd).then(
+            res => res.content ? res.content.trim().split("\n").map(i=>items[Number(i)]) : null
+        );
+    },
 
     xdoclick: async function(x, y, button=1, opts={}) {
         const xyres = await tri.native.run(
