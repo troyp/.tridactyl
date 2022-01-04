@@ -543,15 +543,15 @@ bind ,ap tabopenorswitchc https://www.paypal.com/myaccount/home
 " Open MyGov
 bind ,ay tabopenorswitchc https://my.gov.au/LoginServices/main/login?execution=e1s1
 
-" ╭──────────────────────╮
-" │ ,am -- mail/contacts │
-" ╰──────────────────────╯
+" ╭───────────────────────────╮
+" │ ,am -- apps/mail+contacts │
+" ╰───────────────────────────╯
 bind ,am<C-h> showkeys ,am
-bind ,amc tabopenorswitchc https://contacts.google.com/?hl=en&tab=mC
-bind ,amC tabopenorswitchc https://mail.google.com/mail/u/0/h/k4067n2i55u9/?&v=cl
-bind ,amm tabopenorswitchc https://mail.google.com/mail/u/0/h/1f0xqcpo2pdl3/?f=1
-bind ,amM tabopenorswitchc https://mail.google.com/mail/u/0/#inbox
-bind ,amy tabopenorswitchc https://au.mail.yahoo.com/d/folders/1
+bind: ,amc "Open Google Contacts" tabopenorswitchc https://contacts.google.com/?hl=en&tab=mC
+bind: ,amC "Open Gmail Contacts (basic)" tabopenorswitchc https://mail.google.com/mail/u/0/h/k4067n2i55u9/?&v=cl
+bind: ,amm "Open Gmail (basic)" tabopenorswitchc https://mail.google.com/mail/u/0/h/1f0xqcpo2pdl3/?f=1
+bind: ,amM "Open Gmail" tabopenorswitchc https://mail.google.com/mail/u/0/#inbox
+bind: ,amy "Open Yahoo Mail" tabopenorswitchc https://au.mail.yahoo.com/d/folders/1
 
 " ╭───────────╮
 " │ ,av -- AV │
