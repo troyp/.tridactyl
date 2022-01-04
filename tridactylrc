@@ -414,6 +414,11 @@ bind ym yankmousepos
 " ╰───────────╯
 bind e<C-h> showkeys e
 bind ea tabopen about:addons
+
+" | eb -- goto/sidebar |
+bind: ebh "Open history sidebar" xdo key ctrl+v ctrl+h
+bind: ebk "Open bookmarks sidebar" xdo key ctrl+v ctrl+b
+
 bind ec tabopen about:config
 bind ed tabopen about:downloads
 bind eD tabopen about:debugging
@@ -463,6 +468,11 @@ bind elpv   tabopenorswitchc file:///home/troy/Pictures/vlc-snapshot
 bind el<C-h> showkeys el
 bind elud   tabopenorswitchc file:///usr/share/doc/
 bind eluld  tabopenorswitchc file:///usr/local/share/doc/
+
+" | ew -- goto/window |
+bind: ewh "Open history window" xdo key ctrl+v ctrl+H
+bind: ewd "Open downloads manager" xdo key ctrl+v ctrl+Y
+bind: ewk "Open bookmarks manager" xdo key ctrl+v ctrl+O
 
 " | ey -- goto/dactyl |
 bind eyss fillcmdline_notrail tabopenorswitchc https://github.com/tridactyl/tridactyl/tree/master/src/
