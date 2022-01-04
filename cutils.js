@@ -114,13 +114,69 @@ var cutils = {
         return output;
     },
 
-    isolate: function(...selectors) {
-        const keepElts = $$(["head", ...selectors].join(","));
-        for (elt of $$("*")) {
+    /** Hides elements matching SELECTOR. See get() for arguments and options */
+    hide: function(selector, opts={}) {
+        const elts = this.get(selector, opts);
+        elts.forEach(e=>e.classList.add("TridactylKilledElem"));
+        return elts.length ? elts : null;
+    },
+
+    /** Hides elements matching any of the SELECTORS. For more options, see rm() */
+    hideall: (...selectors) => this.hide(selectors),
+
+    /**    isolate(selector, opts):                     Remove all but matching elements
+     *     isolate(selector, context:HTMLElement):      Remove all but matching elements under CONTEXT
+     *     isolate(selector, ["firstMatch"]:[string]):  Remove all but first matching element
+     *     isolate(selector, filter:e=>Bool):           Remove all but matching elements satisfying predicate FILTER
+     *     isolate(selector, pattern:string|RegExp):    Remove all but matching elements with text matching PATTERN
+     *  opts.filter:        predicate that selected elements must satisfy
+     *  opts.firstMatch:    only keep the first matching element
+     *  opts.context:       the root element of the search; null for whole document
+     *  opts.match:         a regex or string that selected elements must match;
+     *  opts.useInnerText   opts.match tests against elements' innerText property rather than textContent
+     *  opts.noHead         remove the <head> element
+     *  opts.noCmdline      remove Tridactyl's commandline iframe
+     */
+    isolate: function(selector, opts={}) {
+        const keepElts = $$(selector);
+        /* opts */
+        if (Array.isArray(opts)) opts = opts.reduce((acc,e)=>(acc[e]=true) && acc, {});
+        else if (opts instanceof HTMLElement) opts = { context: opts };
+        else if (opts instanceof RegExp)      opts = { match: opts };
+        else if (typeof opts === "function")  opts = { filter: opts };
+        else if (typeof opts === "string")    opts = { match: opts };
+        /* pred */
+        function pred(e) {
+            const textProp = opts.useInnerText ? "innerText" : "textContent";
+            const match_ok  = !opts.match  || e[textProp].match(opts.match);
+            const filter_ok = !opts.filter || opts.filter(e);
+            return match_ok && filter_ok;
+        }
+        /* selector */
+        if (Array.isArray(selector))
+            selector = selector.join(",");
+        if (!opts.noHead)
+            selector += "head,";
+        if (!opts.noCmdline)
+            selector += "#cmdline_iframe,";
+        /* main logic */
+        var matched = [];
+        if (opts.firstMatch) {
+            if ((elt = $$(selector, opts.context).find(pred))) {
+                matched = [elt];
+            } else
+                return null;
+        } else {
+            matched = $$(selector, opts.context).filter(pred);
+        }
+        for (elt of matched) {
             if (keepElts.every(k => !k.contains(elt) && !elt.contains(k)))
                 elt.remove();
         }
+        return elts.length ? elts : null;
     },
+
+    keep: (...selectors) => this.isolate(selectors),
 
     message: function(s, opts={}) {
         const s_ = (opts.prefix || "") + s;
@@ -135,18 +191,18 @@ var cutils = {
         return s;
     },
 
-    /**    rm(selector, opts):                     Remove matching elements
-     *     rm(selector, context:HTMLElement):      Remove matching elements under CONTEXT
-     *     rm(selector, ["firstMatch"]:[string]):  Remove first matching element
-     *     rm(selector, filter:e=>Bool):             Remove matching elements satisfying predicate FILTER
-     *     rm(selector, pattern:string|RegExp):    Remove matching elements with text matching PATTERN
+    /**    get(selector, opts):                     Get matching elements
+     *     get(selector, context:HTMLElement):      Get matching elements under CONTEXT
+     *     get(selector, ["firstMatch"]:[string]):  Get first matching element
+     *     get(selector, filter:e=>Bool):             Get matching elements satisfying predicate FILTER
+     *     get(selector, pattern:string|RegExp):    Get matching elements with text matching PATTERN
      *  opts.filter:        predicate that selected elements must satisfy
-     *  opts.firstMatch:    only remove the first matching element
+     *  opts.firstMatch:    only get the first matching element
      *  opts.context:       the root element of the search; null for whole document
      *  opts.match:         a regex or string that selected elements must match;
      *  opts.useInnerText   opts.match tests against elements' innerText property rather than textContent
      */
-    rm: function(selector, opts={}) {
+    get: function(selector, opts={}) {
         /* selector */
         if (Array.isArray(selector))
             selector = selector.join(",");
@@ -165,23 +221,25 @@ var cutils = {
         }
         /* main logic */
         if (opts.firstMatch) {
-            if ((elt = $$(selector, opts.context).find(pred))) {
-                elt.remove();
-                return elt;
-            } else
-                return null;
-        }
-        else {
-            const elts = $$(selector, opts.context).filter(pred);
-            elts.forEach(e=>e.remove());
-            return elts.length ? elts : null;
+            const elt = $$(selector, opts.context).find(pred);
+            return elt ? [elt] : [];
+        } else {
+            return $$(selector, opts.context).filter(pred);
         }
     },
 
-    rmall: (...selectors)=>rm(selectors),
+    /** Remove elements matching SELECTOR. See get() for arguments and options */
+    rm: function(selector, opts={}) {
+        const elts = this.get(selector, opts);
+        elts.forEach(e=>e.remove());
+        return elts.length ? elts : null;
+    },
 
-    /* urltoggle(s1, s2, url)                Replace s1 with s2, or else s2 with s1
-     * urltoggle(s1, s2, url, {re1, re2})    Replace regex1 with s2, or else regex2 with s1
+    /** Remove elements matching any of the SELECTORS. For more options, see rm() */
+    rmall: (...selectors) => this.rm(selectors),
+
+    /** urltoggle(s1, s2, url)                Replace s1 with s2, or else s2 with s1
+     *  urltoggle(s1, s2, url, {re1, re2})    Replace regex1 with s2, or else regex2 with s1
      */
     urltoggle: function(s1, s2, url, opts={}) {
         const patt1 = opts.re1 || s1;
@@ -207,6 +265,16 @@ var cutils = {
         if (newUrl && newUrl!==url) window.location.replace(newUrl);
     },
 
+    /** Unhides elements matching SELECTOR. See get() for arguments and options */
+    unhide: function(selector, opts={}) {
+        const elts = this.get(selector, opts);
+        elts.forEach(e=>e.className = e.className.replace("TridactylKilledElem", ""));
+        return elts.length ? elts : null;
+    },
+
+    /** Unhides elements matching any of the SELECTORS. For more options, see rm() */
+    unhideall: (...selectors) => this.unhide(selectors),
+
     yankWithMsg: function(s, opts={}) {
         tri.excmds.yank(s);
         const defaultPrefix = "Copied" + (opts.useAlert ? "...\n" : ": ");
@@ -218,5 +286,6 @@ var cutils = {
 window.cutils = cutils;
 window.R = R;
 for (k of Object.keys(cutils))
-    window[k] = cutils[k];
+    if (!["hide", "unhide"].includes(k))
+        window[k] = cutils[k];
 
