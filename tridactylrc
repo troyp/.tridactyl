@@ -312,7 +312,10 @@ bind: wr "Reload tridactylrc file" source ~/.tridactyl/tridactylrc
 bind: wsu "Copy userChrome.css from .tridactyl/css to default profile directory" copyuserchrome
 bind: wsU "Copy userChrome.css and restart browser" composite copyuserchrome ; restart
 
-bind: wtt "toggle tab bar" xdo key ctrl+B
+bind: wtd "toggle downloads menu" xdoclick 241 111
+bind: wtt "toggle bookmarks toolbar" xdo key ctrl+B
+bind: wtm "toggle menu bar" xdo key alt+v; sleep 0.5; xdotool key Right; sleep 0.5; xdotool key Return
+bind: wu "Undo window" undo window
 bind: ww "Open URL in new window" fillcmdline winopen
 bind: wx "dismiss update notification" xdo mousemove 1740 230 click 1
 
