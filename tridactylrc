@@ -381,10 +381,15 @@ command searchnmaps jsb -d¦ utils.tri.searchNmapsWrapper(JS_ARGS.join(" "))¦
 bind <C-h><C-h> showkeys <C-h>
 bind <C-h>h fillcmdline help
 bind <C-h>b fillcmdline searchnmaps
+bdoc <C-h>b "Firefox Keyboard Shortcuts"
+bind <C-h>b tabopenorswitchc https://support.mozilla.org/en-US/kb/keyboard-shortcuts-perform-firefox-tasks-quickly
 bind <C-h>d tabopen about:devtools-toolbox?id=tridactyl.vim.betas%40cmcaine.co.uk&type=extension
 bind <C-h>i tabopen moz-extension://926899c1-24a3-4569-9789-2f53b837f92e/static/docs/globals.html
 bind <C-h>k fillcmdline bind
+bind <C-h>K tabopenorswitchc https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
 bind <C-h>u fillcmdline bindurl
+bdoc <C-h>x "xdotool keycodes"
+bind <C-h>x tabopenorswitchc https://gitlab.com/cunidev/gestures/-/wikis/xdotool-list-of-key-codes
 
 " ╭───────────╮
 " │ y -- yank │
