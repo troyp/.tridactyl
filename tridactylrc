@@ -519,7 +519,7 @@ bind x<C-h> showkeys x
 " | xr -- rikairebuilt |
 bind xr<C-h> showkeys xr
 " rikairebuilt toggle
-bind xrr xdoclick 1861 111 1
+bind xrr xdoclick 1861 111
 " addon page
 bind xra tabopenorswitchc https://addons.mozilla.org/en-GB/firefox/addon/rikaihan/
 " source page
