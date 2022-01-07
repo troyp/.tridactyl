@@ -76,6 +76,15 @@ ghbind cs;* ghtabsearchwrapper "search my stars [new tab]" https://github.com/${
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
+" │ Google.com │
+" ╰────────────╯
+command: googlebind "Bind key for www.google.com" bindurl https://www.google.com
+command: googlebind: "Bind key with description for www.google.com" bindurl: https://www.google.com
+
+googlebind: ctn "Toggle Top stories" cujs cutils.hide("g-section-with-header", {toggle:true});
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────╮
 " │ Medium.com │
 " ╰────────────╯
 autocmd DocStart ^https?://medium\.com(/|$) urlmodify -r https?://medium\.com/? https://scribe.rip/
