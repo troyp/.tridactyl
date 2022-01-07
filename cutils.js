@@ -86,9 +86,7 @@ var cutils = {
                 elts[0].click();
                 return elts.slice(0,1);
             }
-        } else {
-            return null;
-        }
+        } else return null;
     },
 
 
@@ -117,7 +115,13 @@ var cutils = {
     /** Hides elements matching SELECTOR. See get() for arguments and options */
     hide: function(selector, opts={}) {
         const elts = this.get(selector, opts);
-        elts.forEach(e=>e.classList.add("TridactylKilledElem"));
+        if (opts.toggle) elts.forEach(e=>{
+            if (e.classList.contains("TridactylKilledElem"))
+                e.classList.remove("TridactylKilledElem");
+            else
+                e.classList.add("TridactylKilledElem");
+        });
+        else elts.forEach(e=>e.classList.add("TridactylKilledElem"));
         return elts.length ? elts : null;
     },
 
@@ -274,6 +278,8 @@ var cutils = {
 
     /** Unhides elements matching any of the SELECTORS. For more options, see rm() */
     unhideall: (...selectors) => this.unhide(selectors),
+
+    yankelts: (selector, opts={}) => this.yankWithMsg(this.get(selector, opts).map(e=>e.textContent).join("\n")),
 
     yankWithMsg: function(s, opts={}) {
         tri.excmds.yank(s);
