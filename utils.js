@@ -277,6 +277,11 @@ utils.tab = {
         return browser.tabs.move(thisTab.id, {index: i});
     },
 
+    moveToAlternate: async function(n=1) {
+        const alt = await this.getAlternate(n);
+        return this.move(alt.index+1);
+    },
+
     open: async function(url, opts={}) {
         /*   open(URL, { OPTIONS... })
          *   open(URL, WHERE)
