@@ -292,7 +292,12 @@ command copyuserchrome ! cp -v ~/.tridactyl/css/userChrome.css `echo ~/.mozilla/
 command: rmuserchrome "Remove userChrome.js from default profile" ! rm ~/.mozilla/firefox/*.default/userChrome.css
 commdoc bmrofi "[WHERE? BG? OPTS?] Open bookmark via rofi"
 command bmrofi jsb -d¦ apps.bmrofi(JS_ARGS)¦
+" note: The :history command can usually only take a count of about 5 (ie prev 5 days history)
+"       this seems to be due to a limit on how much can be sent to the native client
+"       The :historysearch command takes a search term to filter input *first*, so it can be
+"       used for searching over a longer time range
 command history jsb -d¦ utils.openHistoryItemsWrapper(JS_ARGS)¦
+command historysearch jsb -d¦ utils.openHistorySearchWrapper(JS_ARGS)¦
 
 bind wc fillcmdline wincloseindex
 
@@ -348,6 +353,15 @@ commdoc multienginesearch_adj "Search multiple engines with same query in adjace
 command multienginesearch_adj jsb -d¦ apps.multipleEngineSearch(JS_ARGS, {where: "related"})¦
 
 bind s<C-h> showkeys s
+
+" | sh -- search history |
+bind sh<C-h> showkeys sh
+bind: shh "Search history, open item(s) in last tab [rofi]" historysearch last false
+bind: sha "Search history, open item(s) in adjacent tab [rofi]" historysearch related false
+bind: shb "Search history, open item(s) in adjacent background tab [rofi]" historysearch related true
+bind: sho "Search history, open item in current tab [rofi]" historysearch here false
+
+" | sk -- search by bookmark keyword  |
 bind sk<C-h> showkeys sk
 bind: ska "Search by bookmark keyword in adjacent tab" fillcmdline kwsearch_adj
 bind: skb "Search by bookmark keyword in background adjacent tab" fillcmdline kwsearch_bg
@@ -355,6 +369,8 @@ bind: skk "Search by bookmark keyword in last tab" fillcmdline kwsearch
 bind: sko "Search by bookmark keyword in current tab" fillcmdline kwsearch_here
 bind: sks "Search by bookmark keyword in last tab [Rofi]" fillcmdline kwrofi
 
+" | sm -- search multiple |
+bind sm<C-h> showkeys sm
 bind: smm "Search multiple queries" fillcmdline multisearch
 bind: smM "Search multiple queries" fillcmdline multisearch_adj
 bind: sme "Search multiple engines" fillcmdline multienginesearch

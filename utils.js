@@ -85,6 +85,18 @@ var utils = {
         });
     },
 
+    openHistorySearchWrapper: async function(args) {
+        args = this.tri.parseArgs(args);
+        const [where, bg, days] = args;
+        const text = (await tri.native.run("kdialog --inputbox 'text to search'")).content;
+        return this.openHistoryItems({
+            text: text,
+            where: where,
+            background:this.parseBool(bg),
+            hoursAgo: 24*(days||2)
+        });
+    },
+
     parseBool(s) {
         if (["true", "yes", "on", "1"].includes(s)) return true;
         else if (["false", "no", "off", "0"].includes(s)) return false;
@@ -92,6 +104,7 @@ var utils = {
     },
 
     /**   Search history for TEXT and choose from results with rofi
+     *  opts.text          text to search for
      *  opts.startTime:    earliest time for history results
      *  opts.endTime:      latest time for history results
      *  opts.hoursAgo:     alternative to startTime/endTime;
@@ -109,7 +122,9 @@ var utils = {
         opts.format ||= "i";
         /* time range of results */
         if (!opts.hoursAgo && !opts.startTime && !opts.endTime)
-            opts.hoursAgo = 48;
+            opts.daysAgo = 4;
+        if (opts.daysAgo && !opts.hoursAgo)
+            opts.hoursAgo = 24 * opts.daysAgo;
         if (opts.hoursAgo) {
             if (opts.startTime || opts.endTime) {
                 this.message("ERROR: conflicting options");
