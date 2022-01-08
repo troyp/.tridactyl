@@ -142,7 +142,6 @@ var cutils = {
      *  opts.noCmdline      remove Tridactyl's commandline iframe
      */
     isolate: function(selector, opts={}) {
-        const keepElts = $$(selector);
         /* opts */
         if (Array.isArray(opts)) opts = opts.reduce((acc,e)=>(acc[e]=true) && acc, {});
         else if (opts instanceof HTMLElement) opts = { context: opts };
@@ -157,27 +156,27 @@ var cutils = {
             return match_ok && filter_ok;
         }
         /* selector */
-        if (Array.isArray(selector))
-            selector = selector.join(",");
-        if (!opts.noHead)
-            selector += "head,";
-        if (!opts.noCmdline)
-            selector += "#cmdline_iframe,";
+        if (Array.isArray(selector)) selector = selector.join(",");
         /* main logic */
-        var matched = [];
+        var keepElts = [];
         if (opts.firstMatch) {
             if ((elt = $$(selector, opts.context).find(pred))) {
-                matched = [elt];
+                keepElts = [elt];
             } else
                 return null;
         } else {
-            matched = $$(selector, opts.context).filter(pred);
+            keepElts = $$(selector, opts.context).filter(pred);
         }
-        for (elt of matched) {
-            if (keepElts.every(k => !k.contains(elt) && !elt.contains(k)))
+        if (!opts.noHead) keepElts.push(document.head);
+        if (!opts.noCmdline) keepElts.push(document.getElementById("cmdline_iframe"));
+        var successful = null;
+        for (elt of $$("*")) {
+            if (keepElts.every(k => !k.contains(elt) && !elt.contains(k))) {
                 elt.remove();
+                successful = true;
+            }
         }
-        return elts.length ? elts : null;
+        return successful;
     },
 
     keep: (...selectors) => this.isolate(selectors),
