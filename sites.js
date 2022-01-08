@@ -99,4 +99,14 @@ var sites = {
     },
 };
 
+sites.LISTS = {
+    liquor_specials: [
+        "https://www.danmurphys.com.au/current-offers?filters=variety(spirits)",
+        "https://www.liquorland.com.au/specials/spirit-specials",
+        "https://www.vintagecellars.com.au/specialoffers/spirit-specials",
+        "https://bws.com.au/productgroup/spirit-specials",
+        "https://www.firstchoiceliquor.com.au/specials",
+    ],
+};
+
 window.sites = sites;

@@ -321,6 +321,14 @@ utils.tab = {
         return newTab;
     },
 
+    openMultiple: async function(urls, opts={}) {
+        urls = urls.map(u=>u.trim()).filter(u=>u);
+        opts.where ||= "last";
+        opts.background ??= (["related", "next"].includes(opts.where));
+        for (const url of urls) await utils.tab.open(url, opts);
+        return urls;
+    },
+
     openOrSummon: async function(url, opts={}) {
         /*
          * opts.where ["here", "related" (default), "next"]: where to open new tab (if any)
