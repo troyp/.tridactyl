@@ -617,16 +617,24 @@ utils.tri = {
 
     parseArgs: function(args, opts={}) {
         opts = this.parseOpts(opts, {castString: "type"});
+        var result = null, callerOpts = {};
+        if (opts.allowOpts && typeof args.at(-1) == "object") {
+            [args, [callerOpts]] = tri.R.splitAt(-1, args);
+        }
         const argstr = args.join(" ").trim();
         switch (opts.type) {
           case "string":
-              return argstr; break;
+              result = argstr; break;
           case "number":
-              return Number(argstr) || null;
+              result = Number(argstr) || null;
           case "array":
           default:
-              return argstr.split(/ +/); break;
+              result = argstr.split(/ +/); break;
         }
+        if (opts.allowOpts)
+            return [result, callerOpts];
+        else
+            return result;
     },
 
     parseArgsAndCount: function(args, opts={}) {
