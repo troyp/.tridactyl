@@ -55,19 +55,24 @@ var cutils = {
      *    $$t(SELECTOR, TEXT, CONTEXT)
      *  Return an array of elements in subtree CONTEXT matching SELECTOR and matching TEXT.
      *  TEXT may be either a string or a regular expression.
+     *  Options:
+     *    opts.textProperty: property used to extract elements' text to match (default: "innerText")
      */
     $$t: function(selector, text, opts={}) {
         if (opts instanceof Node) opts = {context: opts};
+        opts.textProperty ||= "innerText";
         const elems = this.$$(selector, opts);
-        return elems.filter(e=>e[opts.useInnerText ? "innerText" : "textContent"].match(text));
+        return elems.filter(e=>e[opts.textProperty].match(text));
     },
 
     /** Return an element in subtree CONTEXT matching SELECTOR and matching TEXT.
+     *  See $$t for details.
      */
     $1t: function(selector, text, opts={}) {
         if (opts instanceof Node) opts = {context: opts};
+        opts.textProperty ||= "innerText";
         const elems = this.$$(selector, opts);
-        return elems.find(e=>e[opts.useInnerText ? "innerText" : "textContent"].match(text));
+        return elems.find(e=>e[opts.textProperty].match(text));
     },
 
     /** Clicks matching element(s). If successful, returns an array of clicked items.
@@ -76,7 +81,7 @@ var cutils = {
     click: function(selector, opts={}) {
         const elts = opts.match
               ? $$(selector)
-              : $$t(selector, opts.match, {useInnerText: opts.useInnerText});
+              : $$t(selector, opts.match, {textProperty: opts.textProperty});
         if (elts.length) {
             if (opts.all) {
                 elts.forEach(e=>e.click());
@@ -128,18 +133,20 @@ var cutils = {
     /** Hides elements matching any of the SELECTORS. For more options, see rm() */
     hideall: (...selectors) => this.hide(selectors),
 
-    /**    isolate(selector, opts):                     Remove all but matching elements
-     *     isolate(selector, context:HTMLElement):      Remove all but matching elements under CONTEXT
-     *     isolate(selector, ["firstMatch"]:[string]):  Remove all but first matching element
-     *     isolate(selector, filter:e=>Bool):           Remove all but matching elements satisfying predicate FILTER
-     *     isolate(selector, pattern:string|RegExp):    Remove all but matching elements with text matching PATTERN
-     *  opts.filter:        predicate that selected elements must satisfy
-     *  opts.firstMatch:    only keep the first matching element
-     *  opts.context:       the root element of the search; null for whole document
-     *  opts.match:         a regex or string that selected elements must match;
-     *  opts.useInnerText   opts.match tests against elements' innerText property rather than textContent
-     *  opts.noHead         remove the <head> element
-     *  opts.noCmdline      remove Tridactyl's commandline iframe
+    /**   isolate(selector, opts)
+     *    isolate(selector, context:HTMLElement)
+     *    isolate(selector, ["firstMatch"]:[string])
+     *    isolate(selector, filter:e=>Bool)
+     *    isolate(selector, pattern:string|RegExp)
+     *  Remove all but matching elements.
+     *  Options:
+     *    opts.filter:        predicate that selected elements must satisfy
+     *    opts.firstMatch:    only keep the first matching element
+     *    opts.context:       the root element of the search; null for whole document
+     *    opts.match:         a regex or string that selected elements must match;
+     *    opts.textProperty:  property used to extract elements' text to match (default: "innerText")
+     *    opts.noHead:        remove the <head> element
+     *    opts.noCmdline:     remove Tridactyl's commandline iframe
      */
     isolate: function(selector, opts={}) {
         /* opts */
@@ -150,8 +157,7 @@ var cutils = {
         else if (typeof opts === "string")    opts = { match: opts };
         /* pred */
         function pred(e) {
-            const textProp = opts.useInnerText ? "innerText" : "textContent";
-            const match_ok  = !opts.match  || e[textProp].match(opts.match);
+            const match_ok  = !opts.match  || e[opts.textProperty].match(opts.match);
             const filter_ok = !opts.filter || opts.filter(e);
             return match_ok && filter_ok;
         }
@@ -194,16 +200,18 @@ var cutils = {
         return s;
     },
 
-    /**    get(selector, opts):                     Get matching elements
-     *     get(selector, context:HTMLElement):      Get matching elements under CONTEXT
-     *     get(selector, ["firstMatch"]:[string]):  Get first matching element
-     *     get(selector, filter:e=>Bool):             Get matching elements satisfying predicate FILTER
-     *     get(selector, pattern:string|RegExp):    Get matching elements with text matching PATTERN
-     *  opts.filter:        predicate that selected elements must satisfy
-     *  opts.firstMatch:    only get the first matching element
-     *  opts.context:       the root element of the search; null for whole document
-     *  opts.match:         a regex or string that selected elements must match;
-     *  opts.useInnerText   opts.match tests against elements' innerText property rather than textContent
+    /**   get(selector, opts)
+     *    get(selector, context:HTMLElement)
+     *    get(selector, ["firstMatch"]:[string])
+     *    get(selector, filter:e=>Bool)
+     *    get(selector, pattern:string|RegExp)
+     *  Get matching elements.
+     *  Options:
+     *    opts.filter:        predicate that selected elements must satisfy
+     *    opts.firstmatch:    only get the first matching element
+     *    opts.context:       the root element of the search; null for whole document
+     *    opts.match:         a regex or string that selected elements must match;
+     *    opts.textproperty   property that opts.match tests against (default: "innertext")
      */
     get: function(selector, opts={}) {
         /* selector */
@@ -217,8 +225,7 @@ var cutils = {
         else if (typeof opts === "string")    opts = { match: opts };
         /* pred */
         function pred(e) {
-            const textProp = opts.useInnerText ? "innerText" : "textContent";
-            const match_ok  = !opts.match  || e[textProp].match(opts.match);
+            const match_ok  = !opts.match  || e[opts.textProperty].match(opts.match);
             const filter_ok = !opts.filter || opts.filter(e);
             return match_ok && filter_ok;
         }
@@ -278,7 +285,7 @@ var cutils = {
     /** Unhides elements matching any of the SELECTORS. For more options, see rm() */
     unhideall: (...selectors) => this.unhide(selectors),
 
-    yankelts: (selector, opts={}) => this.yank(this.get(selector, opts).map(e=>e.textContent).join("\n")),
+    yankelts: (selector, opts={}) => this.yank(this.get(selector, opts).map(e=>e[opts.textProperty]).join("\n")),
 
     yank: function(s, opts={}) {
         /* options */
