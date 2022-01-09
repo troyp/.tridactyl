@@ -16,7 +16,7 @@ var apps = {
         opts.switches ??= "-u -s";
         const cmd  = `kwsearch ${[opts.switches, ...args].join?.(" ")?.trim()}`;
         return tri.native.run(cmd).then(
-            res => utils.yankWithMsg(opts.decode ? utils.decode(res.content, opts.decodeFn) : res.content)
+            res => utils.yank(opts.decode ? utils.decode(res.content, opts.decodeFn) : res.content)
         );
     },
 

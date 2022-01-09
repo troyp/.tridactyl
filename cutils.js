@@ -278,13 +278,19 @@ var cutils = {
     /** Unhides elements matching any of the SELECTORS. For more options, see rm() */
     unhideall: (...selectors) => this.unhide(selectors),
 
-    yankelts: (selector, opts={}) => this.yankWithMsg(this.get(selector, opts).map(e=>e.textContent).join("\n")),
+    yankelts: (selector, opts={}) => this.yank(this.get(selector, opts).map(e=>e.textContent).join("\n")),
 
-    yankWithMsg: function(s, opts={}) {
+    yank: function(s, opts={}) {
+        /* options */
+        opts = cutils.tri.parseOpts(opts, {castBoolean: "msg"});
+        opts.msg ??= true;
+        /* yank */
         tri.excmds.yank(s);
-        const defaultPrefix = "Copied" + (opts.useAlert ? "...\n" : ": ");
-        opts.prefix ??= defaultPrefix;
-        this.message(s, opts);
+        /* message? */
+        if (opts.msg) {
+            opts.prefix ??= "Copied" + (opts.useAlert ? "...\n" : ": ");
+            this.message(s, opts);
+        }
     },
 };
 

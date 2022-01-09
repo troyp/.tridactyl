@@ -212,11 +212,17 @@ var utils = {
         return this.xdoelem(selector, xdocmd, opts);
     },
 
-    yankWithMsg: function(s, opts={}) {
+    yank: function(s, opts={}) {
+        /* options */
+        opts = utils.tri.parseOpts(opts, {castBoolean: "msg"});
+        opts.msg ??= true;
+        /* yank */
         tri.excmds.yank(s);
-        var defaultPrefix = "Copied" + (opts.useAlert ? "...\n" : ": ");
-        opts.prefix ??= defaultPrefix;
-        this.message(s, opts);
+        /* message? */
+        if (opts.msg) {
+            opts.prefix ??= "Copied" + (opts.useAlert ? "...\n" : ": ");
+            this.message(s, opts);
+        }
     },
 };
 
@@ -578,13 +584,13 @@ utils.tri = {
         const hist = tri.state.cmdHistory;
         const N = hist.length;
         const cmds = ns.map(n=>hist[N-n]);
-        return utils.yankWithMsg(cmds.join("\n"));
+        return utils.yank(cmds.join("\n"));
     },
 
     cmdYankHistoryLastN: function(n) {
         n = Number(n)||1;
         const cmds = tri.state.cmdHistory.slice(-n);
-        return utils.yankWithMsg(cmds.join("\n"));
+        return utils.yank(cmds.join("\n"));
     },
 
     docBindMode: function(args) {

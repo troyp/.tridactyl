@@ -601,7 +601,7 @@ bind: ,avy "Goto Youtube" tabopenorswitchc https://www.youtube.com/
 " ╰────────────────────╯
 bind ,aw<C-h> showkeys ,aw
 " Show Goonellabah Sunrise and Sunset Times
-bind ,aws jsb var [sr,ss]=apps.sunriseSunset(...user.latlong); utils.yankWithMsg(`SUNRISE: ${sr}\nSUNSET:  ${ss}`);
+bind ,aws jsb var [sr,ss]=apps.sunriseSunset(...user.latlong); utils.yank(`SUNRISE: ${sr}\nSUNSET:  ${ss}`);
 " Open Lismore Weather (BoM)
 bind ,aww tabopenorswitchc http://www.bom.gov.au/nsw/forecasts/lismore.shtml
 " Open Goonellabah Weather (timeanddate.com)
@@ -686,8 +686,8 @@ bind: ,ts "Toggle HTTPS:" urltoggle https:// http://
 command convertunits jsb -d¦ apps.convertUnits(JS_ARGS).then(s=>tri.excmds.fillcmdline_nofocus(s))¦
 bind ,vv fillcmdline convertunits
 
-command copytablecols withjs -r cutils.js ; js -d¦ tri.controller.acceptExCmd(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}]), {useAlert:true})`)¦
-command copytablecols_strict withjs -r cutils.js ; js -d¦ tri.excmds.fillcmdline(`hint -c table -F t=>cutils.yankWithMsg(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}], {strict:true}), {useAlert:true})`)¦
+command copytablecols withjs -r cutils.js ; js -d¦ tri.controller.acceptExCmd(`hint -c table -F t=>cutils.yank(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}]), {useAlert:true})`)¦
+command copytablecols_strict withjs -r cutils.js ; js -d¦ tri.excmds.fillcmdline(`hint -c table -F t=>cutils.yank(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}], {strict:true}), {useAlert:true})`)¦
 
 " ╭─────────────────────╮
 " │ ,x -- miscellaneous │
