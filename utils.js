@@ -684,16 +684,19 @@ utils.tri = {
      *  options.defaults.key=val:         if key if falsey, set to value
      *  options.nullishDefaults.key=val:  if key is nullish, set to value
      */
-    parseOpts: function(opts, options={}) {
-        if (options.castString && typeof opts == "string") {
-            const opts_ = {};
-            opts_[options.castString] = opts;
-            opts = opts_;
-        } else if (options.castFunction && typeof opts == "function") {
-            const opts_ = {};
-            opts_[options.castFunction] = opts;
-            opts = opts_;
+    parseOpts: function(rawopts, options={}) {
+        /* cast opts */
+        var opts = {};
+        if (options.castString && typeof rawopts == "string") {
+            opts[options.castString] = rawopts;
+        } else if (options.castFunction && typeof rawopts == "function") {
+            opts[options.castFunction] = rawopts;
+        } else if (options.castBoolean && typeof rawopts == "boolean") {
+            opts[options.castBoolean] = rawopts;
+        } else {
+            opts = rawopts;
         }
+        /* defaults */
         options.defaults ||= {};
         options.nullishDefaults ||= {};
         for (k of Object.keys(options.defaults)) {
@@ -702,6 +705,7 @@ utils.tri = {
         for (k of Object.keys(options.nullishDefaults)) {
             opts[k] ??= options.nullishDefaults[k];
         }
+        /* return */
         return opts;
     },
 

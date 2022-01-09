@@ -294,9 +294,46 @@ var cutils = {
     },
 };
 
+// ───────────────────────────────────────────────────────────────────────────────
+// ╭──────────────────────────────────────────────────────────────────╮
+// │ cutils.tri -- utilities related to tridactyl source and features │
+// ╰──────────────────────────────────────────────────────────────────╯
+
+cutils.tri = {
+    /** options.castString:               if a string is passed for opts rather than an array, it
+     *                                    represents the value of the property opts[options.castString].
+     *  options.defaults.key=val:         if key if falsey, set to value
+     *  options.nullishDefaults.key=val:  if key is nullish, set to value
+     */
+    parseOpts: function(rawopts, options={}) {
+        /* cast opts */
+        var opts = {};
+        if (options.castString && typeof rawopts == "string") {
+            opts[options.castString] = rawopts;
+        } else if (options.castFunction && typeof rawopts == "function") {
+            opts[options.castFunction] = rawopts;
+        } else if (options.castBoolean && typeof rawopts == "boolean") {
+            opts[options.castBoolean] = rawopts;
+        } else {
+            opts = rawopts;
+        }
+        /* defaults */
+        options.defaults ||= {};
+        options.nullishDefaults ||= {};
+        for (k of Object.keys(options.defaults)) {
+            opts[k] ||= options.defaults[k];
+        }
+        for (k of Object.keys(options.nullishDefaults)) {
+            opts[k] ??= options.nullishDefaults[k];
+        }
+        /* return */
+        return opts;
+    },
+};
+
 window.cutils = cutils;
 window.R = R;
 for (k of Object.keys(cutils))
-    if (!["hide", "unhide"].includes(k))
+    if (!["hide", "unhide", "tri"].includes(k))
         window[k] = cutils[k];
 
