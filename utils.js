@@ -575,6 +575,26 @@ utils.tab = {
 // ╰─────────────────────────────────────────────────────────────────╯
 
 utils.tri = {
+    bindMode: function(args) {
+        const argstr = args.join(" ").trim();
+        const bindmodeRe = /^([a-z]+) ([^ ]+) (.*)/;
+        const match = argstr.match(bindmodeRe);
+        [mode, key, rest] = match.slice(1);
+        switch(mode) {
+          case "all":
+              tri.controller.acceptExCmd(`bind --mode=normal ${key} ${rest}`);
+              tri.controller.acceptExCmd(`bind --mode=visual ${key} ${rest}`);
+              tri.controller.acceptExCmd(`bind --mode=ex ${key} ${rest}`);
+              tri.controller.acceptExCmd(`bind --mode=hint ${key} ${rest}`);
+              /* fallthrough to case i */
+          case "i":
+              tri.controller.acceptExCmd(`bind --mode=insert ${key} ${rest}`);
+              tri.controller.acceptExCmd(`bind --mode=input ${key} ${rest}`);
+              break;
+          default:
+              tri.controller.acceptExCmd(`bind --mode=${mode} ${key} ${rest}`);
+        }
+    },
 
     /* cmdYankHistory :: number|string|array -> IO string
      */
@@ -600,11 +620,19 @@ utils.tri = {
         [mode, key, desc, rest] = match.slice(1);
         /* TODO: implement documentation system */
         /* for now, extract descriptions statically from file */
-        if (mode=="i") {
-            tri.controller.acceptExCmd(`bind --mode=insert ${key} ${rest}`);
-            tri.controller.acceptExCmd(`bind --mode=input ${key} ${rest}`);
-        } else {
-            tri.controller.acceptExCmd(`bind --mode=${mode} ${key} ${rest}`);
+        switch(mode) {
+          case "all":
+              tri.controller.acceptExCmd(`bind --mode=normal ${key} ${rest}`);
+              tri.controller.acceptExCmd(`bind --mode=visual ${key} ${rest}`);
+              tri.controller.acceptExCmd(`bind --mode=ex ${key} ${rest}`);
+              tri.controller.acceptExCmd(`bind --mode=hint ${key} ${rest}`);
+              /* fallthrough to case i */
+          case "i":
+              tri.controller.acceptExCmd(`bind --mode=insert ${key} ${rest}`);
+              tri.controller.acceptExCmd(`bind --mode=input ${key} ${rest}`);
+              break;
+          default:
+              tri.controller.acceptExCmd(`bind --mode=${mode} ${key} ${rest}`);
         }
     },
 
@@ -756,6 +784,27 @@ utils.tri = {
     searchNmapsWrapper: async function (term) {
         const conf = this.searchConfig("nmaps", term.trim());
         return utils.messageBox(conf, {contPrefix: "\t\t"});
+    },
+
+    unbindMode: function(args) {
+        const argstr = args.join(" ").trim();
+        const bindmodeRe = /^([a-z]+) ([^ ]+)/;
+        const match = argstr.match(bindmodeRe);
+        [mode, key] = match.slice(1);
+        switch(mode) {
+          case "all":
+              tri.controller.acceptExCmd(`unbind --mode=normal ${key}`);
+              tri.controller.acceptExCmd(`unbind --mode=visual ${key}`);
+              tri.controller.acceptExCmd(`unbind --mode=ex ${key}`);
+              tri.controller.acceptExCmd(`unbind --mode=hint ${key}`);
+              /* fallthrough to case i */
+          case "i":
+              tri.controller.acceptExCmd(`unbind --mode=insert ${key}`);
+              tri.controller.acceptExCmd(`unbind --mode=input ${key}`);
+              break;
+          default:
+              tri.controller.acceptExCmd(`unbind --mode=${mode} ${key}`);
+        }
     },
 };
 
