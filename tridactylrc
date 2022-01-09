@@ -567,13 +567,11 @@ bind ,<C-h> showkeys ,
 " ╭───────────╮
 " │ ,a -- web │
 " ╰───────────╯
-bind ,a<C-h> showkeys ,a
-" Open banking
-bind ,ab withjsb user.bankurl | tabopenorswitchc
-" Open Paypal
-bind ,ap tabopenorswitchc https://www.paypal.com/myaccount/home
-" Open MyGov
-bind ,ay tabopenorswitchc https://my.gov.au/LoginServices/main/login?execution=e1s1
+bind: ,a<C-h> showkeys ,a
+bind: ,ab "Open banking" withjsb user.bankurl | tabopenorswitchc
+bind: ,ac "Open Google calendar" tabopenorswitch https://calendar.google.com/calendar/u/0/r/month
+bind: ,ap "Open Paypal" tabopenorswitchc https://www.paypal.com/myaccount/home
+bind: ,ay "Open MyGov" tabopenorswitchc https://my.gov.au/LoginServices/main/login?execution=e1s1
 
 " ╭──────────────────────────╮
 " │ ,am -- web/mail+contacts │
