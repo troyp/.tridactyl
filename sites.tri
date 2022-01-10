@@ -90,6 +90,10 @@ ghbind cs;* ghtabsearchwrapper "search my stars [new tab]" https://github.com/${
 command: googlebind "Bind key for www.google.com" bindurl https://www.google.com
 command: googlebind: "Bind key with description for www.google.com" bindurl: https://www.google.com
 
+googlebind: f "Open link in current tab [HINT]" hint -J
+googlebind: F "Open link in new tab [HINT]" hint -Jb
+googlebind: gf "Open multiple tabs in background tabs [HINNTS]" hint -qJb
+
 googlebind: ctn "Toggle Top stories" cujs cutils.hide("g-section-with-header", {toggle:true});
 
 " ───────────────────────────────────────────────────────────────────────────────
