@@ -57,6 +57,8 @@ command: bdoc "provide a description for a bind definition on a separate line" j
 " ╭──────────╮
 " │ Settings │
 " ╰──────────╯
+" Autocommands
+autocmd TabEnter .* unfocus
 
 " General Settings
 "
@@ -76,6 +78,7 @@ guiset_quiet tabs count
 jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{urls:["<all_urls>"],types:["main_frame"]},["blocking","responseHeaders"])
 
 setpref browser.aboutConfig.showWarning false
+setpref browser.autofocus false
 setpref browser.compactmode.show true
 setpref browser.tabs.tabMinWidth 120
 setpref browser.urlbar.speculativeConnect.enabled false
