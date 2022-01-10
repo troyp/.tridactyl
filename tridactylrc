@@ -148,8 +148,10 @@ bind: X "Stop loading" stop
 
 unbind g;
 bind g<C-h> showkeys g
+bind: gf "Open multiple tabs in background tabs [HINT]" hint -qb
 bdoc gh "Open the previous item in tab history in an adjacent tab"
 bind gh jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goBack(t.id));
+bind: gs "Toggle page source" viewsource
 
 bind: <C-F10> "Open hamburger menu" xdoclick 1896 115
 
