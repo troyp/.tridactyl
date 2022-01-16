@@ -318,32 +318,34 @@ command history jsb -d¦ utils.openHistoryItemsWrapper(JS_ARGS)¦
 command historysearch jsb -d¦ utils.openHistorySearchWrapper(JS_ARGS)¦
 
 bind wc fillcmdline wincloseindex
+bind: wm "Toggle mute tab" mute toggle
+bind: wM "Mute all tabs" mute all
+bind: wr "Reload tridactylrc file" source ~/.tridactyl/tridactylrc
+bind: wu "Undo window" undo window
+bind: ww "Open URL in new window" fillcmdline winopen
+bind: wx "dismiss update notification" xdo mousemove 1740 230 click 1
 
-" | wk -- bookmarks |
+" | wk -- browser/bookmarks |
 bind wk<C-h> showkeys wk
 bind: wkk "Open bookmark in last tab [Rofi]" bmrofi
 bind: wka "Open bookmark in adjacent tab [Rofi]" bmrofi related
 bind: wkb "Open bookmark in background adjacent tab [Rofi]" bmrofi related t
 bind: wko "Open bookmark in current tab [Rofi]" bmrofi here
 
+" | wh -- browser/history |
 bind: whh "Open history item in last tab [rofi]" history last false
 bind: wha "Open history item in adjacent tab [rofi]" history related false
 bind: whb "Open history item in adjacent background tab [rofi]" history related true
 bind: who "Open history item in current tab [rofi]" history here false
 
-bind: wm "Toggle mute tab" mute toggle
-bind: wM "Mute all tabs" mute all
-bind: wr "Reload tridactylrc file" source ~/.tridactyl/tridactylrc
+" | ws -- browser/style |
 bind: wsu "Copy userChrome.css from .tridactyl/css to default profile directory" copyuserchrome
 bind: wsU "Copy userChrome.css and restart browser" composite copyuserchrome ; restart
 
+" | wt -- browser/toggle |
 bind: wtd "toggle downloads menu" xdoclick 241 111
 bind: wtt "toggle bookmarks toolbar" xdo key ctrl+B
 bind: wtm "toggle menu bar" xdo key alt+v; sleep 0.5; xdotool key Right; sleep 0.5; xdotool key Return
-bind: wu "Undo window" undo window
-bind: ww "Open URL in new window" fillcmdline winopen
-bind: wx "dismiss update notification" xdo mousemove 1740 230 click 1
-
 
 " ╭─────────────╮
 " │ s -- search │
