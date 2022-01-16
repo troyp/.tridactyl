@@ -81,7 +81,7 @@ var utils = {
         return this.openHistoryItems({
             where: where,
             background:this.parseBool(bg),
-            hoursAgo: 24*(days||2)
+            hoursAgo: 24*(days||4)
         });
     },
 
@@ -93,7 +93,7 @@ var utils = {
             text: text,
             where: where,
             background:this.parseBool(bg),
-            hoursAgo: 24*(days||2)
+            hoursAgo: 24*(days||4)
         });
     },
 
