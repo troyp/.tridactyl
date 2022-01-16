@@ -383,18 +383,25 @@ bind: sho "Search history, open item in current tab [rofi]" historysearch here f
 
 " | sk -- search by bookmark keyword  |
 bind sk<C-h> showkeys sk
-bind: ska "Search by bookmark keyword in adjacent tab" fillcmdline kwsearch_adj
-bind: skb "Search by bookmark keyword in background adjacent tab" fillcmdline kwsearch_bg
-bind: skk "Search by bookmark keyword in last tab" fillcmdline kwsearch
-bind: sko "Search by bookmark keyword in current tab" fillcmdline kwsearch_here
-bind: sks "Search by bookmark keyword in last tab [Rofi]" fillcmdline kwrofi
+bind: skb "Bmark keyword search: background adjacent tab" fillcmdline kwsearch_bg
+bind: skk "Bmark keyword search: adjacent tab" fillcmdline kwsearch_adj
+bind: skl "Bmark keyword search: last tab" fillcmdline kwsearch
+bind: sko "Bmark keyword search: current tab" fillcmdline kwsearch_here
+bind: s;kb "Bmark keyword search: background adjacent tab [Rofi]" ! kwsearch -Sw|sed -r 's/.*/kwsearch_bg \0/'
+bind: s;kk "Bmark keyword search: adjacent tab [Rofi]" ! kwsearch -Sw|sed -r 's/.*/kwsearch_adj \0/'
+bind: s;kl "Bmark keyword search: last tab [Rofi]" ! kwsearch -Sw|sed -r 's/.*/kwsearch \0/'
+bind: sks "Bmark keyword search: last tab [Rofi]" fillcmdline kwrofi
 
 " | sm -- search multiple |
 bind sm<C-h> showkeys sm
-bind: smm "Search multiple queries" fillcmdline multisearch
-bind: smM "Search multiple queries" fillcmdline multisearch_adj
-bind: sme "Search multiple engines" fillcmdline multienginesearch
-bind: smE "Search multiple engines" fillcmdline multienginesearch_adj
+bind: smm "Search multiple queries: adjacent tab" fillcmdline multisearch_adj
+bind: smM "Search multiple queries" fillcmdline multisearch
+bind: sme "Search multiple engines: adjacent tab" fillcmdline multienginesearch_adj
+bind: smE "Search multiple engines" fillcmdline multienginesearch
+bind: s;mm "Search multiple queries: adjacent tab" ! kwsearch --kw-completion|sed -r 's/.*/multisearch_adj \0/'
+bind: s;mM "Search multiple queries" ! kwsearch --kw-completion|sed -r 's/.*/multisearch \0/'
+bind: s;me "Search multiple engines: adjacent tab" ! echo -n "multienginesearch "; kwsearch --kw-completion --multi
+bind: s;mE "Search multiple engines" ! echo -n "multienginesearch_adj "; kwsearch --kw-completion --multi
 
 bind ss fillcmdline open search
 bind s/ fillcmdline find
