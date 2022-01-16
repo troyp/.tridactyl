@@ -52,6 +52,7 @@ command: setpref: "setpref with description" docdef setpref
 command: guiset_quiet: "guiset_quiet with description" docdef guiset_quiet
 command: commdoc "provide a description for a command definition on a separate line" js ;
 command: bdoc "provide a description for a bind definition on a separate line" js ;
+command trisanitize sanitize tridactyllocal
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮
