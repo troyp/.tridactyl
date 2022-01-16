@@ -88,7 +88,7 @@ var utils = {
     openHistorySearchWrapper: async function(args) {
         args = this.tri.parseArgs(args);
         const [where, bg, days] = args;
-        const text = (await tri.native.run("kdialog --inputbox 'text to search'")).content;
+        const text = await this.query("text to search:");
         return this.openHistoryItems({
             text: text,
             where: where,
@@ -101,6 +101,11 @@ var utils = {
         if (["true", "yes", "on", "1"].includes(s)) return true;
         else if (["false", "no", "off", "0"].includes(s)) return false;
         else return null;
+    },
+
+    query: async function(msg="") {
+        const res = await tri.native.run(`kdialog --inputbox '${msg}'`);
+        return res.content.replace(/\n$/,"");
     },
 
     /**   Search history for TEXT and choose from results with rofi
