@@ -765,12 +765,12 @@ utils.tri = {
         opts = this.parseOpts(opts, {castString: "where", nullishDefaults:{where:"last"}});
         const n = this.parseArgs(args, {type: "number"})||1;
         if (opts.where=="here") {
-            utils.cbread(0).then(s=>utils.tab.open(s, "here"));
+            await utils.cbread(0).then(s=>utils.tab.open(s, "here"));
             for (i=1; i<n; ++i)
-                utils.cbread(i).then(s=>utils.tab.open(s, {where: "related", background: true}));
+                await utils.cbread(i).then(s=>utils.tab.open(s, {where: "related", background: true}));
         } else {
             for (i=0; i<n; ++i)
-                utils.cbread(i).then(s=>utils.tab.open(s, opts));
+                await utils.cbread(i).then(s=>utils.tab.open(s, opts));
         }
     },
 
