@@ -683,11 +683,14 @@ utils.tri = {
     myfocusinput: function(arg) { const n = arg ? Number(arg)-1 : "-l"; tri.excmds.focusinput(n); },
 
     parseArgs: function(args, opts={}) {
+        /* opts */
         opts = this.parseOpts(opts, {castString: "type"});
         var result = null, callerOpts = {};
         if (opts.allowOpts && typeof args.at(-1) == "object") {
             [args, [callerOpts]] = tri.R.splitAt(-1, args);
         }
+        /* args */
+        if (typeof args == "string") args = [args];
         const argstr = args.join(" ").trim();
         switch (opts.type) {
           case "string":
