@@ -817,6 +817,8 @@ bind --mode=insert  <C-C>    withjsb user.creditcard | text.insert_text
 " ╭──────────────────────╮
 " │ Visual-mode bindings │
 " ╰──────────────────────╯
+vbind Y cujs cutils.yank(window.getSelection().toString())
+
 vbind: <A-;> "Switch to last accessed tab" tabswitchprev
 vbind: <A-:> "Switch to last accessed tab and close current tab" tabswitchprev!
 
