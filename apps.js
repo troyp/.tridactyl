@@ -120,6 +120,17 @@ apps.trans = {
             );
         },
     },
+
+    transsh: async function(args) {
+        args = utils.tri.parseArgs(args, "string");
+        const cmd = `! trans -no-ansi -show-original=n ${args} |` +
+              `perl -pe 's/\\n+/ \| /g' |` +
+              `perl -pe 's/\\s+/ /g' |` +
+              `perl -pe 's/( \\|)+/\|/g'`;
+        utils.yank(cmd, {msg:false});
+        tri.controller.acceptExCmd(cmd);
+    },
+
 }
 
 window.apps = apps;

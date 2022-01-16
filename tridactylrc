@@ -563,6 +563,10 @@ bind: a;c "Open link in Google Chrome" composite hint -pipe a href | ! /usr/loca
 bind: a;f "Open link in Waterfox" composite hint -pipe a href | ! /opt/waterfox/waterfox
 
 " | at -- apps/translate |
+command trans jsb -d¦ apps.trans.transsh(JS_ARGS)¦
+
+bind: att "Translate text in command line: [sl:tl] TEXT" fillcmdline trans
+
 " | atp -- apps/translate/page |
 bind: atpp "Google translate page" googletranslatepage
 bind: atpb "Bing translate page" bingtranslatepage
