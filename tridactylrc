@@ -711,6 +711,9 @@ bind ,rwe fillcmdline wpeplist
 " ╰───────────────╯
 bind ,t<C-h> showkeys ,t
 bind: ,ts "Toggle HTTPS:" urltoggle https:// http://
+bind: ,tu "Toggle URL component" urltoggle
+bind: ,t- "Toggle URL spaces <-> dashes" urltoggle %20 -
+bind: ,tj "Toggle URL en <-> ja" urltoggle /en. /ja.
 
 " ╭──────────────────╮
 " │ ,v -- conversion │
