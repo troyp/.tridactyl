@@ -12,18 +12,24 @@
 # ╰───────────╯
 unset kw
 
+# selection vars
 filter=
 kwonly=
+# rofi vars
+rofi=
+rofithemestr='#window {width: 80%;} #listview {lines: 25;}';
 multi=
-select=
-url=
+# output vars
+args=
+oformat=
 yank=
 
 # ╭─────────╮
 # │ options │
 # ╰─────────╯
-SHORT="h,f:,k,K:,m,s,S,t,u,y,Y"
-LONG="help,filter:,keyword-only,find-keyword:,multi-select,select,select-keyword,tridactyl,url,yank,yank-only"
+SHORT="h,f:,j,J,k,K:,m,s,S,t,u,w,y,Y"
+LONG="help,filter:,json,js-only,keyword-only,find-keyword:,multi-select,select,select-keyword,tridactyl,url,kw,yank,
+  yank-only"
 PARSED=$(getopt -a -n kwsearch --options "$SHORT" --longoptions "$LONG" -- "$@")
 
 eval set -- "$PARSED"
@@ -44,26 +50,32 @@ USAGE: kwsearch [OPTION...]
 Options:
   -f RE  --filter RE          filter bookmarks with RE
   -h     --help               show help
+  -j     --json               force JSON output
+  -J     --js-only            javascript: URI (bookmarklets) only
   -k     --keyword-only       keyword bookmarks only
   -K KW  --find-keyword KW    find bookmark with keyword KW
   -m     --multi-select       choose multiple bookmarks with Rofi
   -s     --select             choose bookmark with Rofi
-  -S     --select-keyword     choose bookmark keyword with Rofi
-  -t     --tridactyl          format as tridactyl searchurl setting
+  -S     --select-keyword     choose bookmark keyword with Rofi (implies --keyword-only)
+  -t     --tridactyl          format as tridactyl searchurl setting (implies --keyword-only)
   -u     --url                print URL only
+  -w     --kw                 print keyword only (implies --keyword-only)
   -y     --yank               copy output to clipboard
   -Y     --yank-only          send output to clipboard, no output
 EOF
             exit 0
             ;;
         (-f | --filter) filter="$2"; shift 2; ;;
+        (-j | --json) oformat=json; shift; ;;
+        (-J | --js-only) jsonly=t; shift; ;;
         (-k | --keyword-only) kwonly=t; shift; ;;
         (-K | --find-keyword) kw="$2"; shift 2; ;;
-        (-m | --multi-select) multi="t"; shift; ;;
-        (-s | --select) select="t"; shift; ;;
-        (-S | --select-keyword) kwonly=t; select="kw"; shift; ;;
-        (-t | --tridactyl) tri="t"; shift; ;;
-        (-u | --url) url=t; shift; ;;
+        (-m | --multi-select) multi="-multi-select"; shift; ;;
+        (-s | --select) rofi=t; shift; ;;
+        (-S | --select-keyword) kwonly=t; rofi=kw; shift; ;;
+        (-t | --tridactyl) oformat=tri; shift; ;;
+        (-u | --url) oformat=url; shift; ;;
+        (-w | --kw) oformat=kw; kwonly=t; shift; ;;
         (-y | --yank) yank=t; shift; ;;
         (-Y | --yank-only) yank=only; shift; ;;
         (--) shift; break ;;
@@ -72,10 +84,10 @@ EOF
 done
 
 # handle additional arguments
-if [[ $# -gt 0 ]]; then
-    args=t;
-    url=t;
-fi;
+if [[ $# -gt 0 ]]; then args=t; fi;
+
+# output format defaults to url when -K or arguments
+if [[ -n $kw$args ]]; then oformat=${oformat:-url}; fi;
 
 # ╭──────────────╮
 # │ dependencies │
@@ -85,58 +97,76 @@ RETYPE=$(echo | grep -P "" &>/dev/null && printf P || printf E);
 # env var for yank command
 KWSEARCH_YANKCMD=${KWSEARCH_YANKCMD:-xsel -ib};
 
-# ╭────────────╮
-# │ main logic │
-# ╰────────────╯
-cat "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | jq -rc '
-            recurse(.children[]?)
-            | select(.uri)
-            | {kw: .keyword, title: .title, url: .uri}
-' | {
+# ╭─────────────────────────╮
+# │ non-interactive filters │
+# ╰─────────────────────────╯
+bmarksjson=`mktemp`;
+
+jq -rc '
+   recurse(.children[]?)
+   | select(.uri)
+   | {keyword, title, uri}
+' "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | {
     # --keyword-only
     if [[ -n $kwonly ]]; then
-        jq -c 'select(.kw)';
+        jq -c 'select(.keyword)';
+    else cat;
+    fi;
+} | {
+    # javascript: URI only
+    if [[ -n $jsonly ]]; then
+        jq -c 'select(.uri | test("^javascript:"))';
     else cat;
     fi;
 } | {
     # select by --find-keyword ?
     if [[ -n ${kw+SET} ]]; then
-        jq -c "select(.kw == \"$kw\")";
+        jq -c "select(.keyword == \"$kw\")";
     else {
         # filter results
-            # filter with regex
-            if [[ -n filter ]]; then grep -i -$RETYPE "$filter";
-            else cat;
-            fi;
-        } | {
-            # select with rofi
-            if [[ -n $select ]]; then
-                rofithemestr='#window {width: 80%;} #listview {lines: 25;}';
-                if [[ $select == kw ]]; then
+        # filter with regex
+        if [[ -n filter ]]; then grep -i -$RETYPE "$filter";
+        else cat;
+        fi;
+    }
+    fi
+} > $bmarksjson;
 
-                    rofi -theme-str "$rofithemestr" -dmenu -i -no-custom -filter '"kw":"';
-                else
-                    rofi -theme-str "$rofithemestr" -dmenu -i -no-custom;
-                fi;
-            elif [[ -n $multi ]]; then
-                rofi -dmenu -i -no-custom -multi-select;
-            else cat
-            fi;
-        }
-    fi;
-} | {
+# ╭────────────────╮
+# │ rofi selection │
+# ╰────────────────╯
+lines=`mktemp`;
+
+if [[ -n $rofi ]]; then
+    cat $bmarksjson |
+        perl -pe 's/{"keyword":(null|"(.*)"),"title":"(.*)","uri":"(.*)"}/
+                    sprintf("%-18s \t%s  (<%s>)","$2:",$3,$4)/e' |
+        if [[ $rofi == kw ]]; then
+            # keyword completion with rofi
+            rofi -theme-str "$rofithemestr" -dmenu -i -no-custom -matching "regex" -format d -filter "^" $multi;
+        else
+            rofi -theme-str "$rofithemestr" -dmenu -i -no-custom -matching "regex" -format d $multi;
+        fi > $lines;
+fi;
+
+# ╭────────╮
+# │ output │
+# ╰────────╯
+
+if [[ -n $rofi ]]; then
+    sed -n -f <(sed 's/$/p/' $lines) $bmarksjson;
+else
+    cat $bmarksjson;
+fi |
+
     # output format
-    if [[ -n $url ]]; then
-        # URL only
-        jq -r '.url';
-    elif [[ -n $tri ]]; then
-        # tridactyl searchurl
-        \perl -pe 's/{"kw":"(.*)","title":"(.*)","url":"(.*)"}/set searchurls.$1 $3/';
-    else
-        # JSON
-        cat;
-    fi;
-} | {
+    case $oformat in
+        url) jq -r '.uri'; ;;
+        kw)  jq -r '.keyword'; ;;
+        tri) perl -pe 's/{"keyword":"(.*)","title":"(.*)","uri":"(.*)"}/set searchurls.$1 $3/'; ;;
+        json | *) cat; ;;
+    esac |
+
     # arguments: resolve search bookmark URLs
     if [[ -n $args ]]; then
         # TODO: handle | in arguments
@@ -144,16 +174,13 @@ cat "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | jq -rc '
         sed "s|%s|$*|";
     else
         cat;
-    fi;
-} | {
-    if [[ -n $yank ]]; then
-        # put results in clipboard
-        if [[ $yank == only ]]; then
-            eval $KWSEARCH_YANKCMD;
-        else
-            tee >(eval $KWSEARCH_YANKCMD);
-        fi;
+    fi |
+
+    # yank?
+    if [[ $yank == only ]]; then
+        $KWSEARCH_YANKCMD;
+    elif [[ -n $yank ]]; then
+        tee >($KWSEARCH_YANKCMD);
     else
         cat;
     fi;
-}
