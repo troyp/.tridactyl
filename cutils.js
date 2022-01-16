@@ -208,10 +208,10 @@ var cutils = {
      *  Get matching elements.
      *  Options:
      *    opts.filter:        predicate that selected elements must satisfy
-     *    opts.firstmatch:    only get the first matching element
+     *    opts.firstMatch:    only get the first matching element
      *    opts.context:       the root element of the search; null for whole document
      *    opts.match:         a regex or string that selected elements must match;
-     *    opts.textproperty   property that opts.match tests against (default: "innertext")
+     *    opts.textProperty   property that opts.match tests against (default: "innertext")
      */
     get: function(selector, opts={}) {
         /* selector */
@@ -285,27 +285,7 @@ var cutils = {
     /** Unhides elements matching any of the SELECTORS. For more options, see rm() */
     unhideall: (...selectors) => this.unhide(selectors),
 
-    yankby: function(selector, opts={}) {
-        /* options */
-        opts = cutils.tri.parseOpts(opts, {castString: "textProperty"});
-        opts.textProperty ??= "innerText";
-        /* yank */
-        this.yank(this.get(selector, opts).map(e=>e[opts.textProperty]).join("\n"));
-    },
-
-    yankelt: function(elts, opts={}) {
-        /* options */
-        opts = cutils.tri.parseOpts(opts, {castString: "textProperty"});
-        opts.textProperty ??= "innerText";
-        /* yank */
-        function getText(e) {
-            switch (e.tagName.toLowerCase()) {
-              case "input": return e.value; break;
-              default: return e[opts.textProperty];
-            }
-        }
-        this.yank(elts.map(e=>getText(e)).join("\n"), opts);
-    },
+    yankelts: (selector, opts={}) => this.yank(this.get(selector, opts).map(e=>e[opts.textProperty]).join("\n")),
 
     yank: function(s, opts={}) {
         /* options */
