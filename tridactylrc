@@ -431,7 +431,7 @@ bind <C-h>x tabopenorswitchc https://gitlab.com/cunidev/gestures/-/wikis/xdotool
 " │ y -- yank │
 " ╰───────────╯
 commdoc bmyank "Yank bookmark data from bookmarks.json file"
-command bmyank jsb -d¦ apps.bmyank(JS_ARGS, {decode:true})¦
+command bmyank jsb -d¦ apps.bmyank(JS_ARGS, "")¦
 commdoc yankmousepos "Yank the mouse pointer position (X Y)"
 command yankmousepos ! echo "yank $(xdotool getmouselocation | perl -pe 's/x:(\d+) y:(\d+) .*/$1 $2/')";
 
@@ -440,10 +440,11 @@ bdoc y? "Yank the current tridactyl config as JSON"
 bind y? jsb tri.excmds.yank(JSON.stringify(tri.config.USERCONFIG))
 
 " | yk -- yank/bookmarks |
+bind yk<C-h> showkeys yk
 bind: ykk "Yank bookmark data from bookmarks.json file" fillcmdline bmyank
-bind: ykK "Yank keyword bookmark URL" fillcmdline bmyank -uK
-bind: yks "Yank bookmark URL with rofi kfrom bookmarks.json file" bmyank
-bind: ykS "Yank keyword bookmark URL with rofi from bookmarks.json file" fillcmdline bmyank -k
+bind: ykK "Yank keyword bookmark URL" fillcmdline bmyank -K
+bind: yks "Yank bookmark URL with rofi kfrom bookmarks.json file" bmyank -s -u
+bind: ykS "Yank keyword bookmark URL with rofi from bookmarks.json file" fillcmdline bmyank -S -u
 
 bdoc ym "Yank the current mouse position [X Y]"
 bind ym yankmousepos
