@@ -13,10 +13,16 @@ var apps = {
     },
 
     bmyank: async function(args=[], opts={}) {
-        args = utils.tri.parseArgs(args);
-        opts = utils.tri.parseOpts(opts, {castString: "switches", defaults: {switches: "-u -s"}});
-        opts.decode ??= true;
-        const cmd  = `kwsearch ${[opts.switches, ...args].join(" ").trim()}`;
+        args = utils.tri.parseArgs(args, "string");
+        opts = utils.tri.parseOpts(
+            opts,
+            {
+                castString: "switches",
+                nullishDefaults: { switches: "-u -s", decode: true }
+            }
+        );
+        if (!args && !opts.switches) opts.switches = "-u -s";
+        const cmd  = `kwsearch ${opts.switches} ${args}`;
         return tri.native.run(cmd).then(
             res => utils.yank(opts.decode ? utils.decode(res.content, opts.decodeFn) : res.content)
         );
