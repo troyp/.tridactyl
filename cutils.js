@@ -285,7 +285,27 @@ var cutils = {
     /** Unhides elements matching any of the SELECTORS. For more options, see rm() */
     unhideall: (...selectors) => this.unhide(selectors),
 
-    yankelts: (selector, opts={}) => this.yank(this.get(selector, opts).map(e=>e[opts.textProperty]).join("\n")),
+    yankby: function(selector, opts={}) {
+        /* options */
+        opts = cutils.tri.parseOpts(opts, {castString: "textProperty"});
+        opts.textProperty ??= "innerText";
+        /* yank */
+        this.yank(this.get(selector, opts).map(e=>e[opts.textProperty]).join("\n"));
+    },
+
+    yankelt: function(elts, opts={}) {
+        /* options */
+        opts = cutils.tri.parseOpts(opts, {castString: "textProperty"});
+        opts.textProperty ??= "innerText";
+        /* yank */
+        function getText(e) {
+            switch (e.tagName.toLowerCase()) {
+              case "input": return e.value; break;
+              default: return e[opts.textProperty];
+            }
+        }
+        this.yank(elts.map(e=>getText(e)).join("\n"), opts);
+    },
 
     yank: function(s, opts={}) {
         /* options */

@@ -434,10 +434,18 @@ commdoc bmyank "Yank bookmark data from bookmarks.json file"
 command bmyank jsb -d¦ apps.bmyank(JS_ARGS, "")¦
 commdoc yankmousepos "Yank the mouse pointer position (X Y)"
 command yankmousepos ! echo "yank $(xdotool getmouselocation | perl -pe 's/x:(\d+) y:(\d+) .*/$1 $2/')";
+commdoc yankall "Copy text from elements matching a selector"
+command yankall cujs -d¦ yankby(JS_ARGS.join(" "))¦
+command yankfirst cujs -d¦ yankby(JS_ARGS.join(" "), {firstMatch: true})¦
 
 bind y<C-h> showkeys y
 bdoc y? "Yank the current tridactyl config as JSON"
 bind y? jsb tri.excmds.yank(JSON.stringify(tri.config.USERCONFIG))
+
+bind: yf "Yank element text by CSS selector (first match)" fillcmdline yankfirst
+bind: ym "Yank the current mouse position [X Y]" yankmousepos
+bind: ys "Yank element text by CSS selector (all)" fillcmdline yankall
+bind: yS "Yank element text by CSS selector [HINT]" fillcmdline hint -p -c
 
 " | yk -- yank/bookmarks |
 bind yk<C-h> showkeys yk
@@ -446,8 +454,11 @@ bind: ykK "Yank keyword bookmark URL" fillcmdline bmyank -K
 bind: yks "Yank bookmark URL with rofi kfrom bookmarks.json file" bmyank -s -u
 bind: ykS "Yank keyword bookmark URL with rofi from bookmarks.json file" fillcmdline bmyank -S -u
 
-bdoc ym "Yank the current mouse position [X Y]"
-bind ym yankmousepos
+" | yx -- yank/text |
+bind yx<C-h> showkeys yx
+bind: yxp "Yank paragraph/heading" hint -p -c p,code,h1,h2,h3,h4,h5,h6,output,table
+bind: yxs "Yank spans of text, code etc" hint -p -c span,code,a,tr,cite,data,dd,dt,em,strong,u,sub,sup,ruby,output
+bind: yxx "Yank page text" withcutils yankelt("body")
 
 " ╭───────────╮
 " │ e -- goto │
