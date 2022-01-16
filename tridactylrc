@@ -317,6 +317,10 @@ command bmrofi jsb -d¦ apps.bmrofi(JS_ARGS)¦
 "       used for searching over a longer time range
 command history jsb -d¦ utils.openHistoryItemsWrapper(JS_ARGS)¦
 command historysearch jsb -d¦ utils.openHistorySearchWrapper(JS_ARGS)¦
+command: bmklet "Run bookmarklet [rofi]" jsb apps.bmklet();
+command: bmkletq "Run bookmarklet with params [rofi]" jsb apps.bmkletq();
+commdoc bmkletkw "Run bookmarklet by keyword"
+command bmkletkw jsb -d¦ apps.bmklet(JS_ARGS.slice(2), {kw: JS_ARGS[1]})¦
 
 bind wc fillcmdline wincloseindex
 bind: wm "Toggle mute tab" mute toggle
@@ -338,6 +342,12 @@ bind: whh "Open history item in last tab [rofi]" history last false
 bind: wha "Open history item in adjacent tab [rofi]" history related false
 bind: whb "Open history item in adjacent background tab [rofi]" history related true
 bind: who "Open history item in current tab [rofi]" history here false
+
+" | wj<C-h> -- browser/bookmarklets |
+bind wj<C-h> showkeys wj
+bind: wjj "Run bookmarklet [rofi]" bmklet
+bind: wjk "Run bookmarklet by keyword" fillcmdline bmkletkw
+bind: wjs "Run bookmarklet with params [rofi]" bmkletq
 
 " | ws -- browser/style |
 bind: wsu "Copy userChrome.css from .tridactyl/css to default profile directory" copyuserchrome
