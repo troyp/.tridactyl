@@ -17,6 +17,12 @@ var utils = {
         return components.map(decodeFn).join("%s");
     },
 
+    jsurirun: async function(url, opts={}) {
+        if (opts.searchterm) url = url.trim().replace("%s", opts.searchterm);
+        const js = utils.decode(url.replace(/^javascript:/, ""));
+        return tri.controller.acceptExCmd(`js ${js}`);
+    },
+
     message: function(s, opts={}) {
         const s_ = (opts.prefix || "") + s;
         if (opts.temp) {
