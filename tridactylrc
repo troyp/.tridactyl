@@ -611,10 +611,12 @@ bind: ,amy "Open Yahoo Mail" tabopenorswitchc https://au.mail.yahoo.com/d/folder
 " │ ,as -- web/shopping │
 " ╰─────────────────────╯
 bind: ,asa "open Amazon AU" tabopenorswitch https://www.amazon.com.au/gp/cart/view.html/ref=nav_cart
+bind: ,asc "Open Coles" tabopenorswitch https://shop.coles.com.au/a/ballina/home
 bind: ,ase "open eBay" tabopenorswitch https://cart.ebay.com.au
 bind: ,asj "open Jackson's Art" tabopenorswitch https://www.jacksonsart.com/en-au/checkout/cart/
 bind: ,asl "Open liquor specials" jsb utils.tab.openMultiple(sites.LISTS.liquor_specials, {background:true});
 bind: ,asp "Open Paypal" tabopenorswitch https://www.paypal.com/myaccount/home
+bind: ,asw "Open Woolworths" tabopenorswitch https://www.woolworths.com.au/shop/mylists
 
 " ╭───────────────╮
 " │ ,av -- web/AV │
