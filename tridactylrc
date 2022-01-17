@@ -58,33 +58,14 @@ command trisanitize sanitize tridactyllocal
 " ╭──────────╮
 " │ Settings │
 " ╰──────────╯
+command: loadsettings "Load settings from settings.tri" source ~/.tridactyl/settings.tri
+
 " Autocommands
 autocmd TabEnter .* unfocus
 
-" General Settings
-"
-set gimode nextinput
-set tabclosepinned false
-set relatedopenpos related
-set tabopenpos last
-set followpagepatterns.next \\b(forward|next|more|older)\\b|(>>|»)$|(>|»|▸|►)$|次|下|后
-set followpagepatterns.prev \\b(back|prev(ious)?|less|newer)\\b|(<|«|◂|◄)$|前|上
-set hintchars hjklasdfgyuiopqwertnmzxcvb
-set hintfiltermode vimperator-reflow
-
-
-guiset_quiet statuspanel right
-guiset_quiet tabs count
-
 jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{urls:["<all_urls>"],types:["main_frame"]},["blocking","responseHeaders"])
 
-setpref browser.aboutConfig.showWarning false
-setpref browser.autofocus false
-setpref browser.compactmode.show true
-setpref browser.tabs.tabMinWidth 120
-setpref browser.urlbar.speculativeConnect.enabled false
-setpref privacy.trackingprotection.enabled true
-
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
 " │ searchurls │
 " ╰────────────╯
