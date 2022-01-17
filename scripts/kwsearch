@@ -22,14 +22,15 @@ multi=
 # output vars
 args=
 oformat=
+oneline=
 yank=
 
 # ╭─────────╮
 # │ options │
 # ╰─────────╯
-SHORT="h,f:,j,J,k,K:,m,s,S,t,u,w,y,Y"
+SHORT="h,f:,j,J,k,K:,m,s,S,t,u,w,y,Y,1"
 LONG="help,filter:,json,js-only,keyword-only,find-keyword:,multi-select,select,select-keyword,tridactyl,url,kw,yank,
-  yank-only"
+  yank-only,one-line"
 PARSED=$(getopt -a -n kwsearch --options "$SHORT" --longoptions "$LONG" -- "$@")
 
 eval set -- "$PARSED"
@@ -62,6 +63,7 @@ Options:
   -w     --kw                 print keyword only (implies --keyword-only)
   -y     --yank               copy output to clipboard
   -Y     --yank-only          send output to clipboard, no output
+  -1     --one-line           display output on a single line
 EOF
             exit 0
             ;;
@@ -78,6 +80,7 @@ EOF
         (-w | --kw) oformat=kw; kwonly=t; shift; ;;
         (-y | --yank) yank=t; shift; ;;
         (-Y | --yank-only) yank=only; shift; ;;
+        (-1 | --one-line) oneline=t; shift; ;;
         (--) shift; break ;;
         (*)  echo "unrecognized option: $1" >&2 ; exit 1; ;;
     esac
@@ -172,6 +175,13 @@ fi |
         # TODO: handle | in arguments
         # TODO: handle escaping in search URL
         sed "s|%s|$*|";
+    else
+        cat;
+    fi |
+
+    # single-line?
+    if [[ -n $oneline ]]; then
+        tr "\n" " " | sed -r 's/ +$//';
     else
         cat;
     fi |
