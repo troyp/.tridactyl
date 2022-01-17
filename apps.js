@@ -19,7 +19,7 @@ var apps = {
 
     bmklet: async function(args=[], opts={}) {
         const switches = opts.kw
-              ? `-u -J -K ${opts.kw}`
+              ? `-u -J -K '${opts.kw}'`
               : `-u -J -s`;
         const bmk = await this.bmget(args, {switches: switches, decode: true});
         utils.jsurirun(bmk);
@@ -96,7 +96,7 @@ var apps = {
 
     kwsearch: async function(args, opts={where: "last"}) {
         const [kw, ...rest] = utils.tri.parseArgs(args);
-        return tri.native.run(`kwsearch -K ${kw} ${rest.join(" ")||"''"}`).then(
+        return tri.native.run(`kwsearch -K '${kw}' ${rest.join(" ")||"''"}`).then(
             res => utils.tab.open(res.content, opts));
     },
 
