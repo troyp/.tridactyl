@@ -364,24 +364,24 @@ bind: wtm "toggle menu bar" xdo key alt+v; sleep 0.5; xdotool key Right; sleep 0
 unbind s
 unbind /
 
-commdoc kwsearch "Keyword bookmark search in last tab"
+commdoc kwsearch "Keyword bookmark search: last tab"
 command kwsearch jsb -d¦ apps.kwsearch(JS_ARGS)¦
-commdoc kwsearch_adj "Keyword bookmark search in adjacent tab"
+commdoc kwsearch_adj "Keyword bookmark search: adjacent tab"
 command kwsearch_adj jsb -d¦ apps.kwsearch(JS_ARGS, {where: "related"})¦
-commdoc kwsearch_bg   "Keyword bookmark search in background adjacent tab"
+commdoc kwsearch_bg   "Keyword bookmark search: background adjacent tab"
 command kwsearch_bg   jsb -d¦ apps.kwsearch(JS_ARGS, {where: "related", background: true})¦
-commdoc kwsearch_here "Keyword bookmark search in current tab"
+commdoc kwsearch_here "Keyword bookmark search: current tab"
 command kwsearch_here jsb -d¦ apps.kwsearch(JS_ARGS, {where: "here"})¦
-commdoc kwrofi "Keyword bookmark search in current tab [Rofi]"
+commdoc kwrofi "Keyword bookmark search: current tab [Rofi]"
 command kwrofi jsb -d¦ apps.kwrofi(JS_ARGS)¦
 commdoc multisearch "Search multiple queries"
 command multisearch jsb -d¦ apps.multipleQuerySearch(JS_ARGS)¦
 commdoc multienginesearch "Search multiple engines with same query"
 command multienginesearch jsb -d¦ apps.multipleEngineSearch(JS_ARGS)¦
-commdoc multisearch_adj "Search multiple queries in adjacent tabs"
+commdoc multisearch_adj "Search multiple queries: adjacent tabs"
 command multisearch_adj jsb -d¦ apps.multipleQuerySearch(JS_ARGS, {where: "related"})¦
-commdoc multienginesearch_adj "Search multiple engines with same query in adjacent tabs"
-command multienginesearch_adj jsb -d¦ apps.multipleEngineSearch(JS_ARGS, {where: "related"})¦
+commdoc multienginesearch_adj "Search multiple engines with same query: adjacent tabs"
+command multienginesearch_adj jsb -d¦ apps.multipleEngineSearchRofi(JS_ARGS, {where: "related"})¦
 
 bind s<C-h> showkeys s
 
@@ -409,10 +409,12 @@ bind: smm "Search multiple queries: adjacent tab" fillcmdline multisearch_adj
 bind: smM "Search multiple queries" fillcmdline multisearch
 bind: sme "Search multiple engines: adjacent tab" fillcmdline multienginesearch_adj
 bind: smE "Search multiple engines" fillcmdline multienginesearch
-bind: s;mm "Search multiple queries: adjacent tab" ! kwsearch --kw-completion|sed -r 's/.*/multisearch_adj \0/'
-bind: s;mM "Search multiple queries" ! kwsearch --kw-completion|sed -r 's/.*/multisearch \0/'
-bind: s;me "Search multiple engines: adjacent tab" ! echo -n "multienginesearch "; kwsearch --kw-completion --multi
-bind: s;mE "Search multiple engines" ! echo -n "multienginesearch_adj "; kwsearch --kw-completion --multi
+
+" | s;m -- search multiple (rofi) |
+bind: s;mm "Search multiple queries: adjacent tab [Rofi]" ! kwsearch -w -k -s|sed -r 's/.*/multisearch_adj \0/'
+bind: s;mM "Search multiple queries [Rofi]" ! kwsearch -w -k -s|sed -r 's/.*/multisearch \0/'
+bind: s;me "Search multiple engines: adjacent tab [Rofi]" ! echo -n "multienginesearch_adj "; kwsearch -w -S -m -1
+bind: s;mE "Search multiple engines [Rofi]" ! echo -n "multienginesearch "; kwsearch -w -S -m -1
 
 bind ss fillcmdline open search
 bind s/ fillcmdline find
