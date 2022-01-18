@@ -457,6 +457,9 @@ bind: ykK "Yank keyword bookmark URL" fillcmdline bmyank -K
 bind: yks "Yank bookmark URL with rofi kfrom bookmarks.json file" bmyank -s -u
 bind: ykS "Yank keyword bookmark URL with rofi from bookmarks.json file" fillcmdline bmyank -S -u
 
+bind: yll "Yank links" withlinks links.yankAll()
+bind: yls "Yank selected links" withlinks links.yankSelected()
+
 " | yx -- yank/text |
 bind yx<C-h> showkeys yx
 bind: yxp "Yank paragraph/heading" hint -p -c p,code,h1,h2,h3,h4,h5,h6,output,table

@@ -67,4 +67,11 @@ links = {
           </div>
           <hr>`;
     },
+
+    selected: () => [...cutils.getSelectionDOM().links],
+
+    yankAll: function() { return cutils.yank([...document.links].map(e=>e.href).join("\n")); },
+
+    yankSelected: function() { return cutils.yank(this.selected().map(e=>e.href).join("\n")); },
+
 };
