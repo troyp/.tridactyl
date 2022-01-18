@@ -1,7 +1,7 @@
 links = {
     append: function() {
         return this.appendLines(
-            "a",
+            document.links,
             {
                 transform: l=>`<a href=${l.href}>${decodeURIComponent(l.href)}</a>`,
                 filter: l=>l?.href!=="" && l?.textContent?.trim()!=="",
@@ -12,7 +12,7 @@ links = {
 
     appendAsMarkdown: function() {
         return this.appendLines(
-            "a",
+            document.links,
             {
                 transform: l=>`[${l.textContent}](${decodeURIComponent(l.href)})`,
                 filter: l=>l?.href!=="" && l?.textContent?.trim()!=="",
@@ -32,7 +32,9 @@ links = {
         const transform = (typeof opts.transform == "string")
             ? (e=>e[opts.transform])
             : opts.transform;
-        const elts = $$(selector);
+        const elts = typeof selector == "string"
+              ? $$(selector)
+              : [...selector];
         const linkHtml = elts
               .map(transform)
               .filter(opts.filter)
@@ -45,7 +47,7 @@ links = {
 
     appendWithText: function() {
         return this.appendLines(
-            "a",
+            document.links,
             {
                 transform: l => `${l.textContent} --- <a href=${l.href}>${decodeURIComponent(l.href)}</a>`,
                 filter: l=>l?.href!=="" && l?.textContent?.trim()!=="",
