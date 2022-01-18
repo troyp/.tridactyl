@@ -174,6 +174,24 @@ var utils = {
         );
     },
 
+    select: async function(input, opts={}) {
+        if (Array.isArray(input)) input = input.join("\n");
+        opts = this.tri.parseOpts(opts, {defaults:{prompt:"", format:"s"}});
+        const rofithemestr = '#window {width: 80%;} #listview {lines: 25;}';
+        const rofithemeopt = `-theme-str '${rofithemestr}'`;
+        const dmenuOpts = opts.multiSelect ? "-multi-select -i" : "-i";
+        const prompt = [
+            opts.prompt,
+            opts.multiSelect ? "[Shift+ENTER:select, ENTER:return]" : "[ENTER:select]"
+        ].join(" ");
+        const inputcmd = opts.tempfile
+              ? `cat ${opts.tempfile} | `
+              : `dmenuin="$(cat <<'EOF'\n${input}\nEOF\n)"; echo "$dmenuin" | `;
+        const cmd = `${inputcmd} rofi -dmenu ${rofithemeopt} -format ${opts.format} -p "${prompt}" ${dmenuOpts}`;
+        const res = await tri.native.run(cmd);
+        return res?.content.trim().split("\n");
+    },
+
     xdoclick: async function(x, y, button=1, opts={}) {
         const xyres = await tri.native.run(
             `xdotool getmouselocation | perl -pe 's/x:(\\d+) y:(\\d+) .*/$1 $2/';`);

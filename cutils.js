@@ -264,6 +264,24 @@ var cutils = {
     /** Remove elements matching any of the SELECTORS. For more options, see rm() */
     rmall: (...selectors) => this.rm(selectors),
 
+    select: async function(input, opts={}) {
+        if (Array.isArray(input)) input = input.join("\n");
+        opts = this.tri.parseOpts(opts, {defaults:{prompt:"", format:"s"}});
+        const rofithemestr = '#window {width: 80%;} #listview {lines: 25;}';
+        const rofithemeopt = `-theme-str '${rofithemestr}'`;
+        const dmenuOpts = opts.multiSelect ? "-multi-select -i" : "-i";
+        const prompt = [
+            opts.prompt,
+            opts.multiSelect ? "[Shift+ENTER:select, ENTER:return]" : "[ENTER:select]"
+        ].join(" ");
+        const inputcmd = opts.tempfile
+              ? `cat ${opts.tempfile} | `
+              : `dmenuin="$(cat <<'EOF'\n${input}\nEOF\n)"; echo "$dmenuin" | `;
+        const cmd = `${inputcmd} rofi -dmenu ${rofithemeopt} -format ${opts.format} -p "${prompt}" ${dmenuOpts}`;
+        const res = await tri.native.run(cmd);
+        return res?.content.trim().split("\n");
+    },
+
     /** urltoggle(s1, s2, url)                Replace s1 with s2, or else s2 with s1
      *  urltoggle(s1, s2, url, {re1, re2})    Replace regex1 with s2, or else regex2 with s1
      */
