@@ -117,6 +117,44 @@ var cutils = {
         return output;
     },
 
+    /**   get(selector, opts)
+     *    get(selector, context:HTMLElement)
+     *    get(selector, ["firstMatch"]:[string])
+     *    get(selector, filter:e=>Bool)
+     *    get(selector, pattern:string|RegExp)
+     *  Get matching elements.
+     *  Options:
+     *    opts.filter:        predicate that selected elements must satisfy
+     *    opts.firstMatch:    only get the first matching element
+     *    opts.context:       the root element of the search; null for whole document
+     *    opts.match:         a regex or string that selected elements must match;
+     *    opts.textProperty   property that opts.match tests against (default: "innertext")
+     */
+    get: function(selector, opts={}) {
+        /* selector */
+        if (Array.isArray(selector))
+            selector = selector.join(",");
+        /* opts */
+        if (Array.isArray(opts)) opts = opts.reduce((acc,e)=>(acc[e]=true) && acc, {});
+        else if (opts instanceof HTMLElement) opts = { context: opts };
+        else if (opts instanceof RegExp)      opts = { match: opts };
+        else if (typeof opts === "function")  opts = { filter: opts };
+        else if (typeof opts === "string")    opts = { match: opts };
+        /* pred */
+        function pred(e) {
+            const match_ok  = !opts.match  || e[opts.textProperty].match(opts.match);
+            const filter_ok = !opts.filter || opts.filter(e);
+            return match_ok && filter_ok;
+        }
+        /* main logic */
+        if (opts.firstMatch) {
+            const elt = $$(selector, opts.context).find(pred);
+            return elt ? [elt] : [];
+        } else {
+            return $$(selector, opts.context).filter(pred);
+        }
+    },
+
     /** Hides elements matching SELECTOR. See get() for arguments and options */
     hide: function(selector, opts={}) {
         const elts = this.get(selector, opts);
@@ -198,44 +236,6 @@ var cutils = {
             tri.excmds.fillcmdline_nofocus(s_);
         }
         return s;
-    },
-
-    /**   get(selector, opts)
-     *    get(selector, context:HTMLElement)
-     *    get(selector, ["firstMatch"]:[string])
-     *    get(selector, filter:e=>Bool)
-     *    get(selector, pattern:string|RegExp)
-     *  Get matching elements.
-     *  Options:
-     *    opts.filter:        predicate that selected elements must satisfy
-     *    opts.firstMatch:    only get the first matching element
-     *    opts.context:       the root element of the search; null for whole document
-     *    opts.match:         a regex or string that selected elements must match;
-     *    opts.textProperty   property that opts.match tests against (default: "innertext")
-     */
-    get: function(selector, opts={}) {
-        /* selector */
-        if (Array.isArray(selector))
-            selector = selector.join(",");
-        /* opts */
-        if (Array.isArray(opts)) opts = opts.reduce((acc,e)=>(acc[e]=true) && acc, {});
-        else if (opts instanceof HTMLElement) opts = { context: opts };
-        else if (opts instanceof RegExp)      opts = { match: opts };
-        else if (typeof opts === "function")  opts = { filter: opts };
-        else if (typeof opts === "string")    opts = { match: opts };
-        /* pred */
-        function pred(e) {
-            const match_ok  = !opts.match  || e[opts.textProperty].match(opts.match);
-            const filter_ok = !opts.filter || opts.filter(e);
-            return match_ok && filter_ok;
-        }
-        /* main logic */
-        if (opts.firstMatch) {
-            const elt = $$(selector, opts.context).find(pred);
-            return elt ? [elt] : [];
-        } else {
-            return $$(selector, opts.context).filter(pred);
-        }
     },
 
     /** Remove elements matching SELECTOR. See get() for arguments and options */
