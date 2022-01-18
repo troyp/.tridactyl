@@ -155,6 +155,22 @@ var cutils = {
         }
     },
 
+    getSelectionDOM: function() {
+        var str = getSelectionHtml();
+        var parser = new DOMParser();
+        return parser.parseFromString(str, "text/html");
+    },
+
+    getSelectionHtml: function() {
+        const sel = window.getSelection();
+        var contents = document.createElement("div");
+        for (let i=0; i<sel.rangeCount; ++i) {
+            const fragment = sel.getRangeAt(i).cloneContents();
+            contents.appendChild(fragment);
+        }
+        return contents.innerHTML;
+    },
+
     /** Hides elements matching SELECTOR. See get() for arguments and options */
     hide: function(selector, opts={}) {
         const elts = this.get(selector, opts);
