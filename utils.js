@@ -777,7 +777,7 @@ utils.tri = {
 
     pasten: async function(args, opts={}) {
         opts = this.parseOpts(opts, {castString: "where", nullishDefaults:{where:"last"}});
-        const n = this.parseArgs(args, {type: "number"})||1;
+        const n = Math.max(this.parseArgs(args, "number"), 1);
         if (opts.where=="here") {
             await utils.cbread(0).then(s=>utils.tab.open(s, "here"));
             for (i=1; i<n; ++i)
