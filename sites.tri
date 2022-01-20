@@ -4,6 +4,8 @@
 " ╰────────────╯
 command amazbind bindurl https://([a-zA-Z0-9]+\.)amazon.com(\.[a-z][a-z])/
 command amazbind: bindurl: https://([a-zA-Z0-9]+\.)amazon.com(\.[a-z][a-z])/
+
+amazbind c<C-h> showkeysurl https://([a-zA-Z0-9]+\.)amazon.com(\.[a-z][a-z])/ c
 amazbind: coc "Goto cart" urlmodorsummon_g /gp/cart/view.html/ref=nav_cart
 amazbind: coh "Goto history" urlmodorsummon_g /gp/history
 amazbind: coi "Scroll to Product Information" cujs $1("#prodDetails").scrollIntoView();
@@ -22,6 +24,7 @@ amazbind: co! "Goto contact form" urlmodorsummon_g /gp/help/customer/contact-us/
 command fbind bindurl file://
 command fbind: bindurl: file://
 
+fbind: c<C-h> showkeysurl file:// c
 fbind: cc "Copy filename" hint -p -c a.file,a.dir
 
 " ───────────────────────────────────────────────────────────────────────────────
@@ -142,14 +145,14 @@ primevbind: <space> "Play/Pause" xdoclick 943 624
 commdoc ramdafiltercat "Filter methods by category"
 command ramdafiltercat csites -r S.js ; js -p csites.ramda.filterCategory(S.capitalize(JS_ARG));
 
-bindurl ramdajs.com/ c<C-h> showkeys c
+bindurl ramdajs.com/ c<C-h> showkeysurl ramdajs.com/ c
 bindurl: ramdajs.com/ cc "Filter methods by category" fillcmdline ramdafiltercat
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
 " │ Reddit.com │
 " ╰────────────╯
-bindurl reddit.com/ c<C-h> showkeys c
+bindurl reddit.com/ c<C-h> showkeysurl reddit.com/ c
 bindurl reddit.com/ cto urltoggle https://www.reddit.com https://old.reddit.com
 
 " ───────────────────────────────────────────────────────────────────────────────
