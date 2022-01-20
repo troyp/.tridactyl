@@ -7,6 +7,8 @@ jsb -r S.js
 jsb -r js/sprintf.js
 " tridactyl-specific libraries
 jsb -r utils.js
+" url manipulation library
+jsb -r urls.js
 " app-specific libraries
 jsb -r js/suncalc.js
 " app-specific code
@@ -19,6 +21,7 @@ jsb -r personal/personal.js
 
 jsb window.S = S
 jsb window.utils = utils
+jsb window.urls = urls
 jsb window.apps = apps
 jsb window.sites = sites
 jsb window.sprintf = sprintf
@@ -187,10 +190,11 @@ command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"
 
 command withjs composite js
 command withjsb composite jsb
-commdoc urltoggle "Toggle a component of the current URL"
-command urltoggle cujs -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
+command withurlsjs composite js -r urls.js ; js
 command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
 command: csites "Load S.js, cutils.js, csites.js, run js" composite js -r cutils.js ; js -r csites.js ; js
+commdoc urltoggle "Toggle a component of the current URL"
+command urltoggle cujs -d¦ cutils.urltoggleWrapper(JS_ARGS.join(" "))¦
 command xdo jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
 commdoc xdoclick "Click element at point X Y with button N and return pointer to original position"
 command xdoclick jsb -d¦ utils.xdoclickWrapper(JS_ARGS, {return:true})¦
