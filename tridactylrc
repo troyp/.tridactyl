@@ -366,7 +366,7 @@ command multienginesearch jsb -d¦ apps.multipleEngineSearch(JS_ARGS)¦
 commdoc multisearch_adj "Search multiple queries: adjacent tabs"
 command multisearch_adj jsb -d¦ apps.multipleQuerySearch(JS_ARGS, {where: "related"})¦
 commdoc multienginesearch_adj "Search multiple engines with same query: adjacent tabs"
-command multienginesearch_adj jsb -d¦ apps.multipleEngineSearchRofi(JS_ARGS, {where: "related"})¦
+command multienginesearch_adj jsb -d¦ apps.multipleEngineSearch(JS_ARGS, {where: "related"})¦
 
 bind s<C-h> showkeys s
 
