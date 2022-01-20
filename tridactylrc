@@ -184,12 +184,18 @@ commdoc tabopenorswitch "Open an URL in a new (final) tab, or switch to existing
 command tabopenorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"last"});
 commdoc tabopenorswitch_adj "Open an URL in an afjacent tab, or switch to existing tab"
 command tabopenorswitch_adj jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"related"});
+commdoc openorsummonc "Open an URL in current (with count: adjacent) tab, or summon an existing tab"
+command openorsummonc jsb -d¦ utils.tab.openOrSummon(JS_ARGS[1], {where: JS_ARGS[2]?"related":"here"})¦
+commdoc tabopenorsummonc "Open an URL in a new final tab (count: current tab), or summon an existing tab"
+command tabopenorsummonc jsb -d¦ utils.tab.openOrSummon(JS_ARGS[1], {where: JS_ARGS[2]?"here":"last"})¦
 commdoc openorsummon "Open an URL in current tab, or switch to existing tab and move adjacent"
 command openorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"here"});
 commdoc tabopenorsummon "Open an URL in a new adjacent tab, or switch to existing tab and move adjacent"
 command tabopenorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"});
 commdoc tabopenorsummonbg "Open an URL in a new background adjacent tab, or move existing tab adjacent"
 command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related", background: true});
+commdoc urlmodorsummon_g "Open URL formed by grafting a path onto the domain, or summon existing tab"
+command urlmodorsummon_g jsb -d¦ urls.mod.graftOrSummon(JS_ARGS[1], 0, {where:JS_ARGS[2]?"related":"here"})¦
 
 command withjs composite js
 command withjsb composite jsb
