@@ -1,4 +1,21 @@
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────╮
+" │ Amazon.com │
+" ╰────────────╯
+command amazbind bindurl https://([a-zA-Z0-9]+\.)amazon.com(\.[a-z][a-z])/
+command amazbind: bindurl: https://([a-zA-Z0-9]+\.)amazon.com(\.[a-z][a-z])/
+amazbind: coc "Goto cart" urlmodorsummon_g /gp/cart/view.html/ref=nav_cart
+amazbind: coh "Goto history" urlmodorsummon_g /gp/history
+amazbind: coi "Scroll to Product Information" cujs $1("#prodDetails").scrollIntoView();
+amazbind: cok "Scroll to Related Products" cujs $1t(".a-carousel-heading", "Custom.*also viewed").scrollIntoView();
+amazbind: col "Goto lists" urlmodorsummon_g /registry/wishlist/ref=cm_wl_your_lists
+amazbind: coo "Goto orders" urlmodorsummon_g /gp/css/order-history/ref=nav_nav_orders_first
+amazbind: cor "Goto reviews" cujs $1("#customerReviews").scrollIntoView()
+amazbind: coR "Goto all reviews" cujs click("a[data-hook=see-all-reviews-link-foot]")
+amazbind: cow "Goto wish list" urlmodorsummon_g /hz/wishlist/ls/
+amazbind: co! "Goto contact form" urlmodorsummon_g /gp/help/customer/contact-us/ref=cu_surl
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────╮
 " │ file:// │
 " ╰─────────╯
