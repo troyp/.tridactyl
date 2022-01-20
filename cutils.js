@@ -282,33 +282,6 @@ var cutils = {
         return res?.content.trim().split("\n");
     },
 
-    /** urltoggle(s1, s2, url)                Replace s1 with s2, or else s2 with s1
-     *  urltoggle(s1, s2, url, {re1, re2})    Replace regex1 with s2, or else regex2 with s1
-     */
-    urltoggle: function(s1, s2, url, opts={}) {
-        const patt1 = opts.re1 || s1;
-        const patt2 = opts.re2 || s2;
-        if (opts.re1 ? url.match(opts.re1) : url.includes(s1))
-            return url.replace(patt1, s2);
-        else
-            return url.replace(patt2, s1);
-    },
-
-    urltoggleWrapper: function(argstr) {
-        const args = argstr.trim().split(/ +/);
-        [s1, s2, ...opts] = args;
-        var restr1, flags1, restr2, flags2;
-        if (opts.length==4)
-            [restr1, flags1, restr2, flags2] = opts;
-        else
-            [restr1, restr2, flags1, flags2] = opts;
-        const re1 = restr1 ? RegExp(restr1, flags1||"") : null;
-        const re2 = restr2 ? RegExp(restr2, flags2||"") : null;
-        const url = window.location.href;
-        const newUrl = this.urltoggle(s1, s2, url, {re1: re1, re2: re2});
-        if (newUrl && newUrl!==url) window.location.replace(newUrl);
-    },
-
     /** Unhides elements matching SELECTOR. See get() for arguments and options */
     unhide: function(selector, opts={}) {
         const elts = this.get(selector, opts);
