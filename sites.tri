@@ -130,10 +130,10 @@ command: primevbind "Bind key for www.primevideo.com" bindurl https://www.primev
 command: primevbind: "Bind key with description for www.primevideo.com" bindurl: https://www.primevideo.com
 
 primevbind c<C-h> showkeysurl https://www.primevideo.com/ c
-primevbind: cc "Show episode" cujs fillcmdline_nofocus($1("div.contentTitlePanel>div.subtitle").textContent)
-primevbind: ct "Show episode" cujs fillcmdline_nofocus($1("div.contentTitlePanel>div.title").textContent)
-primevbind: cyy "Show episode" cujs cutils.yank($1("div.contentTitlePanel>div.subtitle").textContent)
-primevbind: cyt "Show episode" cujs cutils.yank($1("div.contentTitlePanel>div.title").textContent)
+primevbind: cc "Show episode" cujs cutils.getText1("div.contentTitlePanel>div.subtitle") | show
+primevbind: ct "Show series" cujs cutils.getText1("div.contentTitlePanel>div.title") | show
+primevbind: cyy "Yank episode" cujs cutils.yankby1("div.contentTitlePanel>div.subtitle")
+primevbind: cyt "Yank series" cujs cutils.yankby1("div.contentTitlePanel>div.title")
 
 primevbind: <enter> "Play/Pause" xdoclick 943 624
 primevbind: <space> "Play/Pause" xdoclick 943 624
