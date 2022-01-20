@@ -143,6 +143,9 @@ bind: <C-F10> "Open hamburger menu" xdoclick 1896 115
 bind: <C-v> "Enter ignore mode (disable tridactyl bindings)" nmode ignore 1 mode normal
 bind: <C-z> "Enter ignore mode for one keybinding (disable tridactyl bindings)" mode ignore
 
+bind <C-o> jumpprev
+bind <C-O> jumpnext
+
 unbind <C-x>
 bind: <C-x><C-c> "Close all windows" qall
 bind: <C-x><C-x> "Restart browser" restart
