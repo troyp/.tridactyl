@@ -197,6 +197,7 @@ command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"
 commdoc urlmodorsummon_g "Open URL formed by grafting a path onto the domain, or summon existing tab"
 command urlmodorsummon_g jsb -d¦ urls.mod.graftOrSummon(JS_ARGS[1], 0, {where:JS_ARGS[2]?"related":"here"})¦
 
+command show fillcmdline_nofocus
 command withjs composite js
 command withjsb composite jsb
 command withurlsjs composite js -r urls.js ; js
