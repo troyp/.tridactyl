@@ -171,6 +171,20 @@ var cutils = {
         return contents.innerHTML;
     },
 
+    getText: function(selector, opts={}) {
+        opts = cutils.tri.parseOpts(opts, {castString: "textProperty"});
+        opts.textProperty ??= "innerText";
+        return this.get(selector, opts).map(e=>e[opts.textProperty]).join("\n");
+    },
+
+    getText1: function(selector, opts={}) {
+        opts = cutils.tri.parseOpts(opts, {castString: "textProperty"});
+        opts.textProperty ??= "innerText";
+        opts.firstMatch = true;
+        const elt = this.get(selector, opts)[0];
+        return elt && elt[opts.textProperty];
+    },
+
     /** Hides elements matching SELECTOR. See get() for arguments and options */
     hide: function(selector, opts={}) {
         const elts = this.get(selector, opts);
@@ -292,12 +306,11 @@ var cutils = {
     /** Unhides elements matching any of the SELECTORS. For more options, see rm() */
     unhideall: (...selectors) => this.unhide(selectors),
 
-    yankby: function(selector, opts={}) {
-        /* options */
-        opts = cutils.tri.parseOpts(opts, {castString: "textProperty"});
-        opts.textProperty ??= "innerText";
-        /* yank */
-        this.yank(this.get(selector, opts).map(e=>e[opts.textProperty]).join("\n"));
+    yankby: (...args) => this.yank(this.getText(...args)),
+
+    yank1by: function(selector, opts={}) {
+        const text = this.getText1(selector, opts);
+        return text!==null && this.yank(text);
     },
 
     yankelt: function(elts, opts={}) {
