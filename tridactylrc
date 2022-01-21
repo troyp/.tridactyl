@@ -131,6 +131,9 @@ bind: gP "Open url in clipboard in new background adjacent tab" pasten_bg
 unbind x
 bind: X "Stop loading" stop
 
+commdoc urlroot_n "Go to the ancestor URL nth from the root domain"
+command urlroot_n jsb -d¦ utils.tab.open(urls.getPathPrefix(JS_ARGS[1]))¦
+
 unbind g;
 bind g<C-h> showkeys g
 bind: gf "Open multiple tabs in background tabs [HINT]" hint -qb
@@ -139,6 +142,7 @@ bind gh jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goBack(t.id));
 bdoc gl "Open the next item in tab history in an adjacent tab"
 bind gl jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goForward(t.id));
 bind: gs "Toggle page source" viewsource
+bind: gU "Go to the ancestor URL nth from the root domain" urlroot_n
 
 bind: <C-F10> "Open hamburger menu" xdoclick 1896 115
 
