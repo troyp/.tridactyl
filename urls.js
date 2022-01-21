@@ -126,9 +126,16 @@ urls.mod = {
         return [urls.getPathPrefix(n, initurl), splicetext].join("/").replace(/(?<!:)\/\/+/g, "/");
     },
 
+    /** graftOrSummon(splicetext, n, opts)    Graft the path SPLICETEXT onto current URL's domain,
+     *                                        open or summon the resulting URL.
+     *                                        Options are only passed if called from background page (:jsb)
+    */
     graftOrSummon: async function(splicetext, n=0, opts={}) {
         const url = this.graft(splicetext, n);
-        await utils.tab.openOrSummon(url, opts);
+        if (window.location.protocol == "moz-extension:")
+            await utils.tab.openOrSummon(url, opts);
+        else
+            tri.controller.acceptExCmd(`openorsummon ${url}`);
     },
 
     /** urltoggle(s1, s2, url)                Replace s1 with s2, or else s2 with s1
