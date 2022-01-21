@@ -256,6 +256,7 @@ bind: b< "Close all tabs to the left"  tabclosealltoleft
 
 " | bd -- tabs/delete |
 bind bd<C-h> showkeys bd
+bind: bda "Close alternate tab" jsb utils.tab.getAlternate().then(t=>browser.tabs.remove(t.id));
 bind: bdm "Close tabs matching string" fillcmdline tabremove
 bind: bd;m "Close tabs not matching string" fillcmdline tabfilter
 bind: bdo "Close other tabs" tabonly
