@@ -108,7 +108,8 @@ urls = {
      *  For n>=0, keep n path components after hostnameRe
      *  For n<0, -1 keeps whole path, -2 removes 1 level, etc
      */
-    getPathPrefix: function(n=1, initurl=tri.contentLocation.href) {
+    getPathPrefix: function(n=0, initurl=tri.contentLocation.href) {
+        n = Number(n);
         const url = new URL(initurl);
         /* remove initial / from pathname - we don't need to replace it when setting pathname */
         const path = url.pathname.split("/").slice(1);
