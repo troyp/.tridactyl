@@ -209,6 +209,7 @@ command withjsb composite jsb
 command withurlsjs composite js -r urls.js ; js
 command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
 command: csites "Load S.js, cutils.js, csites.js, run js" composite js -r cutils.js ; js -r csites.js ; js
+command: capps "Load capps.js and run js" composite js -r capps.js ; js
 commdoc urltoggle "Toggle a component of the current URL"
 command urltoggle withurlsjs -d¦ urls.mod.toggleWr(JS_ARGS.join(" "))¦
 command xdo jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
@@ -677,6 +678,12 @@ bind: ,cC "Yank the last N command-line history items" cmdYankHistoryItems
 bind: ,cp "Execute commands in clipboard" expaste
 bdoc ,cr "Open command-line with previous command, replacing first argument"
 bind ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────╮
+" │ ,d -- dev │
+" ╰───────────╯
+bind: ,dx "Toggle X-Ray view" capps capps.toggleXray()
 
 " ╭───────────────────────╮
 " │ ,e -- javascript eval │
