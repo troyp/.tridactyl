@@ -143,6 +143,7 @@ urls.mod = {
      *  urltoggle(s1, s2, url, {re1, re2})    Replace regex1 with s2, or else regex2 with s1
      */
     toggle: function(s1, s2, url=tri.contentLocation, opts={}) {
+        url = String(url);
         const patt1 = opts.re1 || s1;
         const patt2 = opts.re2 || s2;
         if (opts.re1 ? url.match(opts.re1) : url.includes(s1))
