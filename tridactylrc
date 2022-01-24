@@ -736,14 +736,21 @@ command wpeplist jsb -d¦ sites.wp.episodeList(JS_ARGS.join(" "))¦
 " | ,rw -- wikipedia |
 bind ,rwe fillcmdline wpeplist
 
-" ╭───────────────╮
-" │ ,t -- toggles │
-" ╰───────────────╯
-bind ,t<C-h> showkeys ,t
-bind: ,ts "Toggle HTTPS:" urltoggle https:// http://
-bind: ,tu "Toggle URL component" urltoggle
-bind: ,t- "Toggle URL spaces <-> dashes" urltoggle %20 -
-bind: ,tj "Toggle URL en <-> ja" urltoggle /en. /ja.
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────╮
+" │ ,u -- URL │
+" ╰───────────╯
+" | ,ud -- url/delete |
+bind: ,udq "Remove URL query and hash" withurlsjs urls.mod.delComponent("search", "hash")
+bind: ,udQ "Remove URL query" withurlsjs urls.mod.delComponent("search")
+bind: ,udh "Remove URL hash (fragment)" withurlsjs urls.mod.delComponent("hash")
+
+" | ,ut -- url/toggle |
+bind ,ut<C-h> showkeys ,ut
+bind: ,uts "Toggle HTTPS:" urltoggle https:// http://
+bind: ,utt "Toggle URL component" urltoggle
+bind: ,ut- "Toggle URL spaces <-> dashes" urltoggle %20 -
+bind: ,utj "Toggle URL en <-> ja" urltoggle /en. /ja.
 
 " ╭──────────────────╮
 " │ ,v -- conversion │
