@@ -212,6 +212,8 @@ command: csites "Load S.js, cutils.js, csites.js, run js" composite js -r cutils
 command: capps "Load capps.js and run js" composite js -r capps.js ; js
 commdoc urltoggle "Toggle a component of the current URL"
 command urltoggle withurlsjs -d¦ urls.mod.toggleWr(JS_ARGS.join(" "))¦
+commdoc urlremove "Remove string from current URL"
+command urlremove withurlsjs -p tri.controller.acceptExCmd(`open ${urls.mod.toggle(JS_ARG, "")}`)
 command xdo jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
 commdoc xdoclick "Click element at point X Y with button N and return pointer to original position"
 command xdoclick jsb -d¦ utils.xdoclickWrapper(JS_ARGS, {return:true})¦
@@ -747,7 +749,10 @@ bind ,rwe fillcmdline wpeplist
 " ╭───────────╮
 " │ ,u -- URL │
 " ╰───────────╯
+bind ,u<C-h> showkeys ,u
 " | ,ud -- url/delete |
+bind ,ud<C-h> showkeys ,ud
+bind: ,udd "Remove part of URL" fillcmdline urlremove
 bind: ,udq "Remove URL query and hash" withurlsjs urls.mod.delComponent("search", "hash")
 bind: ,udQ "Remove URL query" withurlsjs urls.mod.delComponent("search")
 bind: ,udh "Remove URL hash (fragment)" withurlsjs urls.mod.delComponent("hash")

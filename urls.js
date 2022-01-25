@@ -139,6 +139,13 @@ urls.mod = {
             tri.controller.acceptExCmd(`openorsummon ${url}`);
     },
 
+    delComponent: function(...components) {
+        const url = new URL(tri.contentLocation);
+        for (c of components)
+            url[c] = "";
+        tri.controller.acceptExCmd(`open ${url}`);
+    },
+
     /** urltoggle(s1, s2, url)                Replace s1 with s2, or else s2 with s1
      *  urltoggle(s1, s2, url, {re1, re2})    Replace regex1 with s2, or else regex2 with s1
      */
