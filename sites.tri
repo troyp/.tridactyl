@@ -18,6 +18,28 @@ amazbind: cow "Goto wish list" urlmodorsummon_g /hz/wishlist/ls/
 amazbind: co! "Goto contact form" urlmodorsummon_g /gp/help/customer/contact-us/ref=cu_surl
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────╮
+" │ Ebay.com │
+" ╰──────────╯
+command ebaybind bindurl ebay.com(\.[a-z][a-z])/
+command ebaybind: bindurl: ebay.com(\.[a-z][a-z])/
+
+ebaybind c<C-h> showkeysurl  ebay.com(\.[a-z][a-z])/ c
+" | co -- ebay/goto |
+ebaybind co<C-h> showkeysurl  ebay.com(\.[a-z][a-z])/ co
+ebaybind: coa "Goto Account Settings Page" openorsummon https://accountsettings.ebay.com.au/uas
+ebaybind: coc "Goto Cart" openorsummon https://cart.ebay.com.au
+ebaybind: cof "Leave feedback" openorsummon https://www.ebay.com.au/fdbk/leave_feedback
+ebaybind: cok "Goto Similar Items" cujs $1t("section.merch-module", /people who.*also viewed/i).scrollIntoView();
+ebaybind: com "Goto Inbox" openorsummon https://mesg.ebay.com.au/mesgweb/ViewMessages/0
+ebaybind: coo "Goto Orders (Purchase history)" openorsummon https://www.ebay.com.au/mye/myebay/purchase
+ebaybind: cos "Goto My Saved Sellers" openorsummon https://www.ebay.com.au/myb/SavedSellers
+ebaybind: cov "Goto seller's store" csites tri.controller.acceptExCmd(`openorsummon ${csites.e.getStoreURL()}`);
+ebaybind: cow "Goto watch list" openorsummon https://www.ebay.com.au/myb/WatchList
+ebaybind: coy "Goto My eBay" openorsummon https://www.ebay.com.au/myb/Summary
+ebaybind: co/ "Goto My saved searches" openorsummon https://www.ebay.com.au/myb/SavedSearches
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────╮
 " │ file:// │
 " ╰─────────╯

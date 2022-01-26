@@ -1,4 +1,13 @@
 csites = {
+    e: {
+        _site: "ebay.com.au",
+
+        getStoreURL: function() {
+            const storelink = $1("#storeSeller>div>a") || $1t("a", "Visit store") || $1t("a", "See other items");
+            return storelink?.href;
+        }
+    },
+
     ramda: {
         filterCategory: function(cat) {
             this.restore();
