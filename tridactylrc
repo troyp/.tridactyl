@@ -620,6 +620,7 @@ bind ,<C-h> showkeys ,
 " │ ,a -- web │
 " ╰───────────╯
 bind: ,a<C-h> showkeys ,a
+bind: ,aa "Open Afterpay" tabopenorswitchc https://portal.afterpay.com/au/
 bind: ,ab "Open banking" withjsb user.bankurl | tabopenorswitchc
 bind: ,ac "Open Google calendar" tabopenorswitch https://calendar.google.com/calendar/u/0/r/month
 bind: ,ap "Open Paypal" tabopenorswitchc https://www.paypal.com/myaccount/home
