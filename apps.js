@@ -142,10 +142,17 @@ var apps = {
 };
 
 apps.pw = {
-    hash: async function(s, opts={}) {
+    /**   hash(S, { OPTIONS... }) Hash the string S, copy resulting password
+     *  opts.punctuation: require punctuation
+     *  opts.digitsOnly: use only digits in password
+     *  opts.type: custom (8-char by default), short or long password
+     *  returnTabNumber: return to specified tab after generating password
+     *  keepOpen: keep password-hasher open when returning to other tag
+     */
+    hash: async function(s="", opts={}) {
         const masterpw = user.masterpw;
-        const hashCallback = `
-            const $id = document.getElementById;
+        const setup = `
+            const delay = t => new Promise((resolve, _) => setTimeout(resolve, t));
             const $1t = (sel, text) => [...document.querySelectorAll(sel)].filter(e=>e.innerText.match(text))?.[0];
             const masterkey = document.getElementById("master-key");
             const sitetag = document.getElementById("site-tag");
@@ -162,18 +169,26 @@ apps.pw = {
             noSpecial.checked = true;
             punctuation.checked = ${opts.punctuation};
             digitsOnly.checked = ${opts.digitsOnly};
-            setTimeout(()=>{
+        `;
+        const generate = `
+            delay(300).then(async ()=>{
                 ${opts.type||"custom"}button.click();
                 const pw = document.getElementById("hash-word").value;
-                navigator.clipboard.writeText("Copied password for ${s}: "+pw);
+                await navigator.clipboard.writeText(pw);
                 tri.excmds.fillcmdline_nofocus("Copied password for ${s}: "+pw)
-                pw;
-            }, 300);
+                return pw;
+            });
         `;
-        const res = await utils.tab.openAndRun("http://localhost:8036/password-hasher.html", hashCallback, opts);
-        if (opts.returnTabNumber) await utils.tab.switch(opts.returnTabNumber);
-        return res;
-    }
+        const hashCallback = s ? setup+generate : setup+"sitetag.focus();";
+        const pw = await utils.tab.openAndRun("http://localhost:8036/password-hasher.html", hashCallback, opts);
+        if (opts.returnTabNumber && s) {
+            await utils.tab.switch(opts.returnTabNumber, !opts.keepOpen);
+            setTimeout(async () => {
+                tri.excmds.fillcmdline_nofocus(`Copied password for ${s}: ${pw}`);
+            }, 300);
+        }
+        return pw;
+    },
 };
 
 apps.trans = {
