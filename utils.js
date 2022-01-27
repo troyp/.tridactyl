@@ -253,6 +253,14 @@ var utils = {
             this.message(s, opts);
         }
     },
+
+    yankf: function(fstr, ...rest) {
+        const opts = typeof rest.at(-1) == "object"
+              ? rest.pop()
+              : {};
+        return this.yank(sprintf(fstr, ...rest), opts);
+    },
+
 };
 
 // ───────────────────────────────────────────────────────────────────────────────

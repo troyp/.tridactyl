@@ -658,7 +658,7 @@ bind: ,avy "Goto Youtube" tabopenorswitchc https://www.youtube.com/
 " ╰────────────────────╯
 bind ,aw<C-h> showkeys ,aw
 " Show Goonellabah Sunrise and Sunset Times
-bind ,aws jsb var [sr,ss]=apps.sunriseSunset(...user.latlong); utils.yank(`SUNRISE: ${sr}\nSUNSET:  ${ss}`);
+bind ,aws jsb utils.yankf(`SUNRISE: %s\nSUNSET:  %s`, ...apps.sunriseSunset(...user.latlong));
 " Open Lismore Weather (BoM)
 bind ,aww tabopenorswitchc http://www.bom.gov.au/nsw/forecasts/lismore.shtml
 " Open Goonellabah Weather (timeanddate.com)
