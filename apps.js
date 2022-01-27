@@ -189,6 +189,16 @@ apps.pw = {
         }
         return pw;
     },
+
+    hashSite: async function(opts={}) {
+        const domain = tri.contentLocation.hostname;
+        const simpl_domain = domain.replace(/(www|signin|reg)\./, "");
+        const decoded_domain = decodeURIComponent(simpl_domain);
+        const thisTab = await tri.webext.activeTab();
+        const thisTabOrd = thisTab.index +1;
+        opts.returnTabNumber ||= thisTabOrd;
+        return this.hash(decoded_domain, opts);
+    },
 };
 
 apps.trans = {

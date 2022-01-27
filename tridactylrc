@@ -585,6 +585,8 @@ bind a;<C-h> showkeys a;
 bind: a;c "Open link in Google Chrome" composite hint -pipe a href | ! /usr/local/bin/google-chrome
 bind: a;f "Open link in Waterfox" composite hint -pipe a href | ! /opt/waterfox/waterfox
 
+bind: aps "Hash site domain with password-hasher" jsb apps.pw.hashSite();
+
 " | at -- apps/translate |
 command trans jsb -d¦ apps.trans.transsh(JS_ARGS)¦
 
