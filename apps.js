@@ -139,7 +139,42 @@ var apps = {
         return [sunrise, sunset] = [times.sunrise, times.sunset].map(t=>t.toTimeString());
     },
 
-}
+};
+
+apps.pw = {
+    hash: async function(s, opts={}) {
+        const masterpw = user.masterpw;
+        const hashCallback = `
+            const $id = document.getElementById;
+            const $1t = (sel, text) => [...document.querySelectorAll(sel)].filter(e=>e.innerText.match(text))?.[0];
+            const masterkey = document.getElementById("master-key");
+            const sitetag = document.getElementById("site-tag");
+            const more = document.getElementsByTagName("summary")[0];
+            const noSpecial = document.getElementById("noSpecial");
+            const punctuation = document.getElementById("punctuation");
+            const digitsOnly = document.getElementById("digitsOnly");
+            const shortbutton = $1t("button", "Short");
+            const longbutton = $1t("button", "Long");
+            const custombutton = $1t("button", "Generate Custom");
+            sitetag.value = "${s}";
+            masterkey.value = "${masterpw}";
+            more.click();
+            noSpecial.checked = true;
+            punctuation.checked = ${opts.punctuation};
+            digitsOnly.checked = ${opts.digitsOnly};
+            setTimeout(()=>{
+                ${opts.type||"custom"}button.click();
+                const pw = document.getElementById("hash-word").value;
+                navigator.clipboard.writeText("Copied password for ${s}: "+pw);
+                tri.excmds.fillcmdline_nofocus("Copied password for ${s}: "+pw)
+                pw;
+            }, 300);
+        `;
+        const res = await utils.tab.openAndRun("http://localhost:8036/password-hasher.html", hashCallback, opts);
+        if (opts.returnTabNumber) await utils.tab.switch(opts.returnTabNumber);
+        return res;
+    }
+};
 
 apps.trans = {
     page: {
