@@ -383,6 +383,35 @@ utils.tab = {
         return newTab;
     },
 
+    openAndRun: async function(url, code, opts={}) {
+        opts = utils.tri.parseOpts(
+            opts, {
+                castString: "where",
+                defaults: {
+                    where: "related",
+                    runAt: "document_idle",
+                },
+            });
+        const newtab = await this.open(url, opts);
+        const execOpts = {
+            matchAboutBlank: opts.matchAboutBlank,
+            runAt: opts.runAt,
+        };
+        if (opts.file)
+            execOpts.file = code;
+        else {
+            execOpts.code = (typeof code == "function")
+                ? `(${code.toString()})()`
+                : code;
+        }
+        if (opts.frame == "all")
+            execOpts.allFrames = true;
+        else
+            execOpts.frameId = opts.frame || 0;
+        // utils.msg(`browser.tabs.executeScript(${newtab.id}, ${execOpts}) -- code: ${execOpts.code}`);
+        return browser.tabs.executeScript(newtab.id, execOpts);
+    },
+
     openMultiple: async function(urls, opts={}) {
         urls = urls.map(u=>u.trim()).filter(u=>u);
         opts.where ||= "last";
