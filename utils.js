@@ -38,7 +38,7 @@ var utils = {
 
     messageBox: async function(lines, opts={}) {
         if (typeof lines === "string") lines = lines.split("\n");
-        const w = parseInt(opts.width) || 50;
+        const w = parseInt(opts.width) || Infinity;
         const indent = opts.contPrefix || "";
         const d = indent.length;
         var line, s = "";
