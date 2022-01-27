@@ -68,7 +68,7 @@ var utils = {
             lines = await lines;
         else if (!Array.isArray(lines)) lines = [
             String(lines), "",
-            ...Object.getOwnPropertyNames(lines)
+            ...Object.getOwnPropertyNames(lines).map(l=>`${l}: \t  ${lines[l]}`)
         ];
         return this.messageBox(lines, opts);
     },
