@@ -324,7 +324,6 @@ utils.tab = {
          * opts.background: don't switch to new tab
          */
         opts = utils.tri.parseOpts(opts, {castString: "where"});
-        if (typeof opts == "string") opts = {where: opts};
         const thisTab = await tri.webext.activeTab();
         const legal = url.match(/^https?:/);
         /* can't open special URLs in current tab */
