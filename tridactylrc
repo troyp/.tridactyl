@@ -577,6 +577,8 @@ bind: ac "Open URL in Google Chrome" withurl ! /usr/local/bin/google-chrome
 bind: af "Open URL in Waterfox" withurl ! /opt/waterfox/waterfox --new-tab
 bdoc aw "Toggle wayback machine"
 bind aw urltoggle https://web.archive.org/web/https: https: https?://web.archive.org/web/[^:]+/https?: https?:
+bdoc a;w "Open link in wayback machine [HINT]"
+bind a;w composite hint -pipe | js -p tri.controller.acceptExCmd(`tabopen https://web.archive.org/web/${JS_ARG}`)
 
 " | a; -- apps/hints |
 bind a;<C-h> showkeys a;
