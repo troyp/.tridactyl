@@ -327,6 +327,7 @@ command: bmkletq "Run bookmarklet with params [rofi]" jsb apps.bmkletq();
 commdoc bmkletkw "Run bookmarklet by keyword"
 command bmkletkw jsb -d¦ apps.bmklet(JS_ARGS.slice(2), {kw: JS_ARGS[1]})¦
 
+bind w<C-h> showkeys w
 bind wc fillcmdline wincloseindex
 bind: wm "Toggle mute tab" mute toggle
 bind: wM "Mute all tabs" mute all
