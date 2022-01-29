@@ -100,6 +100,12 @@ var apps = {
             res => utils.tab.open(res.content, opts));
     },
 
+    kwsearch_get: async function(args) {
+        const [kw, ...rest] = utils.tri.parseArgs(args);
+        const res = await tri.native.run(`kwsearch -K '${kw}' ${rest.join(" ")||"''"}`);
+        return res.content.trim();
+    },
+
     kwrofi: async function(args, opts={where: "last"}) {
         const switches = opts?.switches || "-u -k -s";
         const where = opts.where || "last";
