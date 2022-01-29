@@ -17,6 +17,7 @@ set followpagepatterns.next \\b(forward|next|more|older)\\b|(>>|»)$|(>|»|▸|�
 set followpagepatterns.prev \\b(back|prev(ious)?|less|newer)\\b|(<|«|◂|◄)$|前|上
 set hintchars hjklasdfgyuiopqwertnmzxcvb
 set hintfiltermode vimperator-reflow
+set completions.Bmark.autoselect false
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────╮
