@@ -339,10 +339,12 @@ bind: wx "dismiss update notification" xdo mousemove 1740 230 click 1
 
 " | wk -- browser/bookmarks |
 bind wk<C-h> showkeys wk
-bind: wkk "Open bookmark in last tab [Rofi]" bmrofi
 bind: wka "Open bookmark in adjacent tab [Rofi]" bmrofi related
 bind: wkb "Open bookmark in background adjacent tab [Rofi]" bmrofi related t
-bind: wko "Open bookmark in current tab [Rofi]" bmrofi here
+bind: wkk "Open bookmark in last tab [Rofi]" bmrofi
+bind: wkh "Open bookmark in current tab [Rofi]" bmrofi here
+bind: wko "Open bookmark in current tab" fillcmdline bmarks
+bind: wkt "Open bookmark in new tab" fillcmdline bmarks -t
 
 " | wh -- browser/history |
 bind: whh "Open history item in last tab [rofi]" history last false
@@ -354,6 +356,7 @@ bind: who "Open history item in current tab [rofi]" history here false
 bind wj<C-h> showkeys wj
 bind: wjj "Run bookmarklet [rofi]" bmklet
 bind: wjk "Run bookmarklet by keyword" fillcmdline bmkletkw
+bind: wjo "Run bookmarklet with :open" fillcmdline bmarks javascript:
 bind: wjs "Run bookmarklet with params [rofi]" bmkletq
 
 " | ws -- browser/style |
