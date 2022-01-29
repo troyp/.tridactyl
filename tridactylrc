@@ -127,6 +127,7 @@ bind: p "Open url in clipboard in new adjacent tab" pasten_adj
 bind: P "Open url in clipboard" pasten_here
 bind: gp "Open url in clipboard in new tab" pasten
 bind: gP "Open url in clipboard in new background adjacent tab" pasten_bg
+bind: gO "Open :open prompt converting current URL to searchurl string" composite url2args | fillcmdline open
 
 unbind x
 bind: X "Stop loading" stop
