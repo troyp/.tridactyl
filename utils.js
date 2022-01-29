@@ -325,12 +325,12 @@ utils.tab = {
         return this.move(alt.index+1);
     },
 
+    /**   open(URL, { OPTIONS... })
+     *    open(URL, WHERE)
+     *  opts.where ["here" (default), "related", "next", "last"]: where to open new tab (if any)
+     *  opts.background: don't switch to new tab
+     */
     open: async function(url, opts={}) {
-        /*   open(URL, { OPTIONS... })
-         *   open(URL, WHERE)
-         * opts.where ["here" (default), "related", "next", "last"]: where to open new tab (if any)
-         * opts.background: don't switch to new tab
-         */
         opts = utils.tri.parseOpts(opts, {castString: "where"});
         const thisTab = await tri.webext.activeTab();
         const legal = url.match(/^https?:/);
@@ -420,14 +420,14 @@ utils.tab = {
         return urls;
     },
 
+    /**   openOrSummon(URL, { OPTIONS... })
+     *  opts.where ["here", "related" (default), "next"]: where to open new tab (if any)
+     *  opts.regex: regex to test if existing tab qualifies
+     *  opts.reload: whether to reload existing tab
+     *  opts.background: whether to leave new/summoned tab in background, or make active
+     *  opts.closeCurrent [default: true if where=="here"]: whether to close current tab
+     */
     openOrSummon: async function(url, opts={}) {
-        /*
-         * opts.where ["here", "related" (default), "next"]: where to open new tab (if any)
-         * opts.regex: regex to test if existing tab qualifies
-         * opts.reload: whether to reload existing tab
-         * opts.background: whether to leave new/summoned tab in background, or make active
-         * opts.closeCurrent [default: true if where=="here"]: whether to close current tab
-         */
         if (!url) return null;
         opts = utils.tri.parseOpts(opts, {castString: "where", nullishDefaults:{where:"here"}});
         const currentTab = await tri.webext.activeTab();
@@ -446,14 +446,14 @@ utils.tab = {
         }
     },
 
+    /**   openOrSwitch(URL, { OPTIONS... })
+     *    openOrSwitch(URL, WHERE)
+     *  opts.where ["last" (default), "here", "related", "next"]: where to open new tab (if any)
+     *  opts.regex: regex to test if existing tab qualifies
+     *  opts.reload: whether to reload existing tab
+     *  opts.closeCurrent [default: true if where=="here"]: whether to close current tab
+     */
     openOrSwitch: async function (url, opts={}) {
-        /*   openOrSwitch(URL, { OPTIONS... })
-         *   openOrSwitch(URL, WHERE)
-         * opts.where ["last" (default), "here", "related", "next"]: where to open new tab (if any)
-         * opts.regex: regex to test if existing tab qualifies
-         * opts.reload: whether to reload existing tab
-         * opts.closeCurrent [default: true if where=="here"]: whether to close current tab
-         */
         if (!url) return null;
         if (typeof opts == "string") opts = {where: opts};
         opts.closeCurrent ??= (opts.where=="here");
@@ -517,7 +517,8 @@ utils.tab = {
             tri.controller.acceptExCmd(`tabclose ${ns.join(" ")}`);
     },
 
-    /* Returns 0-based index of tab(s) chosen */
+    /**  rofiChoose({ OPTIONS... })    Return the 0-based index of tab(s) chosen
+     */
     rofiChoose: async function (opts={}) {
         opts.prompt ??= "Select tabs (S-Enter): ";
         opts.format ||= "i";
@@ -602,7 +603,10 @@ utils.tab = {
         return t;
     },
 
-    switch: async function(tabnum) {
+    /**   switch(N, { OPTIONS... })    Switch to tab N, optionally close original tab
+        opts.removeCurrent: remove current tab
+     */
+    switch: async function(tabnum, opts={}) {
           if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
           const N = await this.getN();
           const n = (tabnum-1).mod(N) + 1;
