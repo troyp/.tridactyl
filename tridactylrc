@@ -813,7 +813,11 @@ bind ,,ft  composite set hintchars 0123456789 ; hint -t ; unset hintchars
 " ╭───────╮
 " │ marks │
 " ╰───────╯
-jsb utils.tri.generateMarkBindings();
+command setmark jsb -p tri.controller.acceptExCmd(`js window._tri_mark_reg_${JS_ARG}=window.scrollY`)
+command gotomark jsb -p tri.controller.acceptExCmd(`js window.scrollTo(0, window._tri_mark_reg_${JS_ARG})`)
+
+bind: m "Set mark" gobble 1 setmark
+jsb tri.excmds.bind("'", "gobble 1 gotomark")
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────────────────╮
