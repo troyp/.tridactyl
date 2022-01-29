@@ -607,12 +607,14 @@ utils.tab = {
         opts.removeCurrent: remove current tab
      */
     switch: async function(tabnum, opts={}) {
+          opts = utils.tri.parseOpts(opts, {castBoolean: "removeCurrent"});
           if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
           const N = await this.getN();
           const n = (tabnum-1).mod(N) + 1;
-          browser.tabs.query({currentWindow: true, index: n-1}).then(
-              tt=> browser.tabs.update(tt[0].id, { active: true })
-          );
+          const thisTab = await tri.webext.activeTab();
+          const otherTab = (await browser.tabs.query({currentWindow: true, index: n-1}))[0];
+          if (opts.removeCurrent) browser.tabs.remove(thisTab.id);
+          return browser.tabs.update(otherTab.id, { active: true });
     },
 
     switchAlternate: async function(n=1, opts={}) {
