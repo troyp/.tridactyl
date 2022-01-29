@@ -428,6 +428,7 @@ bind: s;mE "Search multiple engines [Rofi]" ! echo -n "multienginesearch "; kwse
 
 bind ss fillcmdline open search
 bind s/ fillcmdline find
+jsb tri.excmds.bind("s'", "!s key ctrl+v apostrophe")
 
 bind n findnext
 bind N findnext
