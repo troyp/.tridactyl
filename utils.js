@@ -331,9 +331,11 @@ utils.tab = {
      *  opts.background: don't switch to new tab
      */
     open: async function(url, opts={}) {
+        var addr_type;
+        [url, addr_type] = await utils.tri.parseUrl(url);
         opts = utils.tri.parseOpts(opts, {castString: "where"});
         const thisTab = await tri.webext.activeTab();
-        const legal = url.match(/^https?:/);
+        const legal = url.match(/^https?:/) || addr_type !== "URL";
         /* can't open special URLs in current tab */
         if (!legal && opts.where==="here") opts.where="next";
         const initurl = legal ? url : "https://google.com";
@@ -824,6 +826,28 @@ utils.tri = {
                 terms.push(words[i]);
         }
         return terms;
+    },
+
+    parseUrl: async function(url) {
+        try {
+            return [(new URL(url)).href, "URL"];
+        } catch (_) {
+            if (url.match(/^[^: ]+\.[^: ]+(\/|$)/)) {
+                return [`https://${url}`, "URL"];
+            } else {
+                const se = url.split(" ")[0];
+                const surls = tri.config.get("searchurls");
+                const kwurl = await apps.kwsearch_get(url);
+                if (surls.hasOwnProperty(se)) {
+                    const surl = surls[se];
+                    return [url, "searchurl"];
+                } else if (kwurl) {
+                    return [kwurl, "URL"];
+                } else {
+                    return [url, "other"];
+                }
+            }
+        }
     },
 
     pasten: async function(args, opts={}) {
