@@ -15,10 +15,12 @@ unset kw
 # selection vars
 filter=
 kwonly=
+jsonly=
 # rofi vars
 rofi=
 rofithemestr='#window {width: 80%;} #listview {lines: 25;}';
 multi=
+case="-i"
 # output vars
 args=
 oformat=
@@ -28,9 +30,9 @@ yank=
 # ╭─────────╮
 # │ options │
 # ╰─────────╯
-SHORT="h,f:,j,J,k,K:,m,s,S,t,u,w,y,Y,1"
-LONG="help,filter:,json,js-only,keyword-only,find-keyword:,multi-select,select,select-keyword,tridactyl,url,kw,yank,
-  yank-only,one-line"
+SHORT="h,f:,I,j,J,k,K:,m,s,S,t,u,w,y,Y,1"
+LONG="help,filter:,case-sensitive,json,js-only,keyword-only,find-keyword:,multi-select,select,select-keyword,
+  tridactyl,url,kw,yank,yank-only,one-line"
 PARSED=$(getopt -a -n kwsearch --options "$SHORT" --longoptions "$LONG" -- "$@")
 
 eval set -- "$PARSED"
@@ -51,6 +53,7 @@ USAGE: kwsearch [OPTION...]
 Options:
   -f RE  --filter RE          filter bookmarks with RE
   -h     --help               show help
+  -I     --case-sensitive     make Rofi case-sensitive
   -j     --json               force JSON output
   -J     --js-only            javascript: URI (bookmarklets) only
   -k     --keyword-only       keyword bookmarks only
@@ -68,6 +71,7 @@ EOF
             exit 0
             ;;
         (-f | --filter) filter="$2"; shift 2; ;;
+        (-I | --case-sensitive) case=""; shift; ;;
         (-j | --json) oformat=json; shift; ;;
         (-J | --js-only) jsonly=t; shift; ;;
         (-k | --keyword-only) kwonly=t; shift; ;;
@@ -146,9 +150,9 @@ if [[ -n $rofi ]]; then
                     sprintf("%-18s \t%s  (<%s>)","$2:",$3,$4)/e' |
         if [[ $rofi == kw ]]; then
             # keyword completion with rofi
-            rofi -theme-str "$rofithemestr" -dmenu -i -no-custom -matching "regex" -format d -filter "^" $multi;
+            rofi -theme-str "$rofithemestr" -dmenu "$case" -no-custom -matching "regex" -format d -filter "^" $multi;
         else
-            rofi -theme-str "$rofithemestr" -dmenu -i -no-custom -matching "regex" -format d $multi;
+            rofi -theme-str "$rofithemestr" -dmenu "$case" -no-custom -matching "regex" -format d $multi;
         fi > $lines;
 fi;
 
