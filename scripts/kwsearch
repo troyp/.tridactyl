@@ -174,7 +174,9 @@ fi |
     if [[ -n $args ]]; then
         # TODO: handle | in arguments
         # TODO: handle escaping in search URL
-        sed "s|%s|$*|";
+        s=$(printf %s "$*" | jq -sRr @uri);
+        S=${*//&/\\&}
+        sed "s|%S|$S|" | sed "s|%s|$s|";
     else
         cat;
     fi |
