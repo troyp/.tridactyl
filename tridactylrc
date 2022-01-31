@@ -215,7 +215,9 @@ commdoc urltoggle "Toggle a component of the current URL"
 command urltoggle withurlsjs -d¦ urls.mod.toggleWr(JS_ARGS.join(" "))¦
 commdoc urlremove "Remove string from current URL"
 command urlremove withurlsjs -p tri.controller.acceptExCmd(`open ${urls.mod.toggle(JS_ARG, "")}`)
-command xdo jsb -d¦ tri.controller.acceptExCmd("exclaim_quiet xdotool" + JS_ARGS.join(" "))¦
+command !! exclaim_
+command !s exclaim_quiet
+command xdo !s xdotool
 commdoc xdoclick "Click element at point X Y with button N and return pointer to original position"
 command xdoclick jsb -d¦ utils.xdoclickWrapper(JS_ARGS, {return:true})¦
 commdoc xdoclick! "Click element at point X Y with button N"
@@ -230,7 +232,6 @@ commdoc expaste "Execute commands in clipboard"
 command expaste jsb utils.cbread().then(s=>s.split("\n").forEach(c=>tri.controller.acceptExCmd(c)));
 commdoc exclaim_ "Run commands in /bin/sh and print the result on the command line"
 command exclaim_ jsb -d¦ apps.exclaim_(JS_ARGS)¦
-command !! exclaim_
 
 " ╭───────────╮
 " │ b -- tabs │
