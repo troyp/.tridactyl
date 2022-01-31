@@ -178,6 +178,14 @@ bind: g;p "Focus first password input field on page" focusinput -p
 " ╭──────────────────╮
 " │ general commands │
 " ╰──────────────────╯
+command show fillcmdline_nofocus
+command withjs composite js
+command withjsb composite jsb
+command withurlsjs composite js -r urls.js ; js
+command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
+command: csites "Load S.js, cutils.js, csites.js, run js" composite js -r cutils.js ; js -r csites.js ; js
+command: capps "Load capps.js and run js" composite js -r capps.js ; js
+
 commdoc tabopen_adj "Open an URL in an adjacent tab"
 command tabopen_adj jsb -d¦ utils.tab.open(JS_ARGS, {where: "related"})¦
 commdoc tabopen_last "Open an URL in an adjacent tab"
@@ -204,20 +212,13 @@ commdoc tabopenorsummon "Open an URL in a new adjacent tab, or switch to existin
 command tabopenorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"});
 commdoc tabopenorsummonbg "Open an URL in a new background adjacent tab, or move existing tab adjacent"
 command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related", background: true});
-commdoc urlmodorsummon_g "Open URL formed by grafting a path onto the domain, or summon existing tab"
-command urlmodorsummon_g jsb -d¦ urls.mod.graftOrSummon(JS_ARGS[1], 0, {where:JS_ARGS[2]?"related":"here"})¦
-
-command show fillcmdline_nofocus
-command withjs composite js
-command withjsb composite jsb
-command withurlsjs composite js -r urls.js ; js
-command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
-command: csites "Load S.js, cutils.js, csites.js, run js" composite js -r cutils.js ; js -r csites.js ; js
-command: capps "Load capps.js and run js" composite js -r capps.js ; js
 commdoc urltoggle "Toggle a component of the current URL"
 command urltoggle withurlsjs -d¦ urls.mod.toggleWr(JS_ARGS.join(" "))¦
 commdoc urlremove "Remove string from current URL"
 command urlremove withurlsjs -p tri.controller.acceptExCmd(`open ${urls.mod.toggle(JS_ARG, "")}`)
+commdoc urlmodorsummon_g "Open URL formed by grafting a path onto the domain, or summon existing tab"
+command urlmodorsummon_g jsb -d¦ urls.mod.graftOrSummon(JS_ARGS[1], 0, {where:JS_ARGS[2]?"related":"here"})¦
+
 command !! exclaim_
 command !s exclaim_quiet
 command xdo !s xdotool
