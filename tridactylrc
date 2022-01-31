@@ -178,7 +178,10 @@ bind: g;p "Focus first password input field on page" focusinput -p
 " ╭──────────────────╮
 " │ general commands │
 " ╰──────────────────╯
-command: tabopen_adj "Open an URL in an adjacent tab" jsb -p utils.tab.open(JS_ARG, {where: "related"})
+commdoc tabopen_adj "Open an URL in an adjacent tab"
+command tabopen_adj jsb -d¦ utils.tab.open(JS_ARGS, {where: "related"})¦
+commdoc tabopen_last "Open an URL in an adjacent tab"
+command tabopen_last jsb -d¦ utils.tab.open(JS_ARGS, {where: "last"})¦
 commdoc tabopen_bg "Open an URL in an adjacent background tab"
 command tabopen_bg jsb -d¦ utils.tab.open(JS_ARGS, {where: "related", background: true})¦
 commdoc openorswitchc "Open an URL in current (with count: adjacent) tab, or switch to existing tab"
@@ -259,6 +262,7 @@ bind b<C-h> showkeys b
 bind: bb "Switch to tab from completion list" fillcmdline tab
 bind: bo "Open in adjacent tab" fillcmdline tabopen_adj
 bind: bO "Open in adjacent background tab" fillcmdline tabopen_bg
+bind: bl "Open in last tab" fillcmdline tabopen_last
 bind: bp "Pin/unpin tab" pin
 bind: b> "Close all tabs to the right" tabclosealltoright
 bind: b< "Close all tabs to the left"  tabclosealltoleft
