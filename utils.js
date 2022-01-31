@@ -275,6 +275,8 @@ var utils = {
 // ╰─────────────────────────────╯
 
 utils.tab = {
+    aboutURIWhitelist: ["about:license", "about:logo", "about:rights", "about:blank"],
+
     filter: function(pred) {
         return tab.remove(!pred);
     },
@@ -299,6 +301,16 @@ utils.tab = {
         const t = await this.get(tabnum, opts);
         return t.id;
     },
+
+    getLastOpened: async function(url, opts={}) {
+        const sorted = await this.sortedByAccess();
+        const f = opts.matchURLorTitle
+              ? t => t.url == url || t.title == url.replace(/^file:\/\//, "")
+              : t => t.url == url;
+        const filtered = sorted.filter(f);
+        return filtered?.[0];
+    },
+
 
     getPinned: async function() {
         return browser.tabs.query({currentWindow: true, pinned: true});
@@ -337,58 +349,50 @@ utils.tab = {
      *  opts.background: don't switch to new tab
      */
     open: async function(url, opts={}) {
+        opts = utils.tri.parseOpts(opts, {castString: "where", castNumber: "where"});
         var addr_type;
-        [url, addr_type] = await utils.tri.parseUrl(url);
-        opts = utils.tri.parseOpts(opts, {castString: "where"});
+        [url, addr_type] = await utils.tri.parseUrl(url, opts.where!=="here");
+        const isURL = addr_type === "URL";
+        const isIllegal = /^file:|^about:/.test(url) && !this.aboutURIWhitelist.includes(url);
         const thisTab = await tri.webext.activeTab();
-        const legal = url.match(/^https?:/) || addr_type !== "URL";
-        /* can't open special URLs in current tab */
-        if (!legal && opts.where==="here") opts.where="next";
-        const initurl = legal ? url : "https://google.com";
-        const active = !opts.background;
-        var newTab;
-        /* https?: URLs */
-        if (legal) {
+        if (isURL && isIllegal) {
+            /* illegal file:|about: URL */
+            return this.openIllegal(url, opts);
+        } else if (opts.where === "here") {
+            /* dispatch to :open */
+            return open(...url.split(" "));
+        } else if (opts.where === tri.config.tabopenpos) {
+            /* dispatch to :tabopen */
+            const args = opts.background ? ["-b", ...url.split(" ")] : url.split(" ");
+            return tabopen(...args);
+        } else {
+            /* force resolution of address into URL */
+            /* then call tabCreateWrapper */
+            if (!isURL) url = utils.tri.parseUrl(url, true)[0];
+            const i = thisTab.index;
+            const N = await this.getN();
+            const tabCreateOpts = {
+                url: url,
+                active: !opts.background,
+            };
             switch (opts.where) {
               case "last":
-                  const N = await this.getN();
-                  newTab = await this.tabCreateWrapper({url: initurl, active: active, index: N});
+                  tabCreateOpts.index = N;
                   break;
               case "related":
-                  newTab = await tri.webext.openInNewTab(initurl, {active: active, related: true});
+                  tabCreateOpts.index = i+1;
                   break;
               case "next":
-                  const i = thisTab.index;
-                  newTab = await tri.webext.openInNewTab(initurl, {active: active, related: true, index: i+1});
+                  tabCreateOpts.index = i+1;
+                  tabCreateOpts.openerTabId = thisTab.id;
                   break;
-              case "here":
               default:
-                  newTab = thisTab;
-                  await tri.controller.acceptExCmd(`open ${url}`);
+                  /* opts.where can take a tabnumber */
+                  tabCreateOpts.index = opts.where-1;
+                  break;
             }
-        } else {
-            /* special URLs */
-            if (opts.where=="last" && opts.background)
-                await tri.controller.acceptExCmd(`tabopen -b ${url}`);
-            else
-                await tri.controller.acceptExCmd(`tabopen ${url}`);
-            /* TODO: identify correct tab using .url and .lastAccessed properties */
-            /* currently assumes last tab (ie. tabopenpos == "last") */
-            const tt = await this.getAll();
-            newTab = tt.slice(-1)[0];
-            const i = thisTab.index;
-            if (["related", "next"].includes(opts.where)) {
-                /* TODO: handle related separately */
-                /* TODO: don't set alternate tab */
-                if (opts.background)
-                    await browser.tabs.move(newTab.id, {index: i+1}).then(t=>this.switch(thisTab.index+1));
-                else
-                    await browser.tabs.move(newTab.id, {index: i+1});
-            } else if (opts.where=="last" && opts.background) {
-                await this.switch(thisTab.index+1);
-            }
+            return this.tabCreateWrapper(tabCreateOpts);
         }
-        return newTab;
     },
 
     openAndRun: async function(url, code, opts={}) {
@@ -419,6 +423,47 @@ utils.tab = {
         // utils.msg(`browser.tabs.executeScript(${newtab.id}, ${execOpts}) -- code: ${execOpts.code}`);
         return browser.tabs.executeScript(newtab.id, execOpts);
     },
+
+    openIllegal: async function(url, opts={}) {
+        opts = utils.tri.parseOpts(opts, {castString: "where", castNumber: "where"});
+        const thisTab = await tri.webext.activeTab();
+        if (opts.where === "here") {
+            if (opts.useOmnibox) {
+                await tri.native.run(
+                    `xdotool key ctrl+l key ctrl+u sleep 0.5 type ${url}; xdotool key Return`
+                );
+                return thisTab;
+            } else {
+                opts.where = "next";
+                return this.openIllegal(url, opts);
+            }
+        } else { /* new tab */
+            await tabopen(...url.split(" "));
+            const t = await this.getLastOpened(url);
+            const i = thisTab.index;
+            var pos;
+            switch (opts.where) {
+              case "last":
+                  pos = -1;
+                  break;
+              case "related":
+                  pos = i+1;
+                  break;
+              case "next":
+                  pos = i+1;
+                  break;
+              default:
+                  /* opts.where can take a tabnumber */
+                  /* FIXME: position and background both break when opts.where is a number */
+                  pos = opts.where-1;
+                  break;
+            }
+            await browser.tabs.move(t.id, {index: pos});
+            if (opts.background) await this.switch(thisTab);
+            return t;
+        }
+    },
+
 
     openMultiple: async function(urls, opts={}) {
         urls = urls.map(u=>u.trim()).filter(u=>u);
@@ -637,11 +682,13 @@ utils.tab = {
         const tab = await browserBg.tabs.create(options);
         const answer = new Promise(resolve => {
             /* can't run in content scripts */
-            browserBg.runtime.onMessage.addListener((message, sender) => {
-                if (message !== "dom_loaded_background" || sender?.tab?.id !== tab.id) return;
-                browserBg.runtime.onMessage.removeListener(listener);
-                resolve(tab);
-            });
+            if (options.waitForDOM)
+                browserBg.runtime.onMessage.addListener((message, sender) => {
+                    if (message !== "dom_loaded_background" || sender?.tab?.id !== tab.id) return;
+                    browserBg.runtime.onMessage.removeListener(listener);
+                    resolve(tab);
+                });
+            else resolve(tab);
         });
         /* Return on slow- / extremely quick- loading pages anyway */
         return Promise.race([answer, (async () => {await sleep(750); return tab;})(),]);
