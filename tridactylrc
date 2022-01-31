@@ -180,7 +180,7 @@ bind: g;p "Focus first password input field on page" focusinput -p
 " ╰──────────────────╯
 command: tabopen_adj "Open an URL in an adjacent tab" jsb -p utils.tab.open(JS_ARG, {where: "related"})
 commdoc tabopen_bg "Open an URL in an adjacent background tab"
-command tabopen_bg jsb -p utils.tab.open(JS_ARG, {where: "related", background: true})
+command tabopen_bg jsb -d¦ utils.tab.open(JS_ARGS, {where: "related", background: true})¦
 commdoc openorswitchc "Open an URL in current (with count: adjacent) tab, or switch to existing tab"
 command openorswitchc jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"related":"here"})¦
 commdoc tabopenorswitchc "Open an URL in a new final tab (count: current tab), or switch to existing tab"
