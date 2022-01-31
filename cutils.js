@@ -259,11 +259,11 @@ var cutils = {
         const s_ = (opts.prefix || "") + s;
         if (opts.temp) {
             const t = opts.duration || 3000;
-            tri.excmds.fillcmdline_tmp(s_, t);
+            fillcmdline_tmp(s_, t);
         } else if (opts.useAlert) {
             alert(s_);
         } else {
-            tri.excmds.fillcmdline_nofocus(s_);
+            fillcmdline_nofocus(s_);
         }
         return s;
     },
@@ -332,7 +332,7 @@ var cutils = {
         opts = cutils.tri.parseOpts(opts, {castBoolean: "msg"});
         opts.msg ??= true;
         /* yank */
-        tri.excmds.yank(s);
+        yank(s);
         /* message? */
         if (opts.msg) {
             opts.prefix ??= "Copied" + (opts.useAlert ? "...\n" : ": ");

@@ -27,11 +27,11 @@ var utils = {
         const s_ = (opts.prefix || "") + s;
         if (opts.temp) {
             const t = opts.duration || 3000;
-            tri.excmds.fillcmdline_tmp(s_, t);
+            fillcmdline_tmp(s_, t);
         } else if (opts.useAlert) {
             this.messageBox(s_.split("\n"), opts);
         } else {
-            tri.excmds.fillcmdline_nofocus(s_);
+            fillcmdline_nofocus(s_);
         }
         return s;
     },
@@ -252,7 +252,7 @@ var utils = {
         opts = utils.tri.parseOpts(opts, {castBoolean: "msg"});
         opts.msg ??= true;
         /* yank */
-        tri.excmds.yank(s);
+        yank(s);
         /* message? */
         if (opts.msg) {
             opts.prefix ??= "Copied" + (opts.useAlert ? "...\n" : ": ");
@@ -520,7 +520,7 @@ utils.tab = {
               : indexes.slice(nPinned);
         const ns = rmindexes.map(i=>i+1);
         if (opts.review)
-            tri.excmds.fillcmdline(`tabclose ${ns.join(" ")}`);
+            fillcmdline(`tabclose ${ns.join(" ")}`);
         else
             tri.controller.acceptExCmd(`tabclose ${ns.join(" ")}`);
     },
@@ -716,7 +716,7 @@ utils.tri = {
     },
 
     docBindUrl: function(args) {
-        const argstr = args.join(" ").trim();
+        const argstr = this.parseArgs(args, "string");
         const bindurlRe = /^([^ ]+) ([^ ]+) "([^"]*)" (.*)/;
         const [site, key, desc, rest] = argstr.match(bindurlRe).slice(1);
         tri.controller.acceptExCmd(`bindurl ${site} ${key} ${rest}`);
@@ -740,12 +740,12 @@ utils.tri = {
             l=> {
                 const n = parseInt(l.content);
                 const url = `https://github.com/tridactyl/tridactyl/blob/master/src/excmds.ts#L${n}`;
-                return tri.excmds.tabopen(url);
+                return tabopen(url);
             }
         );
     },
 
-    myfocusinput: function(arg) { const n = arg ? Number(arg)-1 : "-l"; tri.excmds.focusinput(n); },
+    myfocusinput: function(arg) { const n = arg ? Number(arg)-1 : "-l"; focusinput(n); },
 
     parseArgs: function(args, opts={}) {
         /* opts */

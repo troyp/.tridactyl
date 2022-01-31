@@ -90,7 +90,7 @@ var apps = {
      */
     exclaim_: async function(args) {
         const res = await tri.native.run(args.join(" "));
-        tri.excmds.fillcmdline_nofocus(res.content.replace(/\n/g, "   "));
+        fillcmdline_nofocus(res.content.replace(/\n/g, "   "));
         return res.content;
     },
 
