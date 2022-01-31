@@ -5,6 +5,19 @@
 // │        │
 // ╰────────╯
 
+/** note: tri.urlutils provides the following methods to content scripts:
+ *  - deleteQuery()
+ *  - getAbsoluteURL()
+ *  - getDownloadFilenameForUrl()
+ *  - getUrlParent()
+ *  - getUrlRoot()
+ *  - graftUrlPath()
+ *  - incrementUrl()
+ *  - interpolateSearchItem()
+ *  - replaceQueryValue()
+ *  - setQueryValue()
+ */
+
 urls = {
     urlRe: new RegExp(
         "(?<scheme>[^/]+)//"
