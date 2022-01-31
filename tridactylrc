@@ -236,6 +236,9 @@ commdoc expaste "Execute commands in clipboard"
 command expaste jsb utils.cbread().then(s=>s.split("\n").forEach(c=>tri.controller.acceptExCmd(c)));
 commdoc exclaim_ "Run commands in /bin/sh and print the result on the command line"
 command exclaim_ jsb -d¦ apps.exclaim_(JS_ARGS)¦
+command omni! jsb -d¦ utils.omniboxEnter(JS_ARGS.join(" "))¦
+command omni xdo key ctrl+l key ctrl+u sleep 0.5 type
+command omni_focus xdo key ctrl+l key ctrl+u
 
 " ╭───────────╮
 " │ b -- tabs │
@@ -338,10 +341,20 @@ bind w<C-h> showkeys w
 bind wc fillcmdline wincloseindex
 bind: wm "Toggle mute tab" mute toggle
 bind: wM "Mute all tabs" mute all
+bind: wl "Focus and clear omnibox" omni_focus
+bind: wo "Omnibox open" fillcmdline omni!
 bind: wr "Reload tridactylrc file" source ~/.tridactyl/tridactylrc
 bind: wu "Undo window" undo window
 bind: ww "Open URL in new window" fillcmdline winopen
 bind: wx "dismiss update notification" xdo mousemove 1740 230 click 1
+
+bind: wab "Search open tabs in omnibar" omni "% "
+bind: wah "Search history in omnibar" omni "^ "
+bind: wak "Search bookmarks in omnibar" omni "* "
+bind: wal "Search local file suggestions in omnibar" omni "& file:/// "
+bind: was "Search suggestions in omnibar" omni "? "
+bind: wat "Search page title suggestions in omnibar" omni "# "
+bind: wau "Search URL suggestions in omnibar" omni "$ "
 
 " | wk -- browser/bookmarks |
 bind wk<C-h> showkeys wk

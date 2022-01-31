@@ -73,6 +73,12 @@ var utils = {
         return this.messageBox(lines, opts);
     },
 
+    omniboxEnter: async function(s) {
+        const cmd = `xdotool key alt+d key ctrl+u type "${s}" ; xdotool key Return`;
+        const res = await tri.native.run(cmd);
+        return res;
+    },
+
     openHistoryItems: async function(opts={}) {
         opts.where ||= "last";
         opts.multiSelect ??= true;
