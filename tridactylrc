@@ -385,7 +385,7 @@ bind: wsU "Copy userChrome.css and restart browser" composite copyuserchrome ; r
 " | wt -- browser/toggle |
 bind: wtd "toggle downloads menu" xdoclick 241 111
 bind: wtt "toggle bookmarks toolbar" xdo key ctrl+B
-bind: wtm "toggle menu bar" xdo key alt+v; sleep 0.5; xdotool key Right; sleep 0.5; xdotool key Return
+bind: wtm "toggle menu bar" xdo key alt+v sleep 0.5 key Right sleep 0.5 key Return
 
 " ╭─────────────╮
 " │ s -- search │
