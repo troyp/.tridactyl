@@ -794,6 +794,8 @@ utils.tri = {
             opts[options.castFunction] = rawopts;
         } else if (options.castBoolean && typeof rawopts == "boolean") {
             opts[options.castBoolean] = rawopts;
+        } else if (options.castNumber && typeof rawopts == "number") {
+            opts[options.castNumber] = rawopts;
         } else {
             opts = rawopts;
         }
@@ -834,7 +836,9 @@ utils.tri = {
         return terms;
     },
 
-    parseUrl: async function(url) {
+    parseUrl: async function(url, opts={}) {
+        if (Array.isArray(url)) url = url.join(" ").trim();
+        opts = this.parseOpts(opts, {castBoolean: "force"});
         try {
             return [(new URL(url)).href, "URL"];
         } catch (_) {
@@ -846,11 +850,15 @@ utils.tri = {
                 const kwurl = await apps.kwsearch_get(url);
                 if (surls.hasOwnProperty(se)) {
                     const surl = surls[se];
-                    return [url, "searchurl"];
+                    return opts.force
+                        ? [this.searchurlResolve(url), "URL"]
+                        : [url, "searchurl"];
                 } else if (kwurl) {
                     return [kwurl, "URL"];
                 } else {
-                    return [url, "other"];
+                    return opts.force
+                        ? [this.searchurlResolve(url, {default: true}), "URL"]
+                        : [url, "query"];
                 }
             }
         }
@@ -880,6 +888,24 @@ utils.tri = {
         const conf = this.searchConfig("nmaps", term.trim());
         return utils.messageBox(conf, {contPrefix: "\t\t"});
     },
+
+    searchurlResolve: function(url, opts={}) {
+        opts = this.parseOpts(opts, {castBoolean: "default"});
+        url = url.trim();
+        const k = url.indexOf(" ");
+        const defaultSE = tri.config.get("searchengine") || "google";
+        const SE = opts.default
+              ? defaultSE
+              : url.slice(0, k);
+        const search = opts.default
+              ? url
+              : url.slice(k).trim();
+        const su = tri.config.get("searchurls")[SE];
+        return su.includes("%s")
+            ? su.replace(/%s/g, search)
+            : su + search;
+    },
+
 
     unbindMode: function(args) {
         const argstr = args.join(" ").trim();
