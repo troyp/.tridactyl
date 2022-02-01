@@ -76,8 +76,8 @@ EOF
         (-J | --js-only) jsonly=t; shift; ;;
         (-k | --keyword-only) kwonly=t; shift; ;;
         (-K | --find-keyword) kw="$2"; shift 2; ;;
-        (-m | --multi-select) rofi=t; multi="-multi-select"; shift; ;;
-        (-s | --select) rofi=t; shift; ;;
+        (-m | --multi-select) rofi=${rofi:-t}; multi="-multi-select"; shift; ;;
+        (-s | --select) rofi=${rofi:-t}; shift; ;;
         (-S | --select-keyword) kwonly=t; rofi=kw; shift; ;;
         (-t | --tridactyl) oformat=tri; kwonly=t; shift; ;;
         (-u | --url) oformat=url; shift; ;;
