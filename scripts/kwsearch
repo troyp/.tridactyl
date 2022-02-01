@@ -18,7 +18,7 @@ kwonly=
 jsonly=
 # rofi vars
 rofi=
-rofithemestr='#window {width: 80%;} #listview {lines: 25;}';
+rofitheme='#window {width: 80%;} #listview {lines: 25;}';
 multi=
 case="-i"
 # output vars
@@ -113,31 +113,33 @@ jq -rc '
    recurse(.children[]?)
    | select(.uri)
    | {keyword, title, uri}
-' "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" | {
+' "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" |
+
     # --keyword-only
     if [[ -n $kwonly ]]; then
         jq -c 'select(.keyword)';
     else cat;
-    fi;
-} | {
+    fi |
+
     # javascript: URI only
     if [[ -n $jsonly ]]; then
         jq -c 'select(.uri | test("^javascript:"))';
     else cat;
-    fi;
-} | {
+    fi |
+
     # select by --find-keyword ?
     if [[ -n ${kw+SET} ]]; then
         jq -c "select(.keyword == \"$kw\")";
-    else {
+    else
         # filter results
         # filter with regex
-        if [[ -n filter ]]; then grep -i -$RETYPE "$filter";
-        else cat;
+        if [[ -n filter ]]; then
+            grep -i -$RETYPE "$filter";
+        else
+            cat;
         fi;
-    }
-    fi
-} > $bmarksjson;
+
+    fi > $bmarksjson;
 
 # ╭────────────────╮
 # │ rofi selection │
@@ -150,9 +152,9 @@ if [[ -n $rofi ]]; then
                     sprintf("%-18s \t%s  (<%s>)","$2:",$3,$4)/e' |
         if [[ $rofi == kw ]]; then
             # keyword completion with rofi
-            rofi -theme-str "$rofithemestr" -dmenu "$case" -no-custom -matching "regex" -format d -filter "^" $multi;
+            rofi -theme-str "$rofitheme" -dmenu "$case" -no-custom -matching "regex" -format d -filter "^" $multi;
         else
-            rofi -theme-str "$rofithemestr" -dmenu "$case" -no-custom -matching "regex" -format d $multi;
+            rofi -theme-str "$rofitheme" -dmenu "$case" -no-custom -matching "regex" -format d $multi;
         fi > $lines;
 fi;
 
