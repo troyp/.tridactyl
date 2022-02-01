@@ -145,7 +145,7 @@ bind gl jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goForward(t.id));
 bind: gs "Toggle page source" viewsource
 bind: gU "Go to the ancestor URL nth from the root domain" urlroot_n
 
-bind: <C-F10> "Open hamburger menu" xdoclick 1896 115
+bind: <C-F10> "Open hamburger menu" xdoclick 1896 86
 
 bind: <C-v> "Enter ignore mode (disable tridactyl bindings)" nmode ignore 1 mode normal
 bind: <C-z> "Enter ignore mode for one keybinding (disable tridactyl bindings)" mode ignore
@@ -264,8 +264,8 @@ command tabsummonalt jsb -d¦ utils.tab.summonAlternate(JS_ARGS[1]||1)¦
 command: tabmove! "Move current tab to specified tab number" jsb -p utils.tab.move(JS_ARG);
 command tabmovetoalt jsb -d¦ utils.tab.moveToAlternate(JS_ARGS[1]||1)¦
 
-bind: g;h "Choose entry in tab's backward history" xdoclick 275 114 3
-bind: g;l "Choose entry in tab's forward history" xdoclick 313 114 3
+bind: g;h "Choose entry in tab's backward history" xdoclick 275 86 3
+bind: g;l "Choose entry in tab's forward history" xdoclick 313 86 3
 bind: <C-a> "Switch to first tab" tabfirst
 bind: <C-e> "Switch to last tab" tablast
 
@@ -356,7 +356,7 @@ bind: wo "Omnibox open" fillcmdline omni!
 bind: wr "Reload tridactylrc file" source ~/.tridactyl/tridactylrc
 bind: wu "Undo window" undo window
 bind: ww "Open URL in new window" fillcmdline winopen
-bind: wx "dismiss update notification" xdo mousemove 1740 230 click 1
+bind: wx "dismiss update notification" xdoclick 1740 200
 
 bind: wab "Search open tabs in omnibar" omni "% "
 bind: wah "Search history in omnibar" omni "^ "
@@ -393,7 +393,7 @@ bind: wsu "Copy userChrome.css from .tridactyl/css to default profile directory"
 bind: wsU "Copy userChrome.css and restart browser" composite copyuserchrome ; restart
 
 " | wt -- browser/toggle |
-bind: wtd "toggle downloads menu" xdoclick 241 111
+bind: wtd "toggle downloads menu" xdoclick 241 86
 bind: wtt "toggle bookmarks toolbar" xdo key ctrl+B
 bind: wtm "toggle menu bar" xdo key alt+v sleep 0.5 key Right sleep 0.5 key Return
 
@@ -638,8 +638,8 @@ bind x<C-h> showkeys x
 " | xr -- rikairebuilt |
 bind xr<C-h> showkeys xr
 " rikairebuilt toggle
-bind: xrr "Toggle rikairebuilt" xdoclick 1861 111
-abind: <A-F1> "Toggle rikairebuilt" xdoclick 1861 111
+bind: xrr "Toggle rikairebuilt" xdoclick 1822 86
+abind: <A-F1> "Toggle rikairebuilt" xdoclick 1822 86
 " addon page
 bind xra tabopenorswitchc https://addons.mozilla.org/en-GB/firefox/addon/rikaihan/
 " source page
