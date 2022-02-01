@@ -601,6 +601,21 @@ utils.tab = {
         );
     },
 
+    rofiHighlight: async function(opts={}) {
+        const currentTab = await tri.webext.activeTab();
+        const alltabs = await this.getAll();
+        const idxs = await this.rofiChoose();
+        const selected = alltabs.filter(t=>idxs.includes(t.index));
+        if (selected==[]) return [];
+        else if (!selected.includes(currentTab)) {
+            const nextTab = selected[0];
+            await browser.tabs.update(nextTab.id, {highlighted: true, active: false});
+            await browser.tabs.update(currentTab.id, {highlighted: false });
+        }
+        selected.forEach(async tab => await browser.tabs.update(tab.id, {highlighted: true }));
+        return selected;
+    },
+
     sortedByAccess: async function() {
         const tabs = await browser.tabs.query({currentWindow: true});
         return tabs.sort((t1,t2) => t2.lastAccessed-t1.lastAccessed);

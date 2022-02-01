@@ -290,6 +290,10 @@ bind: bdo "Close other tabs" tabonly
 bind: bds "Select tabs to close with rofi" jsb utils.tab.removeWithRofi();
 bind: bd;s "Select tabs to keep with rofi; close others" jsb utils.tab.removeWithRofi({invert:true});
 
+" | bh -- tabs/highlight |
+bind bh<C-h> showkeys bh
+bind: bhh "Highlight tabs with rofi" jsb utils.tab.rofiHighlight();
+
 " | bm -- tabs/move |
 bind bm<C-h> showkeys bm
 bind: bma "move active tab after alternate tab" tabmovetoalt
