@@ -133,7 +133,7 @@ jq -rc '
     else
         # filter results
         # filter with regex
-        if [[ -n filter ]]; then
+        if [[ -n $filter ]]; then
             grep -i -$RETYPE "$filter";
         else
             cat;
