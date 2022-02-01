@@ -91,10 +91,10 @@ EOF
 done
 
 # handle additional arguments
-if [[ $# -gt 0 ]]; then args=t; fi;
+if [ $# -gt 0 ]; then args=t; fi;
 
 # output format defaults to url when -K or arguments
-if [[ -n $kw$args ]]; then oformat=${oformat:-url}; fi;
+if [ -n "$kw$args" ]; then oformat=${oformat:-url}; fi;
 
 # ╭──────────────╮
 # │ dependencies │
@@ -116,24 +116,24 @@ jq -rc '
 ' "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" |
 
     # --keyword-only
-    if [[ -n $kwonly ]]; then
+    if [ -n "$kwonly" ]; then
         jq -c 'select(.keyword)';
     else cat;
     fi |
 
     # javascript: URI only
-    if [[ -n $jsonly ]]; then
+    if [ -n "$jsonly" ]; then
         jq -c 'select(.uri | test("^javascript:"))';
     else cat;
     fi |
 
     # select by --find-keyword ?
-    if [[ -n ${kw+SET} ]]; then
+    if [ -n "${kw+SET}" ]; then
         jq -c "select(.keyword == \"$kw\")";
     else
         # filter results
         # filter with regex
-        if [[ -n $filter ]]; then
+        if [ -n "$filter" ]; then
             grep -i -$RETYPE "$filter";
         else
             cat;
@@ -146,11 +146,11 @@ jq -rc '
 # ╰────────────────╯
 lines=`mktemp`;
 
-if [[ -n $rofi ]]; then
+if [ -n "$rofi" ]; then
     cat $bmarksjson |
         perl -pe 's/{"keyword":(null|"(.*)"),"title":"(.*)","uri":"(.*)"}/
                     sprintf("%-18s \t%s  (<%s>)","$2:",$3,$4)/e' |
-        if [[ $rofi == kw ]]; then
+        if [ "$rofi" = kw ]; then
             # keyword completion with rofi
             rofi -theme-str "$rofitheme" -dmenu "$case" -no-custom -matching "regex" -format d -filter "^" $multi;
         else
@@ -162,7 +162,7 @@ fi;
 # │ output │
 # ╰────────╯
 
-if [[ -n $rofi ]]; then
+if [ -n "$rofi" ]; then
     sed -n -f <(sed 's/$/p/' $lines) $bmarksjson;
 else
     cat $bmarksjson;
@@ -177,7 +177,7 @@ fi |
     esac |
 
     # arguments: resolve search bookmark URLs
-    if [[ -n $args ]]; then
+    if [ -n "$args" ]; then
         # TODO: handle | in arguments
         # TODO: handle escaping in search URL
         s=$(printf %s "$*" | jq -sRr @uri);
@@ -188,16 +188,16 @@ fi |
     fi |
 
     # single-line?
-    if [[ -n $oneline ]]; then
+    if [ -n "$oneline" ]; then
         tr "\n" " " | sed -r 's/ +$//';
     else
         cat;
     fi |
 
     # yank?
-    if [[ $yank == only ]]; then
+    if [ "$yank" = only ]; then
         $KWSEARCH_YANKCMD;
-    elif [[ -n $yank ]]; then
+    elif [ -n "$yank" ]; then
         tee >($KWSEARCH_YANKCMD);
     else
         cat;
