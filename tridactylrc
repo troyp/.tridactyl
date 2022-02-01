@@ -816,15 +816,16 @@ bind: ,utj "Toggle URL en <-> ja" urltoggle /en. /ja.
 " │ ,v -- conversion │
 " ╰──────────────────╯
 command convertunits jsb -d¦ apps.convertUnits(JS_ARGS).then(s=>tri.excmds.fillcmdline_nofocus(s))¦
-bind ,vv fillcmdline convertunits
 
-command copytablecols withjs -r cutils.js ; js -d¦ tri.controller.acceptExCmd(`hint -c table -F t=>cutils.yank(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}]), {useAlert:true})`)¦
-command copytablecols_strict withjs -r cutils.js ; js -d¦ tri.excmds.fillcmdline(`hint -c table -F t=>cutils.yank(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}], {strict:true}), {useAlert:true})`)¦
 bind ,v<C-h> showkeys ,v
+bind ,vv fillcmdline convertunits
 
 " ╭─────────────────────╮
 " │ ,x -- miscellaneous │
 " ╰─────────────────────╯
+command copytablecols withjs -r cutils.js ; js -d¦ tri.controller.acceptExCmd(`hint -c table -F t=>cutils.yank(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}]), {useAlert:true})`)¦
+command copytablecols_strict withjs -r cutils.js ; js -d¦ tri.excmds.fillcmdline(`hint -c table -F t=>cutils.yank(cutils.extractTableColumns(t, [${JS_ARGS.slice(1).join(",")}], {strict:true}), {useAlert:true})`)¦
+
 bind ,x<C-h> showkeys ,x
 bind ,xt<C-h> showkeys ,xt
 bind ,xtc fillcmdline copytablecols
