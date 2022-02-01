@@ -374,6 +374,7 @@ bind: wkk "Open bookmark in last tab [Rofi]" bmrofi
 bind: wkh "Open bookmark in current tab [Rofi]" bmrofi here
 bind: wko "Open bookmark in current tab" fillcmdline bmarks
 bind: wkt "Open bookmark in new tab" fillcmdline bmarks -t
+bind: wkv "View bookmarks JSON file in browser" winopen file:///home/troy/bookmarks/bookmarks.json
 
 " | wh -- browser/history |
 bind: whh "Open history item in last tab [rofi]" history last false
