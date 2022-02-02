@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # ───────────────────────────────────────────────────────────────────────────────
 # ╭────────────╮
@@ -26,6 +26,8 @@ args=
 oformat=
 oneline=
 yank=
+
+tempd=`mktemp -d`;
 
 # ╭─────────╮
 # │ options │
@@ -107,7 +109,7 @@ KWSEARCH_YANKCMD=${KWSEARCH_YANKCMD:-xsel -ib};
 # ╭─────────────────────────╮
 # │ non-interactive filters │
 # ╰─────────────────────────╯
-bmarksjson=`mktemp`;
+bmarksjson=$tempd/bmarksjson;
 
 jq -rc '
    recurse(.children[]?)
@@ -144,7 +146,7 @@ jq -rc '
 # ╭────────────────╮
 # │ rofi selection │
 # ╰────────────────╯
-lines=`mktemp`;
+lines=$tempd/lines;
 
 if [ -n "$rofi" ]; then
     cat $bmarksjson |
@@ -163,7 +165,9 @@ fi;
 # ╰────────╯
 
 if [ -n "$rofi" ]; then
-    sed -n -f <(sed 's/$/p/' $lines) $bmarksjson;
+    fifo1=$tempd/fifo1;
+    mkfifo $fifo1;
+    sed 's/$/p/' $lines > $fifo1 & sed -n -f $fifo1 $bmarksjson;
 else
     cat $bmarksjson;
 fi |
@@ -181,7 +185,7 @@ fi |
         # TODO: handle | in arguments
         # TODO: handle escaping in search URL
         s=$(printf %s "$*" | jq -sRr @uri);
-        S=${*//&/\\&}
+        S=`echo "$*" | perl -pe 's/&/\\\\&/g'`;
         sed "s|%S|$S|" | sed "s|%s|$s|";
     else
         cat;
@@ -198,7 +202,11 @@ fi |
     if [ "$yank" = only ]; then
         $KWSEARCH_YANKCMD;
     elif [ -n "$yank" ]; then
-        tee >($KWSEARCH_YANKCMD);
+        fifo2=$tempd/fifo2;
+        mkfifo $fifo2;
+        $KWSEARCH_YANKCMD <$fifo2 & pid2=$!;
+        tee $fifo2;
+        wait $pid2;
     else
         cat;
     fi;
