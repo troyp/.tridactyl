@@ -133,7 +133,7 @@ unbind x
 bind: X "Stop loading" stop
 
 commdoc urlroot_n "Go to the ancestor URL nth from the root domain"
-command urlroot_n jsb -d¦ utils.tab.open(urls.getPathPrefix(JS_ARGS[1]))¦
+command urlroot_n jsb -d¦ utils.tab.open(urls.getPathPrefix(JS_ARGS[1]), "here")¦
 
 unbind g;
 bind g<C-h> showkeys g
