@@ -96,20 +96,20 @@ var apps = {
 
     kwsearch: async function(args, opts={where: "last"}) {
         const [kw, ...rest] = utils.tri.parseArgs(args);
-        return tri.native.run(`kwsearch -K '${kw}' ${rest.join(" ")||"''"}`).then(
+        return tri.native.run(`kwsearch -K '${kw}' '${rest.join(" ")}'`).then(
             res => utils.tab.open(res.content, opts));
     },
 
     kwsearch_get: async function(args) {
         const [kw, ...rest] = utils.tri.parseArgs(args);
-        const res = await tri.native.run(`kwsearch -K '${kw}' ${rest.join(" ")||"''"}`);
+        const res = await tri.native.run(`kwsearch -K '${kw}' '${rest.join(" ")}'`);
         return res.content.trim();
     },
 
     kwrofi: async function(args, opts={where: "last"}) {
         const switches = opts?.switches || "-u -k -s";
         const where = opts.where || "last";
-        const cmd = `kwsearch ${switches} ${args.join?.(" ")?.trim()}`;
+        const cmd = `kwsearch ${switches} '${args.join?.(" ")?.trim()}'`;
         return tri.native.run(cmd).then(
             res => utils.tab.open(res.content, opts)
         );
