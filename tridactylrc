@@ -858,9 +858,9 @@ bind ,,<C-h> showkeys ,,
 bind ,,c hint -c [class*="expand"],[class="togg"]
 
 " middle and right click using xdotool
-command xdoclick xdoelem a,img,th,button,input,select,details,[onclick],[contenteditable=true],[tabindex] -e click
-bind: ,,x "Middle click element" xdoclick 2
-bind: ,,m "Right click element (context menu)" xdoclick 3
+command xhintclick xdoelem a,img,th,button,input,select,details,[onclick],[contenteditable=true],[tabindex] -e click
+bind: ,,x "Middle click element" xhintclick 2
+bind: ,,m "Right click element (context menu)" xhintclick 3
 
 " ╭──────────────────────────────────────────────────╮
 " │ ,,f -- numeric hints: allow alphabetic filtering │
