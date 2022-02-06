@@ -197,6 +197,11 @@ apps.pw = {
     },
 
     hashSite: async function(opts={}) {
+        opts = utils.tri.parseOpts(opts,{
+            castBoolean: "keepOpen",
+            castNumber: "count",
+        });
+        if (opts?.count > 1) opts.keepOpen = true;
         const domain = tri.contentLocation.hostname;
         const simpl_domain = domain.replace(/(www|signin|reg|id)\./, "");
         const decoded_domain = decodeURIComponent(simpl_domain);
