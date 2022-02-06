@@ -690,6 +690,7 @@ bind: ,amc "Open Google Contacts" tabopenorswitchc https://contacts.google.com/?
 bind: ,amC "Open Gmail Contacts (basic)" tabopenorswitchc https://mail.google.com/mail/u/0/h/k4067n2i55u9/?&v=cl
 bind: ,amm "Open Gmail (basic)" tabopenorswitchc https://mail.google.com/mail/u/0/h/1f0xqcpo2pdl3/?f=1
 bind: ,amM "Open Gmail" tabopenorswitchc https://mail.google.com/mail/u/0/#inbox
+bind: ,amw "Compose mail (gmail)" tabopenorswitchc https://mail.google.com/mail/u/0/h/1vlpaqi99ql4v/?&cs=b&pv=tl&v=b
 bind: ,amy "Open Yahoo Mail" tabopenorswitchc https://au.mail.yahoo.com/d/folders/1
 
 " ╭─────────────────────╮
