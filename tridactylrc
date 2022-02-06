@@ -134,6 +134,12 @@ bind: X "Stop loading" stop
 
 commdoc urlroot_n "Go to the ancestor URL nth from the root domain"
 command urlroot_n jsb -d¦ utils.tab.open(urls.getPathPrefix(JS_ARGS[1]), "here")¦
+commdoc taburlroot_n "Go to the ancestor URL nth from the root domain in new tab"
+command taburlroot_n jsb -d¦ utils.tab.open(urls.getPathPrefix(JS_ARGS[1]), "next")¦
+commdoc urlup_n "Go to the nth parent URL"
+command urlup_n jsb -d¦ utils.tab.open(urls.getNthParent(JS_ARGS[1]), "here")¦
+commdoc taburlup_n "Go to the nth parent URL in new tab"
+command taburlup_n jsb -d¦ utils.tab.open(urls.getNthParent(JS_ARGS[1]), "next")¦
 
 unbind g;
 bind g<C-h> showkeys g
@@ -144,6 +150,8 @@ bdoc gl "Open the next item in tab history in an adjacent tab"
 bind gl jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goForward(t.id));
 bind: gs "Toggle page source" viewsource
 bind: gU "Go to the ancestor URL nth from the root domain" urlroot_n
+bind: g;u "Go the nth parent URL in new tab" taburlup_n
+bind: g;U "Go to the ancestor URL nth from the root domain in new tab" taburlroot_n
 
 bind: <C-F10> "Open hamburger menu" xdoclick 1896 86
 
@@ -163,6 +171,8 @@ bind: <A--> "Decrement current URL by 1" urlincrement -1
 " ╭─────────────╮
 " │ g; -- focus │
 " ╰─────────────╯
+" note: g;h g;l g;u g;U bound to other commands
+
 commdoc myfocusinput "Focus COUNTth input field"
 command myfocusinput jsb -d¦ utils.tri.myfocusinput(JS_ARGS.join(" "))¦
 bind: gi "Focus COUNTth input field" myfocusinput
