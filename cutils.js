@@ -79,21 +79,14 @@ var cutils = {
      *  If unsuccessful, returns null.
      */
     click: function(selector, opts={}) {
-        const elts = opts.match
-              ? $$(selector)
-              : $$t(selector, opts.match, {textProperty: opts.textProperty});
-        if (elts.length) {
-            if (opts.all) {
-                elts.forEach(e=>e.click());
-                return elts;
-            }
-            else {
-                elts[0].click();
-                return elts.slice(0,1);
-            }
-        } else return null;
+        opts.firstMatch = !opts.all;
+        delete opts.all;
+        const elts = cutils.get(selector, opts);
+        elts.forEach(e=>e.click());
+        return elts.length > 0 && elts;
     },
 
+    clickall: (selector, opts={}) => cutils.click(selector, {...opts, all:true}),
 
     extractTableColumns: function(table, columns, opts={}) {
         var output = "";
