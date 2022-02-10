@@ -954,8 +954,9 @@ utils.tri = {
         return Object.keys(conf).map(k=>sprintf("%-8s\t%-s", k, conf[k])).filter(s=>s.match(term));
     },
 
-    searchNmapsWrapper: async function (term) {
-        const conf = this.searchConfig("nmaps", term.trim());
+    searchNmapsWrapper: async function (r, opts={}) {
+        regexp = new RegExp(r.trim(), opts.caseSensitive ? "" : "i");
+        const conf = this.searchConfig("nmaps", regexp);
         return utils.messageBox(conf, {contPrefix: "\t\t"});
     },
 
