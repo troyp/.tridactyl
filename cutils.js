@@ -380,7 +380,12 @@ cutils.tri = {
 
 window.cutils = cutils;
 window.R = R;
-for (k of Object.keys(cutils))
-    if (!["hide", "unhide", "tri"].includes(k))
-        window[k] = cutils[k];
 
+[
+    "$$", "$1", "$$cls", "$1cls", "$id", "$$tag", "$1tag", "$$t", "$1t",
+    "click", "clickall",
+    "getText", "getText1",
+    "getSelectionDOM", "getSelectionHtml",
+    "isolate", "keep", "rm", "rmall",
+    "yankby", "yank1by", "yankelt",
+].forEach(k => window[k]=cutils[k]);
