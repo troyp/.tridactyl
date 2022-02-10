@@ -61,7 +61,7 @@ var cutils = {
     $$t: function(selector, text, opts={}) {
         if (opts instanceof Node) opts = {context: opts};
         opts.textProperty ||= "innerText";
-        const elems = this.$$(selector, opts);
+        const elems = $$(selector, opts);
         return elems.filter(e=>e[opts.textProperty].match(text));
     },
 
@@ -71,7 +71,7 @@ var cutils = {
     $1t: function(selector, text, opts={}) {
         if (opts instanceof Node) opts = {context: opts};
         opts.textProperty ||= "innerText";
-        const elems = this.$$(selector, opts);
+        const elems = $$(selector, opts);
         return elems.find(e=>e[opts.textProperty].match(text));
     },
 
@@ -174,20 +174,20 @@ var cutils = {
     getText: function(selector, opts={}) {
         opts = cutils.tri.parseOpts(opts, {castString: "textProperty"});
         opts.textProperty ??= "innerText";
-        return this.get(selector, opts).map(e=>e[opts.textProperty]).join("\n");
+        return cutils.get(selector, opts).map(e=>e[opts.textProperty]).join("\n");
     },
 
     getText1: function(selector, opts={}) {
         opts = cutils.tri.parseOpts(opts, {castString: "textProperty"});
         opts.textProperty ??= "innerText";
         opts.firstMatch = true;
-        const elt = this.get(selector, opts)[0];
+        const elt = cutils.get(selector, opts)[0];
         return elt && elt[opts.textProperty];
     },
 
     /** Hides elements matching SELECTOR. See get() for arguments and options */
     hide: function(selector, opts={}) {
-        const elts = this.get(selector, opts);
+        const elts = cutils.get(selector, opts);
         if (opts.toggle) elts.forEach(e=>{
             if (e.classList.contains("TridactylKilledElem"))
                 e.classList.remove("TridactylKilledElem");
@@ -199,7 +199,7 @@ var cutils = {
     },
 
     /** Hides elements matching any of the SELECTORS. For more options, see rm() */
-    hideall: (...selectors) => this.hide(selectors),
+    hideall: (...selectors) => cutils.hide(selectors),
 
     /**   isolate(selector, opts)
      *    isolate(selector, context:HTMLElement)
@@ -270,7 +270,7 @@ var cutils = {
 
     /** Remove elements matching SELECTOR. See get() for arguments and options */
     rm: function(selector, opts={}) {
-        const elts = this.get(selector, opts);
+        const elts = cutils.get(selector, opts);
         elts.forEach(e=>e.remove());
         return elts.length ? elts : null;
     },
@@ -280,7 +280,7 @@ var cutils = {
 
     select: async function(input, opts={}) {
         if (Array.isArray(input)) input = input.join("\n");
-        opts = this.tri.parseOpts(opts, {defaults:{prompt:"", format:"s"}});
+        opts = cutils.tri.parseOpts(opts, {defaults:{prompt:"", format:"s"}});
         const rofithemestr = '#window {width: 80%;} #listview {lines: 25;}';
         const rofithemeopt = `-theme-str '${rofithemestr}'`;
         const dmenuOpts = opts.multiSelect ? "-multi-select -i" : "-i";
@@ -298,19 +298,19 @@ var cutils = {
 
     /** Unhides elements matching SELECTOR. See get() for arguments and options */
     unhide: function(selector, opts={}) {
-        const elts = this.get(selector, opts);
+        const elts = cutils.get(selector, opts);
         elts.forEach(e=>e.className = e.className.replace("TridactylKilledElem", ""));
         return elts.length ? elts : null;
     },
 
     /** Unhides elements matching any of the SELECTORS. For more options, see rm() */
-    unhideall: (...selectors) => this.unhide(selectors),
+    unhideall: (...selectors) => cutils.unhide(selectors),
 
-    yankby: (...args) => this.yank(this.getText(...args)),
+    yankby: (...args) => cutils.yank(this.getText(...args)),
 
     yank1by: function(selector, opts={}) {
         const text = this.getText1(selector, opts);
-        return text!==null && this.yank(text);
+        return text!==null && cutils.yank(text);
     },
 
     yankelt: function(elts, opts={}) {
@@ -324,7 +324,7 @@ var cutils = {
               default: return e[opts.textProperty];
             }
         }
-        this.yank(elts.map(e=>getText(e)).join("\n"), opts);
+        cutils.yank(elts.map(e=>getText(e)).join("\n"), opts);
     },
 
     yank: function(s, opts={}) {
@@ -336,7 +336,7 @@ var cutils = {
         /* message? */
         if (opts.msg) {
             opts.prefix ??= "Copied" + (opts.useAlert ? "...\n" : ": ");
-            this.message(s, opts);
+            cutils.message(s, opts);
         }
     },
 };
