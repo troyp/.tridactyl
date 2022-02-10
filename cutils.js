@@ -354,6 +354,14 @@ cutils.tri = {
             opts[options.castFunction] = rawopts;
         } else if (options.castBoolean && typeof rawopts == "boolean") {
             opts[options.castBoolean] = rawopts;
+        } else if (options.castNumber && typeof rawopts == "number") {
+            opts[options.castNumber] = rawopts;
+        } else if (options.castHTMLElement && rawopts instanceof HTMLElement) {
+            opts[options.castHTMLElement] = rawopts;
+        } else if (options.castRegExp && rawopts instanceof RegExp) {
+            opts[options.castRegExp] = rawopts;
+        } else if (options.castArrayToBooleanOpts && Array.isArray(rawopts)) {
+            opts = rawopts.reduce((acc,e)=>(acc[e]=true) && acc, {});
         } else {
             opts = rawopts;
         }
