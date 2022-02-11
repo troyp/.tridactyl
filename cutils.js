@@ -122,6 +122,7 @@ var cutils = {
      *    opts.context:       the root element of the search; null for whole document
      *    opts.match:         a regex or string that selected elements must match;
      *    opts.textProperty   property that opts.match tests against (default: "innertext")
+     *    opts.returnParent   return the parents (or nth ancestors) of the matched elements
      */
     get: function(selector, opts={}) {
         /* selector */
@@ -134,6 +135,10 @@ var cutils = {
             castFunction: "filter",
             castArrayToBooleanOpts: true,
         });
+        function getParent(e, n) {
+            if (n==0) return e;
+            else return getParent(e.parentElement, n-1);
+        };
         /* pred */
         function pred(e) {
             const match_ok  = !opts.match  || e[opts.textProperty].match(opts.match);
@@ -143,9 +148,15 @@ var cutils = {
         /* main logic */
         if (opts.firstMatch) {
             const elt = $$(selector, opts.context).find(pred);
-            return elt ? [elt] : [];
+            if (elt)
+                return opts.returnParent ? getParent(elt, opts.returnParent) : elt;
+            else
+                return [];
         } else {
-            return $$(selector, opts.context).filter(pred);
+            const elts = $$(selector, opts.context).filter(pred);
+            return opts.returnParent
+                ? elts.map(e=>getParent(e, opts.returnParent))
+                : elts;
         }
     },
 
