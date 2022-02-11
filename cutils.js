@@ -50,6 +50,12 @@ var cutils = {
         return null;
     },
 
+    $$cls: (classes, context=document) => [...context.getElementsByClassNames(classes)],
+    $1cls: (classes, context=document) => context.getElementsByClassNames(classes)[0],
+    $id: (id) => document.getElementById(id),
+    $$tag: (tag, context=document) => [...context.getElementsByTagName(tag)],
+    $1tag: (tag, context=document) => context.getElementsByTagName(tag)[0],
+
     /**   $$t(SELECTOR, TEXT)
      *    $$t(SELECTOR, TEXT, {context: CONTEXT})
      *    $$t(SELECTOR, TEXT, CONTEXT)
