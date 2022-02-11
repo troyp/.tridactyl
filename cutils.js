@@ -125,14 +125,15 @@ var cutils = {
      */
     get: function(selector, opts={}) {
         /* selector */
-        if (Array.isArray(selector))
-            selector = selector.join(",");
+        selector = [selector].flat(1).join(",");
         /* opts */
-        if (Array.isArray(opts)) opts = opts.reduce((acc,e)=>(acc[e]=true) && acc, {});
-        else if (opts instanceof HTMLElement) opts = { context: opts };
-        else if (opts instanceof RegExp)      opts = { match: opts };
-        else if (typeof opts === "function")  opts = { filter: opts };
-        else if (typeof opts === "string")    opts = { match: opts };
+        opts = cutils.tri.parseOpts(opts, {
+            castHTMLElement: "context",
+            castString: "match",
+            castRegExp: "match",
+            castFunction: "filter",
+            castArrayToBooleanOpts: true,
+        });
         /* pred */
         function pred(e) {
             const match_ok  = !opts.match  || e[opts.textProperty].match(opts.match);
