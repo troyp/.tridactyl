@@ -203,7 +203,7 @@ apps.pw = {
         });
         if (opts?.count > 1) opts.keepOpen = true;
         const domain = tri.contentLocation.hostname;
-        const simpl_domain = domain.replace(/(www|signin|reg|id)\./, "");
+        const simpl_domain = domain.replace(/(www|signin|reg|id|accounts)\./, "");
         const decoded_domain = decodeURIComponent(simpl_domain);
         const thisTab = await tri.webext.activeTab();
         const thisTabOrd = thisTab.index +1;
