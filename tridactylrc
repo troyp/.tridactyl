@@ -61,7 +61,9 @@ command trisanitize sanitize tridactyllocal
 " ╭──────────╮
 " │ Settings │
 " ╰──────────╯
-command: loadsettings "Load settings from settings.tri" source ~/.tridactyl/settings.tri
+jsb -r settings.js
+
+command: loadsettings "Load settings from settings.tri" withjsb -r settings.js ; source ~/.tridactyl/settings.tri
 
 " Autocommands
 autocmd TabEnter .* unfocus
