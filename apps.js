@@ -135,9 +135,14 @@ var apps = {
     multipleQuerySearch: async function(rawargs, opts={}) {
         opts.where ||= "last";
         opts.background ??= true;
-        const [searchEngine, ...queries] = utils.tri.parseTerms(rawargs);
-        if (opts.where!=="related") queries.reverse();
-        queries.forEach(q => apps.kwsearch([searchEngine, q], opts));
+        const [enginestr, ...queries] = utils.tri.parseTerms(rawargs);
+        const SEs = enginestr.split(/ +/);
+        if (opts.where=="next") {
+            queries.reverse();
+            SEs.reverse();
+        }
+        const searches = SEs.flatMap(se=>queries.map(q=>[se,q]));
+        for (s of searches) await apps.kwsearch(s);
     },
 
     sunriseSunset: function(lat, long) {
