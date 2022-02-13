@@ -15,7 +15,7 @@ unset kw
 # selection vars
 filter=
 kwonly=
-jsonly=
+protocol=
 # rofi vars
 rofi=
 rofitheme='#window {width: 80%;} #listview {lines: 25;}';
@@ -32,9 +32,9 @@ tempd=`mktemp -d`;
 # ╭─────────╮
 # │ options │
 # ╰─────────╯
-SHORT="h,f:,I,j,J,k,K:,m,s,S,t,u,w,y,Y,1"
-LONG="help,filter:,case-sensitive,json,js-only,keyword-only,find-keyword:,multi-select,select,select-keyword,
-  tridactyl,url,kw,yank,yank-only,one-line"
+SHORT="h,f:,I,j,J,k,K:,m,p:,s,S,t,u,w,y,Y,1"
+LONG="help,filter:,case-sensitive,json,js-only,keyword-only,find-keyword:,multi-select,protocol:,select,
+  select-keyword,tridactyl,url,kw,yank,yank-only,one-line"
 PARSED=$(getopt -a -n kwsearch --options "$SHORT" --longoptions "$LONG" -- "$@")
 
 eval set -- "$PARSED"
@@ -61,6 +61,7 @@ Options:
   -k     --keyword-only       keyword bookmarks only
   -K KW  --find-keyword KW    find bookmark with keyword KW
   -m     --multi-select       choose multiple bookmarks with Rofi
+  -p P   --protocol P         specify the protocol (or scheme) P: of URIs as regex
   -s     --select             choose bookmark with Rofi
   -S     --select-keyword     choose bookmark keyword with Rofi (implies --keyword-only)
   -t     --tridactyl          format as tridactyl searchurl setting (implies --keyword-only)
@@ -75,10 +76,11 @@ EOF
         (-f | --filter) filter="$2"; shift 2; ;;
         (-I | --case-sensitive) case=""; shift; ;;
         (-j | --json) oformat=json; shift; ;;
-        (-J | --js-only) jsonly=t; shift; ;;
+        (-J | --js-only) protocol="javascript"; shift; ;;
         (-k | --keyword-only) kwonly=t; shift; ;;
         (-K | --find-keyword) kw="$2"; shift 2; ;;
         (-m | --multi-select) rofi=${rofi:-t}; multi="-multi-select"; shift; ;;
+        (-p | --protocol) protocol="$2"; shift 2; ;;
         (-s | --select) rofi=${rofi:-t}; shift; ;;
         (-S | --select-keyword) kwonly=t; rofi=kw; shift; ;;
         (-t | --tridactyl) oformat=tri; kwonly=t; shift; ;;
@@ -124,8 +126,8 @@ jq -rc '
     fi |
 
     # javascript: URI only
-    if [ -n "$jsonly" ]; then
-        jq -c 'select(.uri | test("^javascript:"))';
+    if [ -n "$protocol" ]; then
+        jq -c 'select(.uri | test("^'"$protocol"':"))';
     else cat;
     fi |
 
