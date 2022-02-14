@@ -806,11 +806,21 @@ bind: ,lt "Append link text & destinations to end of page" withlinks links.appen
 " ╭─────────────────╮
 " │ ,r -- reference │
 " ╰─────────────────╯
-command wpeplist jsb -d¦ sites.wp.episodeList(JS_ARGS.join(" "))¦
-
 bind ,r<C-h> showkeys ,r
 
-" | ,rw -- wikipedia |
+" | ,ru -- reference/unicode |
+commdoc unicodehexcodes "Unicode hex code of characters"
+command unicodehexcodes jsb -d¦ apps.unicodeHexcodes(JS_ARGS.join(""))¦
+commdoc unicode "Describe unicode characters"
+command unicode jsb -d¦ apps.unicode(JS_ARGS.join(""))¦
+
+bind ,ru<C-h> showkeys ,ru
+bind: ,ruu "Describe unicode characters" fillcmdline unicode
+bind: ,rux "Show unicode hex codes" fillcmdline unicodehexcodes
+
+" | ,rw -- reference/wikipedia |
+command wpeplist jsb -d¦ sites.wp.episodeList(JS_ARGS.join(" "))¦
+
 bind ,rw<C-h> showkeys ,rw
 bind ,rwe fillcmdline wpeplist
 
