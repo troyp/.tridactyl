@@ -150,6 +150,19 @@ var apps = {
         return [sunrise, sunset] = [times.sunrise, times.sunset].map(t=>t.toTimeString());
     },
 
+    unicodeHexcodes: function(s) {
+        return utils.message(Array.from(s).map(c => c.charCodeAt(0).toString(16)).join(" "));
+    },
+
+    unicode: async function(s) {
+        if (s.length == 1) {
+            return tri.controller.acceptExCmd(`exclaim unicode ${s}`);
+        } else {
+            const res = await tri.native.run(`unicode ${s}`);
+            return utils.msg(res.content);
+        }
+    },
+
 };
 
 apps.pw = {
