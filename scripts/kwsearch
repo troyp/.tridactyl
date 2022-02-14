@@ -13,7 +13,7 @@
 unset kw
 
 # selection vars
-filter=
+regex=
 kwonly=
 protocol=
 # rofi vars
@@ -32,8 +32,8 @@ tempd=`mktemp -d`;
 # ╭─────────╮
 # │ options │
 # ╰─────────╯
-SHORT="h,f:,I,j,J,k,K:,m,p:,s,S,t,u,w,y,Y,1"
-LONG="help,filter:,case-sensitive,json,js-only,keyword-only,find-keyword:,multi-select,protocol:,select,
+SHORT="h,I,j,J,k,K:,m,p:,r:,s,S,t,u,w,y,Y,1"
+LONG="help,case-sensitive,json,js-only,keyword-only,find-keyword:,multi-select,protocol:,regex:,select,
   select-keyword,tridactyl,url,kw,yank,yank-only,one-line"
 PARSED=$(getopt -a -n kwsearch --options "$SHORT" --longoptions "$LONG" -- "$@")
 
@@ -53,7 +53,6 @@ USAGE: kwsearch [OPTION...]
     the SEARCHTERMs (escaping not yet supported).
 
 Options:
-  -f RE  --filter RE          filter bookmarks with RE
   -h     --help               show help
   -I     --case-sensitive     make Rofi case-sensitive
   -j     --json               force JSON output
@@ -62,6 +61,7 @@ Options:
   -K KW  --find-keyword KW    find bookmark with keyword KW
   -m     --multi-select       choose multiple bookmarks with Rofi
   -p P   --protocol P         specify the protocol (or scheme) P: of URIs as regex
+  -r RE  --regex RE           filter bookmarks with RE
   -s     --select             choose bookmark with Rofi
   -S     --select-keyword     choose bookmark keyword with Rofi (implies --keyword-only)
   -t     --tridactyl          format as tridactyl searchurl setting (implies --keyword-only)
@@ -73,7 +73,6 @@ Options:
 EOF
             exit 0
             ;;
-        (-f | --filter) filter="$2"; shift 2; ;;
         (-I | --case-sensitive) case=""; shift; ;;
         (-j | --json) oformat=json; shift; ;;
         (-J | --js-only) protocol="javascript"; shift; ;;
@@ -81,6 +80,7 @@ EOF
         (-K | --find-keyword) kw="$2"; shift 2; ;;
         (-m | --multi-select) rofi=${rofi:-t}; multi="-multi-select"; shift; ;;
         (-p | --protocol) protocol="$2"; shift 2; ;;
+        (-r | --regex) regex="$2"; shift 2; ;;
         (-s | --select) rofi=${rofi:-t}; shift; ;;
         (-S | --select-keyword) kwonly=t; rofi=kw; shift; ;;
         (-t | --tridactyl) oformat=tri; kwonly=t; shift; ;;
@@ -137,8 +137,8 @@ jq -rc '
     else
         # filter results
         # filter with regex
-        if [ -n "$filter" ]; then
-            grep -i -$RETYPE "$filter";
+        if [ -n "$regex" ]; then
+            grep -i -$RETYPE "$regex";
         else
             cat;
         fi;
