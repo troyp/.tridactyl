@@ -640,7 +640,7 @@ bind: a;f "Open link in Waterfox" composite hint -pipe a href | ! /opt/waterfox/
 bind ad<C-h> showkeys ad
 
 " | add -- apps/downloads/dir |
-command opendldir jsb -d¦ places.dl.getDir(JS_ARGS[2]).then(d=>apps.openWith(d, "dolphin"))¦
+command opendldir jsb -d¦ places.dl.getDir(JS_ARGS[2]).then(d=>apps.openWith(d, JS_ARGS[1]))¦
 
 bind add<C-h> showkeys add
 bind: addd "Open last download directory with dolphin" opendldir dolphin
