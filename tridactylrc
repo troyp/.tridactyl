@@ -636,6 +636,15 @@ bind a;<C-h> showkeys a;
 bind: a;c "Open link in Google Chrome" composite hint -pipe a href | ! /usr/local/bin/google-chrome
 bind: a;f "Open link in Waterfox" composite hint -pipe a href | ! /opt/waterfox/waterfox
 
+" | ad -- apps/downloads |
+bind ad<C-h> showkeys ad
+
+" | add -- apps/downloads/dir |
+command opendldir jsb -d¦ places.dl.getDir(JS_ARGS[2]).then(d=>apps.openWith(d, "dolphin"))¦
+
+bind add<C-h> showkeys add
+bind: addd "Open last download directory with dolphin" opendldir dolphin
+
 " | ap -- apps/pw |
 commdoc pwhashsite "Hash site domain with password-hasher"
 command pwhashsite jsb -d¦ apps.pw.hashSite(parseInt(JS_ARGS?.[1])||1)¦
