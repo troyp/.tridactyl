@@ -60,12 +60,12 @@ var utils = {
     },
 
     msg: async function(lines, opts={}) {
+        if (lines instanceof Promise)
+            lines = await lines;
         if (typeof lines === "string")
             lines = lines.split("\n");
         else if (typeof lines !== "object")
             lines = [lines];
-        else if (lines instanceof Promise)
-            lines = await lines;
         else if (!Array.isArray(lines)) lines = [
             String(lines), "",
             ...Object.getOwnPropertyNames(lines).map(l=>`${l}: \t  ${lines[l]}`)
