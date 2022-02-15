@@ -124,6 +124,22 @@ places.kw = {
 
 // ───────────────────────────────────────────────────────────────────────────────
 // ╭────────────────────────╮
+// │ places.dl -- downloads │
+// ╰────────────────────────╯
+
+places.dl = {
+    getDir: async function(n=1) {
+        return this.getLatest(n).then(d=>d.filename.replace(/[^/]*$/, ""));
+    },
+
+    getLatest: async function(n=1) {
+        const dls = await browser.downloads.search({limit: n, orderBy: ["-startTime"]});
+        return dls[n-1];
+    },
+};
+
+// ───────────────────────────────────────────────────────────────────────────────
+// ╭────────────────────────╮
 // │ places.hist -- history │
 // ╰────────────────────────╯
 
