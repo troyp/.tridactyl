@@ -133,6 +133,7 @@ places.dl = {
     },
 
     getLatest: async function(n=1) {
+        n = Number(n);
         const dls = await browser.downloads.search({limit: n, orderBy: ["-startTime"]});
         return dls[n-1];
     },
