@@ -3,60 +3,6 @@
 // ╰────────────────────────────────────────────╯
 
 var apps = {
-    bmget: async function(args=[], opts={}) {
-        args = utils.tri.parseArgs(args);
-        opts = utils.tri.parseOpts(
-            opts,
-            { castString: "switches",
-              nullishDefaults: {switches: "-u -s"}
-            }
-        );
-        const cmd  = `kwsearch ${[opts.switches, ...args].join(" ").trim()}`;
-        return tri.native.run(cmd).then(
-            res => opts.decode ? utils.decode(res.content, opts.decodeFn) : res.content
-        );
-    },
-
-    bmklet: async function(args=[], opts={}) {
-        const switches = opts.kw
-              ? `-u -J -K '${opts.kw}'`
-              : `-u -J -s`;
-        const bmk = await this.bmget(args, {switches: switches, decode: true});
-        utils.jsurirun(bmk);
-    },
-
-    /* Choose bookmarklet with rofi, then query for parameters */
-    bmkletq: async function(args=[], opts={}) {
-        const bmk = await this.bmget(args, {switches: "-u -J -s", decode: true});
-        const query = await utils.query("parameters:");
-        utils.jsurirun(bmk, {searchterm: query});
-    },
-
-    bmrofi: async function(args) {
-        const [where, bg, ...switches] = utils.tri.parseArgs(args);
-        const switchstr = switches?.length ? switches.join(" ") : "-s -u";
-        const cmd = `kwsearch ${switchstr}`;
-        return tri.native.run(cmd).then(
-            res => utils.tab.open(res.content, {where: where||"last", background: bg==="t"})
-        );
-    },
-
-    bmyank: async function(args=[], opts={}) {
-        args = utils.tri.parseArgs(args, "string");
-        opts = utils.tri.parseOpts(
-            opts,
-            {
-                castString: "switches",
-                nullishDefaults: { switches: "-u -s", decode: true }
-            }
-        );
-        if (!args && !opts.switches) opts.switches = "-u -s";
-        const cmd  = `kwsearch ${opts.switches} ${args}`;
-        return tri.native.run(cmd).then(
-            res => utils.yank(opts.decode ? utils.decode(res.content, opts.decodeFn) : res.content)
-        );
-    },
-
     convertUnits: function(args) {
         args = args.filter(a=> a.trim()!== "");
         var n=1, unit1="", unit2="";
@@ -92,57 +38,6 @@ var apps = {
         const res = await tri.native.run(args.join(" "));
         fillcmdline_nofocus(res.content.replace(/\n/g, "   "));
         return res.content;
-    },
-
-    kwsearch: async function(args, opts={where: "last"}) {
-        const [kw, ...rest] = utils.tri.parseArgs(args);
-        return tri.native.run(`kwsearch -K '${kw}' '${rest.join(" ")}'`).then(
-            res => utils.tab.open(res.content, opts));
-    },
-
-    kwsearch_get: async function(args) {
-        const [kw, ...rest] = utils.tri.parseArgs(args);
-        const res = await tri.native.run(`kwsearch -K '${kw}' '${rest.join(" ")}'`);
-        return res.content.trim();
-    },
-
-    kwrofi: async function(args, opts={where: "last"}) {
-        const switches = opts?.switches || "-u -k -s";
-        const where = opts.where || "last";
-        const cmd = `kwsearch ${switches} '${args.join?.(" ")?.trim()}'`;
-        return tri.native.run(cmd).then(
-            res => utils.tab.open(res.content, opts)
-        );
-    },
-
-    multipleEngineSearch: async function(rawargs, opts={}) {
-        opts.where ||= "last";
-        opts.background ??= true;
-        const args = utils.tri.parseTerms(rawargs);
-        const query = args.slice(-1)[0];
-        const searchEngines = args.slice(0, -1);
-        if (searchEngines.length==0) {
-            utils.tab.open(query, opts);
-        } else {
-            if (opts.where!=="related") searchEngines.reverse();
-            searchEngines.forEach(s => apps.kwsearch([s, query], opts));
-        }
-    },
-
-    /* TODO: should I enforce the order of tabs? Or at least statistically
-     * encourage correct order by introducing a short delay?
-     */
-    multipleQuerySearch: async function(rawargs, opts={}) {
-        opts.where ||= "last";
-        opts.background ??= true;
-        const [enginestr, ...queries] = utils.tri.parseTerms(rawargs);
-        const SEs = enginestr.split(/ +/);
-        if (opts.where=="next") {
-            queries.reverse();
-            SEs.reverse();
-        }
-        const searches = SEs.flatMap(se=>queries.map(q=>[se,q]));
-        for (s of searches) await apps.kwsearch(s);
     },
 
     sunriseSunset: function(lat, long) {

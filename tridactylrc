@@ -13,6 +13,8 @@ jsb -r urls.js
 jsb -r js/suncalc.js
 " app-specific code
 jsb -r apps.js
+" bookmarks, history, downloads
+jsb -r places.js
 " site-specific code
 jsb -r sites.js
 source ~/.tridactyl/sites.tri
@@ -351,17 +353,17 @@ commdoc copyuserchrome "Copy userChrome.js from .tridactyl/css to default profil
 command copyuserchrome ! cp -v ~/.tridactyl/css/userChrome.css `echo ~/.mozilla/firefox/*.default`
 command: rmuserchrome "Remove userChrome.js from default profile" ! rm ~/.mozilla/firefox/*.default/userChrome.css
 commdoc bmrofi "[WHERE? BG? OPTS?] Open bookmark via rofi"
-command bmrofi jsb -d¦ apps.bmrofi(JS_ARGS)¦
+command bmrofi jsb -d¦ places.bm.rofi(JS_ARGS)¦
 " note: The :history command can usually only take a count of about 5 (ie prev 5 days history)
 "       this seems to be due to a limit on how much can be sent to the native client
 "       The :historysearch command takes a search term to filter input *first*, so it can be
 "       used for searching over a longer time range
-command history jsb -d¦ utils.openHistoryItemsWrapper(JS_ARGS)¦
-command historysearch jsb -d¦ utils.openHistorySearchWrapper(JS_ARGS)¦
-command: bmklet "Run bookmarklet [rofi]" jsb apps.bmklet();
-command: bmkletq "Run bookmarklet with params [rofi]" jsb apps.bmkletq();
+command history jsb -d¦ places.hist.itemsWr(JS_ARGS)¦
+command historysearch jsb -d¦ places.hist.searchWr(JS_ARGS)¦
+command: bmklet "Run bookmarklet [rofi]" jsb places.bmklet.get();
+command: bmkletq "Run bookmarklet with params [rofi]" jsb places.bmklet.rofi();
 commdoc bmkletkw "Run bookmarklet by keyword"
-command bmkletkw jsb -d¦ apps.bmklet(JS_ARGS.slice(2), {kw: JS_ARGS[1]})¦
+command bmkletkw jsb -d¦ places.bmklet.get(JS_ARGS.slice(2), {kw: JS_ARGS[1]})¦
 
 bind w<C-h> showkeys w
 bind wc fillcmdline wincloseindex
@@ -421,23 +423,23 @@ unbind s
 unbind /
 
 commdoc kwsearch "Keyword bookmark search: last tab"
-command kwsearch jsb -d¦ apps.kwsearch(JS_ARGS)¦
+command kwsearch jsb -d¦ places.kw.open(JS_ARGS)¦
 commdoc kwsearch_adj "Keyword bookmark search: adjacent tab"
-command kwsearch_adj jsb -d¦ apps.kwsearch(JS_ARGS, {where: "related"})¦
+command kwsearch_adj jsb -d¦ places.kw.open(JS_ARGS, {where: "related"})¦
 commdoc kwsearch_bg   "Keyword bookmark search: background adjacent tab"
-command kwsearch_bg   jsb -d¦ apps.kwsearch(JS_ARGS, {where: "related", background: true})¦
+command kwsearch_bg   jsb -d¦ places.kw.open(JS_ARGS, {where: "related", background: true})¦
 commdoc kwsearch_here "Keyword bookmark search: current tab"
-command kwsearch_here jsb -d¦ apps.kwsearch(JS_ARGS, {where: "here"})¦
+command kwsearch_here jsb -d¦ places.kw.open(JS_ARGS, {where: "here"})¦
 commdoc kwrofi "Keyword bookmark search: current tab [Rofi]"
-command kwrofi jsb -d¦ apps.kwrofi(JS_ARGS)¦
+command kwrofi jsb -d¦ places.kw.rofi(JS_ARGS)¦
 commdoc multisearch "Search multiple queries"
-command multisearch jsb -d¦ apps.multipleQuerySearch(JS_ARGS)¦
+command multisearch jsb -d¦ places.kw.multi(JS_ARGS)¦
 commdoc multienginesearch "Search multiple engines with same query"
-command multienginesearch jsb -d¦ apps.multipleEngineSearch(JS_ARGS)¦
+command multienginesearch jsb -d¦ places.kw.multiengine(JS_ARGS)¦
 commdoc multisearch_adj "Search multiple queries: adjacent tabs"
-command multisearch_adj jsb -d¦ apps.multipleQuerySearch(JS_ARGS, {where: "related"})¦
+command multisearch_adj jsb -d¦ places.kw.multi(JS_ARGS, {where: "related"})¦
 commdoc multienginesearch_adj "Search multiple engines with same query: adjacent tabs"
-command multienginesearch_adj jsb -d¦ apps.multipleEngineSearch(JS_ARGS, {where: "related"})¦
+command multienginesearch_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {where: "related"})¦
 
 bind s<C-h> showkeys s
 
@@ -510,7 +512,7 @@ bind <C-h>x tabopenorswitchc https://gitlab.com/cunidev/gestures/-/wikis/xdotool
 " │ y -- yank │
 " ╰───────────╯
 commdoc bmyank "Yank bookmark data from bookmarks.json file"
-command bmyank jsb -d¦ apps.bmyank(JS_ARGS, "")¦
+command bmyank jsb -d¦ places.bm.yank(JS_ARGS, "")¦
 commdoc yankmousepos "Yank the mouse pointer position (X Y)"
 command yankmousepos ! echo "yank $(xdotool getmouselocation | perl -pe 's/x:(\d+) y:(\d+) .*/$1 $2/')";
 commdoc yankall "Copy text from elements matching a selector"
