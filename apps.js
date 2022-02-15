@@ -40,6 +40,14 @@ var apps = {
         return res.content;
     },
 
+    openWith: async function(file, cmd) {
+        const resolved_cmd = sprintf(cmd, file);
+        const final_cmd = resolved_cmd == cmd
+              ? `${cmd} ${file}`
+              : resolved_cmd;
+        return tri.native.run(final_cmd);
+    },
+
     sunriseSunset: function(lat, long) {
         const times = SunCalc.getTimes(new Date(), lat, long);
         return [sunrise, sunset] = [times.sunrise, times.sunset].map(t=>t.toTimeString());
