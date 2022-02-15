@@ -64,11 +64,11 @@ places.bm = {
     },
 };
 
-// ╭─────────────────────────────────────────╮
+// ╭──────────────────────────────────────╮
 // │ places.kw -- keyword bookmark search │
-// ╰─────────────────────────────────────────╯
+// ╰──────────────────────────────────────╯
 
-places.bm.kw = {
+places.kw = {
     open: async function(args, opts={where: "last"}) {
         const [kw, ...rest] = utils.tri.parseArgs(args);
         return tri.native.run(`kwsearch -K '${kw}' '${rest.join(" ")}'`).then(
