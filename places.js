@@ -12,6 +12,18 @@ const places = {};
 // ╰────────────────────────╯
 
 places.bm = {
+    /* Choose bookmarklet with keyword or rofi, then query for parameters if %s in URI */
+    bmklet: async function(args=[], opts={}) {
+        const switches = opts.kw
+              ? `-u -J -K '${opts.kw}'`
+              : `-u -J -s`;
+        const bmk = await this.get(args, {switches: switches, decode: true});
+        const query = bmk.includes("%s")
+              ? await utils.prompt("parameters:")
+              : "";
+        utils.jsurirun(bmk, {searchterm: query});
+    },
+
     get: async function(args=[], opts={}) {
         args = utils.tri.parseArgs(args);
         opts = utils.tri.parseOpts(
@@ -49,27 +61,6 @@ places.bm = {
         return tri.native.run(cmd).then(
             res => utils.yank(opts.decode ? utils.decode(res.content, opts.decodeFn) : res.content)
         );
-    },
-};
-
-// ╭───────────────────────────────╮
-// │ places.bmklet -- bookmarklets │
-// ╰───────────────────────────────╯
-
-places.bmklet = {
-    get: async function(args=[], opts={}) {
-        const switches = opts.kw
-              ? `-u -J -K '${opts.kw}'`
-              : `-u -J -s`;
-        const bmk = await this.get(args, {switches: switches, decode: true});
-        utils.jsurirun(bmk);
-    },
-
-    /* Choose bookmarklet with rofi, then query for parameters */
-    rofi: async function(args=[], opts={}) {
-        const bmk = await this.get(args, {switches: "-u -J -s", decode: true});
-        const query = await utils.query("parameters:");
-        utils.jsurirun(bmk, {searchterm: query});
     },
 };
 

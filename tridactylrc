@@ -360,10 +360,9 @@ command bmrofi jsb -d¦ places.bm.rofi(JS_ARGS)¦
 "       used for searching over a longer time range
 command history jsb -d¦ places.hist.itemsWr(JS_ARGS)¦
 command historysearch jsb -d¦ places.hist.searchWr(JS_ARGS)¦
-command: bmklet "Run bookmarklet [rofi]" jsb places.bmklet.get();
-command: bmkletq "Run bookmarklet with params [rofi]" jsb places.bmklet.rofi();
+command: bmklet "Run bookmarklet [rofi]" jsb places.bm.bmklet();
 commdoc bmkletkw "Run bookmarklet by keyword"
-command bmkletkw jsb -d¦ places.bmklet.get(JS_ARGS.slice(2), {kw: JS_ARGS[1]})¦
+command bmkletkw jsb -d¦ places.bm.bmklet(JS_ARGS.slice(2), {kw: JS_ARGS[1]})¦
 
 bind w<C-h> showkeys w
 bind wc fillcmdline wincloseindex
@@ -405,7 +404,6 @@ bind wj<C-h> showkeys wj
 bind: wjj "Run bookmarklet [rofi]" bmklet
 bind: wjk "Run bookmarklet by keyword" fillcmdline bmkletkw
 bind: wjo "Run bookmarklet with :open" fillcmdline bmarks javascript:
-bind: wjs "Run bookmarklet with params [rofi]" bmkletq
 
 " | ws -- browser/style |
 bind: wsu "Copy userChrome.css from .tridactyl/css to default profile directory" copyuserchrome
