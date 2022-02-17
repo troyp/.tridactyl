@@ -15,8 +15,8 @@ places.bm = {
     /* Choose bookmarklet with keyword or rofi, then query for parameters if %s in URI */
     bmklet: async function(args=[], opts={}) {
         const switches = opts.kw
-              ? `-u -J -K '${opts.kw}'`
-              : `-u -J -s`;
+              ? `-u -J -K '${opts.kw} --'`
+              : `-u -J -s --`;
         const bmk = await this.get(args, {switches: switches, decode: true});
         const query = bmk.includes("%s")
               ? await utils.prompt("parameters:")
@@ -71,20 +71,20 @@ places.bm = {
 places.kw = {
     open: async function(args, opts={where: "last"}) {
         const [kw, ...rest] = utils.tri.parseArgs(args);
-        return tri.native.run(`kwsearch -K '${kw}' '${rest.join(" ")}'`).then(
+        return tri.native.run(`kwsearch -K '${kw}' -- '${rest.join(" ")}'`).then(
             res => utils.tab.open(res.content, opts));
     },
 
     get: async function(args) {
         const [kw, ...rest] = utils.tri.parseArgs(args);
-        const res = await tri.native.run(`kwsearch -K '${kw}' '${rest.join(" ")}'`);
+        const res = await tri.native.run(`kwsearch -K '${kw}' -- '${rest.join(" ")}'`);
         return res.content.trim();
     },
 
     rofi: async function(args, opts={where: "last"}) {
         const switches = opts?.switches || "-u -k -s";
         const where = opts.where || "last";
-        const cmd = `kwsearch ${switches} '${args.join?.(" ")?.trim()}'`;
+        const cmd = `kwsearch ${switches} -- '${args.join?.(" ")?.trim()}'`;
         return tri.native.run(cmd).then(
             res => utils.tab.open(res.content, opts)
         );
