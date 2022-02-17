@@ -48,6 +48,16 @@ var apps = {
         return tri.native.run(final_cmd);
     },
 
+    openWithWr: async function(file, cmdterms) { return this.openWith(file, cmdterms.join(" ").trim()); },
+
+    /* optionally takes a count after the command, used to choose a file via callback */
+    openNthWithWr: async function(callback, rawargs) {
+        const [cmdterms, count] = utils.tri.parseArgsAndCount(rawargs);
+        const cmd = cmdterms.join(" ").trim();
+        const file = await callback(count||1);
+        return this.openWith(file, cmd);
+    },
+
     sunriseSunset: function(lat, long) {
         const times = SunCalc.getTimes(new Date(), lat, long);
         return [sunrise, sunset] = [times.sunrise, times.sunset].map(t=>t.toTimeString());
