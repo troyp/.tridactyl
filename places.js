@@ -100,7 +100,7 @@ places.kw = {
             utils.tab.open(query, opts);
         } else {
             if (opts.where!=="related") searchEngines.reverse();
-            searchEngines.forEach(s => places.bm.kw.search([s, query], opts));
+            searchEngines.forEach(s => this.open([s, query], opts));
         }
     },
 
@@ -117,7 +117,7 @@ places.kw = {
             SEs.reverse();
         }
         const searches = SEs.flatMap(se=>queries.map(q=>[se,q]));
-        for (s of searches) await places.bm.kw.search(s);
+        for (s of searches) await this.open(s, opts);
     },
 
 };
