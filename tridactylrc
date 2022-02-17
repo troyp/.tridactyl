@@ -172,6 +172,7 @@ bind: <C-x><C-x> "Restart browser" restart
 bind: <A-=> "Increment current URL by 1" urlincrement 1
 bind: <A--> "Decrement current URL by 1" urlincrement -1
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
 " │ g; -- focus │
 " ╰─────────────╯
@@ -189,6 +190,7 @@ bind: g;n "Focus input on page after last focused one" focusinput -n
 bind: g;N "Focus input on page before last focused one" focusinput -N
 bind: g;p "Focus first password input field on page" focusinput -p
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────╮
 " │ general commands │
 " ╰──────────────────╯
@@ -261,6 +263,7 @@ command omni! jsb -d¦ utils.omniboxEnter(JS_ARGS.join(" "))¦
 command omni xdo key ctrl+l key ctrl+u sleep 0.5 type
 command omni_focus xdo key ctrl+l key ctrl+u
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────╮
 " │ b -- tabs │
 " ╰───────────╯
@@ -344,6 +347,7 @@ bind: <AC-0> "Move tab to final position" tabmove! 0
 bind: <AC-h> "Move tab one position to right" tabmove -1
 bind: <AC-l> "Move tab one position to left"  tabmove +1
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────────╮
 " │ w -- window/browser │
 " ╰─────────────────────╯
@@ -414,6 +418,7 @@ bind: wtd "toggle downloads menu" xdoclick 241 86
 bind: wtt "toggle bookmarks toolbar" xdo key ctrl+B
 bind: wtm "toggle menu bar" xdo key alt+v sleep 0.5 key Right sleep 0.5 key Return
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
 " │ s -- search │
 " ╰─────────────╯
@@ -486,6 +491,7 @@ bind <C-/> clearsearchhighlight
 bind * js tri.controller.acceptExCmd(`find ${window.getSelection()+""}`);
 bind # js tri.controller.acceptExCmd(`find -? ${window.getSelection()+""}`);
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────╮
 " │ <C-h> -- help │
 " ╰───────────────╯
@@ -506,6 +512,7 @@ bind <C-h>u fillcmdline bindurl
 bdoc <C-h>x "xdotool keycodes"
 bind <C-h>x tabopenorswitchc https://gitlab.com/cunidev/gestures/-/wikis/xdotool-list-of-key-codes
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────╮
 " │ y -- yank │
 " ╰───────────╯
@@ -542,6 +549,7 @@ bind: yxp "Yank paragraph/heading" hint -p -c p,code,h1,h2,h3,h4,h5,h6,output,ta
 bind: yxs "Yank spans of text, code etc" hint -p -c span,code,a,tr,cite,data,dd,dt,em,strong,u,sub,sup,ruby,output
 bind: yxx "Yank page text" withcutils yankelt("body")
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────╮
 " │ e -- goto │
 " ╰───────────╯
@@ -615,6 +623,7 @@ command gotoCommandSource jsb -p utils.tri.gotoCommandSource(JS_ARG);
 bind es tabopen about:support
 bind etc fillcmdline gotoCommandSource
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────╮
 " │ a -- apps │
 " ╰───────────╯
@@ -631,12 +640,19 @@ bind aw urltoggle https://web.archive.org/web/https: https: https?://web.archive
 bdoc a;w "Open link in wayback machine [HINT]"
 bind a;w composite hint -pipe | js -p tri.controller.acceptExCmd(`tabopen https://web.archive.org/web/${JS_ARG}`)
 
-" | a; -- apps/hints |
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────╮
+" │ a; -- apps/hints │
+" ╰──────────────────╯
 bind a;<C-h> showkeys a;
 bind: a;c "Open link in Google Chrome" composite hint -pipe a href | ! /usr/local/bin/google-chrome
 bind: a;f "Open link in Waterfox" composite hint -pipe a href | ! /opt/waterfox/waterfox
 
-" | ad -- apps/downloads |
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────────╮
+" │ ad -- apps/downloads │
+" ╰──────────────────────╯
+
 bind ad<C-h> showkeys ad
 
 " | add -- apps/downloads/dir |
@@ -646,22 +662,31 @@ command opendldir jsb -d¦ places.dl.getDir(JS_ARGS[2]).then(dir=>apps.openWith(
 bind add<C-h> showkeys add
 bind: addd "Open last download directory with dolphin" opendldir dolphin
 
-" | ap -- apps/pw |
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────────╮
+" │ ap -- apps/pw │
+" ╰───────────────╯
 commdoc pwhashsite "Hash site domain with password-hasher"
 command pwhashsite jsb -d¦ apps.pw.hashSite(parseInt(JS_ARGS?.[1])||1)¦
 
 bind ap<C-h> showkeys ap
 bind: aps "Hash site domain with password-hasher" pwhashsite
 
-" | at -- apps/translate |
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────────╮
+" │ at -- apps/translate │
+" ╰──────────────────────╯
 command trans jsb -d¦ apps.trans.transsh(JS_ARGS)¦
 
+bind at<C-h> showkeys at
 bind: att "Translate text in command line: [sl:tl] TEXT" fillcmdline trans
 
 " | atp -- apps/translate/page |
 bind: atpp "Google translate page" googletranslatepage
 bind: atpb "Bing translate page" bingtranslatepage
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────╮
 " │ x -- extensions │
 " ╰─────────────────╯
@@ -679,6 +704,7 @@ bind xrs tabopenorswitchc https://github.com/Garethp/RikaiRebuilt
 " config page
 bind xrc winopen moz-extension://41d2b8bf-2a97-4468-87c8-f6243594c04c/options/options.html
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
 " │ , -- leader │
 " ╰─────────────╯
@@ -738,6 +764,7 @@ bind ,aww tabopenorswitchc http://www.bom.gov.au/nsw/forecasts/lismore.shtml
 " Open Goonellabah Weather (timeanddate.com)
 bind ,awt tabopenorswitchc https://www.timeanddate.com/weather/@2164966
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────────────╮
 " │ ,c -- command-line │
 " ╰────────────────────╯
@@ -761,6 +788,7 @@ bind ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_lin
 " ╰───────────╯
 bind: ,dx "Toggle X-Ray view" capps capps.toggleXray()
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────────╮
 " │ ,e -- javascript eval │
 " ╰───────────────────────╯
@@ -783,6 +811,7 @@ bind ,ej fillcmdline cujs
 bind ,ep fillcmdline getproperties
 bind ,es fillcmdline getselector
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────────╮
 " │ ,j -- japanese │
 " ╰────────────────╯
@@ -803,6 +832,7 @@ bind ,jkr tabopenorswitchc https://jisho.org/#radical
 " Visual Kanji Search - similar kanji (clipboard)
 bind ,jkv pastef https://thekanjimap.com/index.html?k=${s} | tabopenorswitchc
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
 " │ ,l -- links │
 " ╰─────────────╯
@@ -813,6 +843,7 @@ bind: ,la "Append links to end of page" withlinks links.append()
 bind: ,lm "Append links as markdown to end of page" withlinks links.appendAsMarkdown()
 bind: ,lt "Append link text & destinations to end of page" withlinks links.appendWithText()
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────╮
 " │ ,r -- reference │
 " ╰─────────────────╯
@@ -854,6 +885,7 @@ bind: ,utt "Toggle URL component" urltoggle
 bind: ,ut- "Toggle URL spaces <-> dashes" urltoggle %20 -
 bind: ,utj "Toggle URL en <-> ja" urltoggle /en. /ja.
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────╮
 " │ ,v -- conversion │
 " ╰──────────────────╯
@@ -862,6 +894,7 @@ command convertunits jsb -d¦ apps.convertUnits(JS_ARGS).then(s=>tri.excmds.fill
 bind ,v<C-h> showkeys ,v
 bind ,vv fillcmdline convertunits
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────────╮
 " │ ,x -- miscellaneous │
 " ╰─────────────────────╯
@@ -874,6 +907,7 @@ bind ,xt<C-h> showkeys ,xt
 bind ,xtc fillcmdline copytablecols
 bind ,xtC fillcmdline copytablecols_strict
 
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
 " │ ,, -- hints │
 " ╰─────────────╯
