@@ -11,6 +11,7 @@
 # │ variables │
 # ╰───────────╯
 unset kw
+bmfile="${BMARKFILE:-$HOME/bookmarks/bookmarks.json}"
 
 # selection vars
 regex=
@@ -32,8 +33,8 @@ tempd=`mktemp -d`;
 # ╭─────────╮
 # │ options │
 # ╰─────────╯
-SHORT="h,I,J,k,K:,m,o:,p:,r:,s,S,u,w,y,Y,1"
-LONG="help,case-sensitive,js-only,keyword-only,find-keyword:,multi-select,output-format:,protocol:,
+SHORT="f:,h,I,J,k,K:,m,o:,p:,r:,s,S,u,w,y,Y,1"
+LONG="folder:,help,case-sensitive,js-only,keyword-only,find-keyword:,multi-select,output-format:,protocol:,
   regex:,select,select-keyword,url,kw,yank,yank-only,one-line"
 PARSED=$(getopt -a -n kwsearch --options "$SHORT" --longoptions "$LONG" -- "$@")
 
@@ -53,6 +54,7 @@ USAGE: kwsearch [OPTION...]
     the SEARCHTERMs (escaping not yet supported).
 
 Options:
+  -f RE  --folder RE          restrict results to folders matching regex RE (jq regex)
   -h     --help               show help
   -I     --case-sensitive     make Rofi case-sensitive
   -J     --js-only            javascript: URI (bookmarklets) only
@@ -76,6 +78,7 @@ Options:
 EOF
             exit 0
             ;;
+        (-f | --folder) folder="$2"; shift 2; ;;
         (-I | --case-sensitive) case=""; shift; ;;
         (-J | --js-only) protocol="javascript"; shift; ;;
         (-k | --keyword-only) kwonly=t; shift; ;;
@@ -120,11 +123,14 @@ KWSEARCH_YANKCMD=${KWSEARCH_YANKCMD:-xsel -ib};
 # ╰─────────────────────────╯
 bmarksjson=$tempd/bmarksjson;
 
-jq -rc '
-   recurse(.children[]?)
-   | select(.uri)
-   | {keyword, title, uri}
-' "${BMARKFILE:-$HOME/bookmarks/bookmarks.json}" |
+jq 'recurse(.children[]?)' "$bmfile" |
+
+    # --folder
+    if [ -n "$folder" ]; then
+        jq 'select(.title | test("'"$folder"'")?) | recurse(.children[]?)';
+    else cat;
+    fi |
+    jq -rc 'select(.uri) | {keyword, title, uri}' |
 
     # --keyword-only
     if [ -n "$kwonly" ]; then
