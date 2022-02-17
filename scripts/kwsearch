@@ -32,9 +32,9 @@ tempd=`mktemp -d`;
 # ╭─────────╮
 # │ options │
 # ╰─────────╯
-SHORT="h,I,j,J,k,K:,m,p:,r:,s,S,t,u,w,y,Y,1"
-LONG="help,case-sensitive,json,js-only,keyword-only,find-keyword:,multi-select,protocol:,regex:,select,
-  select-keyword,tridactyl,url,kw,yank,yank-only,one-line"
+SHORT="h,I,J,k,K:,m,o:,p:,r:,s,S,u,w,y,Y,1"
+LONG="help,case-sensitive,js-only,keyword-only,find-keyword:,multi-select,output-format:,protocol:,
+  regex:,select,select-keyword,url,kw,yank,yank-only,one-line"
 PARSED=$(getopt -a -n kwsearch --options "$SHORT" --longoptions "$LONG" -- "$@")
 
 eval set -- "$PARSED"
@@ -55,18 +55,21 @@ USAGE: kwsearch [OPTION...]
 Options:
   -h     --help               show help
   -I     --case-sensitive     make Rofi case-sensitive
-  -j     --json               force JSON output
   -J     --js-only            javascript: URI (bookmarklets) only
   -k     --keyword-only       keyword bookmarks only
   -K KW  --find-keyword KW    find bookmark with keyword KW
   -m     --multi-select       choose multiple bookmarks with Rofi
+  -o F   --output-format      specify output format F (url, kw, tri, json)
+                                  url: output uri only
+                                  kw: output keyword only (implies --keyword-only)
+                                  tri: format as tridactyl searchurl setting (implies --keyword-only)
+                                  json: force JSON output
   -p P   --protocol P         specify the protocol (or scheme) P: of URIs as regex
   -r RE  --regex RE           filter bookmarks with RE
   -s     --select             choose bookmark with Rofi
   -S     --select-keyword     choose bookmark keyword with Rofi (implies --keyword-only)
-  -t     --tridactyl          format as tridactyl searchurl setting (implies --keyword-only)
-  -u     --url                print URL only
-  -w     --kw                 print keyword only (implies --keyword-only)
+  -u     --url                print URL only (equivalent to `-o url`)
+  -w     --kw                 print keyword only (implies --keyword-only, equivalent to `-o kw`)
   -y     --yank               copy output to clipboard
   -Y     --yank-only          send output to clipboard, no output
   -1     --one-line           display output on a single line
@@ -74,16 +77,20 @@ EOF
             exit 0
             ;;
         (-I | --case-sensitive) case=""; shift; ;;
-        (-j | --json) oformat=json; shift; ;;
         (-J | --js-only) protocol="javascript"; shift; ;;
         (-k | --keyword-only) kwonly=t; shift; ;;
         (-K | --find-keyword) kw="$2"; shift 2; ;;
         (-m | --multi-select) rofi=${rofi:-t}; multi="-multi-select"; shift; ;;
+        (-o | --output-format)
+            oformat="$2";
+            if [ "$oformat" = "kw" ] || [ "$oformat" = "tri" ]; then
+                kwonly=t;
+            fi;
+            shift 2; ;;
         (-p | --protocol) protocol="$2"; shift 2; ;;
         (-r | --regex) regex="$2"; shift 2; ;;
         (-s | --select) rofi=${rofi:-t}; shift; ;;
         (-S | --select-keyword) kwonly=t; rofi=kw; shift; ;;
-        (-t | --tridactyl) oformat=tri; kwonly=t; shift; ;;
         (-u | --url) oformat=url; shift; ;;
         (-w | --kw) oformat=kw; kwonly=t; shift; ;;
         (-y | --yank) yank=t; shift; ;;
