@@ -128,14 +128,25 @@ places.kw = {
 // ╰────────────────────────╯
 
 places.dl = {
+    /* nth latest download directory */
     getDir: async function(n=1) {
         return this.getLatest(n).then(d=>d.filename.replace(/[^/]*$/, ""));
     },
 
+    /* nth latest download */
     getLatest: async function(n=1) {
         n = Number(n);
         const dls = await browser.downloads.search({limit: n, orderBy: ["-startTime"]});
         return dls[n-1];
+    },
+
+    /* open nth latest download directory in emacs dired */
+    openDirInDired: async function(n=1) {
+        const dir = await this.getDir(n);
+        const cmd = `emacsclient -c -F '((name . "dactyl-dired"))' -e '(dired "${dir}")'`
+              + `&& wmctrl -r "dactyl-dired" -b remove,maximized_vert,maximized_horz`
+              + `&& wmctrl -r "dactyl-dired" -e 0,18,370,830,650`;
+        return tri.native.run(cmd);
     },
 };
 
