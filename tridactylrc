@@ -654,16 +654,42 @@ bind: a;f "Open link in Waterfox" composite hint -pipe a href | ! /opt/waterfox/
 " ╭──────────────────────╮
 " │ ad -- apps/downloads │
 " ╰──────────────────────╯
+commdoc opendl "[PROGRAM N] open nth last download with program"
+command opendl jsb -d¦ apps.openNthWithWr(c => places.dl.getLatest(c).then(dl=>dl.filename), JS_ARGS)¦
+commdoc opendln "[N PROGRAM] open nth last download with program"
+command opendln  jsb -d¦ places.dl.getLatest(JS_ARGS[1]).then(dl=>apps.openWithWr(dl.filename, JS_ARGS.slice(2)))¦
+commdoc opendldir "[PROGRAM N] open nth last download directory with program"
+command opendldir jsb -d¦ apps.openNthWithWr(c=>places.dl.getDir(c), JS_ARGS)¦
+commdoc opendldirn "[N PROGRAM] open nth last download directory with program"
+command opendldirn jsb -d¦ places.dl.getDir(JS_ARGS[1]).then(dir=>apps.openWith(dir, JS_ARGS[2]))¦
+commdoc opendldirindired "open nth last download directory in Emacs dired"
+command opendldirindired jsb -d¦ places.dl.openDirInDired(JS_ARGS[1])¦
+commdoc opendlinbrowser "Open nth last download in browser"
+command opendlinbrowser jsb -d¦ places.dl.getLatest(JS_ARGS[1]).then(dl=>utils.tab.open(`file://${dl.filename}`))¦
+commdoc opendldirinbrowser "Open nth last download directory with dolphin"
+command opendldirinbrowser jsb -d¦ places.dl.getDir(JS_ARGS[1]).then(dl=>utils.tab.open(`file://${dl}`))¦
 
 bind ad<C-h> showkeys ad
 
 " | add -- apps/downloads/dir |
-command opendl jsb -d¦ places.dl.getLatest(JS_ARGS[2]).then(dl=>apps.openWith(dl.filename, JS_ARGS[1]))¦
-command opendldir jsb -d¦ places.dl.getDir(JS_ARGS[2]).then(dir=>apps.openWith(dir, JS_ARGS[1]))¦
-
 bind add<C-h> showkeys add
-bind: addd "Open last download directory with dolphin" opendldir dolphin
+bind: adod "Open last download directory with dolphin" opendldir dolphin
+bind: adde "Open last download directory with dired" opendldirindired
+bind: addr "Open last download directory with ranger" opendldir roxterm -e ranger --selectfile
+bind: adds "Open last download directory with program via mimeopen" opendldir roxterm -e zsh -c "mimeopen -a %s"
+bind: addx "Open last download directory with program" fillcmdline_withcount opendldirn
 
+" | ado -- apps/downloads/open |
+bind ado<C-h> showkeys adx
+bind: adoo "Open last download in browser" opendlinbrowser
+bind: ado// "Open last download directory in browser" opendldirinbrowser
+
+
+" | adx -- apps/downloads/run |
+bind: adxd "Open last download with default program (via mimeopen)" opendl mimeopen -n
+bind: adxs "Open last download with program via mimeopen" opendl roxterm -e zsh -c "mimeopen -a %s"
+bind: adxx "Open last download with program" fillcmdline_withcount opendln
+bind: adx= "Open last download: set default application for type and open" opendl roxterm -e zsh -c "mimeopen -d %s"
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────╮
