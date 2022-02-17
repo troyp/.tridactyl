@@ -955,6 +955,12 @@ bind ,,fb  composite set hintchars 0123456789 ; hint -b ; unset hintchars
 bind ,,ff  composite set hintchars 0123456789 ; hint ; unset hintchars
 bind ,,ft  composite set hintchars 0123456789 ; hint -t ; unset hintchars
 
+bind: ,,lu "Follow unvisited link [HINTS]" hint -c :link
+bind: ,,lv "Follow visited link [HINTS]" hint -c :visited
+bind: ,,lU "Follow unvisited link in new tab [HINTS]" hint -c :link
+bind: ,,lV "Follow visited link in new tab [HINTS]" hint -c :visited
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭───────╮
 " │ marks │
 " ╰───────╯
