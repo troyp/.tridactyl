@@ -158,9 +158,10 @@ places.dl = {
 places.hist = {
     items: async function(opts={}) {
         opts.where ||= "last";
-        opts.multiSelect ??= true;
+        opts.multi ??= true;
         const items = await this.search(opts);
-        for await (const item of items) await utils.tab.open(item.url, opts);
+        for (const item of items)
+            await utils.tab.open(item.url, opts);
         return items && items?.length;
     },
 
@@ -184,7 +185,7 @@ places.hist = {
      *  opts.maxResults:   maximum results to send to rofi (default 100)
      *  opts.prompt:       rofi prompt
      *  opts.format:       rofi results format option
-     *  opts.multiSelect:  run rofi in multi-select mode
+     *  opts.multi:        run rofi in multi-select mode
      */
     search: async function(opts={}) {
         opts.text ||= "";
@@ -225,7 +226,7 @@ places.hist = {
             .replace(/(\d\d\/\d\d)\/\d\d(\d\d), (\d\d?:\d\d):\d\d ([ap]m)/, "$1/$2, $3 $4");
         const formatter = h=>sprintf("%18s\t%-40s\t<%s>", datestr(h), S.ellipsize(h.title, 40), h.url);
         const dmenuInput = items.map(formatter).join("\n");
-        const dmenuOpts = opts.multiSelect ? "-multi-select -i" : "-i";
+        const dmenuOpts = opts.multi ? "-multi-select -i" : "-i";
         const rofithemestr='#window {width: 80%;} #listview {lines: 25;}';
         const cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | ` +
             `rofi -dmenu -theme-str "${rofithemestr}" -format ${opts.format} -p "${opts.prompt}" ${dmenuOpts}`;
