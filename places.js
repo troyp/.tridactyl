@@ -156,42 +156,32 @@ places.dl = {
 // ╰────────────────────────╯
 
 places.hist = {
-    items: async function(opts={}) {
-        opts.where ||= "last";
-        opts.multi ??= true;
-        const items = await this.search(opts);
-        for (const item of items)
-            await utils.tab.open(item.url, opts);
-        return items && items?.length;
-    },
-
-    itemsWr: async function(args) {
-        args = utils.tri.parseArgs(args);
-        const [where, bg, days] = args;
-        return this.items({
-            where: where,
-            background: utils.parseBool(bg),
-            hoursAgo: 24*(days||4)
-        });
-    },
-
     /**   Search history for TEXT and choose from results with rofi
      *  opts.text          text to search for
+     *  opts.queryText     query user for text to search for
      *  opts.startTime:    earliest time for history results
      *  opts.endTime:      latest time for history results
      *  opts.hoursAgo:     alternative to startTime/endTime;
      *                     return results from last N hours, or
      *                     specify "N-M" for results from N hours to M hours ago
+     *  opts.daysAgo:      alternative to startTime/endTime/hoursAgo
      *  opts.maxResults:   maximum results to send to rofi (default 100)
      *  opts.prompt:       rofi prompt
      *  opts.format:       rofi results format option
      *  opts.multi:        run rofi in multi-select mode
      */
-    search: async function(opts={}) {
-        opts.text ||= "";
-        /* prompt and results format */
-        opts.prompt ??= "Select tabs (S-Enter): ";
-        opts.format ||= "i";
+    get: async function(opts={}) {
+        opts = utils.tri.parseOpts(opts, {
+            defaults: {
+                text: "",
+                format: "i",
+                maxResults: Number.MAX_SAFE_INTEGER,
+                multi: true,
+            },
+            nullishDefaults: {
+                prompt: "Select tabs (S-Enter): ",
+            },
+        });
         /* time range of results */
         if (!opts.hoursAgo && !opts.startTime && !opts.endTime)
             opts.daysAgo = 4;
@@ -212,8 +202,9 @@ places.hist = {
         }
         const startTime = opts.startTime && new Date(opts.startTime);
         const endTime = opts.endTime && new Date(opts.endTime);
-        /* number of results */
-        opts.maxResults ||= Number.MAX_SAFE_INTEGER;
+        /* query */
+        if (opts.queryText)
+            opts.text ||= await utils.prompt("text to search:");
         /* main */
         const items = await browser.history.search({
             text: opts.text,
@@ -235,16 +226,20 @@ places.hist = {
         );
     },
 
-    searchWr: async function(args) {
+    open: async function(opts={}) {
+        opts.where ||= "last";
+        const items = await this.get(opts);
+        items.forEach(async item => await utils.tab.open(item.url, opts));
+        return items?.length;
+    },
+
+    openWr: async function(args, opts={}) {
         args = utils.tri.parseArgs(args);
         const [where, bg, days] = args;
-        const text = await utils.prompt("text to search:");
-        return this.items({
-            text: text,
-            where: where,
-            background:utils.parseBool(bg),
-            hoursAgo: 24*(days||14)
-        });
+        opts.background ??= utils.parseBool(bg);
+        if (!opts.daysAgo && !opts.hoursAgo && !opts.startTime)
+            opts.daysAgo = opts.queryText||opts.text ? 14 : 4;
+        return this.open(opts);
     },
 
 };
