@@ -32,7 +32,7 @@ places.bm = {
               nullishDefaults: {switches: "-u -s"}
             }
         );
-        const cmd  = `kwsearch ${[opts.switches, ...args].join(" ").trim()}`;
+        const cmd  = `kwsearch ${opts.switches} -- ${args.join(" ").trim()}`;
         return tri.native.run(cmd).then(
             res => opts.decode ? utils.decode(res.content, opts.decodeFn) : res.content
         );
