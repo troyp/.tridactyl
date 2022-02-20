@@ -40,4 +40,17 @@ csites = {
         },
 
     },
+
+    wp: {
+        _site: "wikipedia.org",
+
+        toggleJa: function() {
+            const url = location.href;
+            if (/^https:\/\/en/.test(location.href)) {
+                location.replace($1t(".interlanguage-link", "日本語").firstChild.href);
+            } else {
+                location.replace($1t(".interlanguage-link", "English").firstChild.href);
+            }
+        },
+    },
 }

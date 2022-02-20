@@ -190,6 +190,17 @@ bindurl reddit.com/ c<C-h> showkeysurl reddit.com/ c
 bindurl reddit.com/ cto urltoggle https://www.reddit.com https://old.reddit.com
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────────╮
+" │ Wikipedia.org │
+" ╰───────────────╯
+command: wpbind "Bind key for wikipedia.org" bindurl wikipedia.org
+command: wpbind: "Bind key with description for wikipedia.org" bindurl: wikipedia.org
+command: wpbdoc "Provide a description on a separate line" js ;
+
+wpbind: ctm "Toggle mobile version" urltoggle https://en.m https://en
+wpbind: ctj "Toggle japanese edition" csites csites.wp.toggleJa()
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────╮
 " │ Woolworths.com.au │
 " ╰───────────────────╯
