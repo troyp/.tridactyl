@@ -107,6 +107,10 @@ bind --mode=browser <A-,> tab #
 " │ Normal-mode keybindings │
 " ╰─────────────────────────╯
 
+" <Escape> is bound to `composite mode normal ; hidecmdline` by default
+" To hide unfocused cmdline, use alternative <C-[> instead
+unbind <Escape>
+
 bind: <CA-h> "Scroll left (50px)" scrollpx -50
 bind: <CA-l> "Scroll right (50px)" scrollpx +50
 bind: j "Scroll down" scrollline +5*
