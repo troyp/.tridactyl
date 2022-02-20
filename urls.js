@@ -166,23 +166,24 @@ urls.mod = {
         url = String(url);
         const patt1 = opts.re1 || s1;
         const patt2 = opts.re2 || s2;
-        if (opts.re1 ? url.match(opts.re1) : url.includes(s1))
-            return url.replace(patt1, s2);
-        else
-            return url.replace(patt2, s1);
+        const test = opts.re1 ? url.match(opts.re1) : url.includes(s1);
+        const newurl = test
+              ? url.replace(patt1, s2)
+              : url.replace(patt2, s1);
+        return newurl;
     },
 
-    toggleWr: function(argstr) {
-        const args = argstr.trim().split(/ +/);
-        [s1, s2, ...opts] = args;
-        var restr1, flags1, restr2, flags2;
-        if (opts.length==4)
-            [restr1, flags1, restr2, flags2] = opts;
+    togglepage: function(s1, s2, ...rest) {
+        var re1, re2, flags1="", flags2="";
+        if (rest.length==4)
+            [re1, flags1, re2, flags2] = rest;
         else
-            [restr1, restr2, flags1, flags2] = opts;
-        const re1 = restr1 ? RegExp(restr1, flags1||"") : null;
-        const re2 = restr2 ? RegExp(restr2, flags2||"") : null;
-        const url = tri.contentLocation;
+            [re1, re2] = rest;
+        if (re1)
+            re1 = flags1 ? RegExp(re1|"", flags1||"") : RegExp(re1||"");
+        if (re2)
+            re2 = flags2 ? RegExp(re2|"", flags2||"") : RegExp(re2||"");
+        const url = tri.contentLocation.href;
         const newUrl = this.toggle(s1, s2, url, {re1: re1, re2: re2});
         if (newUrl && newUrl!==url) {
             if (window.location.protocol == "moz-extension:")
@@ -191,6 +192,8 @@ urls.mod = {
                 window.location.replace(newUrl);
         }
     },
+
+    toggleWr: function(argstr) { return this.togglepage(...argstr.trim().split(/ +/)); },
 
 };
 
