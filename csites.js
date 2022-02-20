@@ -1,4 +1,17 @@
 csites = {
+    archive: {
+        _site: "archive.org",
+
+        toggleToolbarURL: function() {
+            urls.mod.togglepage(
+                "id_/http",
+                "/http",
+                "id_\/http(?=s?:)",
+                "(?<!_)\/http(?=s?:)",
+            );
+        },
+    },
+
     e: {
         _site: "ebay.com.au",
 

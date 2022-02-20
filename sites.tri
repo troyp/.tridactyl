@@ -18,6 +18,12 @@ amazbind: cow "Goto wish list" urlmodorsummon_g /hz/wishlist/ls/
 amazbind: co! "Goto contact form" urlmodorsummon_g /gp/help/customer/contact-us/ref=cu_surl
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────╮
+" │ archive.org │
+" ╰─────────────╯
+bindurl archive.org ctt csites -r urls.js ; js csites.archive.toggleToolbarURL()
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮
 " │ Ebay.com │
 " ╰──────────╯
