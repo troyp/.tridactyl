@@ -50,6 +50,20 @@ var sites = {
                 .replace(/\$\{s\}/g, opts.query||"");
         },
 
+        /* Returns a String object containing the path to the raw README */
+        /* Also contains a property `result._qualified_name` to be used as a filename */
+        getReadme: async function() {
+            const promiseRes = await browser.tabs.executeScript({
+                code: 'document.getElementById("readme").getAttribute("data-tagsearch-path")'
+            });
+            const filename = promiseRes[0];
+            const [user, repo] = this.getUserAndRepo();
+            const path = new String(`https://raw.githubusercontent.com/${user}/${repo}/master/${filename}`);
+            path._qualified_name = `${repo}-${filename}`;
+            return path;
+        },
+
+
         openOrSummon(f_url, opts={}) {
             const url = this.format(f_url);
             return utils.tab.openOrSummon(url, {where: opts.where||"here"});
@@ -58,6 +72,12 @@ var sites = {
         search(f_url, description, query, opts={}) {
             const url = this.format(window._ghsearchurl, {query: query});
             return utils.tab.openOrSummon(url, {where: opts.where||"here"});
+        },
+
+        saveReadme: async function(dir, filename="") {
+            return this.getReadme().then(
+                f => exclaim("curl", f, ">", `/opt/doc/${f._qualified_name}`)
+            );
         },
 
         searchWrapper: function(args, opts={}) {

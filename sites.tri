@@ -69,6 +69,8 @@ ghbind cc xdoelem .pl-en -e click 1
 ghbind c8 cujs $1t("button", "Star").click()
 ghbind c* cujs $1t("button", "Star").click()
 
+ghbind: cdr "Download README to /opt/doc" jsb sites.gh.saveReadme()
+
 " | cm -- Github/My |
 ghbind: cmC "My comments" ghopenorsummon https://github.com/search?utf8=✓&q=+is:issue+commenter:${a};
 ghbind: cmr "My forks" ghopenorsummon https://github.com/${a}?tab=repositories&type=fork
