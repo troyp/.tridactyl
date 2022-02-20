@@ -671,6 +671,7 @@ commdoc opendldirinbrowser "Open nth last download directory with dolphin"
 command opendldirinbrowser jsb -d¦ places.dl.getDir(JS_ARGS[1]).then(dl=>utils.tab.open(`file://${dl}`))¦
 
 bind ad<C-h> showkeys ad
+bind: ads "Show all downloads" jsb places.dl.show()
 
 " | add -- apps/downloads/dir |
 bind add<C-h> showkeys add

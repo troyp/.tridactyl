@@ -148,6 +148,12 @@ places.dl = {
               + `&& wmctrl -r "dactyl-dired" -e 0,18,370,830,650`;
         return tri.native.run(cmd);
     },
+
+    show: async function(opts={}) {
+        const dls = await browser.downloads.search({limit: 0, orderBy: ["-startTime"]});
+        return utils.msg(dls.map(dl => dl.filename));
+    },
+
 };
 
 // ───────────────────────────────────────────────────────────────────────────────
