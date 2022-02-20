@@ -486,7 +486,8 @@ jsb tri.excmds.bind("s'", "!s key ctrl+v apostrophe")
 bind n findnext
 bind N findnext
 bind ? fillcmdline find -?
-bind <C-/> clearsearchhighlight
+bind <C-/> "Remove tridactyl search highlighting" clearsearchhighlight
+bind: ,<C-/> "Remove browser.find search highlighting" jsb browser.find.removeHighlighting()
 
 " */#: Temporary implementation using find
 " TODO: implement these properly with forwards/backwards cycling
