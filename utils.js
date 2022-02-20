@@ -87,10 +87,16 @@ var utils = {
 
     prompt: async function(msg="enter text", opts={}) {
         if (opts.native) {
-            const res = await tri.native.run(`kdialog --inputbox '${msg}'`);
+            const code = opts.default
+                  ? `kdialog --textinputbox '${msg}' '${opts.default}'`
+                  : `kdialog --inputbox '${msg}'`;
+            const res = await tri.native.run(code);
             return res.content.replace(/\n$/,"");
         } else {
-            const res = await browser.tabs.executeScript({code: `prompt("${msg}")`});
+            const code = opts.default
+                  ? `prompt("${msg}", "${opts.default}")`
+                  : `prompt("${msg}")`;
+            const res = await browser.tabs.executeScript({code: code});
             return res[0];
         }
     },
