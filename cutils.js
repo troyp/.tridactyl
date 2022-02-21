@@ -88,8 +88,8 @@ var cutils = {
         opts.firstMatch = !opts.all;
         delete opts.all;
         const elts = cutils.get(selector, opts);
-        elts.forEach(e=>e.click());
-        return elts.length > 0 && elts;
+        elts?.forEach(e=>e.click());
+        return elts?.length > 0 && elts;
     },
 
     clickall: (selector, opts={}) => cutils.click(selector, {...opts, all:true}),
