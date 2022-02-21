@@ -241,4 +241,4 @@ woolbind: csa "Search products in adjacent tab" fillcmdline woolsearch_adj
 " | cx -- woolworths/miscellaneous |
 woolbind cx<C-h> showkeysurl https://www.woolworths.com.au/ cx
 woolbdoc cxh "Show only half-price products"
-woolbind cxh cujs $$(".product-grid--tile").forEach(e=>{!$1('img[alt="Half Price"]', e) && e.remove()});
+woolbind cxh cujs $$(".product-grid--tile").forEach(e=>{!$1('img[altt"Half Price"]', e) && e.remove()});
