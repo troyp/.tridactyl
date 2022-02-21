@@ -41,6 +41,17 @@ csites = {
 
     },
 
+    se: {
+        widen: function() {
+            const cssrules = [
+                ["#sidebar", "display: none;"],
+                ["#left-sidebar", "display: none;"],
+                ["#mainbar", "width: 1200px;"],
+            ];
+            cutils.css.toggleOrCreate("_tri_widen", ...cssrules);
+        },
+    },
+
     wp: {
         _site: "wikipedia.org",
 
