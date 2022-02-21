@@ -807,7 +807,7 @@ utils.tri = {
      * multiple words are quoted
      */
     parseTerms: function(args) {
-        const argstr = typeof args==="string" ? args : args.join(" ").trim();
+        const argstr = typeof args==="string" ? args : args.join(" ").trim().replace(/ +/, " ");
         const words = argstr.split(" ");
         var terms = [];
         for (i=0; i<words.length; ++i) {
