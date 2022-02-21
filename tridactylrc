@@ -17,7 +17,6 @@ jsb -r apps.js
 jsb -r places.js
 " site-specific code
 jsb -r sites.js
-source ~/.tridactyl/sites.tri
 " personal info
 jsb -r personal/personal.js
 
@@ -57,6 +56,12 @@ command: setpref: "setpref with description" docdef setpref
 command: guiset_quiet: "guiset_quiet with description" docdef guiset_quiet
 command: commdoc "provide a description for a command definition on a separate line" js ;
 command: bdoc "provide a description for a bind definition on a separate line" js ;
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────────╮
+" │ sourced config files │
+" ╰──────────────────────╯
+source /home/troy/.tridactyl/sites.tri
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮
