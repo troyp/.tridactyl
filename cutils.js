@@ -353,11 +353,94 @@ var cutils = {
 };
 
 // ───────────────────────────────────────────────────────────────────────────────
+// ╭───────────────────────────────╮
+// │ cutils.style -- CSS utilities │
+// ╰───────────────────────────────╯
+
+cutils.css = {
+    /* add rules to sheet SHEETID. Each rule is a pair [SELECTOR, DECLARATIONS] */
+    /* DECLARATIONS is either a string or an object mapping properties to values */
+    addRules: function(styleId, ...rules) {
+        const s = document.getElementById(styleId).sheet;
+        for (rule of rules) {
+            const [selector, decls] = rule;
+            const declStr = typeof decls == "string"
+                  ? decls
+                  : Object.keys(decl).map(k => `${k}: ${decl[k]}`).join("; ");
+            s.insertRule(`${selector} { ${declStr} }`);
+        }
+        return s;
+    },
+
+    addSheet: function(id) {
+        const style = document.createElement("style");
+        style.id = id;
+        const sheet = document.head.appendChild(style).sheet;
+        return sheet;
+    },
+
+    toggle: function(id) {
+        const style = document.getElementById(id);
+        return style.disabled ^= true;
+    },
+
+    show: function(id) {
+        alert(this.text(id));
+    },
+
+    text: function(id) {
+        return [...document.getElementById(id).sheet.cssRules]
+            .map(r=>r.cssText)
+            .join("\n");
+    },
+
+    toggleOrCreate: function(id, ...rules) {
+        const style = document.getElementById(id);
+        return style
+            ? style.disabled ^= true
+            : this.addSheet(id) && this.addRules(id, ...rules);
+    },
+};
+
+// ───────────────────────────────────────────────────────────────────────────────
 // ╭──────────────────────────────────────────────────────────────────╮
 // │ cutils.tri -- utilities related to tridactyl source and features │
 // ╰──────────────────────────────────────────────────────────────────╯
 
 cutils.tri = {
+    parseArgs: function(args, opts={}) {
+        /* opts */
+        opts = this.parseOpts(opts, {castString: "type"});
+        var result = null, callerOpts = {};
+        if (opts.allowOpts && typeof args.at(-1) == "object") {
+            [args, [callerOpts]] = tri.R.splitAt(-1, args);
+        }
+        /* args */
+        if (typeof args == "string") args = [args];
+        const argstr = args.join(" ").trim();
+        switch (opts.type) {
+          case "string":
+              result = argstr; break;
+          case "number":
+              result = Number(argstr) || null;
+          case "array":
+          default:
+              result = argstr.split(/ +/); break;
+        }
+        if (opts.allowOpts)
+            return [result, callerOpts];
+        else
+            return result;
+    },
+
+    parseArgsAndCount: function(args, opts={}) {
+        const n = args.length - 1;
+        const hasCount = parseInt(args[n]) > 0;
+        const countElem = hasCount && args.pop();
+        const count = countElem && parseInt(countElem);
+        return [this.parseArgs(args, opts), count];
+    },
+
     /** options.castString:               if a string is passed for opts rather than an array, it
      *                                    represents the value of the property opts[options.castString].
      *  options.defaults.key=val:         if key if falsey, set to value
