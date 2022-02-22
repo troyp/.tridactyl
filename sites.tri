@@ -151,6 +151,13 @@ googlebind: gf "Open multiple tabs in background tabs [HINNTS]" hint -qJb
 googlebind: ctn "Toggle Top stories" cujs cutils.hide("g-section-with-header", {toggle:true});
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────────╮
+" │ Google Calendar │
+" ╰─────────────────╯
+autocmd DocLoad https://calendar\.google\.com(/|$) js -r sites/gcal.auto.js
+autocmd TabEnter https://calendar\.google\.com(/|$) js -r sites/gcal.auto.js
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
 " │ Medium.com │
 " ╰────────────╯
