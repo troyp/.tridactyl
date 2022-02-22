@@ -204,9 +204,9 @@ commdoc sebind "Bind key for stackexchange sites"
 command sebind jsb -d¦ sites.se.bind("--mode=normal", ...JS_ARGS)¦
 commdoc sebind: "Bind key with description for stackexchange sites"
 command sebind: jsb -d¦ sites.se.bind_("--mode=normal", ...JS_ARGS)¦
-command: seexpandlinks "Expand all links" cujs cutils.click("a.js-show-link", {all:true});
+command: seexpandcomments "Expand all comments" cujs cutils.click("a.js-show-link", {all:true});
 
-sebind: cl "Expand all links" seexpandlinks
+sebind: cc "Expand all comments" seexpandcomments
 
 " | ct -- SE/toggle |
 sebind: ctw "Toggle widen content" csites csites.se.widen()
