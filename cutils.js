@@ -14,6 +14,8 @@ var cutils = {
      */
     $$: function(selector, opts={}) {
         if (opts instanceof Node) opts = {context: opts};
+        selector = selector.replace(/^,+|,+$/, "").replace(/,,+/, ",");
+        if (!selector) return [];
         const getElems = (sel, top) => [...top.querySelectorAll(sel)];
         if (opts.context) {
             return getElems(selector, opts.context);
