@@ -117,7 +117,11 @@ apps.pw = {
             });
         `;
         const hashCallback = s ? setup+generate : setup+"sitetag.focus();";
-        const pw = await utils.tab.openAndRun("http://localhost:8036/password-hasher.html", hashCallback, opts);
+        const pw = await utils.tab.openAndRun(
+            "http://localhost:8721/webapps/password-hasher.html",
+            hashCallback,
+            opts
+        );
         if (opts.returnTabNumber && s) {
             await utils.tab.switch(opts.returnTabNumber, !opts.keepOpen);
             setTimeout(async () => {
