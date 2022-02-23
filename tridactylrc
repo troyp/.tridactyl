@@ -899,6 +899,9 @@ command unicodehexcodes jsb -d¦ apps.unicodeHexcodes(JS_ARGS.join(""))¦
 commdoc unicode "Describe unicode characters"
 command unicode jsb -d¦ apps.unicode(JS_ARGS.join(""))¦
 
+bind: ,rp "Periodic table" tabopenorswitch https://ptable.com
+
+" | ,ru -- reference/unicode |
 bind ,ru<C-h> showkeys ,ru
 bind: ,ruu "Describe unicode characters" fillcmdline unicode
 bind: ,rux "Show unicode hex codes" fillcmdline unicodehexcodes
