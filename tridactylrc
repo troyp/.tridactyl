@@ -2,6 +2,8 @@
 " │ General │
 " ╰─────────╯
 
+" loader for content script libraries
+jsb -r jsload.js
 " general libraries
 jsb -r S.js
 jsb -r js/sprintf.js
@@ -212,6 +214,9 @@ command withurlsjs composite js -r urls.js ; js
 command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
 command: csites "Load S.js, cutils.js, csites.js, run js" composite js -r cutils.js ; js -r csites.js ; js
 command: capps "Load capps.js and run js" composite js -r capps.js ; js
+commdoc jsload "Load JS files into content script"
+command jsload jsb -p jsload(JS_ARG)
+command: cjs "Load JS files into content script" composite jsload
 
 " override :open and :tabopen to get builtin completions
 command open open!
