@@ -20,12 +20,13 @@ tri () {
     TRI_SRC_DIR=${TRI_SRC_DIR:-$TRI_REPO_DIR/src};
     TRI_NATIVE_SRC_DIR=${TRI_NATIVE_SRC_DIR:-$TRI_NATIVE_REPO_DIR/src};
     local TRI_DIR_RE="$TRI_CONFIG_DIR|$TRI_SRC_DIR|$TRI_NATIVE_SRC_DIR";
+    local browser=${TRI_BROWSER:-firefox};
 
     # ╭─────────╮
     # │ options │
     # ╰─────────╯
-    SHORT=c,h,f,n,p,r:,s,t
-    LONG=config-dir,help,files,native,pager,regex:,source-dir,tree
+    SHORT=c,h,f,n,p,r:,s,S,t
+    LONG=config-dir,help,files,native,pager,regex:,source-dir,server,tree
     PARSED=$(getopt -a -n tri --options $SHORT --longoptions $LONG -- "$@")
 
     eval set -- "$PARSED"
@@ -37,8 +38,10 @@ tri () {
                 cat <<'ENDHELP'
 USAGE: tri [OPTION...]
     Access tridactyl user configuration directory and source directory.
-    Uses environment variables $TRI_CONFIG_DIR and $TRI_SRC_DIR (or
-    $TRI_REPO_DIR/src).
+    Uses environment variables:
+        $TRI_CONFIG_DIR
+        $TRI_SRC_DIR (or $TRI_REPO_DIR/src)
+        $TRI_BROWSER
 
 Options:
   -c     --config-dir       change to config directory
@@ -48,6 +51,7 @@ Options:
   -p     --pager            show output in pager
   -r RE  --regex RE         search for lines (or files with -f) matching the regex RE
   -s     --source-dir       change to source directory
+  -S     --server           run server at $TRI_CONFIG_DIR on port 8721
   -t     --tree             view directory tree (current directory when under $TRI_CONFIG_DIR
                             or $TRI_SRC_DIR, or $TRI_SRC_DIR if run from elsewhere).
 ENDHELP
@@ -58,6 +62,10 @@ ENDHELP
             (-p | --pager)          page=t; shift; ;;
             (-r | --regex)          re="$2"; shift 2; ;;
             (-s | --source-dir)     cd $TRI_SRC_DIR; return; ;;
+            (-S | --server)
+                http-server $TRI_CONFIG_DIR -c5 -p 8721;
+                $TRI_BROWSER --new-tab http://localhost:8721;
+                break; ;;
             (-t | --tree)           tree=t; shift; ;;
             (--)                    shift; break ;;
             (*) echo "unrecognized option: $1" >&2 ; return 1; ;;
