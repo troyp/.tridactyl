@@ -352,6 +352,16 @@ var cutils = {
             cutils.message(s, opts);
         }
     },
+
+    yankspan: async function() {
+        const yankelts = [
+            "span", "em", "strong", "u", "sub", "sup", "ruby",
+            "a", "tr", "td", "cite", "data", "dd", "dt",
+            "code", "pre", "output",
+        ];
+        return hint("-p", "-c", yankelts.join(","));
+    },
+
 };
 
 // ───────────────────────────────────────────────────────────────────────────────
