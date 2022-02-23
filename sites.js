@@ -90,6 +90,39 @@ var sites = {
 
     },
 
+    se: {
+        _sites: [
+            "https://[^./]*.stackexchange.com",
+            "https://stackoverflow.com",
+            "https://serverfault.com",
+            "https://superuser.com",
+            "https://askubuntu.com",
+            "https://stackapps.com",
+            "https://mathoverflow.net",
+        ],
+
+        bind: async function(...args) {
+            args = utils.tri.parseTerms(args);
+            const [mode, keys, ...excmd] = args;
+            return this._sites.forEach(async site => {
+                await bindurl(site, mode, keys, ...excmd);
+            });
+        },
+
+        bind_: async function(...args) {
+            args = utils.tri.parseTerms(args);
+            const [mode, keys, desc, ...excmd] = args;
+            return this.bind(mode, keys, ...excmd);
+        },
+
+        unbind: async function(mode, keys) {
+            return this._sites.forEach(async site => {
+                await unbindurl(site, mode, keys);
+            });
+        },
+
+    },
+
     wool: {
         _site: "woolworths.com.au",
 
