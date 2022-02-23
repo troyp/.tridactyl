@@ -559,7 +559,7 @@ bind: yls "Yank selected links" withlinks links.yankSelected()
 bind yx<C-h> showkeys yx
 bind: yxp "Yank paragraph/heading" hint -p -c p,code,h1,h2,h3,h4,h5,h6,output,table
 bind: yxs "Yank spans of text, code etc" hint -p -c span,code,a,tr,cite,data,dd,dt,em,strong,u,sub,sup,ruby,output
-bind: yxx "Yank page text" withcutils yankelt("body")
+bind: yxx "Yank page text" cujs yankelt("body")
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────╮
