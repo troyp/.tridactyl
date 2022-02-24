@@ -221,6 +221,7 @@ command: wpbdoc "Provide a description on a separate line" js ;
 
 wpbind: ctm "Toggle mobile version" urltoggle https://en.m https://en
 wpbind: ctj "Toggle japanese edition" csites csites.wp.toggleJa()
+wpbind: cC "Cleanup (remove clutter from page)" csites csites.wp.cleanup()
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────╮

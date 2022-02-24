@@ -55,6 +55,13 @@ csites = {
     wp: {
         _site: "wikipedia.org",
 
+        cleanup: function() {
+            rmall(
+                "#siteNotice", "#mw-navigation", "#footer", ".noprint", ".mw-editsection",
+                ".navbox", "#xtools", "#kanjiInfo", "._added-by-script",
+            );
+        },
+
         toggleJa: function() {
             const url = location.href;
             if (/^https:\/\/en/.test(location.href)) {
