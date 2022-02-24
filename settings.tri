@@ -40,3 +40,4 @@ setpref browser.compactmode.show true
 setpref browser.tabs.tabMinWidth 120
 setpref browser.urlbar.speculativeConnect.enabled false
 setpref privacy.trackingprotection.enabled true
+setpref security.mixed_content.block_active_content false
