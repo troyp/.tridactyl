@@ -359,7 +359,7 @@ var cutils = {
             "a", "tr", "td", "cite", "data", "dd", "dt",
             "code", "pre", "output",
         ];
-        return hint("-p", "-c", yankelts.join(","));
+        return hint("-c", yankelts.join(","), "-F", "e=>cutils.yank(e.innerText.trim())");
     },
 
 };
