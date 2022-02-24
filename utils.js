@@ -884,14 +884,10 @@ utils.tri = {
     searchurlResolve: function(url, opts={}) {
         opts = this.parseOpts(opts, {castBoolean: "default"});
         url = url.trim();
-        const k = url.indexOf(" ");
         const defaultSE = tri.config.get("searchengine") || "google";
-        const SE = opts.default
-              ? defaultSE
-              : url.slice(0, k);
-        const search = opts.default
-              ? url
-              : url.slice(k).trim();
+        const [SE, search] = opts.default
+              ? [defaultSE, url]
+              : url.split(/ +/).map(trim);
         const su = tri.config.get("searchurls")[SE];
         return su.includes("%s")
             ? su.replace(/%s/g, search)
