@@ -333,8 +333,8 @@ bind: bma "move active tab after alternate tab" tabmovetoalt
 bind: bmA "move alternate tab after active tab" tabsummonalt
 bind: bmm "move tab to position" fillcmdline tabmove!
 bind: bms "move tab after active tab" fillcmdline tabsummon
-bind: bm> "move tab to start (first nonpinned position)" tabmove 0
-bind: bm< "move tab to end" tabmove 1
+bind: bm< "move tab to start (first nonpinned position)" tabmove 1
+bind: bm> "move tab to end" tabmove 0
 
 " | br -- tabs/reload |
 bind br<C-h> showkeys br
