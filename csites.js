@@ -52,6 +52,17 @@ csites = {
         },
     },
 
+    tvtropes: {
+        spoilers: function() {
+            const style = { on:  "transparent", off: "rgb(51, 51, 51)", };
+            const spoilers = $$(".spoiler");
+            if (spoilers[0]?.style?.color == style.off)
+                spoilers.forEach(e=>e.style.color = style.on);
+            else
+                spoilers.forEach(e=>e.style.color = style.off);
+        },
+    },
+
     wp: {
         _site: "wikipedia.org",
 

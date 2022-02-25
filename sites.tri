@@ -212,6 +212,12 @@ sebind: cc "Expand all comments" seexpandcomments
 sebind: ctw "Toggle widen content" csites csites.se.widen()
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────╮
+" │ TVTropes.org │
+" ╰──────────────╯
+bindurl: tvtropes.org cc "Toggle spoilers" csites csites.tvtropes.spoilers()
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────╮
 " │ Wikipedia.org │
 " ╰───────────────╯
