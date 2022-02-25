@@ -43,7 +43,7 @@ places.bm = {
         const switchstr = switches?.length ? switches.join(" ") : "-s -u";
         const cmd = `kwsearch ${switchstr}`;
         return tri.native.run(cmd).then(
-            res => utils.tab.open(res.content, {where: where||"last", background: bg==="t"})
+            res => res.content && utils.tab.open(res.content, {where: where||"last", background: bg==="t"})
         );
     },
 
