@@ -198,9 +198,24 @@ var utils = {
 utils.tab = {
     aboutURIWhitelist: ["about:license", "about:logo", "about:rights", "about:blank"],
 
+    currentOrd: async function() {
+        const currentTab = await tri.webext.activeTab();
+        return currentTab.index + 1;
+    },
+
     filter: function(pred) {
         return tab.remove(!pred);
     },
+
+    firstDWIM: async function() {
+        const currentTab = await tri.webext.activeTab();
+        if (await this.currentOrd() == 1) {
+            const pinned = await this.getPinned();
+            this.switch(pinned.length + 1);
+        } else
+            this.switch(1);
+    },
+
 
     get: async function(tabnum, opts={}) {
         const res = await browser.tabs.query({index: tabnum-1});
