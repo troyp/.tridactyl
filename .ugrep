@@ -1,0 +1,10 @@
+dereference-recursive
+smart-case
+color
+line-number
+initial-tab
+perl-regexp
+hidden
+exclude-dir=.git
+exclude=*.json
+exclude=*working.*
