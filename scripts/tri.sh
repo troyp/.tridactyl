@@ -42,6 +42,8 @@ USAGE: tri [OPTION...]
         $TRI_CONFIG_DIR
         $TRI_SRC_DIR (or $TRI_REPO_DIR/src)
         $TRI_BROWSER
+    To auto-source tri.sh on first invocation, use alias:
+        alias tri='. path/to/tri.sh && tri'
 
 Options:
   -c     --config-dir       change to config directory
@@ -92,7 +94,7 @@ ENDHELP
             \rgrep -ilP --exclude-dir '.git' "$re" "$dir";
         elif [[ -n $re ]]; then
             \rgrep -inP --exclude-dir '.git' "$re" "$dir";
-        else { echo else; return 0; }
+        else { echo "nothing to do"; return 0; }
         fi
     } | {
         sed "s|$dir/||"
