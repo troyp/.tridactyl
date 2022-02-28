@@ -1,0 +1,64 @@
+#! /bin/bash
+
+# --- options ---
+PARSED=$(getopt -n "$0" -o h,i:,m,o: --long "help,input-filter:,multi,output-filter:"  -- "$@")
+if [ $? -ne 0 ]; then echo "getopt error"; exit 1; fi
+eval set -- "$PARSED"
+while true; do
+    case "$1" in
+        (-h|--help)
+            cat <<EOF
+USAGE: rofifilter [OPTION...]
+    Choose one or more lines from input interactively using rofi -dmenu. Perl expressions can be supplied
+    to filter both input and output.
+
+    eg. kwsearch -k | rofifilter -i 's/."kw":"([^ ]+)","title":"([^\"]*)","url":"(.*)"}/\1 \t \2   ( <\3> )/'
+
+Options:
+  -h     --help               show help
+  -i     --input-filter       filter input to be displayed to rofi -dmenu
+  -m     --multi              choose multiple lines
+  -o     --output-filter      filter output to be returned
+
+EOF
+            return; ;;
+        (-i | --input-filter)
+            ifilter="$2"
+            shift 2; ;;
+        (-m | --multi)
+            multiopt="-multi-select"
+            shift; ;;
+        (-o | --output-filter)
+            ofilter="$2"
+            shift 2; ;;
+        (--)
+            shift; break; ;;
+        (*)
+            shift; ;;
+    esac
+done
+# --- end options ---
+
+tempf=`mktemp`;
+lines=`mktemp`;
+rofithemestr='#window {width: 80%;} #listview {lines: 25;}';
+
+tee $tempf |
+    {
+        if [[ -n "$ifilter" ]]; then
+            perl -pe "$ifilter";
+        else
+            cat;
+        fi;
+    } |
+    rofi -theme-str "$rofithemestr" -dmenu -i -no-custom -format d "$multiopt" |
+    perl -pe "s/\n/p;/g" > $lines;
+cat $tempf |
+    sed -n -f $lines |
+    {
+        if [[ -n "$ofilter" ]]; then
+            perl -pe "$ofilter";
+        else
+            cat;
+        fi;
+    }
