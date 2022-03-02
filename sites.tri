@@ -225,9 +225,15 @@ command: wpbind "Bind key for wikipedia.org" bindurl wikipedia.org
 command: wpbind: "Bind key with description for wikipedia.org" bindurl: wikipedia.org
 command: wpbdoc "Provide a description on a separate line" js ;
 
+wpbind c<C-h> showkeysurl wikipedia.org c
+
+" | ct -- wikipedia/toggle |
+wpbind ct<C-h> showkeysurl wikipedia.org ct
 wpbind: ctm "Toggle mobile version" urltoggle https://en.m https://en
 wpbind: ctj "Toggle japanese edition" csites csites.wp.toggleJa()
+
 wpbind: cC "Cleanup (remove clutter from page)" csites csites.wp.cleanup()
+wpbind: c;; "Search ENGINES with page title" jsb fillcmdline(`searchwithengines ${sites.wp.getTopic()}`)
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────╮

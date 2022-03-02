@@ -149,6 +149,21 @@ var sites = {
             const url = `https://en.wikipedia.org/wiki/List_of_${sConv}_episodes`;
             utils.tab.open(url, opts);
         },
+
+        getTopic: function() {
+            const url = new URL(tri.contentLocation);
+            q = k => url.searchParams.get(k);
+            var topic;
+            if (url.pathname == "/w/index.php") {
+                if  (q("title").match(/Special(:|%3A)Search/)) { topic = q("search"); }
+                else if (q("action")) { topic = q("title"); }
+                else topic = null;
+            } else if (url.pathname.startsWith("/wiki/")) {
+                const match = url.pathname.match(/\/wiki\/([A-Za-z]+:)?(.*)/);
+                topic = match[2];
+            } else topic = null;
+            return decodeURIComponent(topic?.replace(/_/g, " "));
+        },
     },
 };
 
