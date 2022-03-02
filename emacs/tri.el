@@ -55,6 +55,7 @@
     "c\\"   'my/tri-bar-subheading-to-unibox
     "gb"    'my/tri-goto-binding
     "gc"    'my/tri-goto-command
+    "gh"    'my/tri-goto-heading
     "dc"    'my/tri-add-commdoc-above
     "o '"   'my/tri-show-quote-sections
     "p"     'my/tri-visit-pentadactylrc
@@ -100,6 +101,17 @@
             (re-search-forward (concat "^a?bind:? +\\(--mode=\\(normal\\|browser\\) +\\)?<?" b ">?") nil t))
           (progn (recenter 4) (beginning-of-line))
         (goto-char start-pos)))))
+
+(defun my/tri-goto-heading (h)
+  "Jump to specified boxed heading"
+  (interactive "sHeading: ")
+  (let ((start-pos (point)))
+    (unless (string-empty-p h) (beginning-of-buffer))
+    (if (re-search-forward (pcre-to-elisp (concat "^ *\" *[|│] +(.*-- )?" h ".* [|│]") "i") nil t)
+        (progn
+          (recenter 4)
+          (beginning-of-line))
+      (goto-char start-pos))))
 
 ;; ╭───────────────╮
 ;; │ my/tri-occur- │
