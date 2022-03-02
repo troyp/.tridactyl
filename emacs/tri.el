@@ -40,7 +40,6 @@
 
 (spacemacs/set-leader-keys-for-major-mode 'tridactyl-mode
     ","     'my/dactyl-cycle-fill-prefix
-    "/"     (my/make-insertion-around-point "/* " " */")
     "'"     'my/tri-prefix-subheading-above
     "ca"    'my/tri-bind-with-above-desc-to-bind:
     "cb"    'my/tri-bind:-to-bdoc
@@ -61,6 +60,13 @@
     "p"     'my/tri-visit-pentadactylrc
     "t"     'my/tri-toggle-penta-mode
     "SPC"   'helm-imenu
+    )
+
+(which-key-add-major-mode-key-based-replacements 'tridactyl-mode
+    ", c"       "convert"
+    ", d"       "documentation"
+    ", g"       "goto"
+    ", o"       "occur"
     )
 
 ;; ───────────────────────────────────────────────────────────────────────────────
