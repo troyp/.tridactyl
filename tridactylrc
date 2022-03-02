@@ -454,12 +454,16 @@ commdoc kwrofi "Keyword bookmark search: current tab [Rofi]"
 command kwrofi jsb -d¦ places.kw.rofi(JS_ARGS)¦
 commdoc multisearch "Search multiple queries"
 command multisearch jsb -d¦ places.kw.multi(JS_ARGS)¦
-commdoc multienginesearch "Search multiple engines with same query"
+commdoc multienginesearch "Search multiple engines with same query [...Es Q]"
 command multienginesearch jsb -d¦ places.kw.multiengine(JS_ARGS)¦
 commdoc multisearch_adj "Search multiple queries: adjacent tabs"
 command multisearch_adj jsb -d¦ places.kw.multi(JS_ARGS, {where: "related"})¦
-commdoc multienginesearch_adj "Search multiple engines with same query: adjacent tabs"
+commdoc multienginesearch_adj "Search multiple engines with same query: adjacent tabs [...Es Q]"
 command multienginesearch_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {where: "related"})¦
+commdoc searchwithengines "Search for query with engines [Q ...Es]"
+command searchwithengines jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst: true})¦
+commdoc searchwithengines_adj "Search for query with engines: adjacent tabs [Q ...Es]"
+command searchwithengines_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst: true, where: "related"})¦
 
 bind s<C-h> showkeys s
 

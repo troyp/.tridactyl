@@ -94,8 +94,12 @@ places.kw = {
         opts.where ||= "last";
         opts.background ??= true;
         const args = utils.tri.parseTerms(rawargs);
-        const query = args.slice(-1)[0];
-        const searchEngines = args.slice(0, -1);
+        const query = opts.queryFirst
+              ? args[0]
+              : args.slice(-1)[0];
+        const searchEngines = opts.queryFirst
+              ? args.slice(1)
+              : args.slice(0, -1);
         if (searchEngines.length==0) {
             utils.tab.open(query, opts);
         } else {
