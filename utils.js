@@ -902,7 +902,7 @@ utils.tri = {
         const defaultSE = tri.config.get("searchengine") || "google";
         const [SE, search] = opts.default
               ? [defaultSE, url]
-              : url.split(/ +/).map(trim);
+              : S.splitFirst(url, / +/);
         const su = tri.config.get("searchurls")[SE];
         return su.includes("%s")
             ? su.replace(/%s/g, search)
