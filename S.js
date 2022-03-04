@@ -48,6 +48,12 @@ S = {
     capitalizeInitial: function(s) {
         return s[0].toUpperCase() + s.slice(1);
     },
+    splitFirst: function(s, patt) {
+        const k = s.search(patt);
+        return k == -1
+            ? [s, ""]
+            : [s.slice(0, k), s.slice(k)];
+    },
     trim: function (s) {
         return s.replace(/^\s+|\s+$/g, "");
     },
