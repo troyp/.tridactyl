@@ -551,6 +551,9 @@ bind y<C-h> showkeys y
 bdoc y? "Yank the current tridactyl config as JSON"
 bind y? jsb tri.excmds.yank(JSON.stringify(tri.config.USERCONFIG))
 
+bdoc ydd "Yank current datetime (yyyy-mm-dd-HH-MM-SS)"
+bind ydd jsb utils.yank((new Date).toISOString().replace("T", "-").replace(/:[0-9.]+Z/, ""))
+
 bind: yf "Yank element text by CSS selector (first match)" fillcmdline yankfirst
 bind: ym "Yank the current mouse position [X Y]" yankmousepos
 bind: ys "Yank element text by CSS selector (all)" fillcmdline yankall
