@@ -80,8 +80,9 @@
   (interactive
    (list
     (let* ((cmd-at-pt (or (thing-at-point 'symbol) ""))
+           (cmd-at-pt-re (format "%s\\_>" cmd-at-pt))
            (msg       (format "Command [default %s]: " cmd-at-pt))
-           (input     (s-trim (read-string msg nil nil cmd-at-pt)))
+           (input     (s-trim (read-string msg nil nil cmd-at-pt-re)))
            (cmd       (replace-regexp-in-string "\\_<:" "" input)))
       cmd)))
   (unless (string-empty-p cmd)
