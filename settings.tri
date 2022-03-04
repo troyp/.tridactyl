@@ -41,3 +41,5 @@ setpref browser.tabs.tabMinWidth 120
 setpref browser.urlbar.speculativeConnect.enabled false
 setpref privacy.trackingprotection.enabled true
 setpref security.mixed_content.block_active_content false
+" use Alt- as the modifier for firefox keybindings
+setpref ui.key.accelKey 18
