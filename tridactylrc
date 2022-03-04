@@ -235,6 +235,7 @@ commdoc openorswitchc "Open an URL in current (with count: adjacent) tab, or swi
 command openorswitchc jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"related":"here"})¦
 commdoc tabopenorswitchc "Open an URL in a new final tab (count: current tab), or switch to existing tab"
 command tabopenorswitchc jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"here":"last"})¦
+command topenorswitch tabopenorswitchc
 commdoc openorswitch "Open an URL in current tab, or switch to existing tab"
 command openorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
 commdoc tabopenorswitch "Open an URL in a new (final) tab, or switch to existing tab"
