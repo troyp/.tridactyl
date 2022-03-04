@@ -807,12 +807,16 @@ bind: ,avy "Goto Youtube" tabopenorswitchc https://www.youtube.com/
 " │ ,aw -- web/weather │
 " ╰────────────────────╯
 bind ,aw<C-h> showkeys ,aw
+" Open Goonellabah Weather: 48 hour daily summary (weatherzone)
+bind ,awd topenorswitch https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah/next48hours#daily-summaries
 " Show Goonellabah Sunrise and Sunset Times
 bind ,aws jsb utils.yankf(`SUNRISE: %s\nSUNSET:  %s`, ...apps.sunriseSunset(...user.latlong));
 " Open Lismore Weather (BoM)
-bind ,aww tabopenorswitchc http://www.bom.gov.au/nsw/forecasts/lismore.shtml
+bind ,aww topenorswitch http://www.bom.gov.au/nsw/forecasts/lismore.shtml
 " Open Goonellabah Weather (timeanddate.com)
-bind ,awt tabopenorswitchc https://www.timeanddate.com/weather/@2164966
+bind ,awt topenorswitch https://www.timeanddate.com/weather/@2164966
+" Open Goonellabah Weather (weatherzone)
+bind ,awz topenorswitch https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────────────╮
