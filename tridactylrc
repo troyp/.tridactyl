@@ -571,7 +571,10 @@ bind: yls "Yank selected links" withlinks links.yankSelected()
 
 " | yx -- yank/text |
 bind yx<C-h> showkeys yx
-bind: yxp "Yank paragraph/heading" hint -p -c p,code,h1,h2,h3,h4,h5,h6,output,table
+bdoc yxh "Yank a text span highlighted with cutils.css.highlight (.tri_hl) [HINT]"
+bind yxh  hint -JVc ._tri_hl -F e=>cutils.yank(e.innerText)
+bind: yxH "Yank all text highlighted with cutils.css.highlight (.tri_hl)" yankall ._tri_hl
+bind: yxp "Yank paragraph/heading" hint -p -c p,code,pre,h1,h2,h3,h4,h5,h6,output,table
 bind: yxs "Yank spans of text, code etc" cujs cutils.yankspan()
 bind: yxx "Yank page text" cujs yankelt("body")
 
