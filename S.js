@@ -48,9 +48,10 @@ S = {
     capitalizeInitial: function(s) {
         return s[0].toUpperCase() + s.slice(1);
     },
-    strip: function (s) {
+    trim: function (s) {
         return s.replace(/^\s+|\s+$/g, "");
     },
+    strip: s=>S.trim(s),
     toLines: function (s, n=160, sep=/([^, ]+[, ]+)/) {
         var lines = s.split("\n");
         var lines_ = [];
