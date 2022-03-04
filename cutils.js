@@ -391,9 +391,15 @@ cutils.css = {
         return sheet;
     },
 
-    toggle: function(id) {
-        const style = document.getElementById(id);
-        return style.disabled ^= true;
+    highlight: function(style={}, opts={}) {
+        /* TODO: merge with existing _tri_hl span if overlapping */
+        /*       split span if overlapping with other elements */
+        const range = opts.range || document.getSelection().getRangeAt(0);
+        const span = document.createElement("span");
+        span.classList.add("_tri_hl");
+        span.style.backgroundColor = "rgba(255,255,100,0.5)";
+        for (k in style) span.style[k] = style[k];
+        range.surroundContents(span);
     },
 
     show: function(id) {
@@ -404,6 +410,11 @@ cutils.css = {
         return [...document.getElementById(id).sheet.cssRules]
             .map(r=>r.cssText)
             .join("\n");
+    },
+
+    toggle: function(id) {
+        const style = document.getElementById(id);
+        return style.disabled ^= true;
     },
 
     toggleOrCreate: function(id, ...rules) {
