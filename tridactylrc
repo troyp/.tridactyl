@@ -910,6 +910,11 @@ bind ,n<C-h> showkeys ,n
 commdoc rm "Remove elements matching selectors"
 command rm cujs -d¦ rmall(JS_ARGS)¦
 
+bind: ,nhd "Remove highlighting span from text [HINT]" hint -c ._tri_hl -F e=>e.outerHTML=e.innerHTML
+bind: ,nhD "Remove all highlighting spans from text" cujs $$("span._tri_hl").forEach(e=>e.outerHTML=e.innerHTML)
+bind: ,nhh "Highlight selected text" cujs cutils.css.highlight()
+bind: <A-F3> "Highlight selected text" cujs cutils.css.highlight()
+
 bind: ,nn "Remove elements matching selectors" fillcmdline rm
 bind: ,ni "Remove images" rm img
 bind: ,nI "Remove first image" rm img:first-of-type
