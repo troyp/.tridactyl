@@ -20,6 +20,7 @@ set followpagepatterns.prev \\b(back|prev(ious)?|less|newer)\\b|(<|«|◂|◄)$|
 set hintchars hjklasdfgyuiopqwertnmzxcvb
 set hintfiltermode vimperator-reflow
 set completions.Bmark.autoselect false
+set modeindicatorshowkeys true
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────╮
