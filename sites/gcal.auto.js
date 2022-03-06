@@ -1,4 +1,4 @@
-// autocmd DocSqtart calendar\.google\.com js -r auto/gcal.js
+// autocmd DocStart calendar\.google\.com js -r auto/gcal.js
 
 // ───────────────────────────────────────────────────────────────────────────────
 // ╭─────────────────╮
