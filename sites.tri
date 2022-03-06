@@ -202,6 +202,7 @@ bindurl reddit.com/ cto urltoggle https://www.reddit.com https://old.reddit.com
 " ╭───────────────────╮
 " │ StackExchange.com │
 " ╰───────────────────╯
+command se_js composite cujs -r sites/se.c.js ; js
 commdoc sebind "Bind key for stackexchange sites"
 command sebind jsb -d¦ sites.se.bind("--mode=normal", ...JS_ARGS)¦
 commdoc sebind: "Bind key with description for stackexchange sites"
@@ -209,9 +210,10 @@ command sebind: jsb -d¦ sites.se.bind_("--mode=normal", ...JS_ARGS)¦
 command: seexpandcomments "Expand all comments" cujs cutils.click("a.js-show-link", {all:true});
 
 sebind: cc "Expand all comments" seexpandcomments
+sebind: cC "Cleanup (remove clutter)" se_js se.cleanup()
 
 " | ct -- SE/toggle |
-sebind: ctw "Toggle widen content" csites csites.se.widen()
+sebind: ctw "Toggle widen content" se_js se.widen()
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────╮
