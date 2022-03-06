@@ -160,6 +160,12 @@ autocmd DocLoad https://calendar\.google\.com(/|$) js -r sites/gcal.auto.js
 autocmd TabEnter https://calendar\.google\.com(/|$) js -r sites/gcal.auto.js
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────╮
+" │ Google Earth │
+" ╰──────────────╯
+seturl https://earth.google.com modeindicator false
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
 " │ Medium.com │
 " ╰────────────╯
