@@ -17,22 +17,22 @@ places.bm = {
         const switches = opts.kw
               ? `-u -J -K '${opts.kw} --'`
               : `-u -J -s --`;
-        const bmk = await this.get(args, {switches: switches, decode: true});
+        const bmk = await this.get({args: args, switches: switches, decode: true});
         const query = bmk.includes("%s")
               ? await utils.prompt("parameters:")
               : "";
         utils.jsurirun(bmk, {searchterm: query});
     },
 
-    get: async function(args=[], opts={}) {
-        args = utils.tri.parseArgs(args);
+    get: async function(opts={}) {
+        args = utils.tri.parseArgs(opts.args, {type: "string"});
         opts = utils.tri.parseOpts(
             opts,
             { castString: "switches",
               nullishDefaults: {switches: "-u -s"}
             }
         );
-        const cmd  = `kwsearch ${opts.switches} -- ${args.join(" ").trim()}`;
+        const cmd  = `kwsearch ${opts.switches} -- ${opts.args}`;
         return tri.native.run(cmd).then(
             res => opts.decode ? utils.decode(res.content, opts.decodeFn) : res.content
         );
