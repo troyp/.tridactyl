@@ -20,6 +20,7 @@ protocol=
 # rofi vars
 rofi=
 rofitheme='#window {width: 80%;} #listview {lines: 25;}';
+rofifilter=
 multi=
 case="-i"
 # output vars
@@ -33,9 +34,9 @@ tempd=`mktemp -d`;
 # ╭─────────╮
 # │ options │
 # ╰─────────╯
-SHORT="f:,h,I,J,k,K:,m,o:,p:,r:,s,S,u,w,y,Y,1"
+SHORT="f:,h,I,J,k,K:,m,o:,p:,r:,R:,s,S,u,w,y,Y,1"
 LONG="folder:,help,case-sensitive,js-only,keyword-only,find-keyword:,multi-select,output-format:,protocol:,
-  regex:,select,select-keyword,url,kw,yank,yank-only,one-line"
+  regex:,rofi-filter:,select,select-keyword,url,kw,yank,yank-only,one-line"
 PARSED=$(getopt -a -n kwsearch --options "$SHORT" --longoptions "$LONG" -- "$@")
 
 eval set -- "$PARSED"
@@ -68,6 +69,7 @@ Options:
                                   json: force JSON output
   -p P   --protocol P         specify the protocol (or scheme) P: of URIs as regex
   -r RE  --regex RE           filter bookmarks with RE
+  -R RE  --filter RE          filter Rofi selection with input regex RE (implies --select)
   -s     --select             choose bookmark with Rofi
   -S     --select-keyword     choose bookmark keyword with Rofi (implies --keyword-only)
   -u     --url                print URL only (equivalent to `-o url`)
@@ -92,6 +94,7 @@ EOF
             shift 2; ;;
         (-p | --protocol) protocol="$2"; shift 2; ;;
         (-r | --regex) regex="$2"; shift 2; ;;
+        (-R | --rofi-filter) rofi=${rofi:-t}; rofifilter="$2"; shift 2; ;;
         (-s | --select) rofi=${rofi:-t}; shift; ;;
         (-S | --select-keyword) kwonly=t; rofi=kw; shift; ;;
         (-u | --url) oformat=url; shift; ;;
@@ -109,6 +112,9 @@ if [ $# -gt 0 ]; then args=t; fi;
 
 # output format defaults to url when -K or arguments
 if [ -n "$kw$args" ]; then oformat=${oformat:-url}; fi;
+
+# adjust rofifilter for -S
+if [ "$rofi" = kw ]; then rofifilter="${rofifilter:+$rofifilter }^"; fi;
 
 # ╭──────────────╮
 # │ dependencies │
@@ -167,12 +173,7 @@ if [ -n "$rofi" ]; then
     cat $bmarksjson |
         perl -pe 's/{"keyword":(null|"(.*)"),"title":"(.*)","uri":"(.*)"}/
                     sprintf("%-18s \t%s  (<%s>)","$2:",$3,$4)/e' |
-        if [ "$rofi" = kw ]; then
-            # keyword completion with rofi
-            rofi -theme-str "$rofitheme" -dmenu "$case" -no-custom -matching "regex" -format d -filter "^" $multi;
-        else
-            rofi -theme-str "$rofitheme" -dmenu "$case" -no-custom -matching "regex" -format d $multi;
-        fi > $lines;
+        rofi -theme-str "$rofitheme" -dmenu "$case" -no-custom -matching "regex" -format d -filter "$rofifilter" $multi > $lines;
 fi;
 
 # ╭────────╮
