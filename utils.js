@@ -17,10 +17,20 @@ var utils = {
         return components.map(decodeFn).join("%s");
     },
 
+    /*    jsurirun(url, opts): execute javascript URI in page
+     *  opts.searchterm [string]: search term for javscript bookmarklet (to replace %s)
+     *  opts.searchterm [true: boolean]: prompt for search term if necessary
+     *  opts.useOpen: run JS URI with :open command rather than :js
+     */
     jsurirun: async function(url, opts={}) {
+        if (opts.searchterm === true && url.includes("%s"))
+            opts.searchterm = this.prompt("search term");
         if (opts.searchterm) url = url.trim().replace("%s", opts.searchterm);
         const js = utils.decode(url.replace(/^javascript:/, ""));
-        return tri.controller.acceptExCmd(`js ${js}`);
+        const cmd = opts.useOpen
+              ? `open ${url}`
+              : `js ${utils.decode(url.replace(/^javascript:/, ""))}`;
+        return tri.controller.acceptExCmd(cmd);
     },
 
     message: function(s, opts={}) {
