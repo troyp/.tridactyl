@@ -44,7 +44,7 @@ while :
 do
     case "$1" in
         (-h | --help)
-            cat <<EOF
+            cat <<'EOF'
 USAGE: kwsearch [OPTION...]
        kwsearch [-k] [-m|-s] [-y] [SEARCHTERM...]
        kwsearch [-K KW] [-y] [SEARCHTERM...]
