@@ -551,6 +551,8 @@ command yankmousepos ! echo "yank $(xdotool getmouselocation | perl -pe 's/x:(\d
 commdoc yankall "Copy text from elements matching a selector"
 command yankall cujs -d¦ yankby(JS_ARGS.join(" "))¦
 command yankfirst cujs -d¦ yankby(JS_ARGS.join(" "), {firstMatch: true})¦
+command yankhint cujs -d¦ yankhint(JS_ARGS.slice(1).join(","))¦
+command yankinput cujs -d¦ yankinput(JS_ARGS.slice(1).join(","))¦
 
 bind y<C-h> showkeys y
 bdoc y? "Yank the current tridactyl config as JSON"
@@ -562,7 +564,10 @@ bind ydd jsb utils.yank((new Date).toISOString().replace("T", "-").replace(/:[0-
 bind: yf "Yank element text by CSS selector (first match)" fillcmdline yankfirst
 bind: ym "Yank the current mouse position [X Y]" yankmousepos
 bind: ys "Yank element text by CSS selector (all)" fillcmdline yankall
-bind: yS "Yank element text by CSS selector [HINT]" fillcmdline hint -p -c
+bind: yS "Yank element text by CSS selector [HINT]" fillcmdline yankhint
+
+" | yi -- yank/input |
+bind: yii "Yank input field [HINT]" yankinput
 
 " | yk -- yank/bookmarks |
 bind yk<C-h> showkeys yk
