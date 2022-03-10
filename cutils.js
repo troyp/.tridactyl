@@ -431,21 +431,26 @@ cutils.css = {
 // ╰──────────────────────────────────────────────────────────────────╯
 
 cutils.tri = {
+    /*    parseArgs(args, opts): return args as a string, an array of nonempty strings, or a number
+     *  opts.type: desired result type
+     *  opts.allowOpts: if true, treat the final arg as an opts object if possible; return [args, opts]
+     */
     parseArgs: function(args, opts={}) {
+        if (!Array.isArray(args)) args = [args];
         /* opts */
         opts = this.parseOpts(opts, {castString: "type"});
         var result = null, callerOpts = {};
-        if (opts.allowOpts && typeof args.at(-1) == "object") {
+        const finalArg = args.at(-1);
+        if (opts.allowOpts && typeof finalArg == "object" && !Array.isArray(finalArg)) {
             [args, [callerOpts]] = tri.R.splitAt(-1, args);
         }
         /* args */
-        if (typeof args == "string") args = [args];
         const argstr = args.join(" ").trim();
         switch (opts.type) {
           case "string":
               result = argstr; break;
           case "number":
-              result = Number(argstr) || null;
+              result = Number(argstr) || null; break;
           case "array":
           default:
               result = argstr.split(/ +/); break;
