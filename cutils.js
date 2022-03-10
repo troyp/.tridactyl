@@ -353,13 +353,27 @@ var cutils = {
         }
     },
 
-    yankspan: async function() {
-        const yankelts = [
+    selectors: {
+        yankspan: [
             "span", "em", "strong", "u", "sub", "sup", "ruby",
             "a", "tr", "td", "cite", "data", "dd", "dt",
             "code", "pre", "output",
-        ];
-        return hint("-c", yankelts.join(","), "-F", "e=>cutils.yank(e.innerText.trim())");
+        ],
+    },
+
+    yankhint: async function(selectors, opts={switches:"-J"}) {
+        return tri.controller.acceptExCmd(
+            `hint -c ${selectors} ${opts.switches} -F e=>cutils.yank(e.innerText.trim())`);
+    },
+
+    yankinput: async function(selectors="input", opts={switches:"-J"}) {
+        selectors ||= "input"; opts.switches ||= "";
+        return tri.controller.acceptExCmd(
+            `hint -c ${selectors} ${opts.switches} -F e=>cutils.yank(e.value.trim())`);
+    },
+
+    yankspan: async function() {
+        return this.yankhint(this.selectors.yankspan.join(","));
     },
 
 };
@@ -517,5 +531,5 @@ window.R = R;
     "getText", "getText1",
     "getSelectionDOM", "getSelectionHtml",
     "isolate", "keep", "rm", "rmall",
-    "yankby", "yank1by", "yankelt",
+    "yankby", "yank1by", "yankelt", "yankhint", "yankinput", "yankspan",
 ].forEach(k => window[k]=cutils[k]);
