@@ -134,6 +134,14 @@ places.kw = {
 // ╰────────────────────────╯
 
 places.dl = {
+    /* get information from nth latest download using callback FN or property */
+    get: async function(n=1, fn=dl=>JSON.parse(JSON.stringify(dl))) {
+        if (typeof fn === "string")
+            return this.getLatest(n).then(dl=>dl[fn]);
+        else
+            return this.getLatest(n).then(fn);
+    },
+
     /* nth latest download directory */
     getDir: async function(n=1) {
         return this.getLatest(n).then(d=>d.filename.replace(/[^/]*$/, ""));
@@ -157,7 +165,12 @@ places.dl = {
 
     show: async function(opts={}) {
         const dls = await browser.downloads.search({limit: 0, orderBy: ["-startTime"]});
-        return utils.msg(dls.map(dl => dl.filename));
+        return utils.msg(dls.map((dl, i) => `【${i}】… ${dl.filename}`));
+    },
+
+    yank: async function(n=1, fn) {
+        const val = await this.get(n, fn);
+        return utils.yank(val);
     },
 
 };
