@@ -527,7 +527,8 @@ bind: s;mM "Search multiple queries [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/
 bind: s;me "Search multiple engines: adjacent tab [Rofi]" ! echo -n "multienginesearch_adj "; kwsearch -w -S -m -1
 bind: s;mE "Search multiple engines [Rofi]" ! echo -n "multienginesearch "; kwsearch -w -S -m -1
 
-bind ss fillcmdline open search
+" | ss -- shopping search |
+bind: ssz "Search amazon and ebay" fillcmdline multienginesearch! "e amazau"
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────╮
