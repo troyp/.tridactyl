@@ -478,6 +478,19 @@ commdoc searchwithengines_adj "Search for query with engines: adjacent tabs [Q .
 command searchwithengines_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst: true, where: "related"})¦
 
 bind s<C-h> showkeys s
+bind s/ fillcmdline find
+jsb tri.excmds.bind("s'", "nativelinksearch")
+
+bind n findnext
+bind N findnext
+bind ? fillcmdline find -?
+bind: <C-/> "Remove tridactyl search highlighting" clearsearchhighlight
+bind: ,<C-/> "Remove browser.find search highlighting" jsb browser.find.removeHighlighting()
+
+" */#: Temporary implementation using find
+" TODO: implement these properly with forwards/backwards cycling
+bind * js tri.controller.acceptExCmd(`find ${window.getSelection()+""}`);
+bind # js tri.controller.acceptExCmd(`find -? ${window.getSelection()+""}`);
 
 " | sh -- search history |
 bind sh<C-h> showkeys sh
@@ -511,19 +524,6 @@ bind: s;me "Search multiple engines: adjacent tab [Rofi]" ! echo -n "multiengine
 bind: s;mE "Search multiple engines [Rofi]" ! echo -n "multienginesearch "; kwsearch -w -S -m -1
 
 bind ss fillcmdline open search
-bind s/ fillcmdline find
-jsb tri.excmds.bind("s'", "!s key ctrl+v apostrophe")
-
-bind n findnext
-bind N findnext
-bind ? fillcmdline find -?
-bind <C-/> "Remove tridactyl search highlighting" clearsearchhighlight
-bind: ,<C-/> "Remove browser.find search highlighting" jsb browser.find.removeHighlighting()
-
-" */#: Temporary implementation using find
-" TODO: implement these properly with forwards/backwards cycling
-bind * js tri.controller.acceptExCmd(`find ${window.getSelection()+""}`);
-bind # js tri.controller.acceptExCmd(`find -? ${window.getSelection()+""}`);
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────╮
