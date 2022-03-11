@@ -178,6 +178,12 @@ var utils = {
         return this.xdoelem(selector, xdocmd, opts);
     },
 
+    xdokeyseq: async function(args) {
+        const [sleep, ...keys] = utils.tri.parseTerms(args);
+        const xdocmd = keys.map(k => `key ${k}`).join(` sleep ${sleep} `);
+        return tri.native.run("xdotool " + xdocmd);
+    },
+
     yank: function(s, opts={}) {
         /* options */
         opts = utils.tri.parseOpts(opts, {castBoolean: "msg"});
