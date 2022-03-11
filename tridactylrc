@@ -468,6 +468,8 @@ commdoc multisearch "Search multiple queries"
 command multisearch jsb -d¦ places.kw.multi(JS_ARGS)¦
 commdoc multienginesearch "Search multiple engines with same query [...Es Q]"
 command multienginesearch jsb -d¦ places.kw.multiengine(JS_ARGS)¦
+commdoc multienginesearch! "Search multiple engines (in quotes) with same (multiword) query ['...Es' ...Q]"
+command multienginesearch! jsb -d¦ places.kw.multi(JS_ARGS, {singleQuery:true})¦
 commdoc multisearch_adj "Search multiple queries: adjacent tabs"
 command multisearch_adj jsb -d¦ places.kw.multi(JS_ARGS, {where: "related"})¦
 commdoc multienginesearch_adj "Search multiple engines with same query: adjacent tabs [...Es Q]"
