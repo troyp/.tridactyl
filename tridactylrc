@@ -476,8 +476,10 @@ commdoc searchwithengines "Search for query with engines [Q ...Es]"
 command searchwithengines jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst: true})¦
 commdoc searchwithengines_adj "Search for query with engines: adjacent tabs [Q ...Es]"
 command searchwithengines_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst: true, where: "related"})¦
+command: nativelinksearch "Search for links (FF builtin)" !s xdotool sleep 0.4 key ctrl+v apostrophe
 
 bind s<C-h> showkeys s
+bind sl nativelinksearch
 bind s/ fillcmdline find
 jsb tri.excmds.bind("s'", "nativelinksearch")
 
