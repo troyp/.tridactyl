@@ -883,14 +883,18 @@ commdoc jsbm "Eval expression and display in a message box"
 command jsbm jsb -d¦ tri.excmds.jsb(`utils.msg(${JS_ARGS.join(" ")})`)¦
 commdoc jse "Find elements matching selector and display in a message box"
 command getselector js -d¦ alert([...document.querySelectorAll(JS_ARGS.join(" "))].map(t=>t.tagName+"\t"+t.innerText.slice(0,50).replace("\n","\t")).join("\n"))¦
+command jseq composite js -r cutils.js ; js -d¦ fillcmdline_nofocus(eval(JS_ARGS.join(" ")))¦
+command jseq! composite js -r cutils.js ; js -d¦ fillcmdline("jseq! "+eval(JS_ARGS.join(" ")))¦
 
 bind ,e<C-h> showkeys ,e
 bind ,eb fillcmdline jsbm
-bind ,ec js -r cutils.js
+bind: ,ec "Evaluate javascript expression iteratively in commandline" fillcmdline jseq!
 bind ,ee fillcmdline jse
 bind ,ej fillcmdline cujs
 bind ,ep fillcmdline getproperties
 bind ,es fillcmdline getselector
+
+bind: J "Evaluate javascript expression in commandline" fillcmdline jseq
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────────╮
