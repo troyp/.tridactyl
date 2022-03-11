@@ -15,13 +15,15 @@ places.bm = {
     /* Choose bookmarklet with keyword or rofi, then query for parameters if %s in URI */
     bmklet: async function(args=[], opts={}) {
         const switches = opts.kw
-              ? `-u -J -K '${opts.kw} --'`
-              : `-u -J -s --`;
+              ? `-u -J -K ${opts.kw} --`
+              : ( opts.filter
+                  ? `-u -J -F "${opts.filter}" --`
+                  : `-u -J -s --` );
         const bmk = await this.get({args: args, switches: switches, decode: true});
         const query = bmk.includes("%s")
               ? await utils.prompt("parameters:")
               : "";
-        utils.jsurirun(bmk, {searchterm: query});
+        utils.jsurirun(bmk, {searchterm: query, useOpen: opts.useOpen});
     },
 
     get: async function(opts={}) {
