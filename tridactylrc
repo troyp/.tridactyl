@@ -716,13 +716,19 @@ commdoc opendlinbrowser "Open nth last download in browser"
 command opendlinbrowser jsb -d¦ places.dl.getLatest(JS_ARGS[1]).then(dl=>utils.tab.open(`file://${dl.filename}`))¦
 commdoc opendldirinbrowser "Open nth last download directory with dolphin"
 command opendldirinbrowser jsb -d¦ places.dl.getDir(JS_ARGS[1]).then(dl=>utils.tab.open(`file://${dl}`))¦
+commdoc yankdlpath "Yank last download path"
+command yankdlpath jsb -d¦ places.dl.yank(JS_ARGS[1]||1, "filename")¦
+commdoc yankdlfilename "Yank last download filename"
+command yankdlfilename jsb -d¦ places.dl.yank(JS_ARGS[1]||1, dl=>dl.filename.replace(/.*\//, ""))¦
+commdoc yankdldir "Yank directory of nth last download"
+command yankdldir jsb -d¦ places.dl.getDir(JS_ARGS[1]||1).then(dl=>utils.yank(dl))¦
 
 bind ad<C-h> showkeys ad
 bind: ads "Show all downloads" jsb places.dl.show()
 
 " | add -- apps/downloads/dir |
 bind add<C-h> showkeys add
-bind: adod "Open last download directory with dolphin" opendldir dolphin
+bind: addd "Open last download directory with dolphin" opendldir dolphin
 bind: adde "Open last download directory with dired" opendldirindired
 bind: addr "Open last download directory with ranger" opendldir roxterm -e ranger --selectfile
 bind: adds "Open last download directory with program via mimeopen" opendldir roxterm -e zsh -c "mimeopen -a %s"
@@ -739,6 +745,11 @@ bind: adxd "Open last download with default program (via mimeopen)" opendl mimeo
 bind: adxs "Open last download with program via mimeopen" opendl roxterm -e zsh -c "mimeopen -a %s"
 bind: adxx "Open last download with program" fillcmdline_withcount opendln
 bind: adx= "Open last download: set default application for type and open" opendl roxterm -e zsh -c "mimeopen -d %s"
+
+" | ady -- apps/downloads/yank |
+bind: adyd "Yank last download directory" yankdldir
+bind: adyf "Yank last download filename" yankdlfilename
+bind: adyy "Yank last download path" yankdlpath
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────╮
