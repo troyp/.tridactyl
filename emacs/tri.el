@@ -129,6 +129,27 @@
 ;; │ documentation commands │
 ;; ╰────────────────────────╯
 
+(defun my/get-surrounding-lines (beg-regex end-regex &optional pos)
+  "Return a pair (BEG . END) marking the range of lines from the first line before POS matching BEG-REGEX to
+the first line after POS matching END-REGEX"
+  (let (beg end)
+    (save-excursion
+      (when pos (goto-char pos))
+      (end-of-line)
+      (re-search-backward beg-regex)
+      (setq beg (line-beginning-position))
+      (re-search-forward end-regex)
+      (setq end (line-end-position))
+      (cons beg end))))
+
+(defun my/select-surrounding-lines (beg-regex end-regex &optional pos)
+  "Select a region of lines from the first line before POS matching BEG-REGEX to the first line after POS
+ matching END-REGEX"
+  (let ((range (my/get-surrounding-lines beg-regex end-regex pos)))
+    (set-mark (car range))
+    (goto-char (cdr range))
+    (activate-mark)))
+
 (my/kmacro-fset 'my/tri-comment-to-inline-description
   "Convert a comment above a bind/command/etc definition to an inline description in a bindd/etc definition"
   [1 119 118 36 104 121 106 1 101 97 100 escape 87 87 105 34 34 32 escape
@@ -139,21 +160,26 @@
   [107 48 108 108 118 36 104 121 106 48 69 97 58 escape 87 69 97 32 34 34 escape 80 107 100 100])
 
 (defun my/tri-bind:-to-bdoc ()
-  "Convert a bdoc: command to a bind command with a bdoc command above"
+  "Convert a bind: command to a bind command with a bdoc command above"
   (interactive)
   (my/evil-substitute-region "bind: +([^ ]+) +\"([^\"]+)\" +(.*)" "bdoc \\1 \"\\2\"\nbind \\1 \\3"))
 
 (defun my/tri-bdoc-to-bind: ()
+  "Convert a bind command with a bdoc command above to a bind: command"
   (interactive)
+  (my/select-surrounding-lines "bdoc" "bind")
   (my/evil-substitute-region "bdoc +([^ ]+) +\"(.*)\"\\nbind +([^ ]+) +(.*)" "bind: \\1 \"\\2\" \\4"))
 
-(my/kmacro-fset 'my/tri-command:-to-commdoc
-  "Convert a command: definition into a command definition with description in a commdoc command above"
-  [121 121 112 69 120 102 34 100 59 120 107 48 52 108 99 69 100 111 99 escape 59 59 108 100 36 106 36])
+(defun my/tri-command:-to-commdoc ()
+  "Convert a command: command to a command command with a commdoc command above"
+  (interactive)
+  (my/evil-substitute-region "command: +([^ ]+) +\"([^\"]+)\" +(.*)" "commdoc \\1 \"\\2\"\ncommand \\1 \\3"))
 
-(my/kmacro-fset 'my/tri-commdoc-to-command:
-  "Convert a command definition with commdoc above to a command: definition with inline description"
-  [107 48 87 87 100 36 106 112 97 32 escape 48 101 97 58 escape 107 100 100])
+(defun my/tri-commdoc-to-command: ()
+  "Convert a command command with a commdoc command above to a command: command"
+  (interactive)
+  (my/select-surrounding-lines "commdoc" "command")
+  (my/evil-substitute-region "commdoc +([^ ]+) +\"(.*)\"\\ncommand +([^ ]+) +(.*)" "command: \\1 \"\\2\" \\4"))
 
 (my/kmacro-fset 'my/tri-add-commdoc-above
   "Add a `commdoc` statement above a command definition"
