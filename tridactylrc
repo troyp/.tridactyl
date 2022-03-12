@@ -946,6 +946,7 @@ bind: ,lt "Append link text & destinations to end of page" withlinks links.appen
 " ╰────────────╯
 bind ,n<C-h> showkeys ,n
 
+command toggleprop cujs -d¦ togglepropWr(JS_ARGS)¦
 commdoc rm "Remove elements matching selectors"
 command rm cujs -d¦ rmall(JS_ARGS)¦
 

@@ -316,6 +316,23 @@ var cutils = {
         return res?.content.trim().split("\n");
     },
 
+    toggleprop: async function(obj, prop, val1, val2) {
+        const val = obj[prop];
+        if (val == val1) obj[prop] = val2;
+        else obj[prop] = val1;
+        return (val==val1)
+            ? obj[prop] = val2
+            : obj[prop] = val1;
+    },
+
+    togglepropWr: async function(rawargs) {
+        const [sel, propchain, val1, val2] = cutils.tri.parseTerms(rawargs);
+        const top_obj = $1(sel);
+        const [obj, prop] = cutils.resolveComplexProperty(top_obj, propchain);
+        // alert([sel, propchain, val1, val2, prop, obj[prop]]);
+        return this.toggleprop(obj, prop, val1, val2||"");
+    },
+
     /** Unhides elements matching SELECTOR. See get() for arguments and options */
     unhide: function(selector, opts={}) {
         const elts = cutils.get(selector, opts);
@@ -562,6 +579,6 @@ window.R = R;
     "click", "clickall",
     "getText", "getText1",
     "getSelectionDOM", "getSelectionHtml",
-    "isolate", "keep", "rm", "rmall",
+    "isolate", "keep", "rm", "rmall", "toggleprop", "togglepropWr",
     "yankby", "yank1by", "yankelt", "yankhint", "yankinput", "yankspan",
 ].forEach(k => window[k]=cutils[k]);
