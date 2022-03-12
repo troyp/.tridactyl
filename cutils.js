@@ -281,6 +281,13 @@ var cutils = {
         return s;
     },
 
+    /*  OBJ, PROP1.PROP2...PROPN -> [OBJ.PROP1...PROPN-1, PROPN] */
+    resolveComplexProperty: function(obj, propchain) {
+        var props = propchain.split(".").reverse();
+        while (props.length > 1) obj = obj[props.pop()];
+        return [obj, props[0]];
+    },
+
     /** Remove elements matching SELECTOR. See get() for arguments and options */
     rm: function(selector, opts={}) {
         const elts = cutils.get(selector, opts);
@@ -520,6 +527,31 @@ cutils.tri = {
         /* return */
         return opts;
     },
+
+    /* Parse string into an array of terms by splitting on spaces except where
+     * multiple words are quoted
+     */
+    parseTerms: function(args) {
+        const argstr = typeof args==="string" ? args : args.join(" ").trim().replace(/ +/, " ");
+        const words = argstr.split(" ");
+        var terms = [];
+        for (i=0; i<words.length; ++i) {
+            /* FIXME? case of an isolated quote surrounded by spaces */
+            /* TODO: proper parsing with escapes; decide how to treat mid-word quotes */
+            if (words[i].startsWith("\"")) {
+                const termwords = [words[i]];
+                if (words[i] == "\"") i++;
+                while (!words[i].endsWith("\"")) {
+                    i++;
+                    termwords.push(words[i]);
+                }
+                terms.push(termwords.join(" ").replace(/^"|"$/g, ""));
+            } else
+                terms.push(words[i]);
+        }
+        return terms;
+    },
+
 };
 
 window.cutils = cutils;
