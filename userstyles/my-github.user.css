@@ -1,0 +1,23 @@
+/* ==UserStyle==
+@name           my-github
+@namespace      https://github.com/troyp
+@version        1.0.0
+==/UserStyle== */
+@-moz-document domain("github.com") {
+    .Header {
+        background-color: #f0f0f0 !important;
+        height: 3.2em;
+    }
+    .Header-link {
+        color: #000 !important;
+    }
+    .header-search-wrapper {
+        background-color: #fff !important;
+    }
+    .header-search-input::placeholder {
+        color: #5b5b5b !important;
+    }
+    #repository-container-header,.pagehead {
+        background-color: #fff !important;
+    }
+}
