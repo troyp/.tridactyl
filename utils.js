@@ -506,7 +506,12 @@ utils.tab = {
     remove: async function(pred) {
         const tabs = await browser.tabs.query({pinned: false, currentWindow: true});
         const atab = await activeTab();
-        const ids = tabs.filter(pred).map(tab => tab.id);
+        const ids = tabs.filter(t=>{
+            t.titleurl = `${t.url}\n${t.title}`;
+            const i = t.index + 1;
+            const i0 = atab.index + 1;  /* index may change: keep inside loop */
+            return pred(t, i, i0);
+        }).map(tab => tab.id);
         return browser.tabs.remove(ids);
     },
 
