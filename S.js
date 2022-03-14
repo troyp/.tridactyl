@@ -42,6 +42,7 @@ S = {
         let s2adj = this.isLowerCase(s) ? s2.toLowerCase() : s2;
         return s2adj.match(s);
     },
+    matchSC: (s, s2) => S.matchSmartCase(s, s2),
     capitalize: function(s) {
         return s.replace(/\b\w/g, function (c) { return c.toUpperCase(); });
     },
