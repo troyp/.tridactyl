@@ -515,6 +515,12 @@ utils.tab = {
         return browser.tabs.remove(ids);
     },
 
+    removeWr: async function(args) {
+        const expr = utils.tri.parseExpr(args);
+        const pred = eval(`(t, i, i0)=>${expr}`);
+        return this.remove(pred);
+    },
+
     removeWithRofi: async function(opts={}) {
         const indexes = await this.rofiChoose(opts);
         const N = await this.getN();
@@ -804,6 +810,12 @@ utils.tri = {
         const countElem = hasCount && args.pop();
         const count = countElem && parseInt(countElem);
         return [this.parseArgs(args, opts), count];
+    },
+
+    /** convert args to a string for interpretation by eval() */
+    parseExpr: function(args, opts={}) {
+        const argstr = this.parseArgs(args, {type: "string", ...opts});
+        return argstr.replace(/ OR |‖/g, " || ").replace(/⊕/g, "|");
     },
 
     /** options.castString:               if a string is passed for opts rather than an array, it
