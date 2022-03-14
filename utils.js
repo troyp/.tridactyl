@@ -754,11 +754,13 @@ utils.tri = {
         const docdefRe = /^([a-zA-Z_!:]+) ([^ ]+) "([^"]*)" (.*)/;
         const match = argstr.match(docdefRe);
         [defCmd, key, desc, rest] = match.slice(1);
-        /* TODO: implement documentation system */
-        /* for now, extract descriptions statically from file */
+        /* store descriptions under tri._doc, eg.
+           tri._doc.command.urlup_n == "Go to the nth parent URL" */
+        /* TODO: do bindings have a unique representation for keys?
+           if not, convert to canonical representation */
+        ((window.tri._doc ||= {})[defCmd] ||= {})[key] = desc;
         tri.controller.acceptExCmd(`${defCmd} ${key} ${rest}`);
     },
-
 
     gotoCommandSource: function(s) {
         const repo = "~/source/git-repos/tridactyl";
