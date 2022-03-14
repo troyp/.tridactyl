@@ -317,6 +317,7 @@ bind: bb "Switch to tab from completion list" fillcmdline tab
 bind: bo "Open in adjacent tab" fillcmdline tabopen_adj
 bind: bO "Open in adjacent background tab" fillcmdline tabopen_bg
 bind: bl "Open in last tab" fillcmdline tabopen_last
+bind: bn "Show number of tabs" jsb utils.tab.showN(true);
 bind: bp "Pin/unpin tab" pin
 bind: b> "Close all tabs to the right" tabclosealltoright
 bind: b< "Close all tabs to the left"  tabclosealltoleft

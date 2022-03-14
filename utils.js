@@ -617,6 +617,15 @@ utils.tab = {
         } else return null;
     },
 
+    showN: async function(opts={}) {
+        opts = utils.tri.parseOpts(opts, {castBoolean: "breakdown"});
+        const n = await this.getN();
+        if (opts.breakdown) {
+            const pinned = await this.getPinned();
+            const p = pinned.length;
+            return utils.message(`#TABS (pinned/unpinned):  ${n} (${p}/${n-p})`);
+        } else return utils.message(`#TABS:  ${n}`);
+    },
 
     summon: async function(tabnum, opts={}) {
         if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
