@@ -34,7 +34,7 @@ jsb window.sprintf = sprintf
 " │ Documentation commands │
 " ╰────────────────────────╯
 " Create versions of definition commands taking descriptions
-command docdef jsb -d¦ utils.tri.docdef(JS_ARGS)¦
+command docdef jsb -d‖ utils.tri.docdef(JS_ARGS)‖
 " Define command with description - doesn't work with `js -d`/`jsb -d` commands
 command command: docdef command
 commdoc docbindmode "bind for mode with description"
