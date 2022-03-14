@@ -220,7 +220,7 @@ utils.tab = {
     },
 
     filter: function(pred) {
-        return this.remove(t=>!pred(t));
+        return this.remove((...args)=>!pred(...args));
     },
 
     firstDWIM: async function() {
