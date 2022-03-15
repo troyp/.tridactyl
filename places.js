@@ -110,19 +110,21 @@ places.kw = {
         }
     },
 
-    /* TODO: should I enforce the order of tabs? Or at least statistically
-     * encourage correct order by introducing a short delay?
      */
     multi: async function(rawargs, opts={}) {
+        /*  TODO: should I enforce the order of tabs? Or at least statistically */
+        /*  encourage correct order by introducing a short delay?               */
         opts.where ||= "last";
         opts.background ??= true;
         const [enginestr, ...queries] = utils.tri.parseTerms(rawargs);
         const SEs = enginestr.split(/ +/);
         if (opts.where=="next") {
-            queries.reverse();
             SEs.reverse();
+            opts.singleQuery || queries.reverse();
         }
-        const searches = SEs.flatMap(se=>queries.map(q=>[se,q]));
+        const searches = opts.singleQuery
+              ? SEs.map(se=>[se,queries.join(" ")])
+              : SEs.flatMap(se=>queries.map(q=>[se,q]));
         for (s of searches) await this.open(s, opts);
     },
 
