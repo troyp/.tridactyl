@@ -291,8 +291,10 @@ command omni_focus xdo key ctrl+l key ctrl+u
 " ╰───────────╯
 unbind b
 
-command: tabremove "Close tabs matching string" jsb -p utils.tab.remove(t=>(S.matchSmartCase(JS_ARG, t.url)));
-command: tabfilter "Close tabs not matching string" jsb -p utils.tab.filter(t=>(S.matchSmartCase(JS_ARG, t.url)));
+command: tabremove "Close tabs matching expression" jsb -d¦ utils.tab.removeWr(JS_ARGS)¦
+command: tabfilter "Close tabs not matching expression" jsb -d¦ utils.tab.filterWr(JS_ARGS)¦
+command: tabremovestr "Close tabs matching string" jsb -p utils.tab.remove(t=>S.matchSC(JS_ARG, t.titleurl));
+command: tabfilterstr "Close tabs not matching string" jsb -p utils.tab.filter(t=>S.matchSC(JS_ARG, t.titleurl));
 commdoc tabswitchprev "Switch to last accessed tab"
 command tabswitchprev jsb -d¦ utils.tab.switchAlternate(JS_ARGS[1]||1)¦
 commdoc tabswitchprev! "Switch to last accessed tab and close current tab" 
@@ -323,10 +325,13 @@ bind: b> "Close all tabs to the right" tabclosealltoright
 bind: b< "Close all tabs to the left"  tabclosealltoleft
 
 " | bd -- tabs/delete |
+" | bd; -- tabs/delete/filter |
 bind bd<C-h> showkeys bd
 bind: bda "Close alternate tab" jsb utils.tab.getAlternate().then(t=>browser.tabs.remove(t.id));
-bind: bdm "Close tabs matching string" fillcmdline tabremove
-bind: bd;m "Close tabs not matching string" fillcmdline tabfilter
+bind: bde "Close tabs matching expression" fillcmdline tabremove
+bind: bd;e "Close tabs not matching expression" fillcmdline tabfilter
+bind: bdm "Close tabs matching string" fillcmdline tabremovestr
+bind: bd;m "Close tabs not matching string" fillcmdline tabfilterstr
 bind: bdo "Close other tabs" tabonly
 bind: bds "Select tabs to close with rofi" jsb utils.tab.removeWithRofi();
 bind: bd;s "Select tabs to keep with rofi; close others" jsb utils.tab.removeWithRofi({invert:true});

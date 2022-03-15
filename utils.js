@@ -223,6 +223,12 @@ utils.tab = {
         return this.remove((...args)=>!pred(...args));
     },
 
+    filterWr: async function(args) {
+        const expr = utils.tri.parseExpr(args);
+        const pred = eval(`(t, i, i0)=>${expr}`);
+        return this.filter(pred);
+    },
+
     firstDWIM: async function() {
         const currentTab = await tri.webext.activeTab();
         if (await this.currentOrd() == 1) {
