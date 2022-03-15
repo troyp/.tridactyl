@@ -142,6 +142,7 @@ var cutils = {
             castRegExp: "match",
             castFunction: "filter",
             castArrayToBooleanOpts: true,
+            defaults: { "textProperty": "innerText", },
         });
         function getParent(e, n) {
             if (n==0) return e;
