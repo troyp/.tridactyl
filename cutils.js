@@ -120,14 +120,15 @@ var cutils = {
 
     /**   get(selector, opts)
      *    get(selector, context:HTMLElement)
-     *    get(selector, ["firstMatch"]:[string])
+     *    get(selector, ["firstMatch"|"lastMatch"]:[string])
      *    get(selector, filter:e=>Bool)
      *    get(selector, pattern:string|RegExp)
      *  Get matching elements.
      *  Options:
      *    opts.filter:        predicate that selected elements must satisfy
-     *    opts.firstMatch:    only get the first matching element
+     *    opts.firstMatch:    [Bool] only get the first matching element
      *    opts.context:       the root element of the search; null for whole document
+     *    opts.lastMatch:     [Bool] only get the last matching element
      *    opts.match:         a regex or string that selected elements must match;
      *    opts.textProperty   property that opts.match tests against (default: "innertext")
      *    opts.returnParent   return the parents (or nth ancestors) of the matched elements
@@ -155,8 +156,10 @@ var cutils = {
             return match_ok && filter_ok;
         }
         /* main logic */
-        if (opts.firstMatch) {
-            const elt = $$(selector, opts.context).find(pred);
+        if (opts.firstMatch || opts.lastMatch) {
+            const elt = opts.firstMatch
+                  ? $$(selector, opts.context).find(pred)
+                  : $$(selector, opts.context).reverse().find(pred);
             if (elt)
                 return opts.returnParent ? getParent(elt, opts.returnParent) : elt;
             else
