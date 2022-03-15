@@ -156,20 +156,18 @@ var cutils = {
             return match_ok && filter_ok;
         }
         /* main logic */
+        var elts;
         if (opts.firstMatch || opts.lastMatch) {
             const elt = opts.firstMatch
                   ? $$(selector, opts.context).find(pred)
                   : $$(selector, opts.context).reverse().find(pred);
-            if (elt)
-                return opts.returnParent ? getParent(elt, opts.returnParent) : elt;
-            else
-                return [];
+            elts = elt ? [elt] : [];
         } else {
-            const elts = $$(selector, opts.context).filter(pred);
-            return opts.returnParent
-                ? elts.map(e=>getParent(e, opts.returnParent))
-                : elts;
+            elts = $$(selector, opts.context).filter(pred);
         }
+        return opts.returnParent
+            ? elts.map(e=>getParent(e, opts.returnParent))
+            : elts;
     },
 
     getSelectionDOM: function() {
