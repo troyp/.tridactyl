@@ -833,6 +833,8 @@ bind: ,amC "Open Gmail Contacts (basic)" tabopenorswitchc https://mail.google.co
 bind: ,amm "Open Gmail (basic)" tabopenorswitchc https://mail.google.com/mail/u/0/h/1f0xqcpo2pdl3/?f=1
 bind: ,amM "Open Gmail" tabopenorswitchc https://mail.google.com/mail/u/0/#inbox
 bind: ,amw "Compose mail (gmail)" tabopenorswitchc https://mail.google.com/mail/u/0/h/1vlpaqi99ql4v/?&cs=b&pv=tl&v=b
+bdoc ,amu "Click unsubscribe"
+bind ,amu cujs !click("a", {match: /unsubscribe/i, lastMatch: true}) && tri.excmds.find("unsubscribe")
 bind: ,amy "Open Yahoo Mail" tabopenorswitchc https://au.mail.yahoo.com/d/folders/1
 
 " ╭─────────────────────╮
