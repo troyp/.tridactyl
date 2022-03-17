@@ -1077,7 +1077,8 @@ bind: ,,lV "Follow visited link in new tab [HINTS]" hint -c :visited
 command setmark jsb -p tri.controller.acceptExCmd(`js window._tri_mark_reg_${JS_ARG}=window.scrollY`)
 command gotomark jsb -p tri.controller.acceptExCmd(`js window.scrollTo(0, window._tri_mark_reg_${JS_ARG})`)
 
-bind: m "Set mark" gobble 1 setmark
+bind: m "Set mark (page-local)" gobble 1 setmark
+jsb utils.tri.docdef(["bind ' \"Goto mark (page-local)\""], {noDef: true})
 jsb tri.excmds.bind("'", "gobble 1 gotomark")
 
 " ───────────────────────────────────────────────────────────────────────────────
