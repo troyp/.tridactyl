@@ -47,7 +47,7 @@ jsb window.sprintf = sprintf
 " ╰────────────────────────╯
 " Create versions of definition commands taking descriptions
 command docdef jsb -d‖ utils.tri.docdef(JS_ARGS)‖
-" Define command with description - doesn't work with `js -d`/`jsb -d` commands
+command docset jsb -d‖ utils.tri.docset(JS_ARGS, { noDef: true })‖
 command command: docdef command
 commdoc docbindmode "bind for mode with description"
 command docbindmode jsb -d¦ utils.tri.docBindMode(JS_ARGS)¦
@@ -67,8 +67,9 @@ command: bindurl: "bindurl with description" jsb -d¦ utils.tri.docBindUrl(JS_AR
 command: set: "set with description" docdef set
 command: setpref: "setpref with description" docdef setpref
 command: guiset_quiet: "guiset_quiet with description" docdef guiset_quiet
-command: commdoc "provide a description for a command definition on a separate line" js ;
-command: bdoc "provide a description for a bind definition on a separate line" js ;
+
+command: commdoc "provide a description for a command definition on a separate line" docset command
+command: bdoc "provide a description for a bind definition on a separate line" docset bind
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────╮

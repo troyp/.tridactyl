@@ -764,17 +764,20 @@ utils.tri = {
         tri.controller.acceptExCmd(`bindurl ${site} ${key} ${rest}`);
     },
 
-    docdef: function(args) {
+    docdef: function(args, opts={}) {
         const argstr = args.join(" ").trim();
         const docdefRe = /^([a-zA-Z_!:]+) ([^ ]+) "([^"]*)" (.*)/;
-        const match = argstr.match(docdefRe);
+        const docsetRe = /^([a-zA-Z_!:]+) ([^ ]+) "([^"]*)"/;
+        const re = opts.noDef ? docsetRe : docdefRe;
+        const match = argstr.match(re);
         [defCmd, key, desc, rest] = match.slice(1);
         /* store descriptions under tri._doc, eg.
            tri._doc.command.urlup_n == "Go to the nth parent URL" */
         /* TODO: do bindings have a unique representation for keys?
            if not, convert to canonical representation */
         ((window.tri._doc ||= {})[defCmd] ||= {})[key] = desc;
-        tri.controller.acceptExCmd(`${defCmd} ${key} ${rest}`);
+        if (!opts.noDef)
+            tri.controller.acceptExCmd(`${defCmd} ${key} ${rest}`);
     },
 
     gotoCommandSource: function(s) {
