@@ -398,8 +398,7 @@ utils.tab = {
                 return this.openIllegal(url, opts);
             }
         } else { /* new tab */
-            await tabopen(...url.split(" "));
-            const t = await this.getLastOpened(url);
+            const t = await tabopen(...url.split(" "));
             const i = thisTab.index;
             var pos;
             switch (opts.where) {
