@@ -1,5 +1,5 @@
 // ╭───────────────────────────────────────────────────────────╮
-// │ cutils.js -- utility functions for content script context │
+// │ cutils.js ── utility functions for content script context │
 // ╰───────────────────────────────────────────────────────────╯
 
 R = tri.R;
@@ -406,7 +406,7 @@ var cutils = {
 
 // ───────────────────────────────────────────────────────────────────────────────
 // ╭───────────────────────────────╮
-// │ cutils.style -- CSS utilities │
+// │ cutils.style ── CSS utilities │
 // ╰───────────────────────────────╯
 
 cutils.css = {
@@ -467,7 +467,7 @@ cutils.css = {
 
 // ───────────────────────────────────────────────────────────────────────────────
 // ╭──────────────────────────────────────────────────────────────────╮
-// │ cutils.tri -- utilities related to tridactyl source and features │
+// │ cutils.tri ── utilities related to tridactyl source and features │
 // ╰──────────────────────────────────────────────────────────────────╯
 
 cutils.tri = {
@@ -584,3 +584,4 @@ window.R = R;
     "isolate", "keep", "rm", "rmall", "toggleprop", "togglepropWr",
     "yankby", "yank1by", "yankelt", "yankhint", "yankinput", "yankspan",
 ].forEach(k => window[k]=cutils[k]);
+
