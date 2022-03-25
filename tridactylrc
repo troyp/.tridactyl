@@ -47,8 +47,10 @@ jsb window.sprintf = sprintf
 " ╰────────────────────────╯
 " Create versions of definition commands taking descriptions
 command docdef jsb -d‖ utils.tri.docdef(JS_ARGS)‖
-command docset jsb -d‖ utils.tri.docset(JS_ARGS, { noDef: true })‖
+command docset jsb -d‖ utils.tri.docdef(JS_ARGS, { noDef: true })‖
 command command: docdef command
+command commdoc docset command
+command bdoc docset bind
 commdoc docbindmode "bind for mode with description"
 command docbindmode jsb -d¦ utils.tri.docBindMode(JS_ARGS)¦
 command bindmode jsb -d¦ utils.tri.bindMode(JS_ARGS)¦
