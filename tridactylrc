@@ -699,6 +699,15 @@ bind: ewd "Open downloads manager" xdo key ctrl+v ctrl+Y
 bind: ewk "Open bookmarks manager" xdo key ctrl+v ctrl+O
 
 " | ey -- goto/dactyl |
+bind ey<C-h> showkeys ey
+
+bind eyr<C-h> showkeys ey
+bind: eyrc "Goto .tridactyl config repo" tabopenorswitchc https://github.com/troyp/.tridactyl/
+bind: eyrr "Goto tridactyl repo" tabopenorswitchc https://github.com/tridactyl/tridactyl/
+bind: eyrR "Goto Ramda JS docs" tabopenorswitchc https://ramdajs.com/docs/
+
+bind eys<C-h> showkeys eys
+bdoc eyss "Goto tridactyl source file"
 bind eyss fillcmdline_notrail tabopenorswitchc https://github.com/tridactyl/tridactyl/tree/master/src/
 
 command gotoCommandSource jsb -p utils.tri.gotoCommandSource(JS_ARG);
