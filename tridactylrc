@@ -1052,9 +1052,16 @@ bind ,xtc fillcmdline copytablecols
 bind ,xtC fillcmdline copytablecols_strict
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────╮
+" │ ; -- hints │
+" ╰────────────╯
 " ╭─────────────╮
 " │ ,, -- hints │
 " ╰─────────────╯
+command: cuhint "Load cutils.js and execute hint" composite js -r cutils.js ; hint
+
+bind: ;Y "Yank link text" cuhint -JF e=>cutils.yankelt(e)
+
 bind ,,<C-h> showkeys ,,
 bind ,,c hint -c [class*="expand"],[class="togg"]
 
