@@ -1080,7 +1080,10 @@ bind: ,,lV "Follow visited link in new tab [HINTS]" hint -c :visited
 " ╭───────╮
 " │ marks │
 " ╰───────╯
-command setmark jsb -p tri.controller.acceptExCmd(`js window._tri_mark_reg_${JS_ARG}=window.scrollY`)
+
+" | marks -- per-page position marks |
+command: setmark "Set mark" jsb -p tri.controller.acceptExCmd(`js window._tri_mark_reg_${JS_ARG}=window.scrollY`)
+commdoc gotomark "Jump to mark on page"
 command gotomark jsb -p tri.controller.acceptExCmd(`js window.scrollTo(0, window._tri_mark_reg_${JS_ARG})`)
 
 bind: m "Set mark (page-local)" gobble 1 setmark
