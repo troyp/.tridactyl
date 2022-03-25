@@ -161,6 +161,9 @@ bind: gp "Open url in clipboard in new tab" pasten
 bind: gP "Open url in clipboard in new background adjacent tab" pasten_bg
 bind: gO "Open :open prompt converting current URL to searchurl string" composite url2args | fillcmdline open
 
+bind u undo tab_strict
+bind U fillcmdline undo
+
 unbind x
 bind: X "Stop loading" stop
 
