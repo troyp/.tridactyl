@@ -875,6 +875,7 @@ bind: ,ava "AccuRadio Classical" tabopenorswitchc https://www.accuradio.com/clas
 bind: ,avd "Open Disney Plus" tabopenorswitchc https://www.disneyplus.com/en-gb/home
 bind: ,avn "Open Netflix" tabopenorswitchc https://www.netflix.com/
 bind: ,avp "Goto Amazon Prime Video" tabopenorswitchc https://www.primevideo.com/storefront/home/ref=atv_nb_logo
+bind: ,avv "Open video apps" tabopenmultiple https://www.netflix.com/ https://www.primevideo.com/
 bind: ,avy "Goto Youtube" tabopenorswitchc https://www.youtube.com/
 
 " ╭────────────────────╮
