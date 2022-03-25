@@ -496,6 +496,8 @@ command searchwithengines jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst: t
 commdoc searchwithengines_adj "Search for query with engines: adjacent tabs [Q ...Es]"
 command searchwithengines_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst: true, where: "related"})¦
 command: nativelinksearch "Search for links (FF builtin)" !s xdotool sleep 0.4 key ctrl+v apostrophe
+command: hl "Highlight text" cujs -d¦ cutils.css.highlightString(JS_ARGS.join(" ").trim())¦
+command: hloff "Highlight text off" cujs -d¦ cutils.css.highlightStringOff()¦
 
 bind s<C-h> showkeys s
 bind sl nativelinksearch
@@ -505,6 +507,8 @@ jsb tri.excmds.bind("s'", "nativelinksearch")
 bind n findnext
 bind N findnext
 bind ? fillcmdline find -?
+bind _ fillcmdline hl
+bind <A--> hloff
 bind: <C-/> "Remove tridactyl search highlighting" clearsearchhighlight
 bind: ,<C-/> "Remove browser.find search highlighting" jsb browser.find.removeHighlighting()
 

@@ -405,9 +405,9 @@ var cutils = {
 };
 
 // ───────────────────────────────────────────────────────────────────────────────
-// ╭───────────────────────────────╮
-// │ cutils.style ── CSS utilities │
-// ╰───────────────────────────────╯
+// ╭─────────────────────────────╮
+// │ cutils.css ── CSS utilities │
+// ╰─────────────────────────────╯
 
 cutils.css = {
     /* add rules to sheet SHEETID. Each rule is a pair [SELECTOR, DECLARATIONS] */
@@ -440,6 +440,29 @@ cutils.css = {
         span.style.backgroundColor = "rgba(255,255,100,0.5)";
         for (k in style) span.style[k] = style[k];
         range.surroundContents(span);
+    },
+
+    highlightString: async function(s, opts={}) {
+        opts.context ||= document.body;
+        opts.separateWordSearch ??= false;
+        opts.acrossElements ??= true;
+        opts.wildcards ??= true;
+        opts.ignoreJoiners ??= true;
+        await tri.controller.acceptExCmd(`js -r js/mark.es6.min.js`);
+        this.addSheet("_tri_markjs");
+        this.addRules("_tri_markjs", ["mark", "background-color: #80ff80"]);
+        const markInst = new Mark(opts.context);
+        if (opts.regex)
+            return markInst.markRegExp(s, opts);
+        else
+            return markInst.mark(s, opts);
+    },
+
+    highlightStringOff: async function(opts={}) {
+        opts.context ||= document.body;
+        await tri.controller.acceptExCmd(`js -r js/mark.es6.min.js`);
+        const markInst = new Mark(opts.context);
+        return markInst.unmark(opts);
     },
 
     show: function(id) {
