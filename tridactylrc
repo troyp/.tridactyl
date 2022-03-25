@@ -803,17 +803,28 @@ bind: atpb "Bing translate page" bingtranslatepage
 " ╰─────────────────╯
 bind x<C-h> showkeys x
 
-" | xr -- rikairebuilt |
+" | xg -- Violentmonkey |
+bind xg<C-h> showkeys xg
+bdoc xgg topenorswitch "Violentmonkey addon page"
+bind xgg topenorswitch moz-extension://db4d65cd-28d4-401b-8744-0faae0d1c402/options/index.html
+bind: xgs "Load gmscript from config dir" topenorswitch file:///home/troy/.tridactyl/gmscripts/
+
+bdoc xhh "referer control extension page"
+bind xhh topenorswitch moz-extension://f8a9790f-55e6-46ab-a00f-9e2dafbbf850/chrome/content/options.html
+
+" | xr -- 10ten japanese reader |
 bind xr<C-h> showkeys xr
-" rikairebuilt toggle
-bind: xrr "Toggle rikairebuilt" xdoclick 1822 86
-abind: <A-F1> "Toggle rikairebuilt" xdoclick 1822 86
-" addon page
-bind xra tabopenorswitchc https://addons.mozilla.org/en-GB/firefox/addon/rikaihan/
-" source page
-bind xrs tabopenorswitchc https://github.com/Garethp/RikaiRebuilt
-" config page
-bind xrc winopen moz-extension://41d2b8bf-2a97-4468-87c8-f6243594c04c/options/options.html
+bind: xrr "Toggle 10ten Japanese reader" xdo key alt+r
+abind: <A-F1> "Toggle 10ten Japanese reader" xdo key alt+r
+bind: xra "10ten addon page" tabopenorswitchc https://addons.mozilla.org/en-GB/firefox/addon/10ten-ja-reader/
+bind: xrs "10ten source repo" tabopenorswitchc https://github.com/birchill/10ten-ja-reader
+
+" | xs -- Custom scrollbars |
+bind xs<C-h> showkeys xs
+bdoc xsa "Custom scrollbars addon page"
+bind xsa tabopenorswitchc https://addons.mozilla.org/en-GB/firefox/addon/custom-scrollbars/
+bdoc xss "Custom scrollbars options page"
+bind xss tabopenorswitchc moz-extension://32050eb2-dc60-41e8-9dfa-b5578d309895/options/options.html
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
