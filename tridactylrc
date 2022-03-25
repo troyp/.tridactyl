@@ -1109,6 +1109,19 @@ bind: m "Set mark (page-local)" gobble 1 setmark
 jsb utils.tri.docdef(["bind ' \"Goto mark (page-local)\""], {noDef: true})
 jsb tri.excmds.bind("'", "gobble 1 gotomark")
 
+" | quickmarks (qmarks) -- different implementation from tridactyl's |
+command: setqmark "Set qmark" jsb -p (tri.config.USERCONFIG.qmarks||={})[JS_ARG]=tri.contentLocation.href
+command: getqmark "Echo qmark" jsb -p tri.config.USERCONFIG.qmarks[JS_ARG]
+commdoc tabopenorswitchqmark "Open qmark in new tab or switch to existing tab"
+command tabopenorswitchqmark jsb -p utils.tab.openOrSwitch(tri.config.USERCONFIG.qmarks[JS_ARG])
+command: openqmark "Open qmark in current tab" jsb -p open(tri.config.USERCONFIG.qmarks[JS_ARG])
+command: qmarks "Show qmarks" jsb utils.tri.showQmarks()
+
+bind: M "Set qmark" gobble 1 setqmark
+bind: go "Open qmark here" gobble 1 openqmark
+bind: gn "Goto qmark" gobble 1 tabopenorswitchqmark
+bind: <C-h>q "Show qmarks" qmarks
+
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────────────────╮
 " │ ex/insert/input-mode keybindings │
