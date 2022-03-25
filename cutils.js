@@ -356,6 +356,7 @@ var cutils = {
         /* options */
         opts = cutils.tri.parseOpts(opts, {castString: "textProperty"});
         opts.textProperty ??= "innerText";
+        if (elts instanceof Node) elts = [elts];
         /* yank */
         function getText(e) {
             switch (e.tagName.toLowerCase()) {
