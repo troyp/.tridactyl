@@ -1005,15 +1005,17 @@ bind ,n<C-h> showkeys ,n
 command toggleprop cujs -d¦ togglepropWr(JS_ARGS)¦
 commdoc rm "Remove elements matching selectors"
 command rm cujs -d¦ rmall(JS_ARGS)¦
+command: keep "Remove elements except those matching selectors" cujs -d¦ keep(JS_ARGS)¦
 
 bind: ,nhd "Remove highlighting span from text [HINT]" hint -c ._tri_hl -F e=>e.outerHTML=e.innerHTML
 bind: ,nhD "Remove all highlighting spans from text" cujs $$("span._tri_hl").forEach(e=>e.outerHTML=e.innerHTML)
 bind: ,nhh "Highlight selected text" cujs cutils.css.highlight()
 bind: <A-F3> "Highlight selected text" cujs cutils.css.highlight()
 
-bind: ,nn "Remove elements matching selectors" fillcmdline rm
 bind: ,ni "Remove images" rm img
 bind: ,nI "Remove first image" rm img:first-of-type
+bind: ,nn "Remove elements matching selectors" fillcmdline rm
+bind: ,no "Remove elements except those matching selectors" fillcmdline keep
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────╮
