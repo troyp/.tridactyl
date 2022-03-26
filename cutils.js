@@ -255,7 +255,7 @@ var cutils = {
             return match_ok && filter_ok;
         }
         /* selector */
-        if (Array.isArray(selector)) selector = selector.join(",");
+        if (Array.isArray(selector)) selector = selector.filter(identity).join(",");
         /* main logic */
         var keepElts = [];
         if (opts.firstMatch) {
