@@ -96,7 +96,7 @@ var cutils = {
 
     clickall: (selector, opts={}) => cutils.click(selector, {...opts, all:true}),
 
-    extractTableColumns: function(table, columns, opts={}) {
+    extractTblCols: function(table, columns, opts={}) {
         var output = "";
         const rows = Array.from(table.rows).slice(1);
         const n = rows[0].cells.length;
@@ -117,6 +117,16 @@ var cutils = {
         }
         return output;
     },
+
+    /* choose table with hint and extract columns given by ARGS */
+    copytablecols: async function(args, opts={}) {
+        args = cutils.tri.parseArgs(args);
+        opts.useAlert ??= true;
+        const tbl = await tri.excmds.hint("-Jc", "table");
+        const data = await this.extractTblCols(tbl, args, opts);
+        return cutils.yank(data, {useAlert: opts.useAlert});
+    },
+
 
     /**   get(selector, opts)
      *    get(selector, context:HTMLElement)
