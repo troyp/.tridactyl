@@ -21,6 +21,25 @@ csites = {
         }
     },
 
+    j: {
+        _site: "https://jisho.org",
+
+        toggleLinksUL: function(ul) {
+            ul.focus();
+            var llstyle = ul.style;
+            leftvalmatch = llstyle.cssText.match(/left: *(-?\d+\w*);/);
+            if (leftvalmatch && parseInt(leftvalmatch[1])>-250) {
+                ul.classList.remove("open");
+                llstyle.cssText = "";
+            } else {
+                ul.classList.add("open");
+                llstyle.cssText.replace(/left:[^;]+;/, "");
+                // llstyle.cssText += " left: -220px;";
+                llstyle.cssText += " left: 0px; background-color: rgba(255, 255, 255, 0.7);";
+            }
+        },
+    },
+
     ramda: {
         filterCategory: function(cat) {
             this.restore();
