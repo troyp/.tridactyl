@@ -423,8 +423,8 @@ utils.tab = {
         }
     },
 
-
     openMultiple: async function(urls, opts={}) {
+        opts = utils.tri.parseOpts(opts, {castString: "where", castNumber: "where"});
         urls = urls.map(u=>u.trim()).filter(u=>u);
         opts.where ||= "last";
         opts.background ??= (["related", "next"].includes(opts.where));
