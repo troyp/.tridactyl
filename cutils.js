@@ -398,9 +398,15 @@ var cutils = {
         ],
     },
 
-    yankhint: async function(selectors, opts={switches:"-J"}) {
+    yankhint: async function(selectors, opts={}) {
+        opts.switches ??= "-J";
+        opts.property ||= "textContent";
+        opts.trim ??= true;
+        const callback = opts.trim
+              ? `e => cutils.yank(e["${opts.property}"].trim())`
+              : `e => cutils.yank(e["${opts.property}"])`;
         return tri.controller.acceptExCmd(
-            `hint -c ${selectors} ${opts.switches} -F e=>cutils.yank(e.innerText.trim())`);
+            `hint -c ${selectors} ${opts.switches} -F ${callback}`);
     },
 
     yankinput: async function(selectors="input", opts={switches:"-J"}) {
