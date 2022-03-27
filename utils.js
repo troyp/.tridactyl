@@ -386,20 +386,20 @@ utils.tab = {
 
     openIllegal: async function(url, opts={}) {
         opts = utils.tri.parseOpts(opts, {castString: "where", castNumber: "where"});
-        const thisTab = await tri.webext.activeTab();
+        const startTab = await tri.webext.activeTab();
         if (opts.where === "here") {
             if (opts.useOmnibox) {
                 await tri.native.run(
                     `xdotool key ctrl+l key ctrl+u sleep 0.5 type ${url}; xdotool key Return`
                 );
-                return thisTab;
+                return startTab;
             } else {
                 opts.where = "next";
                 return this.openIllegal(url, opts);
             }
         } else { /* new tab */
             const t = await tabopen(...url.split(" "));
-            const i = thisTab.index;
+            const i = startTab.index;
             var pos;
             switch (opts.where) {
               case "last":
@@ -418,7 +418,7 @@ utils.tab = {
                   break;
             }
             await browser.tabs.move(t.id, {index: pos});
-            if (opts.background) await this.switch(thisTab);
+            if (opts.background) await this.switch(startTab);
             return t;
         }
     },
