@@ -280,7 +280,8 @@ var cutils = {
 
     keep: (...selectors) => this.isolate(selectors),
 
-    message: function(s, opts={}) {
+    message: async function(s, opts={}) {
+        if (s instanceof Promise) s = await s;
         const s_ = (opts.prefix || "") + s;
         if (opts.temp) {
             const t = opts.duration || 3000;
