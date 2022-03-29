@@ -59,7 +59,7 @@
     "dc"    'my/tri-add-commdoc-above
     "o '"   'my/tri-show-quote-sections
     "p"     'my/tri-visit-pentadactylrc
-    "t"     'my/tri-toggle-penta-mode
+    "t"     'dactyl-text-mode
     "SPC"   'helm-imenu
     )
 
@@ -228,10 +228,6 @@ the first line after POS matching END-REGEX"
 (defun my/tri-visit-pentadactylrc ()
   (interactive)
   (find-file "~/.pentadactylrc"))
-
-(defun my/tri-toggle-penta-mode ()
-  (interactive)
-  (if (eq major-mode 'dactyl-text-mode) (tridactyl-mode) (dactyl-text-mode)))
 
 ;; ───────────────────────────────────────────────────────────────────────────────
 (provide 'tri)
