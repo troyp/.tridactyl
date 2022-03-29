@@ -19,14 +19,14 @@ tri () {
     TRI_CONFIG_DIR=${TRI_CONFIG_DIR:-$HOME/.config/tridactyl};
     TRI_SRC_DIR=${TRI_SRC_DIR:-$TRI_REPO_DIR/src};
     TRI_NATIVE_SRC_DIR=${TRI_NATIVE_SRC_DIR:-$TRI_NATIVE_REPO_DIR/src};
-    local TRI_DIR_RE="$TRI_CONFIG_DIR|$TRI_SRC_DIR|$TRI_NATIVE_SRC_DIR";
+    local TRI_DIR_RE="$TRI_CONFIG_DIR|$TRI_SRC_DIR|$TRI_REPO_DIR|$TRI_NATIVE_SRC_DIR";
     local browser=${TRI_BROWSER:-firefox};
 
     # ╭─────────╮
     # │ options │
     # ╰─────────╯
-    SHORT=c,h,f,n,p,r:,s,S,t
-    LONG=config-dir,help,files,native,pager,regex:,source-dir,server,tree
+    SHORT=c,h,f,g:,n,p,r,s,S,t
+    LONG=config-dir,help,files,grep:,native,pager,repo-dir,source-dir,server,tree
     PARSED=$(getopt -a -n tri --options $SHORT --longoptions $LONG -- "$@")
 
     eval set -- "$PARSED"
@@ -40,7 +40,9 @@ USAGE: tri [OPTION...]
     Access tridactyl user configuration directory and source directory.
     Uses environment variables:
         $TRI_CONFIG_DIR
+        $TRI_REPO_DIR
         $TRI_SRC_DIR (or $TRI_REPO_DIR/src)
+        TRI_NATIVE_SRC_DIR
         $TRI_BROWSER
     To auto-source tri.sh on first invocation, use alias:
         alias tri='. path/to/tri.sh && tri'
@@ -49,20 +51,22 @@ Options:
   -c     --config-dir       change to config directory
   -h     --help             show help
   -f     --files            show matching files only
+  -g RE  --grep RE          search for lines (or files with -f) matching the regex RE
   -n     --native           change to native messenger source directory
   -p     --pager            show output in pager
-  -r RE  --regex RE         search for lines (or files with -f) matching the regex RE
+  -r     --repo-dir         change to repo directory
   -s     --source-dir       change to source directory
   -S     --server           run server at $TRI_CONFIG_DIR on port 8721
-  -t     --tree             view directory tree (current directory when under $TRI_CONFIG_DIR
-                            or $TRI_SRC_DIR, or $TRI_SRC_DIR if run from elsewhere).
+  -t     --tree             view directory tree (current directory when under $TRI_CONFIG_DIR,
+                            $TRI_REPO_DIR, $TRI_SRC_DIR or $TRI_NATIVE_SRC_DIR if run from elsewhere).
 ENDHELP
                 return; ;;
             (-c | --config-dir)     cd $TRI_CONFIG_DIR; return; ;;
             (-f | --files)          files=t; shift; ;;
+            (-g | --grep)           re="$2"; shift 2; ;;
             (-n | --native)         cd $TRI_NATIVE_SRC_DIR; return; ;;
             (-p | --pager)          page=t; shift; ;;
-            (-r | --regex)          re="$2"; shift 2; ;;
+            (-r | --repo-dir)       cd $TRI_REPO_DIR; return; ;;
             (-s | --source-dir)     cd $TRI_SRC_DIR; return; ;;
             (-S | --server)
                 http-server $TRI_CONFIG_DIR -c5 -p 8721;
