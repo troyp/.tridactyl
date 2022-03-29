@@ -38,10 +38,10 @@ var utils = {
         if (opts.temp) {
             const t = opts.duration || 3000;
             fillcmdline_tmp(s_, t);
-        } else if (opts.useAlert) {
-            this.messageBox(s_.split("\n"), opts);
-        } else {
+        } else if (opts.cmdline) {
             fillcmdline_nofocus(s_);
+        } else {
+            this.messageBox(s_.split("\n"), opts);
         }
         return s;
     },
@@ -192,7 +192,7 @@ var utils = {
         yank(s);
         /* message? */
         if (opts.msg) {
-            opts.prefix ??= "Copied" + (opts.useAlert ? "...\n" : ": ");
+            opts.prefix ??= "Copied" + (opts.cmdline ? ": " : "...\n");
             this.message(s, opts);
         }
     },
@@ -628,8 +628,8 @@ utils.tab = {
         if (opts.breakdown) {
             const pinned = await this.getPinned();
             const p = pinned.length;
-            return utils.message(`#TABS (pinned/unpinned):  ${n} (${p}/${n-p})`);
-        } else return utils.message(`#TABS:  ${n}`);
+            return fillcmdline_nofocus(`#TABS (pinned/unpinned):  ${n} (${p}/${n-p})`);
+        } else return fillcmdline_nofocus(`#TABS:  ${n}`);
     },
 
     summon: async function(tabnum, opts={}) {

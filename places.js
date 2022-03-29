@@ -216,7 +216,7 @@ places.hist = {
             opts.hoursAgo = 24 * opts.daysAgo;
         if (opts.hoursAgo) {
             if (opts.startTime || opts.endTime) {
-                utils.message("ERROR: conflicting options");
+                fillcmdline_nofocus("ERROR: conflicting options");
                 return null;
             }
             else if (typeof opts.hoursAgo === "number")

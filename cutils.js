@@ -121,10 +121,10 @@ var cutils = {
     /* choose table with hint and extract columns given by ARGS */
     copytablecols: async function(args, opts={}) {
         args = cutils.tri.parseArgs(args);
-        opts.useAlert ??= true;
+        opts.cmdline ??= false;    /* yank() will set cmdline to true if undefined is passed */
         const tbl = await tri.excmds.hint("-Jc", "table");
         const data = await this.extractTblCols(tbl, args, opts);
-        return cutils.yank(data, {useAlert: opts.useAlert});
+        return cutils.yank(data, {cmdline: opts.cmdline});
     },
 
 
@@ -286,10 +286,10 @@ var cutils = {
         if (opts.temp) {
             const t = opts.duration || 3000;
             fillcmdline_tmp(s_, t);
-        } else if (opts.useAlert) {
-            alert(s_);
-        } else {
+        } else if (opts.cmdline) {
             fillcmdline_nofocus(s_);
+        } else {
+            alert(s_);
         }
         return s;
     },
@@ -380,13 +380,14 @@ var cutils = {
 
     yank: function(s, opts={}) {
         /* options */
-        opts = cutils.tri.parseOpts(opts, {castBoolean: "msg"});
+        opts = cutils.tri.parseOpts(opts, {castBoolean: "cmdline"});
         opts.msg ??= true;
+        opts.cmdline ??= true;
         /* yank */
         yank(s);
         /* message? */
         if (opts.msg) {
-            opts.prefix ??= "Copied" + (opts.useAlert ? "...\n" : ": ");
+            opts.prefix ??= "Copied" + (opts.cmdline ? ": " : "...\n");
             cutils.message(s, opts);
         }
     },

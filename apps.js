@@ -64,7 +64,7 @@ var apps = {
     },
 
     unicodeHexcodes: function(s) {
-        return utils.message(Array.from(s).map(c => c.charCodeAt(0).toString(16)).join(" "));
+        return fillcmdline_nofocus(Array.from(s).map(c => c.charCodeAt(0).toString(16)).join(" "));
     },
 
     unicode: async function(s) {
