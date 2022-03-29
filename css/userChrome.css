@@ -17,8 +17,6 @@
 }
 
 #statuspanel {
-  top: 2em;
-  z-index: 2;
   right: 0;
   display: inline;
 }
