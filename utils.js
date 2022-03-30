@@ -186,8 +186,9 @@ var utils = {
 
     yank: function(s, opts={}) {
         /* options */
-        opts = utils.tri.parseOpts(opts, {castBoolean: "msg"});
+        opts = utils.tri.parseOpts(opts, {castBoolean: "cmdline"});
         opts.msg ??= true;
+        opts.cmdline ??= true;
         /* yank */
         yank(s);
         /* message? */
