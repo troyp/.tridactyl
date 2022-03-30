@@ -603,16 +603,17 @@ command yankhint cujs -d¦ yankhint(JS_ARGS.slice(1).join(","))¦
 command yankinput cujs -d¦ yankinput(JS_ARGS.slice(1).join(","))¦
 
 bind y<C-h> showkeys y
+bind: yf "Yank element text by CSS selector (first match)" fillcmdline yankfirst
+bind: ym "Yank the current mouse position [X Y]" yankmousepos
+bind: yp "Yank paragraph/heading" yankhint p,code,pre,h1,h2,h3,h4,h5,h6,output,table
+bind: ys "Yank element text by CSS selector [HINT]" fillcmdline yankhint
+bind: yS "Yank element text by CSS selector (all)" fillcmdline yankall
 bdoc y? "Yank the current tridactyl config as JSON"
 bind y? jsb tri.excmds.yank(JSON.stringify(tri.config.USERCONFIG))
 
+" | yd -- yank/datetime |
 bdoc ydd "Yank current datetime (yyyy-mm-dd-HH-MM-SS)"
 bind ydd jsb utils.yank((new Date).toISOString().replace("T", "-").replace(/:[0-9.]+Z/, ""))
-
-bind: yf "Yank element text by CSS selector (first match)" fillcmdline yankfirst
-bind: ym "Yank the current mouse position [X Y]" yankmousepos
-bind: ys "Yank element text by CSS selector (all)" fillcmdline yankall
-bind: yS "Yank element text by CSS selector [HINT]" fillcmdline yankhint
 
 " | yi -- yank/input |
 bind: yii "Yank input field [HINT]" yankinput
