@@ -647,9 +647,9 @@ bind ea tabopen about:addons
 bind: ebh "Open history sidebar" xdo key ctrl+v ctrl+h
 bind: ebk "Open bookmarks sidebar" xdo key ctrl+v ctrl+b
 
-bind ec tabopen about:config
-bind ed tabopen about:downloads
-bind eD tabopen about:debugging
+bind ec topenorswitch about:config
+bind ed topenorswitch about:downloads
+bind eD topenorswitch about:debugging
 
 " | el -- goto/local |
 bind el<C-h> showkeys el
