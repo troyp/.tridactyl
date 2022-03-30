@@ -944,9 +944,9 @@ bind: ,dx "Toggle X-Ray view" capps capps.toggleXray()
 " ╭───────────────────────╮
 " │ ,e -- javascript eval │
 " ╰───────────────────────╯
-commdoc jse "Eval expression and display in a message box"
-command jse composite js -r cutils.js ; js -d¦ alert(eval(JS_ARGS.join(" ")))¦
 commdoc jse "Eval expression to obtain object and display its properties in a message box"
+command jse composite js -r cutils.js ; js -d¦ cutils.message(eval(JS_ARGS.join(" ")))¦
+commdoc getproperties "Eval expression to obtain object and display its properties in a message box"
 command getproperties js -d¦ alert(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
 commdoc jsbe "Eval expression and display in commandline"
 command jsbe jsb -d¦ tri.excmds.jsb(`tri.excmds.fillcmdline_nofocus(${JS_ARGS.join(" ")})`)¦
