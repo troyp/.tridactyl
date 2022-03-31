@@ -984,6 +984,20 @@ utils.tri = {
             : su + search;
     },
 
+    qmarks: async function() {
+        const qmarks = Object.entries(tri.config.USERCONFIG.qmarks);
+        const lines = qmarks.map(([k, u]) => {
+            const urlLines = tri.R.splitEvery(58, u);
+            const keyLines = [`${k}:  `, ...urlLines.slice(1).map(_ => "    ")];
+            return tri.R.zipWith((kl,ul)=>kl+ul, keyLines, urlLines).join("\n");
+        });
+        utils.msg(lines);
+    },
+
+    qmarkset: async function(c) {
+        tri.config.USERCONFIG.qmarks ||= {};
+        tri.config.USERCONFIG.qmarks[c] = await js("window.location.href");
+    },
 
     unbindMode: function(args) {
         const argstr = args.join(" ").trim();
