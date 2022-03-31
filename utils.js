@@ -656,11 +656,16 @@ utils.tab = {
      */
     switch: async function(tabnum, opts={}) {
           opts = utils.tri.parseOpts(opts, {castBoolean: "removeCurrent"});
-          if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
-          const N = await this.getN();
-          const n = (tabnum-1).mod(N) + 1;
           const thisTab = await tri.webext.activeTab();
-          const otherTab = (await browser.tabs.query({currentWindow: true, index: n-1}))[0];
+          var otherTab;
+          if (tabnum == null && opts.id) {
+              otherTab = await browser.tabs.get(opts.id);
+          } else {
+              if (tabnum=="$") tabnum = 0; else tabnum &&= Number(tabnum);
+              const N = await this.getN();
+              const n = (tabnum-1).mod(N) + 1;
+              otherTab = (await browser.tabs.query({currentWindow: true, index: n-1}))[0];
+          }
           if (opts.removeCurrent) browser.tabs.remove(thisTab.id);
           return browser.tabs.update(otherTab.id, { active: true });
     },
@@ -670,6 +675,18 @@ utils.tab = {
         const alt = await this.getAlternate(n);
         if (opts.removeCurrent) browser.tabs.remove(thisTab.id);
         return browser.tabs.update(alt.id, {active: true});
+    },
+
+    //  FIXME:
+    switchWr: async function(args) {
+        if (args && args.length > 1) {
+            const n = utils.tri.parseArgs(args, "number");
+            const res = await this.switch(n);
+            tri.config.USERCONFIG.tabswitch_last = await utils.tab.getid(n);
+            return res;
+        } else {
+            return this.switch(null, { id: tri.config.USERCONFIG.tabswitch_last });
+        }
     },
 
     /* taken from tridactyl src/lib/webext.ts -- author: Oliver Blanthorn */

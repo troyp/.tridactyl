@@ -327,7 +327,9 @@ command tabsummonalt jsb -d¦ utils.tab.summonAlternate(JS_ARGS[1]||1)¦
 command: tabmove! "Move current tab to specified tab number" jsb -p utils.tab.move(JS_ARG);
 command tabmovetoalt jsb -d¦ utils.tab.moveToAlternate(JS_ARGS[1]||1)¦
 command tabfirst: jsb utils.tab.firstDWIM();
+command tabswitch jsb -d¦ utils.tab.switchWr(JS_ARGS)¦
 
+bind: gt "Switch to tab N, or last tab switched to" tabswitch
 bind: g;h "Choose entry in tab's backward history" xdoclick 275 86 3
 bind: g;l "Choose entry in tab's forward history" xdoclick 313 86 3
 bind: <C-a> "Switch to first tab, then first nonpinned and back to first" tabfirst:
