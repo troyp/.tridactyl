@@ -84,7 +84,7 @@ var utils = {
     },
 
     omniboxEnter: async function(s) {
-        const cmd = `xdotool key alt+d key ctrl+u type "${s}" ; xdotool key Return`;
+        const cmd = `xdotool key alt+d key ctrl+u type "${s} " ; xdotool key Return`;
         const res = await tri.native.run(cmd);
         return res;
     },
