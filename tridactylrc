@@ -1019,6 +1019,7 @@ bind: ,nhD "Remove all highlighting spans from text" cujs $$("span._tri_hl").for
 bind: ,nhh "Highlight selected text" cujs cutils.css.highlight()
 bind: <A-F3> "Highlight selected text" cujs cutils.css.highlight()
 
+bind: ,nc "Cleanup page (remove clutter)" cujs -r sites/cleanup.c.js
 bind: ,ni "Remove images" rm img
 bind: ,nI "Remove first image" rm img:first-of-type
 bind: ,nn "Remove elements matching selectors" fillcmdline rm
