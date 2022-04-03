@@ -23,6 +23,8 @@ jsb -r js/sprintf.js
 jsb -r utils.js
 " url manipulation library
 jsb -r urls.js
+" xdotool library
+jsb -r xdo.js
 " app-specific libraries
 jsb -r js/suncalc.js
 " app-specific code
@@ -37,6 +39,7 @@ jsb -r personal/personal.js
 jsb window.S = S
 jsb window.utils = utils
 jsb window.urls = urls
+jsb window.xdo = xdo
 jsb window.apps = apps
 jsb window.sites = sites
 jsb window.sprintf = sprintf
@@ -188,7 +191,7 @@ bind: gU "Go to the ancestor URL nth from the root domain" urlroot_n
 bind: g;u "Go the nth parent URL in new tab" taburlup_n
 bind: g;U "Go to the ancestor URL nth from the root domain in new tab" taburlroot_n
 
-bind: <C-F10> "Open hamburger menu" xdoclick 1896 86
+bind: <C-F10> "Open hamburger menu" xdoitem hamburger_menu
 
 bind: <C-v> "Enter ignore mode (disable tridactyl bindings)" nmode ignore 1 mode normal
 bind: <C-z> "Enter ignore mode for one keybinding (disable tridactyl bindings)" mode ignore
@@ -286,26 +289,32 @@ command tabopenmultiple jsb -d¦ utils.tab.openMultiple(JS_ARGS.join(" ").split(
 
 command !! exclaim_
 command !s exclaim_quiet
+
 command xdo !s xdotool
 commdoc xdoclick "Click element at point X Y with button N and return pointer to original position"
-command xdoclick jsb -d¦ utils.xdoclickWrapper(JS_ARGS, {return:true})¦
+command xdoclick jsb -d¦ xdo.clickWr(JS_ARGS, {return:true})¦
 commdoc xdoclick! "Click element at point X Y with button N"
-command xdoclick! jsb -d¦ utils.xdoclickWrapper(JS_ARGS)¦
+command xdoclick! jsb -d¦ xdo.clickWr(JS_ARGS)¦
 commdoc xdoelem "Use xdotool to move the mouse pointer and act on element"
-command xdoelem jsb -d¦ utils.xdoelemWrapper(JS_ARGS.join(" "), {return:true})¦
+command xdoelem jsb -d¦ xdo.elemWr(JS_ARGS.join(" "), {return:true})¦
 commdoc xdoelem! "Use xdotool to move the mouse to act on element and return pointer to original position"
-command xdoelem! jsb -d¦ utils.xdoelemWrapper(JS_ARGS.join(" "))¦
+command xdoelem! jsb -d¦ xdo.elemWr(JS_ARGS.join(" "))¦
+command: xdokey "Use xdotool to simulate a keypress" jsb -p xdo.key(JS_ARG)
 commdoc xdokeyseq "[DELAY KEYS...] use xdotool to simulate a sequence of keys with pause in between"
-command xdokeyseq jsb -d¦ utils.xdokeyseq(JS_ARGS)¦
+command xdokeyseq jsb -d¦ xdo.keyseq(JS_ARGS)¦
+command xdoitem jsb -d¦ xdo.clickItem(JS_ARGS[1], JS_ARGS[2], {return:true})¦
+command xdoitem! jsb -d¦ xdo.clickItem(...JS_ARGS.slice(1))¦
+command omni! jsb -d¦ xdo.omniboxEnter(JS_ARGS.join(" "))¦
+
 commdoc pastef "Takes a format string and replaces ${S} with clipboard contents; used to pipe to another command"
 command pastef composite jsb -p tri.excmds.getclip().then(s=>JS_ARG.replace(/\$\{s\}/g, s))
 commdoc expaste "Execute commands in clipboard"
 command expaste jsb utils.cbread().then(s=>s.split("\n").forEach(c=>tri.controller.acceptExCmd(c)));
 commdoc exclaim_ "Run commands in /bin/sh and print the result on the command line"
 command exclaim_ jsb -d¦ apps.exclaim_(JS_ARGS)¦
-command omni! jsb -d¦ utils.omniboxEnter(JS_ARGS.join(" "))¦
-command omni xdo key ctrl+l key ctrl+u sleep 0.5 type
-command omni_focus xdo key ctrl+l key ctrl+u
+
+command omni xdo key alt+d key ctrl+u sleep 0.5 type
+command omni_focus xdokeyseq 0.2 alt+d ctrl+u
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────╮
@@ -330,8 +339,8 @@ command tabfirst: jsb utils.tab.firstDWIM();
 command tabswitch jsb -d¦ utils.tab.switchWr(JS_ARGS)¦
 
 bind: gt "Switch to tab N, or last tab switched to" tabswitch
-bind: g;h "Choose entry in tab's backward history" xdoclick 275 86 3
-bind: g;l "Choose entry in tab's forward history" xdoclick 313 86 3
+bind: g;h "Choose entry in tab's backward history" xdoitem tabhist_prev 3
+bind: g;l "Choose entry in tab's forward history" xdoitem tabhist_next 3
 bind: <C-a> "Switch to first tab, then first nonpinned and back to first" tabfirst:
 bind: <C-e> "Switch to last tab" tablast
 
@@ -429,6 +438,7 @@ commdoc bmkletkw "Run bookmarklet by keyword"
 command bmkletkw jsb -d¦ places.bm.bmklet(JS_ARGS.slice(2), {kw: JS_ARGS[1]})¦
 commdoc bmkletkw! "Run bookmarklet by keyword with :open"
 command bmkletkw! jsb -d¦ places.bm.bmklet(JS_ARGS.slice(2), {kw: JS_ARGS[1], useOpen: true})¦
+command: ffmenu "Open Firefox (hamburger) menu" xdoitem hamburger_menu
 
 bind w<C-h> showkeys w
 bind wc fillcmdline wincloseindex
@@ -439,8 +449,11 @@ bind: wo "Omnibox open" fillcmdline omni!
 bind: wr "Reload tridactylrc file" source ~/.tridactyl/tridactylrc
 bind: wu "Undo window" undo window
 bind: ww "Open URL in new window" fillcmdline winopen
-bind: wx "dismiss update notification" xdoclick 1740 200
+bind: wx "dismiss update notification" xdoitem update_notification
 
+bind: wcc "Customize toolbar, etc" composite ffmenu ; xdokeyseq 0.2 Up Up Up Right Return
+
+" | wa -- omnibar (awesomebar) |
 bind: wab "Search open tabs in omnibar" omni "% "
 bind: wah "Search history in omnibar" omni "^ "
 bind: wak "Search bookmarks in omnibar" omni "* "
@@ -477,15 +490,17 @@ bind: wsu "Copy userChrome.css from .tridactyl/css to default profile directory"
 bind: wsU "Copy userChrome.css and restart browser" composite copyuserchrome ; restart
 
 " | wt -- browser/toggle |
-bind: wtd "toggle downloads menu" xdoclick 241 86
-bind: wtt "toggle bookmarks toolbar" xdo key ctrl+B
-bind: wtm "toggle menu bar" xdokeyseq 0.2 alt+v Right Return
+bind: wtd "toggle downloads menu" xdoitem downloads_menu
+bind: wtk "toggle edit bookmark" xdoitem edit_bookmark
+bind: wtt "toggle bookmarks toolbar" xdokey accel+B
+bind: wtm "toggle menu bar" xdokeyseq 0.2 menuacc+v → ↵
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
 " │ s -- search │
 " ╰─────────────╯
 unbind s
+unbind --mode=visual s
 unbind /
 
 commdoc kwsearch "Keyword bookmark search: last tab"
@@ -512,7 +527,7 @@ commdoc searchwithengines "Search for query with engines [Q ...Es]"
 command searchwithengines jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst: true})¦
 commdoc searchwithengines_adj "Search for query with engines: adjacent tabs [Q ...Es]"
 command searchwithengines_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst: true, where: "related"})¦
-command: nativelinksearch "Search for links (FF builtin)" !s xdotool sleep 0.4 key ctrl+v apostrophe
+command: nativelinksearch "Search for links (FF builtin)" xdokeyseq 0.2 ctrl+v apostrophe
 command: hl "Highlight text" cujs -d¦ cutils.css.highlightString(JS_ARGS.join(" ").trim())¦
 command: hloff "Highlight text off" cujs -d¦ cutils.css.highlightStringOff()¦
 
@@ -647,8 +662,8 @@ bind e<C-h> showkeys e
 bind ea tabopen about:addons
 
 " | eb -- goto/sidebar |
-bind: ebh "Open history sidebar" xdo key ctrl+v ctrl+h
-bind: ebk "Open bookmarks sidebar" xdo key ctrl+v ctrl+b
+bind: ebh "Open history sidebar" xdokeyseq 0.2 menuacc+v ↓ → ↓ Return
+bind: ebk "Open bookmarks sidebar" xdokeyseq 0.2 menuacc+v ↓ → Return
 
 bind ec topenorswitch about:config
 bind ed topenorswitch about:downloads
@@ -701,9 +716,9 @@ bind elud   tabopenorswitchc file:///usr/share/doc/
 bind eluld  tabopenorswitchc file:///usr/local/share/doc/
 
 " | ew -- goto/window |
-bind: ewh "Open history window" xdo key ctrl+v ctrl+H
-bind: ewd "Open downloads manager" xdo key ctrl+v ctrl+Y
-bind: ewk "Open bookmarks manager" xdo key ctrl+v ctrl+O
+bind: ewh "Open history window" xdokeyseq 0.2 menuacc+s ↵
+bind: ewd "Open downloads manager" xdokeyseq 0.2 menuacc+t ↵
+bind: ewk "Open bookmarks manager" xdokeyseq 0.2 menuacc+b ↵
 
 " | ey -- goto/dactyl |
 bind ey<C-h> showkeys ey
@@ -840,8 +855,8 @@ bind xhh topenorswitch moz-extension://f8a9790f-55e6-46ab-a00f-9e2dafbbf850/chro
 
 " | xr -- 10ten japanese reader |
 bind xr<C-h> showkeys xr
-bind: xrr "Toggle 10ten Japanese reader" xdo key alt+r
-abind: <A-F1> "Toggle 10ten Japanese reader" xdo key alt+r
+bind: xrr "Toggle 10ten Japanese reader" xdokey alt+r
+abind: <A-F1> "Toggle 10ten Japanese reader" xdokey alt+r
 bind: xra "10ten addon page" tabopenorswitchc https://addons.mozilla.org/en-GB/firefox/addon/10ten-ja-reader/
 bind: xrs "10ten source repo" tabopenorswitchc https://github.com/birchill/10ten-ja-reader
 

@@ -83,12 +83,6 @@ var utils = {
         return this.messageBox(lines, opts);
     },
 
-    omniboxEnter: async function(s) {
-        const cmd = `xdotool key alt+d key ctrl+u type "${s} " ; xdotool key Return`;
-        const res = await tri.native.run(cmd);
-        return res;
-    },
-
     parseBool(s) {
         if (["true", "yes", "on", "1"].includes(s)) return true;
         else if (["false", "no", "off", "0"].includes(s)) return false;
@@ -127,61 +121,6 @@ var utils = {
         const cmd = `${inputcmd} rofi -dmenu ${rofithemeopt} -format ${opts.format} -p "${prompt}" ${dmenuOpts}`;
         const res = await tri.native.run(cmd);
         return res?.content.trim().split("\n");
-    },
-
-    xdoclick: async function(x, y, button=1, opts={}) {
-        const xyres = await tri.native.run(
-            `xdotool getmouselocation | perl -pe 's/x:(\\d+) y:(\\d+) .*/$1 $2/';`);
-        const [x0, y0] = xyres.content.trim().split(" ");
-        const excmd = `exclaim_quiet xdotool mousemove ${x} ${y} click ${button}`;
-        if (opts.return) {
-            return tri.controller.acceptExCmd(excmd).then(
-                _=>tri.controller.acceptExCmd(`exclaim_quiet xdotool mousemove ${x0} ${y0}`)
-            );
-        } else
-            return tri.controller.acceptExCmd(excmd);
-    },
-
-    xdoclickWrapper: async function(args, opts={}) {
-        const [x, y, n] = args.join(" ").trim().split(" ");
-        const button = n || 1;
-        return this.xdoclick(x, y, button, opts);
-    },
-
-
-    /* adapted from tridactyl source for ;x in lib/config.ts */
-    xdoelem: async function(selector, xdocmd, opts={}) {
-        /* xdoelem(selector, xdocmd)
-             Move mouse to first element matching selector, then execute further commands.
-             selector: string of arguments to `hint`, may be options and/or selectors (`-c` may be
-                 omitted if a selector is the initial argument).
-             xdocmd: xdotool commands. Optionally, other shell commands may follow, separated by
-                 semicolons (must be escaped if surrounded by spaces).
-        */
-        if (selector && !selector.startsWith("-")) selector = "-c " + selector;
-        const xyres = await tri.native.run(
-            `xdotool getmouselocation | perl -pe 's/x:(\\d+) y:(\\d+) .*/$1 $2/';`);
-        const [x, y] = xyres.content.trim().split(" ");
-        const excmd = `hint ${selector} -F e => {` +
-            "const pos=tri.dom.getAbsoluteCentre(e), dpr=window.devicePixelRatio; tri.native.run(" +
-            "`xdotool mousemove ${dpr*pos.x} ${dpr*pos.y};" +
-            `xdotool ${xdocmd}` + "`)}";
-        if (opts.return) {
-            return tri.controller.acceptExCmd(excmd).then(
-                _=>tri.controller.acceptExCmd(`exclaim_quiet xdotool mousemove ${x} ${y}`)
-            );
-        } else
-            return tri.controller.acceptExCmd(excmd);
-    },
-    xdoelemWrapper: async function(argstr, opts={}) {
-        const [selector, xdocmd] = argstr.split(/ +-e +/).map(s=>s.trim());
-        return this.xdoelem(selector, xdocmd, opts);
-    },
-
-    xdokeyseq: async function(args) {
-        const [sleep, ...keys] = utils.tri.parseTerms(args);
-        const xdocmd = keys.map(k => `key ${k}`).join(` sleep ${sleep} `);
-        return tri.native.run("xdotool " + xdocmd);
     },
 
     yank: function(s, opts={}) {
