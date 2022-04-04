@@ -425,7 +425,6 @@ command bmkletkw! jsb -d¦ places.bm.bmklet(JS_ARGS.slice(2), {kw: JS_ARGS[1], u
 command: ffmenu "Open Firefox (hamburger) menu" xdoitem hamburger_menu
 
 bind w<C-h> showkeys w
-bind wc fillcmdline wincloseindex
 bind: wm "Toggle mute tab" mute toggle
 bind: wM "Mute all tabs" mute all
 bind: wl "Focus and clear omnibox" omni_focus
