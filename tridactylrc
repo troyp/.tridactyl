@@ -106,10 +106,13 @@ jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{url
 " ╰──────────────────────────╯
 bind --mode=browser <A-,> tab #
 bind --mode=browser <AS-,> tabswitchprev!
-" available after changing FF accelerator key to Alt- (via `setpref ui.key.accelKey 18`)
-bind --mode=browser <C-w> tabclose
+" available after changing FF accelerator key to another value via `setpref ui.key.accelKey`
+" see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values#modifier_keys
 bind --mode=browser <C-n> xdo key Down
 bind --mode=browser <C-p> xdo key Up
+" restore Ctrl- based shortcuts removed by setting accelerator to Alt-
+bind --mode=browser <C-r> reloadhard
+bind --mode=browser <C-w> tabclose
 
 " ─────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────────────╮
