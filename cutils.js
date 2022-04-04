@@ -321,8 +321,8 @@ var cutils = {
             opts.prompt,
             opts.multiSelect ? "[Shift+ENTER:select, ENTER:return]" : "[ENTER:select]"
         ].join(" ");
-        const inputcmd = opts.tempfile
-              ? `cat ${opts.tempfile} | `
+        const inputcmd = opts.infile
+              ? `cat ${opts.infile} | `
               : `dmenuin="$(cat <<'EOF'\n${input}\nEOF\n)"; echo "$dmenuin" | `;
         const cmd = `${inputcmd} rofi -dmenu ${rofithemeopt} -format ${opts.format} -p "${prompt}" ${dmenuOpts}`;
         const res = await tri.native.run(cmd);
