@@ -462,7 +462,7 @@ bind: wha "Open history item in adjacent tab [rofi]" history related false
 bind: whb "Open history item in adjacent background tab [rofi]" history related true
 bind: who "Open history item in current tab [rofi]" history here false
 
-" | wj<C-h> -- browser/bookmarklets |
+" | wj -- browser/bookmarklets |
 bind wj<C-h> showkeys wj
 bind: wjj "Run bookmarklet [rofi]" bmklet
 bind: wjk "Run bookmarklet by keyword" fillcmdline bmkletkw
