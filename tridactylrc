@@ -448,10 +448,10 @@ bind: wau "Search URL suggestions in omnibar" omni "$ "
 
 " | wk -- browser/bookmarks |
 bind wk<C-h> showkeys wk
-bind: wka "Open bookmark in adjacent tab [Rofi]" bmrofi related
 bind: wkb "Open bookmark in background adjacent tab [Rofi]" bmrofi related t
-bind: wkk "Open bookmark in last tab [Rofi]" bmrofi
+bind: wkk "Open bookmark in adjacent tab [Rofi]" bmrofi related
 bind: wkh "Open bookmark in current tab [Rofi]" bmrofi here
+bind: wkl "Open bookmark in last tab [Rofi]" bmrofi
 bind: wko "Open bookmark in current tab" fillcmdline bmarks
 bind: wkt "Open bookmark in new tab" fillcmdline bmarks -t
 bind: wkv "View bookmarks JSON file in browser" winopen file:///home/troy/bookmarks/bookmarks.json
