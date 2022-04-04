@@ -173,10 +173,17 @@ command: jishobind "Bind key for www.jisho.org" bindurl https://jisho.org
 command: jishobind: "Bind key for www.jisho.org" bindurl: https://jisho.org
 command jishobdoc js
 
-jishobind: cye "Yank entry" yankhint div.concept_light-representation>span.text,.character
 jishobdoc cl "Links drop-down"
 jishobind cl cshint a.concept_light-status_link[data-dropdown] -F e=>csites.j.toggleLinksUL(e.nextSibling)
-jishobind: c; "Select kanji radical" hint li.radical.available,li.radical.selected
+jishobind: cye "Yank entry" yankhint div.concept_light-representation>span.text,.character
+
+" | cf -- jisho/hints |
+bindurl c;<C-h> showkeysurl https://jisho.org c;
+jishobind: c;e "Goto sentences" jsb sites.j.hintOpen("entry", "sentences")
+jishobind: c;k "Kanji details" jsb sites.j.hintOpen("kanji", "kanji", {regex: sites.j.kanjiRegex})
+jishobind: c;w "Search entry in Weblio" jsb sites.j.hintOpen("entry", "weblio")
+
+jishobind: cc "Select kanji radical" hint li.radical.available,li.radical.selected
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮

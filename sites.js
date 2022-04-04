@@ -90,6 +90,35 @@ var sites = {
 
     },
 
+    j: {
+        kanjiRegex: "[一-龥]",
+
+        sel: {
+            entry: "div.concept_light-representation>span.text,.character",
+            radical: "li.radical.available,li.radical.selected",
+            kanji: "div.concept_light-representation>span.text,.character,.unlinked",
+        },
+
+        surl: {
+            sentences: "https://jisho.org/search/%s #sentences",
+            kanji: "https://jisho.org/search/%s #kanji",
+            weblio: "https://ejje.weblio.jp/content/%s",
+        },
+
+        hintOpen: async function(sel, urlTempl, opts={}) {
+            opts.property ||= "textContent";
+            sel = sites.j.sel[sel] || sel;
+            urlTempl = sites.j.surl[urlTempl] || urlTempl;
+            var hintargs = ["-pipe", sel, opts.property];
+            if (opts.text) hintargs.unshift(`-f`, opts.text);
+            else if (opts.regex) hintargs.unshift(`-fr`, opts.regex);
+            var value = await hint(...hintargs);
+            value = value.trim?.() ?? value;
+            const url = urlTempl.replace("%s", encodeURIComponent(value));
+            return value && utils.tab.open(url, opts);
+        },
+    },
+
     se: {
         _sites: [
             "https://[^./]*.stackexchange.com",
