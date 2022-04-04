@@ -1108,6 +1108,10 @@ bind: ;Y "Yank link text" cuhint -JF e=>cutils.yankelt(e)
 bind ,,<C-h> showkeys ,,
 bind ,,c hint -c [class*="expand"],[class="togg"]
 
+" | ,,i -- hints/image |
+bind ,,i<C-h> showkeys ,,i
+bind: ,,is "Yank image source" composite hint -pipe img src | clipboard yank
+
 " middle and right click using xdotool
 command xhintclick xdoelem a,img,th,button,input,select,details,[onclick],[contenteditable=true],[tabindex] -e click
 bind: ,,x "Middle click element" xhintclick 2
