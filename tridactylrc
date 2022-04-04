@@ -575,17 +575,20 @@ command showkeysurl fillcmdline_notrail bindurl
 command searchnmaps jsb -d¦ utils.tri.searchNmapsWrapper(JS_ARGS.join(" "))¦
 
 bind <C-h><C-h> showkeys <C-h>
-bind <C-h>b fillcmdline searchnmaps
+bind: <C-h>a "Open list of ui.key.accelKey values" topenorswitchc https://searchcode.com/codesearch/view/26755902/
+bind: <C-h>b "Search normal keybinding definitions" fillcmdline searchnmaps
+bdoc <C-h>d "Open devtools toolbox"
 bind <C-h>d tabopen about:devtools-toolbox?id=tridactyl.vim.betas%40cmcaine.co.uk&type=extension
-bdoc <C-h>f "Firefox Keyboard Shortcuts"
+bdoc <C-h>f "Open list of Firefox Keyboard Shortcuts"
 bind <C-h>f tabopenorswitchc https://support.mozilla.org/en-US/kb/keyboard-shortcuts-perform-firefox-tasks-quickly
-bind <C-h>h fillcmdline help
+bind: <C-h>h "Tridactyl help" fillcmdline help
 bind <C-h>i tabopen moz-extension://926899c1-24a3-4569-9789-2f53b837f92e/static/docs/globals.html
-bind <C-h>k fillcmdline bind
+bind: <C-h>k: "View keybindings" fillcmdline bind
 bind <C-h>K tabopenorswitchc https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
+bdoc <C-h>s "Goto tridactyl options"
 bind <C-h>s tabopenorswitchc moz-extension://13341d1e-1f1e-485d-88cc-4d8e57599a91/static/docs/classes/_src_lib_config_.default_config.html
-bind <C-h>u fillcmdline bindurl
-bdoc <C-h>x "xdotool keycodes"
+bind: <C-h>u "View URL-specific keybindings" fillcmdline bindurl
+bdoc <C-h>x "Open xdotool keycodes list"
 bind <C-h>x tabopenorswitchc https://gitlab.com/cunidev/gestures/-/wikis/xdotool-list-of-key-codes
 
 " ───────────────────────────────────────────────────────────────────────────────
