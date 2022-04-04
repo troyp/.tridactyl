@@ -1005,6 +1005,16 @@ bind: ,lm "Append links as markdown to end of page" withlinks links.appendAsMark
 bind: ,lt "Append link text & destinations to end of page" withlinks links.appendWithText()
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────╮
+" │ ,m -- manipulate │
+" ╰──────────────────╯
+bind ,m<C-h> showkeys ,m
+
+command: click "Click first element matching selectors" cujs -d¦ cutils.click(JS_ARGS.slice(1).join(" "))¦
+commdoc clickall "Click first element matching selectors"
+command clickall cujs -d¦ cutils.click(JS_ARGS.slice(1).join(" "), {all: true})¦
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
 " │ ,n -- edit │
 " ╰────────────╯
