@@ -244,11 +244,21 @@ bindurl: tvtropes.org cc "Toggle spoilers" csites csites.tvtropes.spoilers()
 " ╭───────────────╮
 " │ Wikipedia.org │
 " ╰───────────────╯
-command: wpbind "Bind key for wikipedia.org" bindurl wikipedia.org
-command: wpbind: "Bind key with description for wikipedia.org" bindurl: wikipedia.org
+commdoc wpbind "Bind key for wikipedia.org"
+command wpbind bindurl https://([a-z]+\.)?(wikipedia|wikisource|wiktionary|wikibooks|wikimedia)\.org
+commdoc wpbind: "Bind key with description for wikipedia.org"
+command wpbind: bindurl: https://([a-z]+\.)?(wikipedia|wikisource|wiktionary|wikibooks|wikimedia)\.org
 command: wpbdoc "Provide a description on a separate line" js ;
 
 wpbind c<C-h> showkeysurl wikipedia.org c
+wpbdoc cd "Open page in Wiktionary"
+wpbind cd jsb utils.tab.open(`https://en.wiktionary.org/w/index.php?search=${sites.wp.getTopic()}`, "here")
+wpbdoc cD "Open page in Wiktionary (adjacent tab)"
+wpbind cD jsb utils.tab.open(`https://en.wiktionary.org/w/index.php?search=${sites.wp.getTopic()}`, "related")
+wpbdoc ce "Open page in Wikipedia"
+wpbind ce jsb utils.tab.open(`https://en.wikipedia.org/w/index.php?search=${sites.wp.getTopic()}`, "here")
+wpbdoc cE "Open page in Wikipedia (adjacent tab)"
+wpbind cE jsb utils.tab.open(`https://en.wikipedia.org/w/index.php?search=${sites.wp.getTopic()}`, "related")
 
 " | ct -- wikipedia/toggle |
 wpbind ct<C-h> showkeysurl wikipedia.org ct
