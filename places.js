@@ -71,7 +71,7 @@ places.bm = {
 // ╰──────────────────────────────────────╯
 
 places.kw = {
-    open: async function(args, opts={where: "last"}) {
+    open: async function(args, opts={where: "related"}) {
         const [kw, ...rest] = utils.tri.parseArgs(args);
         return tri.native.run(`kwsearch -K '${kw}' -- '${rest.join(" ")}'`).then(
             res => utils.tab.open(res.content, opts));
@@ -83,7 +83,7 @@ places.kw = {
         return res.content.trim();
     },
 
-    rofi: async function(args, opts={where: "last"}) {
+    rofi: async function(args, opts={where: "related"}) {
         const switches = opts?.switches || "-u -k -s";
         const where = opts.where || "last";
         const cmd = `kwsearch ${switches} -- '${args.join?.(" ")?.trim()}'`;

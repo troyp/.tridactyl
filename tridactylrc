@@ -545,10 +545,12 @@ bind: skb "Bmark keyword search: background adjacent tab" fillcmdline kwsearch_b
 bind: skk "Bmark keyword search: adjacent tab" fillcmdline kwsearch_adj
 bind: skl "Bmark keyword search: last tab" fillcmdline kwsearch
 bind: sko "Bmark keyword search: current tab" fillcmdline kwsearch_here
+
+" | sk -- search by bookmark keyword  |
+bind: sks "Bmark keyword search: adjacent tab [Rofi, choose engine last]" fillcmdline kwrofi
 bind: s;kb "Bmark keyword search: background adjacent tab [Rofi]" ! kwsearch -Sw|sed -r 's/.*/kwsearch_bg \0/'
 bind: s;kk "Bmark keyword search: adjacent tab [Rofi]" ! kwsearch -Sw|sed -r 's/.*/kwsearch_adj \0/'
 bind: s;kl "Bmark keyword search: last tab [Rofi]" ! kwsearch -Sw|sed -r 's/.*/kwsearch \0/'
-bind: sks "Bmark keyword search: last tab [Rofi]" fillcmdline kwrofi
 
 " | sm -- search multiple |
 bind sm<C-h> showkeys sm
