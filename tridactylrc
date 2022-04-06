@@ -27,6 +27,8 @@ jsb -r urls.js
 jsb -r xdo.js
 " app-specific libraries
 jsb -r js/suncalc.js
+" shell commands library
+jsb -r shell.js
 " app-specific code
 jsb -r apps.js
 " bookmarks, history, downloads
@@ -40,6 +42,7 @@ jsb window.S = S
 jsb window.utils = utils
 jsb window.urls = urls
 jsb window.xdo = xdo
+jsb window.shell = shell
 jsb window.apps = apps
 jsb window.sites = sites
 jsb window.sprintf = sprintf
