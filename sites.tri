@@ -30,9 +30,9 @@ bindurl archive.org ctt csites -r urls.js ; js csites.archive.toggleToolbarURL()
 command ebaybind bindurl ebay.com(\.[a-z][a-z])/
 command ebaybind: bindurl: ebay.com(\.[a-z][a-z])/
 
-ebaybind c<C-h> showkeysurl  ebay.com(\.[a-z][a-z])/ c
+ebaybind c<C-h> showkeysurl ebay.com(\.[a-z][a-z])/ c
 " | co -- ebay/goto |
-ebaybind co<C-h> showkeysurl  ebay.com(\.[a-z][a-z])/ co
+ebaybind co<C-h> showkeysurl ebay.com(\.[a-z][a-z])/ co
 ebaybind: coa "Goto Account Settings Page" openorsummon https://accountsettings.ebay.com.au/uas
 ebaybind: coc "Goto Cart" openorsummon https://cart.ebay.com.au
 ebaybind: cof "Leave feedback" openorsummon https://www.ebay.com.au/fdbk/leave_feedback
