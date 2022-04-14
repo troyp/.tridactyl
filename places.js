@@ -74,7 +74,7 @@ places.kw = {
     open: async function(args, opts={where: "related"}) {
         const [kw, ...rest] = utils.tri.parseArgs(args);
         return tri.native.run(`kwsearch -K '${kw}' -- '${shell.singQEscape(rest.join(" "))}'`).then(
-            res => utils.tab.open(res.content, opts));
+            res => res.content && utils.tab.open(res.content, opts));
     },
 
     get: async function(args) {
@@ -88,7 +88,7 @@ places.kw = {
         const where = opts.where || "last";
         const cmd = `kwsearch ${switches} -- '${shell.singQEscape(args.join?.(" ")?.trim())}'`;
         return tri.native.run(cmd).then(
-            res => utils.tab.open(res.content, opts)
+            res => res.content && utils.tab.open(res.content, opts)
         );
     },
 
