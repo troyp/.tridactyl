@@ -1024,6 +1024,12 @@ command: click "Click first element matching selectors" cujs -d¦ cutils.click(J
 commdoc clickall "Click first element matching selectors"
 command clickall cujs -d¦ cutils.click(JS_ARGS.slice(1).join(" "), {all: true})¦
 
+" | ,mx -- manipulate/checkboxes |
+bind ,mx<C-h> showkeys ,mx
+bind: ,mxx "Click all checkboxes" cujs cutils.clickall("input[type=checkbox]")
+bind: ,mxy "Check all checkboxes" cujs $$("input[type=checkbox]").forEach(e=>e.checked=true)
+bind: ,mxn "Uncheck all checkboxes" cujs $$("input[type=checkbox]").forEach(e=>e.checked=false)
+
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
 " │ ,n -- edit │
