@@ -1,0 +1,12 @@
+/.*/
+/css/
+/emacs/
+/gmscripts/
+/js/
+/patches/
+/scripts/
+/userstyles/
+/webapps/
+*.json
+*.min.js
+*working.*
