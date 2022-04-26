@@ -204,6 +204,11 @@ sites.LISTS = {
         "https://bws.com.au/productgroup/spirit-specials",
         "https://www.firstchoiceliquor.com.au/specials",
     ],
+    video_apps: [
+        "https://www.netflix.com/",
+        "https://www.primevideo.com/",
+        "https://www.youtube.com/",
+    ],
 };
 
 window.sites = sites;
