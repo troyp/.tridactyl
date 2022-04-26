@@ -1,5 +1,10 @@
+.*
 working.*
-/personal/*
-/build/*
-/misc_ignore/*
+TAGS
+/personal/
+/build/
+/misc_ignore/
+!.gitignore
+!.ugrep
+!.ugignore
 !/personal/personal_skeleton.js
