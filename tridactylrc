@@ -1240,7 +1240,9 @@ bind --mode=insert  <C-C>    withjsb user.creditcard | text.insert_text
 " ╭──────────────────────╮
 " │ Visual-mode bindings │
 " ╰──────────────────────╯
-vbind Y cujs cutils.yank(window.getSelection().toString())
+vbind: Y "Yank selected text" cujs cutils.yank(window.getSelection().toString())
+vbind: p "Open selected URL/search term in adjacent tab" cujs window.getSelection().toString() | tabopen_adj
+vbind: P "Open selected URL/search term in current tab" cujs window.getSelection().toString() | open
 
 vbind: <A-;> "Switch to last accessed tab" tabswitchprev
 vbind: <A-:> "Switch to last accessed tab and close current tab" tabswitchprev!
