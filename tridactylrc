@@ -492,11 +492,11 @@ unbind /
 commdoc kwsearch "Keyword bookmark search: last tab"
 command kwsearch jsb -d¦ places.kw.open(JS_ARGS)¦
 commdoc kwsearch_adj "Keyword bookmark search: adjacent tab"
-command kwsearch_adj jsb -d¦ places.kw.open(JS_ARGS, {where: "related"})¦
-commdoc kwsearch_bg   "Keyword bookmark search: background adjacent tab"
-command kwsearch_bg   jsb -d¦ places.kw.open(JS_ARGS, {where: "related", background: true})¦
+command kwsearch_adj jsb -d¦ places.kw.open(JS_ARGS, {where:"related"})¦
+commdoc kwsearch_bg "Keyword bookmark search: background adjacent tab"
+command kwsearch_bg jsb -d¦ places.kw.open(JS_ARGS, {where:"related", background:true})¦
 commdoc kwsearch_here "Keyword bookmark search: current tab"
-command kwsearch_here jsb -d¦ places.kw.open(JS_ARGS, {where: "here"})¦
+command kwsearch_here jsb -d¦ places.kw.open(JS_ARGS, {where:"here"})¦
 commdoc kwrofi "Keyword bookmark search: current tab [Rofi]"
 command kwrofi jsb -d¦ places.kw.rofi(JS_ARGS)¦
 commdoc multisearch "Search multiple queries"
@@ -508,11 +508,11 @@ command multienginesearch! jsb -d¦ places.kw.multi(JS_ARGS, {singleQuery:true})
 commdoc multisearch_adj "Search multiple queries: adjacent tabs"
 command multisearch_adj jsb -d¦ places.kw.multi(JS_ARGS, {where: "related"})¦
 commdoc multienginesearch_adj "Search multiple engines with same query: adjacent tabs [...Es Q]"
-command multienginesearch_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {where: "related"})¦
+command multienginesearch_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {where:"related"})¦
 commdoc searchwithengines "Search for query with engines [Q ...Es]"
-command searchwithengines jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst: true})¦
+command searchwithengines jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst:true})¦
 commdoc searchwithengines_adj "Search for query with engines: adjacent tabs [Q ...Es]"
-command searchwithengines_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst: true, where: "related"})¦
+command searchwithengines_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst:true, where:"related"})¦
 command: nativelinksearch "Search for links (FF builtin)" xdokeyseq 0.2 ctrl+v apostrophe
 command: hl "Highlight text" cujs -d¦ cutils.css.highlightString(JS_ARGS.join(" ").trim())¦
 command: hloff "Highlight text off" cujs -d¦ cutils.css.highlightStringOff()¦
