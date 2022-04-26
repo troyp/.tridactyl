@@ -5,6 +5,5 @@ line-number
 initial-tab
 perl-regexp
 hidden
-exclude-dir=.*
-exclude=*.json
-exclude=*working.*
+ignore-files=.gitignore
+ignore-files=.ugignore
