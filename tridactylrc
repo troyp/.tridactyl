@@ -641,6 +641,16 @@ bind: ykS "Yank keyword bookmark URL with rofi from bookmarks.json file" fillcmd
 bind: yll "Yank links" withlinks links.yankAll()
 bind: yls "Yank selected links" withlinks links.yankSelected()
 
+" | yu -- yank/URL |
+command: yankparenturl "Yank nth parent URL" jsb -d¦ utils.yank(urls.getNthParent(JS_ARGS[1]||1))¦
+command: yankrooturl "Yank nth from root URL" jsb -d¦ utils.yank(urls.getNthFromRootPath(JS_ARGS[1]||1))¦
+
+bind: yugu "Yank nth parent URL" yankparenturl
+bind: yugU "Yank nth from root URL" yankrooturl
+
+" | yud -- yank/URL/domain |
+bind: yudd "Yank page domain" cujs cutils.yank(document.location.hostname)
+
 " | yx -- yank/text |
 bind yx<C-h> showkeys yx
 bdoc yxh "Yank a text span highlighted with cutils.css.highlight (.tri_hl) [HINT]"
