@@ -649,7 +649,9 @@ bind: yugu "Yank nth parent URL" yankparenturl
 bind: yugU "Yank nth from root URL" yankrooturl
 
 " | yud -- yank/URL/domain |
-bind: yudd "Yank page domain" cujs cutils.yank(document.location.hostname)
+bind: yudd "Yank page hostname" cujs cutils.yank(document.location.hostname)
+bdoc yudD "Yank page hostname (with protocol)"
+bind yudD cujs cutils.yank(`${document.location.protocol}//${document.location.hostname}`)
 
 " | yx -- yank/text |
 bind yx<C-h> showkeys yx
