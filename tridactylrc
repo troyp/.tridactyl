@@ -1123,13 +1123,14 @@ bind ,vv fillcmdline convertunits
 " │ ,x -- miscellaneous │
 " ╰─────────────────────╯
 " | ,xt -- misc/table |
-command copytablecols cujs -d¦ cutils.copytablecols(JS_ARGS)¦
+command: copytablecols "Copy table columns" cujs -d¦ cutils.copytablecols(JS_ARGS)¦
+commdoc copytablecols_strict "Copy table columns (omit rows without enough columns)"
 command copytablecols_strict cujs -d¦ cutils.copytablecols(JS_ARGS, {strict: true})¦
 
 bind ,x<C-h> showkeys ,x
 bind ,xt<C-h> showkeys ,xt
-bind ,xtc fillcmdline copytablecols
-bind ,xtC fillcmdline copytablecols_strict
+bind: ,xtc "Copy table columns" fillcmdline copytablecols
+bind: ,xtC "Copy table columns (omit rows without enough columns)" fillcmdline copytablecols_strict
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
