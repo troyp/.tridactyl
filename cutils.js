@@ -107,7 +107,7 @@ var cutils = {
             function processCols(i) {
                 if (i < 0) { i = n+1-i; }
                 const cellValue = cells[i-1] && cells[i-1].innerText.trim();
-                if (cellValue.match?.(/^".*"$/))
+                if (cellValue?.match?.(/^".*"$/))
                     return cellValue.slice(1, -1).trim();
                 else
                     return cellValue;
