@@ -278,6 +278,23 @@ var cutils = {
         return successful;
     },
 
+    jumpToHeading: async function(selector="h2,h3,h4", opts={}) {
+        opts = cutils.tri.parseOpts(opts, {defaults: {"indentHeadings": true}});
+        const tableHeadings = $$(selector);
+        function indent(t, base=2) {
+            const match = t.match(/[Hh](\d)/);
+            if (match) {
+                const n = parseInt(match[1]);
+                return `${t}: ${"──".repeat(n-base)}`;
+            } else return `${t}:`;
+        }
+        const tableHeadingDescripts = tableHeadings.map(h=>`${indent(h.tagName)} ${h.textContent.trim()}`);
+        const selectedIdx = await cutils.select(tableHeadingDescripts, {format: "i"});
+        const selected = tableHeadings[selectedIdx];
+        selected.scrollIntoView();
+        return selected;
+    },
+
     keep: (...selectors) => this.isolate(selectors),
 
     message: async function(s, opts={}) {

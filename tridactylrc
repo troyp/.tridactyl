@@ -193,6 +193,8 @@ bind: <C-x><C-x> "Restart browser" restart
 bind: <A-=> "Increment current URL by 1" urlincrement 1
 bind: <A--> "Decrement current URL by 1" urlincrement -1
 
+bind: <S-enter> "Jump to heading" cujs jumpToHeading()
+
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
 " │ g; -- focus │
