@@ -1131,10 +1131,11 @@ command copytablecols_strict cujs -d¦ cutils.copytablecols(JS_ARGS, {strict: tr
 
 bind ,x<C-h> showkeys ,x
 bind ,xt<C-h> showkeys ,xt
-bind: ,xtc "Copy table columns" fillcmdline copytablecols
-bind: ,xtC "Copy table columns (omit rows without enough columns)" fillcmdline copytablecols_strict
-bind: ,xtd "Delete table row" hint -Jk tr
-bind: ,xtss "Sort table" js -r js/sorttables.js ; hint -Jc table -F t=>sorttable.makeSortable(t)
+bind: ,xtc "Copy table columns [HINT]" fillcmdline copytablecols
+bind: ,xtC "Copy table columns (omit rows without enough columns) [HINT]" fillcmdline copytablecols_strict
+bind: ,xtd "Delete table row [HINT]" hint -Jk tr
+bind: ,xt;d "Delete multiple table rows [HINTS]" hint -Jqk tr
+bind: ,xtss "Sort table [HINT]" cujs -r js/sorttables.js ; hint -Jc table -F t=>sorttable.makeSortable(t)
 bind: ,xtsa "Sort all tables" cujs -r js/sorttables.js ; js $$("table").forEach(t=>sorttable.makeSortable(t))
 
 " ───────────────────────────────────────────────────────────────────────────────
