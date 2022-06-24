@@ -137,7 +137,7 @@ bind: l "Move to previous tab" tabnext
 bind: H "Move back in tab history" back
 bind: L "Move forward in tab history" forward
 
-command: pasten "Open COUNT URLs from clipboard" jsb -d¦ utils.tri.pasten(JS_ARGS)¦
+command: pasten "Open COUNT URLs from clipboard" jsb -d¦ utils.tri.pasten(JS_ARGS, "last")¦
 commdoc pasten_here "Open COUNT URLs from clipboard, starting in current tab"
 command pasten_here jsb -d¦ utils.tri.pasten(JS_ARGS, "here")¦
 commdoc pasten_adj "Open COUNT URLs from clipboard in adjacent tabs"
@@ -248,10 +248,14 @@ command tabopen_last jsb -d¦ utils.tab.open(JS_ARGS, {where: "last"})¦
 commdoc tabopen_bg "Open an URL in an adjacent background tab"
 command tabopen_bg jsb -d¦ utils.tab.open(JS_ARGS, {where: "related", background: true})¦
 commdoc openorswitchc "Open an URL in current (with count: adjacent) tab, or switch to existing tab"
-command openorswitchc jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"related":"here"})¦
+command openorswitchc jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "here", "related")¦
+commdoc openorswitchc! "Open an (exact) URL in current (with count: adjacent) tab, or switch to existing tab"
+command openorswitchc! jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "here", "related", {exactMatch: true})¦
 commdoc tabopenorswitchc "Open an URL in a new final tab (count: current tab), or switch to existing tab"
-command tabopenorswitchc jsb -d¦ utils.tab.openOrSwitch(JS_ARGS[1], {where: JS_ARGS[2]?"here":"last"})¦
-command topenorswitch tabopenorswitchc
+command tabopenorswitchc jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "related", "here")¦
+commdoc tabopenorswitchc! "Open an (exact) URL in current (with count: adjacent) tab, or switch to existing tab"
+command tabopenorswitchc! jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "related", "here", {exactMatch: true})¦
+command topos tabopenorswitchc
 commdoc openorswitch "Open an URL in current tab, or switch to existing tab"
 command openorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
 commdoc tabopenorswitch "Open an URL in a new (final) tab, or switch to existing tab"
@@ -260,8 +264,12 @@ commdoc tabopenorswitch_adj "Open an URL in an afjacent tab, or switch to existi
 command tabopenorswitch_adj jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"related"});
 commdoc openorsummonc "Open an URL in current (with count: adjacent) tab, or summon an existing tab"
 command openorsummonc jsb -d¦ utils.tab.openOrSummon(JS_ARGS[1], {where: JS_ARGS[2]?"related":"here"})¦
+commdoc openorsummonc! "Open an (exact) URL in current (with count: adjacent) tab, or summon existing tab"
+command openorsummonc! jsb -d¦ utils.tab.openorsummonWr(JS_ARGS, "related", "here", {exactMatch: true})¦
 commdoc tabopenorsummonc "Open an URL in a new final tab (count: current tab), or summon an existing tab"
-command tabopenorsummonc jsb -d¦ utils.tab.openOrSummon(JS_ARGS[1], {where: JS_ARGS[2]?"here":"last"})¦
+command tabopenorsummonc jsb -d¦ utils.tab.openorsummonWr(JS_ARGS, "related", "here")¦
+commdoc tabopenorsummonc! "Open an (exact) URL in a new final tab (count: current tab), or summon an existing tab"
+command tabopenorsummonc! jsb -d¦ utils.tab.openorsummonWr(JS_ARGS, "related", "here", {exactMatch: true})¦
 commdoc openorsummon "Open an URL in current tab, or switch to existing tab and move adjacent"
 command openorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"here"});
 commdoc tabopenorsummon "Open an URL in a new adjacent tab, or switch to existing tab and move adjacent"
@@ -587,7 +595,7 @@ command showkeysurl fillcmdline_notrail bindurl
 command searchnmaps jsb -d¦ utils.tri.searchNmapsWrapper(JS_ARGS.join(" "))¦
 
 bind <C-h><C-h> showkeys <C-h>
-bind: <C-h>a "Open list of ui.key.accelKey values" topenorswitchc https://searchcode.com/codesearch/view/26755902/
+bind: <C-h>a "Open list of ui.key.accelKey values" topos https://searchcode.com/codesearch/view/26755902/
 bind: <C-h>b "Search normal keybinding definitions" fillcmdline searchnmaps
 bdoc <C-h>d "Open devtools toolbox"
 bind <C-h>d tabopen about:devtools-toolbox?id=tridactyl.vim.betas%40cmcaine.co.uk&type=extension
@@ -675,9 +683,9 @@ bind ea tabopen about:addons
 bind: ebh "Open history sidebar" xdokeyseq 0.2 menuacc+v ↓ → ↓ Return
 bind: ebk "Open bookmarks sidebar" xdokeyseq 0.2 menuacc+v ↓ → Return
 
-bind ec topenorswitch about:config
-bind ed topenorswitch about:downloads
-bind eD topenorswitch about:debugging
+bind ec tabopenorswitchc about:config
+bind ed tabopenorswitchc about:downloads
+bind eD tabopenorswitchc about:debugging
 
 " | el -- goto/local |
 bind el<C-h> showkeys el
@@ -856,12 +864,12 @@ bind x<C-h> showkeys x
 
 " | xg -- Violentmonkey |
 bind xg<C-h> showkeys xg
-bdoc xgg topenorswitch "Violentmonkey addon page"
-bind xgg topenorswitch moz-extension://db4d65cd-28d4-401b-8744-0faae0d1c402/options/index.html
-bind: xgs "Load gmscript from config dir" topenorswitch file:///home/troy/.tridactyl/gmscripts/
+bdoc xgg tabopenorswitchc "Violentmonkey addon page"
+bind xgg tabopenorswitchc moz-extension://db4d65cd-28d4-401b-8744-0faae0d1c402/options/index.html
+bind: xgs "Load gmscript from config dir" tabopenorswitchc file:///home/troy/.tridactyl/gmscripts/
 
 bdoc xhh "referer control extension page"
-bind xhh topenorswitch moz-extension://f8a9790f-55e6-46ab-a00f-9e2dafbbf850/chrome/content/options.html
+bind xhh tabopenorswitchc moz-extension://f8a9790f-55e6-46ab-a00f-9e2dafbbf850/chrome/content/options.html
 
 " | xr -- 10ten japanese reader |
 bind xr<C-h> showkeys xr
@@ -910,7 +918,7 @@ bind: ,amy "Open Yahoo Mail" tabopenorswitchc https://au.mail.yahoo.com/d/folder
 " │ ,as -- web/shopping │
 " ╰─────────────────────╯
 bind ,as<C-h> showkeys ,as
-bind: ,asa "open Amazon AU" tabopenorswitch https://www.amazon.com.au/gp/cart/view.html/ref=nav_cart
+bind: ,asa "Open Amazon AU" tabopenorswitch https://www.amazon.com.au/gp/cart/view.html/ref=nav_cart
 bind: ,asc "Open Coles" tabopenorswitch https://shop.coles.com.au/a/ballina/home
 bind: ,ase "open eBay" tabopenorswitch https://cart.ebay.com.au
 bind: ,asj "open Jackson's Art" tabopenorswitch https://www.jacksonsart.com/en-au/checkout/cart/
@@ -934,15 +942,15 @@ bind: ,avy "Goto Youtube" tabopenorswitchc https://www.youtube.com/
 " ╰────────────────────╯
 bind ,aw<C-h> showkeys ,aw
 " Open Goonellabah Weather: 48 hour daily summary (weatherzone)
-bind ,awd topenorswitch https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah/next48hours#daily-summaries
+bind ,awd topos https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah/next48hours#daily-summaries
 " Show Goonellabah Sunrise and Sunset Times
 bind ,aws jsb utils.yankf(`SUNRISE: %s\nSUNSET:  %s`, ...apps.sunriseSunset(...user.latlong));
 " Open Lismore Weather (BoM)
-bind ,aww topenorswitch http://www.bom.gov.au/nsw/forecasts/lismore.shtml
+bind ,aww tabopenorswitchc http://www.bom.gov.au/nsw/forecasts/lismore.shtml
 " Open Goonellabah Weather (timeanddate.com)
-bind ,awt topenorswitch https://www.timeanddate.com/weather/@2164966
+bind ,awt tabopenorswitchc https://www.timeanddate.com/weather/@2164966
 " Open Goonellabah Weather (weatherzone)
-bind ,awz topenorswitch https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah
+bind ,awz tabopenorswitchc https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────────────╮
