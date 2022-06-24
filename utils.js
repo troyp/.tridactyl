@@ -828,6 +828,8 @@ utils.tri = {
             opts[options.castHTMLElement] = rawopts;
         } else if (options.castRegExp && rawopts instanceof RegExp) {
             opts[options.castRegExp] = rawopts;
+        } else if (options.castArray && Array.isArray(rawopts)) {
+            opts[options.castArray] = rawopts;
         } else if (options.castArrayToBooleanOpts && Array.isArray(rawopts)) {
             opts = rawopts.reduce((acc,e)=>(acc[e]=true) && acc, {});
         } else {
