@@ -383,7 +383,9 @@ utils.tab = {
         if (!url) return null;
         opts = utils.tri.parseOpts(opts, {castString: "where", nullishDefaults:{where:"here"}});
         const currentTab = await tri.webext.activeTab();
-        const testfn = opts.regex ? (t=> t.url.match(opts.regex)) : (t=> t.url.indexOf(url)>=0);
+        const testfn = opts.regex
+              ? (t=> t.url.match(opts.regex))
+              : opts.exactMatch ? (t=> t.url == url) : (t=> t.url.indexOf(url)>=0);
         if (testfn(currentTab)) return currentTab;
         else  {
             const alltabs = await this.getAll();
@@ -410,7 +412,9 @@ utils.tab = {
         if (typeof opts == "string") opts = {where: opts};
         opts.closeCurrent ??= (opts.where=="here");
         const currentTab = await tri.webext.activeTab();
-        const testfn = opts.regex ? (t=> t.url.match(opts.regex)) : (t=> t.url.indexOf(url)>=0);
+        const testfn = opts.regex
+              ? (t=> t.url.match(opts.regex))
+              : opts.exactMatch ? (t=> t.url == url) : (t=> t.url.indexOf(url)>=0);
         if (testfn(currentTab)) return currentTab;
         else {
             const alltabs = await this.getAll();
