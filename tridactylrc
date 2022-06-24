@@ -1087,7 +1087,9 @@ command unicodehexcodes jsb -d¦ apps.unicodeHexcodes(JS_ARGS.join(""))¦
 commdoc unicode "Describe unicode characters"
 command unicode jsb -d¦ apps.unicode(JS_ARGS.join(""))¦
 
-bind: ,rp "Periodic table" tabopenorswitch https://ptable.com
+bind: ,rmm "World map (google)" tabopenorswitchc https://www.google.com/maps/@12.8367482,26.1595951,3z
+
+bind: ,rp "Periodic table" tabopenorswitchc https://ptable.com
 
 " | ,ru -- reference/unicode |
 bind ,ru<C-h> showkeys ,ru
