@@ -642,7 +642,7 @@ window.R = R;
     "click", "clickall",
     "getText", "getText1",
     "getSelectionDOM", "getSelectionHtml",
-    "isolate", "keep", "rm", "rmall", "toggleprop", "togglepropWr",
+    "isolate", "jumpToHeading", "keep", "rm", "rmall", "toggleprop", "togglepropWr",
     "yankby", "yank1by", "yankelt", "yankhint", "yankinput", "yankspan",
 ].forEach(k => window[k]=cutils[k]);
 
