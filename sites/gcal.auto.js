@@ -45,5 +45,8 @@ const todayRGBArr = [255, 0, 0];
 const todayFader = fade(15);
 const datekey = dateToDatekey(new Date());
 const todayHeading = document.querySelector(`div[role=main] div>h2[data-datekey="${datekey}"]`);
-todayHeading.parentElement.style.backgroundColor = rgb(...todayRGBArr.map(todayFader));
-todayHeading.parentElement.style.border = `2px solid ${rgb(...todayRGBArr)}`;
+if (todayHeading) {
+    todayHeading.style.backgroundColor = rgb(...todayRGBArr);
+    todayHeading.parentElement.style.backgroundColor = rgb(...todayRGBArr.map(todayFader));
+    todayHeading.parentElement.style.border = `2px solid ${rgb(...todayRGBArr)}`;
+}
