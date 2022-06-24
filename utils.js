@@ -268,7 +268,7 @@ utils.tab = {
         } else {
             /* force resolution of address into URL */
             /* then call tabCreateWrapper */
-            if (!isURL) url = utils.tri.parseUrl(url, true)[0];
+            if (!isURL) url = await utils.tri.parseUrl(url, true)[0];
             const i = thisTab.index;
             const N = await this.getN();
             const tabCreateOpts = {
