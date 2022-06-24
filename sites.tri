@@ -300,6 +300,11 @@ googlebind cyy cujs ; hint -Jc div.g>div div>div>a>div>cite -F e=>cutils.yank(e.
 autocmd DocLoad https://calendar\.google\.com(/|$) js -r sites/gcal.auto.js
 autocmd TabEnter https://calendar\.google\.com(/|$) js -r sites/gcal.auto.js
 
+command: gcalbind "Bind key for calendar.google.com" bindurl https://calendar\.google\.com(/|$)
+command: gcalbind: "Bind key with description for calendar.google.com" bindurl: https://calendar\.google\.com(/|$)
+
+gcalbind: <A-enter> "Load sites/gcal.auto.js" js -r sites/gcal.auto.js
+
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────╮
 " │ Google Earth │
