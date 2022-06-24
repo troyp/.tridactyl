@@ -323,6 +323,8 @@ command: tabremove "Close tabs matching expression" jsb -d¦ utils.tab.removeWr(
 command: tabfilter "Close tabs not matching expression" jsb -d¦ utils.tab.filterWr(JS_ARGS)¦
 command: tabremovestr "Close tabs matching string" jsb -p utils.tab.remove(t=>S.matchSC(JS_ARG, t.titleurl));
 command: tabfilterstr "Close tabs not matching string" jsb -p utils.tab.filter(t=>S.matchSC(JS_ARG, t.titleurl));
+command: tabrmrange "Close tabs from START to END" jsb -d¦ utils.tab.removeRangeWr(JS_ARGS)¦
+commdoc tabrmrange "Close tabs from START to END (including pinned)"
 commdoc tabswitchprev "Switch to last accessed tab"
 command tabswitchprev jsb -d¦ utils.tab.switchAlternate(JS_ARGS[1]||1)¦
 commdoc tabswitchprev! "Switch to last accessed tab and close current tab" 

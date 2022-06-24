@@ -439,6 +439,23 @@ utils.tab = {
         return this.openOrSwitch(args[0], {where: (count ? whereAlt : where), ...opts});
     },
 
+    ordstrToIndex: async function(n) {
+        const N = await this.getN();
+        switch (n) {
+          case "^": return 0;
+          case "$": return N - 1;
+          case ".": return (await this.currentOrd()) - 1;
+          default:
+              n = parseInt(n);
+              return (N+n-1) % N;
+        }
+    },
+
+    ordstrToOrd: async function(n) {
+        const idx = await this.ordstrToIndex(n);
+        return idx + 1;
+    },
+
     parseTabnum: async function(n) {
         const N = await this.getN();
         switch(n) {
@@ -478,6 +495,15 @@ utils.tab = {
         const expr = utils.tri.parseExpr(args);
         const pred = eval(`(t, i, i0)=>${expr}`);
         return this.remove(pred);
+    },
+
+    removeRange: async function(start, end, opts={}) { return this.remove((_,i) => i>=start && i<=end, opts); },
+
+    removeRangeWr: async function(args, opts={}) {
+        const [start, end] = utils.tri.parseArgs(args);
+        const t1 = await utils.tab.ordstrToOrd(start);
+        const t2 = await utils.tab.ordstrToOrd(end);
+        return this.removeRange(t1, t2, opts);
     },
 
     removeWithRofi: async function(opts={}) {
