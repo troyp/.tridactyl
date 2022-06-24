@@ -97,12 +97,12 @@ xdo.keyVars = {
 xdo.keyAbbrevs = {
     accel:  xdo.keyVars.accel,
     menuacc: xdo.keyVars.menuacc,
-    "↵" : "Return",
-    "↩" : "Return",
-    "←"  : "Left",
-    "→"  : "Right",
-    "↓"  : "Down",
-    "↑"  : "Up",
+    "↵"  : "Return",   /* digraph <| */
+    "↩"  : "Return",
+    "←"  : "Left",     /* digraph <- */
+    "→"  : "Right",    /* digraph -> */
+    "↓"  : "Down",     /* digraph -v */
+    "↑"  : "Up",       /* digraph !- */
 };
 
 window.xdo = xdo;
