@@ -400,6 +400,11 @@ utils.tab = {
         }
     },
 
+    openorsummonWr: async function(argscount, where, whereAlt, opts={}) {
+        const [args, count] = utils.tri.parseArgsAndCount(argscount);
+        return this.openOrSwitch(args[0], {where: (count ? whereAlt : where), ...opts});
+    },
+
     /**   openOrSwitch(URL, { OPTIONS... })
      *    openOrSwitch(URL, WHERE)
      *  opts.where ["last" (default), "here", "related", "next"]: where to open new tab (if any)
@@ -427,6 +432,11 @@ utils.tab = {
                 });
             } else return this.open(url, {where: opts.where||"related"});
         }
+    },
+
+    openorswitchWr: async function(argscount, where, whereAlt, opts={}) {
+        const [args, count] = utils.tri.parseArgsAndCount(argscount);
+        return this.openOrSwitch(args[0], {where: (count ? whereAlt : where), ...opts});
     },
 
     parseTabnum: async function(n) {
