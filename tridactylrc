@@ -1137,6 +1137,8 @@ bind ,vv fillcmdline convertunits
 " ╭─────────────────────╮
 " │ ,x -- miscellaneous │
 " ╰─────────────────────╯
+command scrollnthintoview cujs -d¦ cutils.scrollNthIntoView(JS_ARGS[1], JS_ARGS?.[2])¦
+
 " | ,xt -- misc/table |
 command: copytablecols "Copy table columns" cujs -d¦ cutils.copytablecols(JS_ARGS)¦
 commdoc copytablecols_strict "Copy table columns (omit rows without enough columns)"

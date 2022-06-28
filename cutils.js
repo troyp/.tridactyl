@@ -328,6 +328,11 @@ var cutils = {
     /** Remove elements matching any of the SELECTORS. For more options, see rm() */
     rmall: (...selectors) => this.rm(selectors),
 
+    scrollNthIntoView: function(selector, n=1) {
+        n = parseInt(n);
+        return $$(selector)[n-1].scrollIntoView();
+    },
+
     select: async function(input, opts={}) {
         if (Array.isArray(input)) input = input.join("\n");
         opts = cutils.tri.parseOpts(opts, {defaults:{prompt:"", format:"s"}});
