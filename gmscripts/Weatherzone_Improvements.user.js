@@ -7,3 +7,5 @@
 // ==/UserScript==
 
 document.querySelector("div[class*=commonstyle__TopBannerTablet]").remove();
+document.querySelector("nav").style.display = "none";
+document.getElementById("weatherzone-main").style.display = "none";

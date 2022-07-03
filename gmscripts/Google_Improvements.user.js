@@ -7,19 +7,6 @@
 // @grant       none
 // ==/UserScript==
 
-var url = document.location.href;
-var links = [...document.links];
-
-// CONVERT LINKS TO OLD REDDIT
-links.forEach(l=>l.href=l.href.replace(/^https:\/\/www\.reddit\.com\//, "https://old.reddit.com/"));
-
-// changing links results in redirection permission page: proceed to real page
-var match, newurl;
-if ((match = url.match(/\/url\?.*&url=https%3A%2F%2Fold.reddit.com([^&]+)/))) {
-    alert(match);window.open(decodeURIComponent(match[1]));
-}
-
-// ───────────────────────────────────────────────────────────────────────────────
 // ╭────────────────────────╮
 // │ Advanced Search Button │
 // ╰────────────────────────╯
