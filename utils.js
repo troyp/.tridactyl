@@ -34,6 +34,7 @@ var utils = {
     },
 
     message: function(s, opts={}) {
+        opts = utils.tri.parseOpts(opts, {castBoolean: "cmdline"});
         const s_ = (opts.prefix || "") + s;
         if (opts.temp) {
             const t = opts.duration || 3000;
