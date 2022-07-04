@@ -924,8 +924,10 @@ utils.tri = {
                 } else if (kwurl) {
                     return [kwurl, "URL"];
                 } else {
+                    const defaultEngine = tri.config.get("defaultkw") || "g";
                     return opts.force
-                        ? [this.searchurlResolve(url, {default: true}), "URL"]
+                        // ? [this.searchurlResolve(url, {default: true}), "URL"]
+                        ? [await places.kw.get(`${defaultEngine} ${url}`), "URL"]
                         : [url, "query"];
                 }
             }
