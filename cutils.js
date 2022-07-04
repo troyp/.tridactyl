@@ -385,6 +385,13 @@ var cutils = {
         return text!==null && cutils.yank(text);
     },
 
+    yanknthby: function(selector, n=1, opts={}) {
+        n = parseInt(n);
+        const elts = cutils.get(selector, opts);
+        const text = elts?.[n]?.innerText;
+        return text!==null && cutils.yank(text);
+    },
+
     yankelt: function(elts, opts={}) {
         /* options */
         opts = cutils.tri.parseOpts(opts, {castString: "textProperty"});
@@ -648,6 +655,6 @@ window.R = R;
     "getText", "getText1",
     "getSelectionDOM", "getSelectionHtml",
     "isolate", "jumpToHeading", "keep", "rm", "rmall", "toggleprop", "togglepropWr",
-    "yankby", "yank1by", "yankelt", "yankhint", "yankinput", "yankspan",
+    "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankspan",
 ].forEach(k => window[k]=cutils[k]);
 

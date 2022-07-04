@@ -625,6 +625,7 @@ command yankmousepos ! echo "yank $(xdotool getmouselocation | perl -pe 's/x:(\d
 
 command: yankall "Copy text from elements matching a selector" cujs -d¦ yankby(JS_ARGS.join(" "))¦
 command: yankfirst "Yank first element matching selector" cujs -d¦ yankby(JS_ARGS.join(" "), {firstMatch: true})¦
+command: yanknth "Yank nth element matching selector" cujs -d¦ yanknthby(JS_ARGS[1], JS_ARGS[2])¦
 command: yankhint "Yank an element matching selector [HINT]" cujs -d¦ yankhint(JS_ARGS.slice(1).join(","))¦
 command yankinput "Yank input field [HINT]" cujs -d¦ yankinput(JS_ARGS.slice(1).join(","))¦
 
@@ -636,6 +637,11 @@ bind: ys "Yank element text by CSS selector [HINT]" fillcmdline yankhint
 bind: yS "Yank element text by CSS selector (all)" fillcmdline yankall
 bdoc y? "Yank the current tridactyl config as JSON"
 bind y? jsb tri.excmds.yank(JSON.stringify(tri.config.USERCONFIG))
+
+bind: y1 "Yank first H1 heading" yanknth h1
+bind: y2 "Yank first H2 heading" yanknth h2
+bind: y3 "Yank first H3 heading" yanknth h3
+bind: y4 "Yank first H4 heading" yanknth h4
 
 " | yd -- yank/datetime |
 bdoc ydd "Yank current datetime (yyyy-mm-dd-HH-MM-SS)"
