@@ -622,11 +622,11 @@ commdoc bmyank "Yank bookmark data from bookmarks.json file"
 command bmyank jsb -d¦ places.bm.yank(JS_ARGS, "")¦
 commdoc yankmousepos "Yank the mouse pointer position (X Y)"
 command yankmousepos ! echo "yank $(xdotool getmouselocation | perl -pe 's/x:(\d+) y:(\d+) .*/$1 $2/')";
-commdoc yankall "Copy text from elements matching a selector"
-command yankall cujs -d¦ yankby(JS_ARGS.join(" "))¦
-command yankfirst cujs -d¦ yankby(JS_ARGS.join(" "), {firstMatch: true})¦
-command yankhint cujs -d¦ yankhint(JS_ARGS.slice(1).join(","))¦
-command yankinput cujs -d¦ yankinput(JS_ARGS.slice(1).join(","))¦
+
+command: yankall "Copy text from elements matching a selector" cujs -d¦ yankby(JS_ARGS.join(" "))¦
+command: yankfirst "Yank first element matching selector" cujs -d¦ yankby(JS_ARGS.join(" "), {firstMatch: true})¦
+command: yankhint "Yank an element matching selector [HINT]" cujs -d¦ yankhint(JS_ARGS.slice(1).join(","))¦
+command yankinput "Yank input field [HINT]" cujs -d¦ yankinput(JS_ARGS.slice(1).join(","))¦
 
 bind y<C-h> showkeys y
 bind: yf "Yank element text by CSS selector (first match)" fillcmdline yankfirst
