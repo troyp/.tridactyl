@@ -4,7 +4,7 @@
 // @match       https://roll20.net/compendium/dnd5e/*
 // @grant       none
 // @version     1.0
-// @author      -
+// @author      Troy Pracy
 // @description 26/06/2022, 4:46:19 am
 // ==/UserScript==
 

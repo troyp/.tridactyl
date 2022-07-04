@@ -3,6 +3,7 @@
 // @namespace   https://github.com/troyp
 // @include     https://time.is/Sydney
 // @version     1
+// @author      Troy Pracy
 // @grant       none
 // ==/UserScript==
 

@@ -4,6 +4,7 @@
 // @description Jisho Improvements
 // @include     https://jisho.org/*
 // @version     1
+// @author      Troy Pracy
 // @grant       none
 // ==/UserScript==
 

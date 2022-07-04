@@ -4,6 +4,7 @@
 // @description Improvements for addons.mozilla.org
 // @include     https://addons.mozilla.org/*
 // @version     1
+// @author      Troy Pracy
 // @grant       none
 // ==/UserScript==
 

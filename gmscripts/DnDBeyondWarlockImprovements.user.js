@@ -4,7 +4,7 @@
 // @match       https://www.dndbeyond.com/classes/warlock
 // @grant       none
 // @version     1.0
-// @author      -
+// @author      Troy Pracy
 // @description 05/06/2022, 9:25:59 pm
 // ==/UserScript==
 

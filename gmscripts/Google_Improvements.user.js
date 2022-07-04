@@ -2,8 +2,8 @@
 // @name        Google Improvements
 // @namespace   https://github.com/troyp
 // @match       https://www.google.com/*
-
 // @version     1
+// @author      Troy Pracy
 // @grant       none
 // ==/UserScript==
 

@@ -1,12 +1,18 @@
 // ==UserScript==
-// @name        RPG.net Improvements
+// @name        RPGBot.net Improvements
 // @namespace   https://github.com/troyp
 // @match       https://rpgbot.net/dnd5/*
 // @grant       none
 // @version     1.0
-// @author      -
+// @author      Troy Pracy
 // @description 03/07/2022, 3:09:37 pm
 // ==/UserScript==
+
+// Remove
+const removeClasses = ["topad", "shareit", "widget-header"];
+removeClasses.forEach(cls => {
+    [...document.getElementsByClassName(cls)].forEach(e => e.remove());
+})
 
 // Turn item headings into search links on DnDBeyond.com
 const ratings = {
@@ -26,6 +32,7 @@ itemClasses.forEach(cls => {
         a.href = `https://www.dndbeyond.com/search?q=${q}`;
         a.innerText = s;
         a.style.color = ratings[cls];
+        a.style.textDecoration = "none";
         e.append(a);
     });
 });

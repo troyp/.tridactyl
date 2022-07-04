@@ -3,6 +3,7 @@
 // @namespace   https://github.com/troyp
 // @include     https://*github.com/*
 // @version     1
+// @author      Troy Pracy
 // @grant       none
 // ==/UserScript==
 var url = document.location.href;

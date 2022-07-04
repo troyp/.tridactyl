@@ -3,6 +3,7 @@
 // @namespace   https://github.com/troyp
 // @match       *://*.reddit.com/*
 // @version     1
+// @author      Troy Pracy
 // @grant       none
 // ==/UserScript==
 
