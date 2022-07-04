@@ -196,6 +196,11 @@ utils.tab = {
         return sorted[n];
     },
 
+    getHighlighted: async function() {
+        const hlTabs = await browser.tabs.query({currentWindow: true, highlighted: true});
+        return [...hlTabs];
+    },
+
     getid: async function(tabnum, opts={}) {
         const t = await this.get(tabnum, opts);
         return t.id;
