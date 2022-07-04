@@ -60,6 +60,28 @@ function cleanup() {
         isolate("article:first-of-type");
         rmall("aside", ".heading_breadcrumb", ".heading_sharing", "span.next-single");
         $$("figure").forEach(f=>f.style.height=f.querySelector("img").height+"px");
+    } else if (url.match(/https?:\/\/dnd5e\.wikidot\.com/)) {
+        isolate(".main-content-wrap");
+        rm([".site-bar", ".mm-mega-menu"], "firstMatch");
+    } else if (url.match(/https:\/\/www\.dndbeyond\.com/)) {
+        // keep(".p-article-content");
+        keep("header.page-header", "div.container", "ul.quick-menu");
+        rmall("aside.tasha-notes");
+        $$("aside").forEach(e => {
+            e.style.border = "1px solid black";
+            e.style.borderRadius = "15px";
+            e.style.margin = "2em 10em";
+            e.style.padding = "1em";
+            e.style.backgroundColor = "rgba(252, 249, 246, 1)";
+        });
+    } else if (url.match("https://rpgbot.net")) {
+        keep("article");
+        $1("div>span[itemprop='name']").parentElement.remove();
+        rmall(".topad", ".shareit");
+    } else if (url.match("https://www.mapsofworld.com")) {
+        keep("main");
+        $1("main").style.paddingTop = "0";
+        $1("section").style.marginTop = "0";
     } else {
         cleanupGeneric();
     }
