@@ -198,17 +198,14 @@ var cutils = {
 
     getText: function(selector, opts={}) {
         opts = cutils.tri.parseOpts(opts, {castString: "textProperty"});
-        opts.textProperty ??= "innerText";
-        return cutils.get(selector, opts).map(e=>e[opts.textProperty]).join("\n");
+        opts.textProperty ||= "innerText";
+        opts.trim ??= true;
+        const contents = cutils.get(selector, opts).map(e=>e?.[opts.textProperty]);
+        const ss = opts.trim ? contents.map(s=>s.trim()) : contents;
+        return opts.returnArray? ss : ss.join("\n");
     },
 
-    getText1: function(selector, opts={}) {
-        opts = cutils.tri.parseOpts(opts, {castString: "textProperty"});
-        opts.textProperty ??= "innerText";
-        opts.firstMatch = true;
-        const elt = cutils.get(selector, opts)[0];
-        return elt && elt[opts.textProperty];
-    },
+    getText1: function(selector, opts={}) { return this.getText(selector, {firstMatch: true, ...opts}); },
 
     /** Hides elements matching SELECTOR. See get() for arguments and options */
     hide: function(selector, opts={}) {
