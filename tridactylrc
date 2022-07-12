@@ -977,7 +977,9 @@ bind: ,cc "Yank the Nth last command-line history item" cmdYankHistoryItem
 bind: ,cC "Yank the last N command-line history items" cmdYankHistoryItems
 bind: ,cp "Execute commands in clipboard" expaste
 bdoc ,cr "Open command-line with previous command, replacing first argument"
-bind ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word
+bind ,cr :: fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word ; js " " | text.insert_text
+bdoc ,cr "Open command-line with previous command, changing 'tabopen' to 'open' and replacing first argument"
+bind ,c;r :: fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.delete_char; text.delete_char; text.delete_char; text.forward_word ; text.kill_word ; js " " | text.insert_text
 bind: ,cs "Show elements matching selector" fillcmdline getselector
 
 " ───────────────────────────────────────────────────────────────────────────────
