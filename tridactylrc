@@ -978,6 +978,7 @@ bind: ,cC "Yank the last N command-line history items" cmdYankHistoryItems
 bind: ,cp "Execute commands in clipboard" expaste
 bdoc ,cr "Open command-line with previous command, replacing first argument"
 bind ,cr composite fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word
+bind: ,cs "Show elements matching selector" fillcmdline getselector
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────╮
