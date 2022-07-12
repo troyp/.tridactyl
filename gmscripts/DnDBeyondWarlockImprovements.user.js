@@ -10,23 +10,24 @@
 
 const ul = document.querySelector(".quick-menu-tier-2");
 const features_li = document.getElementById("ClassFeatures");
-const features_sublinks = [
-  ["Pact Magic", "PactMagic-387"],
-  ["Eldritch Invocations", "EldritchInvocations-388"],
-  ["Pact Boon", "PactBoon-389"],
-  ["Mystic Arcanum", "MysticArcanum(6thlevel)-390"],
-  ["Eldritch Master", "EldritchMaster-391"],
-];
+const features_sublinks = {
+    "Pact Magic":            "PactMagic-387",
+    "Eldritch Invocations":  "EldritchInvocations-388",
+    "Pact Boon":             "PactBoon-389",
+    "Mystic Arcanum":        "MysticArcanum(6thlevel)-390",
+    "Eldritch Master":       "EldritchMaster-391",
+};
 var current = features_li;
-features_sublinks.forEach(([title, id]) => {
-  const li = document.createElement("li");
-  li.innerHTML = `
+Object.keys(features_sublinks).forEach(title => {
+    const id = features_sublinks[title];
+    const li = document.createElement("li");
+    li.innerHTML = `
     <div class="quick-menu-item-label" style="scroll-behavior: unset;">
       <a class="quick-menu-item-link" href="#${id}" style="scroll-behavior: unset;">
         ${title}
       </a>
      </div>
   `;
-  current.after(li);
-  current = li;
+    current.after(li);
+    current = li;
 });
