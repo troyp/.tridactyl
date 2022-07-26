@@ -627,7 +627,7 @@ command: yankall "Copy text from elements matching a selector" cujs -d¦ yankby(
 command: yankfirst "Yank first element matching selector" cujs -d¦ yankby(JS_ARGS.join(" "), {firstMatch: true})¦
 command: yanknth "Yank nth element matching selector" cujs -d¦ yanknthby(JS_ARGS[1], JS_ARGS[2])¦
 command: yankhint "Yank an element matching selector [HINT]" cujs -d¦ yankhint(JS_ARGS.slice(1).join(","))¦
-command yankinput "Yank input field [HINT]" cujs -d¦ yankinput(JS_ARGS.slice(1).join(","))¦
+command: yankinput "Yank input field [HINT]" cujs -d¦ yankinput(JS_ARGS.slice(1).join(","))¦
 
 bind y<C-h> showkeys y
 bind: yf "Yank element text by CSS selector (first match)" fillcmdline yankfirst
