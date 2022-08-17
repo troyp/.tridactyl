@@ -1,3 +1,13 @@
+" ╭──────────╮
+" │ SITES.js │
+" ╰──────────╯
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────╮
+" │ Load modules │
+" ╰──────────────╯
+jsb sites._.loadSites()
+
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
 " │ Amazon.com │
@@ -22,147 +32,6 @@ amazbind: co! "Goto contact form" urlmodorsummon_g /gp/help/customer/contact-us/
 " │ archive.org │
 " ╰─────────────╯
 bindurl archive.org ctt csites -r urls.js ; js csites.archive.toggleToolbarURL()
-
-" ───────────────────────────────────────────────────────────────────────────────
-" ╭────────────╮
-" │ D&D Beyond │
-" ╰────────────╯
-autocmd DocLoad  https://www\.dndbeyond\.com/ cujs -r sites/dndb.auto.js
-autocmd TabEnter https://www\.dndbeyond\.com/ cujs -r sites/dndb.auto.js
-
-command dndbbind bindurl dndbeyond.com
-command dndbbind: bindurl: dndbeyond.com
-
-dndbbind: <enter> "load dndb.auto.js" cujs -r sites/dndb.auto.js
-dndbbind: <S-enter> "Jump to heading" cujs jumpToHeading()
-dndbbind: <A-enter> "Jump to table" cujs jumpToHeading(".Table-Styles_Table-Title")
-dndbbind f jsb sites.dndb.follow()
-dndbbind: <A-Escape> "Close modal" click .fullscreen-modal-close-btn
-dndbbind: [[ "Previous page" click .top-prev-page>a
-dndbbind: ]] "Next page" click .top-next-page>a
-dndbbind: <C-PageDown> "Load More" cujs $1t("button", /load more/i).click()
-
-dndbbind c<C-h> showkeysurl dndbeyond.com c
-dndbbind: cb "Goto rpgbot.net" openorsummonc https://rpgbot.net/dnd5/
-dndbbind: cc "Lists: open/close row" csites csites.dndb.go();
-dndbbind: cf "Click category icon" hint .ddb-search-filter-item-wrapper>.icon
-dndbbdoc cv "Toggle collapse Dice Notification"
-dndbbind cv hint -Jc .dice_notification_controls__collapse,.dice_notification_controls__uncollapse
-
-" | cl -- dndb/library |
-dndbbind cl<C-h> showkeysurl dndbeyond.com cl
-dndbbind: clb "Library/Basic Rules" openorsummonc! https://www.dndbeyond.com/sources/basic-rules
-dndbbind: cld "Library/DMG" openorsummonc! https://www.dndbeyond.com/sources/dmg
-dndbbind: cll "Library" openorsummonc! https://www.dndbeyond.com/sources#Sourcebooks
-dndbbind: clm "Library/Monster Manual" openorsummonc! https://www.dndbeyond.com/sources/mm
-dndbbind: clM "Library/Monsters of the Multiverse" openorsummonc! https://www.dndbeyond.com/sources/motm
-dndbbind: clp "Library/PHB" openorsummonc! https://www.dndbeyond.com/sources/phb
-dndbbind: cls "Library/Sage Advice" openorsummonc! https://www.dndbeyond.com/sources/sac
-dndbbind: clS "Library/Sword Coast Adventurer's Guide" openorsummonc! https://www.dndbeyond.com/sources/scag
-dndbbind: clt "Library/Tasha's Cauldron of Everything" openorsummonc! https://www.dndbeyond.com/sources/tcoe
-dndbbind: clw "Library/Explorer's Guide to Wildemount" openorsummonc! https://www.dndbeyond.com/sources/egtw
-dndbbind: clx "Library/Xanathar's" openorsummonc! https://www.dndbeyond.com/sources/xgte
-
-" | cm -- dndb/my |
-dndbbind cm<C-h> showkeysurl dndbeyond.com cm
-dndbbind: cmc "Goto my characters" openorsummonc! https://www.dndbeyond.com/characters
-dndbbind: cmh "Goto my homebrew" openorsummonc! https://www.dndbeyond.com/my-creations
-
-dndbbind co<C-h> showkeysurl dndbeyond.com co
-" | co -- dndb/goto |
-dndbbind: coc "Goto cart" openorsummonc! https://www.dndbeyond.com/marketplace/cart
-dndbbind: com "Goto marketplace" openorsummonc! https://www.dndbeyond.com/marketplace/sourcebooks
-dndbbind: cos "Goto dnd-spells.com" openorsummonc! https://www.dnd-spells.com/spells
-
-" | cr -- dndb/rules |
-dndbbind cr<C-h> showkeysurl dndbeyond.com cr
-dndbbind: crb "Goto Backgrounds" openorsummonc! https://www.dndbeyond.com/backgrounds
-dndbbind: cre "Goto Equipment" openorsummonc! https://www.dndbeyond.com/equipment
-dndbbind: crf "Goto Feats" openorsummonc! https://www.dndbeyond.com/feats
-dndbbind: cri "Goto Magic Items" openorsummonc! https://www.dndbeyond.com/magic-items
-dndbbind: crm "Goto Monsters" openorsummonc! https://www.dndbeyond.com/monsters
-dndbbind: crr "Goto Races" openorsummonc! https://www.dndbeyond.com/races
-dndbbind: crv "Goto Vehices" openorsummonc! https://www.dndbeyond.com/vehicles
-
-" | crc -- dndb/rules/classes |
-dndbbind crc<C-h> showkeysurl dndbeyond.com crc
-dndbbind: crc. "Goto Classes" openorsummonc! https://www.dndbeyond.com/classes
-dndbbind: crca "Goto Artificer" openorsummonc! https://www.dndbeyond.com/classes/artificer
-dndbbind: crcB "Goto Barbarian" openorsummonc! https://www.dndbeyond.com/classes/barbarian
-dndbbind: crcb "Goto Bard" openorsummonc! https://www.dndbeyond.com/classes/bard
-dndbbind: crcc "Goto Cleric" openorsummonc! https://www.dndbeyond.com/classes/cleric
-dndbbind: crcd "Goto Druid" openorsummonc! https://www.dndbeyond.com/classes/druid
-dndbbind: crcf "Goto Fighter" openorsummonc! https://www.dndbeyond.com/classes/fighter
-dndbbind: crck "Goto Warlock" openorsummonc! https://www.dndbeyond.com/classes/warlock
-dndbbind: crcm "Goto Monk" openorsummonc! https://www.dndbeyond.com/classes/monk
-dndbbind: crcp "Goto Paladin" openorsummonc! https://www.dndbeyond.com/classes/paladin
-dndbbind: crcR "Goto Ranger" openorsummonc! https://www.dndbeyond.com/classes/ranger
-dndbbind: crcr "Goto Rogue" openorsummonc! https://www.dndbeyond.com/classes/rogue
-dndbbind: crcs "Goto Sorcerer" openorsummonc! https://www.dndbeyond.com/classes/sorcerer
-dndbbind: crcW "Goto Warlock" openorsummonc! https://www.dndbeyond.com/classes/warlock
-dndbbind: crcw "Goto Wizard" openorsummonc! https://www.dndbeyond.com/classes/wizard
-
-" | crs -- dndb/rules/spells |
-dndbbind crs<C-h> showkeysurl dndbeyond.com crs
-dndbbind: crss "Goto Spells" openorsummonc! https://www.dndbeyond.com/spells
-dndbbind: crsc "Goto Spells: conjuration" openorsummonc! https://www.dndbeyond.com/spells/school/conjuration
-dndbbind: crsd "Goto Spells: divination" openorsummonc! https://www.dndbeyond.com/spells/school/divination
-dndbbind: crse "Goto Spells: enchantment" openorsummonc! https://www.dndbeyond.com/spells/school/enchantment
-dndbbind: crsi "Goto Spells: illusion" openorsummonc! https://www.dndbeyond.com/spells/school/illusion
-dndbbind: crsn "Goto Spells: necromancy" openorsummonc! https://www.dndbeyond.com/spells/school/necromancy
-dndbbind: crst "Goto Spells: transmutation" openorsummonc! https://www.dndbeyond.com/spells/school/transmutation
-dndbbind: crsv "Goto Spells: evocation" openorsummonc! https://www.dndbeyond.com/spells/school/evocation
-dndbbind: crs.a "Goto Spells: class=Artificer" openorsummonc! https://www.dndbeyond.com/spells?filter-class=252717
-dndbbind: crs.b "Goto Spells: class=Bard" openorsummonc! https://www.dndbeyond.com/spells?filter-class=1
-dndbbind: crs.c "Goto Spells: class=Cleric" openorsummonc! https://www.dndbeyond.com/spells?filter-class=2
-dndbbind: crs.d "Goto Spells: class=Druid" openorsummonc! https://www.dndbeyond.com/spells?filter-class=3
-dndbbind: crs.k "Goto Spells: class=Warlock" openorsummonc! https://www.dndbeyond.com/spells?filter-class=7
-dndbbind: crs.p "Goto Spells: class=Paladin" openorsummonc! https://www.dndbeyond.com/spells?filter-class=4
-dndbbind: crs.r "Goto Spells: class=Ranger" openorsummonc! https://www.dndbeyond.com/spells?filter-class=5
-dndbbind: crs.s "Goto Spells: class=Sorcerer" openorsummonc! https://www.dndbeyond.com/spells?filter-class=6
-dndbbind: crs.w "Goto Spells: class=Wizard" openorsummonc! https://www.dndbeyond.com/spells?filter-class=8
-dndbbind: crs.W "Goto Spells: class=Warlock" openorsummonc! https://www.dndbeyond.com/spells?filter-class=7
-
-" | cs -- dndb/search |
-command dndbsearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.dndbeyond.com/search?q=${JS_ARGS.join("%20").trim()}`)¦
-
-dndbbind: css "Search" fillcmdline dndbsearch
-
-" | ct -- dndb/toggle |
-dndbbind: ctt "Toggle all" csites csites.dndb.toggle()
-dndbbind: cty "Toggle all on" csites csites.dndb.toggleOn()
-dndbbind: ctn "Toggle all on" csites csites.dndb.toggleOff()
-
-dndbbind: cxtd "Split Damage column of table" csites ; hint -Jc table -F t=>csites.dndb.tableSplitDamageCol(t);
-
-"    ╭────────────────────────────╮
-"    │ D&D Beyond Character Sheet │
-"    ╰────────────────────────────╯
-autocmd DocLoad  https://www\.dndbeyond\.com/characters/ cujs -r sites/dndb.auto.js
-autocmd TabEnter https://www\.dndbeyond\.com/characters/ cujs -r sites/dndb.auto.js
-
-command dndbcsheetbind bindurl https://www.dndbeyond.com/characters/[0-9]+
-command dndbcsheetbind: bindurl: https://www.dndbeyond.com/characters/[0-9]+
-
-dndbcsheetbind: cc "roll dice" csites csites.dndb.csheet.roll();
-dndbcsheetbind: <enter> "load dndb.csheet.auto.js" cujs -r sites/dndb.auto.js
-
-dndbcsheetbind: cyy "Yank Content Group" dndbcsheetyankcontentgroup
-command dndbcsheetyankcontentgroup csites ; hint -Jc .ct-content-group -F e=>csites.dndb.yankContentGroup()
-
-" ───────────────────────────────────────────────────────────────────────────────
-" ╭───────────────────╮
-" │ RPGBot.net - DnD5 │
-" ╰───────────────────╯
-command dndbbind bindurl dndbeyond.com
-command rpgbotbind bindurl rpgbot.net
-command rpgbotbind: bindurl: rpgbot.net
-
-rpgbotbind c<C-h> showkeysurl rpgbot.net c
-rpgbotbind: cb "Goto DnDBeyond.com" openorsummonc https://www.dndbeyond.com
-
-command rpgbotsearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://rpgbot.net/?s=${JS_ARGS.join("%20").trim()}`)¦
-rpgbotbind: css "Search RPGBot.net" fillcmdline rpgbotsearch
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮

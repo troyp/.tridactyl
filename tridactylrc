@@ -228,7 +228,7 @@ command withjs composite js
 command withjsb composite jsb
 command withurlsjs composite js -r urls.js ; js
 command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
-command: csites "Load S.js, cutils.js, csites.js, run js" composite js -r cutils.js ; js -r csites.js ; js
+command: csites "Load S.js, cutils.js, csites.js, run js" composite jsb sites._.loadCsites(); js
 command: capps "Load capps.js and run js" composite js -r capps.js ; js
 commdoc jsload "Load JS files into content script"
 command jsload jsb -p jsload(JS_ARG)
