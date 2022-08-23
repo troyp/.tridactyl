@@ -2,6 +2,10 @@ var sites = {
     _: {
         loadCsites: async function() {
             sites.modules ??= [];
+            tri.controller.acceptExCmd(`composite js -r cutils.js ; js -r csites.js`);
+            sites.modules.forEach(m => {
+                tri.controller.acceptExCmd(`js -r sites/${m}.c.js;`);
+            });
             const loadModulesCmd = sites.modules.map(m=>`js -r sites/${m}.c.js; `);
             const cmd = `composite js -r cutils.js ; js -r csites.js ; ${loadModulesCmd} js`;
             return tri.controller.acceptExCmd(cmd);
@@ -9,10 +13,10 @@ var sites = {
 
         loadSites: async function() {
             sites.modules ??= [];
-            const loadModulesCmd = sites.modules.map(m=>`jsb -r sites/${m}.js; `);
-            const sourceModulesCmd = sites.modules.map(m=>`source ~/.tridactyl/sites/${m}.tri; `);
-            const cmd = `composite ${sourceModulesCmd}; jsb -r cutils.js ; jsb -r csites.js ; ${loadModulesCmd} js`;
-            return tri.controller.acceptExCmd(cmd);
+            sites.modules.forEach(m => {
+                tri.controller.acceptExCmd(`jsb -r sites/${m}.js`);
+                tri.controller.acceptExCmd(`source ~/.tridactyl/sites/${m}.tri; `);
+            });
         },
 
     },
@@ -228,5 +232,8 @@ sites.LISTS = {
         "https://www.youtube.com/",
     ],
 };
+
+sites.modules ??= ["dnd"];
+sites._.loadSites();
 
 window.sites = sites;
