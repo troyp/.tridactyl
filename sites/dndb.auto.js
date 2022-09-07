@@ -29,20 +29,20 @@ $$("span.spell-list-heading-text").forEach(e=>{
 if (document.location.href.match(/https:\/\/www.dndbeyond.com\/characters\/[0-9]+/)) {
 
     const typemap = {
-        "fire": ["#f78c19", "#c52400", "#ffedcc"],
-        "cold": ["lightSkyBlue", "black", "#b6e1fc"],
-        "lightning": ["yellow", "#665700", "#ebedfd"],
-        "thunder": ["lightSeaGreen", "black", "#bef4f1"],
-        "necrotic": ["#fde4be", "#402503", "#fdf5e5"],
-        "acid": ["chartreuse", "black", "#e6ffcc"],
-        "poison": ["yellowGreen", "black", "#ebf5d6"],
-        "psychic": ["pink", "deepPink", "#fff4f6"],
-        "force": ["#ff00dd", "#730064", "#ffccff"],
-        "radiant": ["#76f9ff", "#112425", "#e6eeff"],
+        "fire": ["#f78c19", "#c52400", "rgba(247, 140, 25, 0.2)"],
+        "cold": ["lightSkyBlue", "black", "rgba(135, 206, 250, 0.2)"],
+        "lightning": ["yellow", "#665700", "rgba(255, 255, 0, 0.2)"],
+        "thunder": ["lightSeaGreen", "black", "rgba(32, 178, 170, 0.2)"],
+        "necrotic": ["#fde4be", "#402503", "rgba(253, 228, 190, 0.2)"],
+        "acid": ["chartreuse", "black", "rgba(255, 87, 51, 0.2)"],
+        "poison": ["yellowGreen", "black", "rgba(154, 205, 50, 0.2)"],
+        "psychic": ["pink", "deepPink", "rgba(255, 192, 203, 0.2)"],
+        "force": ["#ff00dd", "#730064", "rgba(255, 0, 221, 0.2)"],
+        "radiant": ["#76f9ff", "#112425", "rgba(255, 0, 221, 0.2)"],
         "Bludgeoning": ["#bdd8ff", "#0055ff", ""],
         "Piercing": ["gray", "red", ""],
         "Slashing": ["gray", "blue", ""],
-        "Healing": ["white", "#cd282d", "#cd282d"],
+        "Healing": ["white", "#cd282d", "rgb(200, 50, 50)"],
     };
 
     $$("svg.ddbc-damage-type-icon__img").forEach(e=>{
