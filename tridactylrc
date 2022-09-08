@@ -1023,10 +1023,10 @@ command jseq! composite js -r cutils.js ; js -d¦ fillcmdline("jseq! "+eval(JS_A
 bind ,e<C-h> showkeys ,e
 bind ,eb fillcmdline jsbm
 bind: ,ec "Evaluate javascript expression iteratively in commandline" fillcmdline jseq!
-bind ,ee fillcmdline jse
-bind ,ej fillcmdline cujs
-bind ,ep fillcmdline getproperties
-bind ,es fillcmdline getselector
+bind: ,ee "Evaluate javascript expression" fillcmdline jse
+bind: ,ej "Load cutils and evaluate javascript expression" fillcmdline cujs
+bind: ,ep "Display properties of expression" fillcmdline getproperties
+bind: ,es "Show elements matching SELECTOR" fillcmdline getselector
 
 bind: J "Evaluate javascript expression in commandline" fillcmdline jseq
 
