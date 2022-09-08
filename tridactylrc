@@ -910,6 +910,17 @@ bind: ,ac "Open Google calendar" tabopenorswitch https://calendar.google.com/cal
 bind: ,ap "Open Paypal" tabopenorswitchc https://www.paypal.com/myaccount/home
 bind: ,ay "Open MyGov" tabopenorswitchc https://my.gov.au/LoginServices/main/login?execution=e1s1
 
+" ╭──────────────────╮
+" │ ,ag -- web/games │
+" ╰──────────────────╯
+bind ,ag<C-h> showkeys ,ag
+
+" | ,agd -- games/D&D |
+bind ,agd<C-h> showkeys ,agd
+bind: ,agdb "Open D&D Beyond" tabopenorswitchc https://www.dndbeyond.com/
+bind: ,agdr "Open RPGBot.net" tabopenorswitchc https://rpgbot.net/dnd5/
+bind: ,agdt "Open Tabletop Builds" tabopenorswitchc https://tabletopbuilds.com/
+
 " ╭──────────────────────────╮
 " │ ,am -- web/mail+contacts │
 " ╰──────────────────────────╯
