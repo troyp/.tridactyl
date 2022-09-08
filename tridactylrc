@@ -1011,6 +1011,7 @@ commdoc jse "Eval expression to obtain object and display its properties in a me
 command jse composite js -r cutils.js ; js -d¦ cutils.message(eval(JS_ARGS.join(" ")))¦
 commdoc getproperties "Eval expression to obtain object and display its properties in a message box"
 command getproperties js -d¦ alert(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
+command jsb_getproperties jsb -d¦ utils.message(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
 commdoc jsbe "Eval expression and display in commandline"
 command jsbe jsb -d¦ tri.excmds.jsb(`tri.excmds.fillcmdline_nofocus(${JS_ARGS.join(" ")})`)¦
 commdoc jsbm "Eval expression and display in a message box"
@@ -1021,12 +1022,17 @@ command jseq composite js -r cutils.js ; js -d¦ fillcmdline_nofocus(eval(JS_ARG
 command jseq! composite js -r cutils.js ; js -d¦ fillcmdline("jseq! "+eval(JS_ARGS.join(" ")))¦
 
 bind ,e<C-h> showkeys ,e
-bind ,eb fillcmdline jsbm
 bind: ,ec "Evaluate javascript expression iteratively in commandline" fillcmdline jseq!
 bind: ,ee "Evaluate javascript expression" fillcmdline jse
 bind: ,ej "Load cutils and evaluate javascript expression" fillcmdline cujs
 bind: ,ep "Display properties of expression" fillcmdline getproperties
 bind: ,es "Show elements matching SELECTOR" fillcmdline getselector
+
+
+" | ,eb -- jsb eval |
+bind ,eb<C-h> showkeys ,eb
+bind: ,ebb "Eval expression and display in message box" fillcmdline jsbm
+bind: ,ebp "Display properties of expression in message box" fillcmdline jsb_getproperties
 
 bind: J "Evaluate javascript expression in commandline" fillcmdline jseq
 
