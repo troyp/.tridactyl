@@ -536,6 +536,9 @@ unbind s
 
 bind s<C-h> showkeys s
 bind sl nativelinksearch
+bind: so "Open keyword search in current tab" ! kwsearch -sw|sed -r 's/.*/open \0/'
+bind: sa "Open keyword search in new tab" ! kwsearch -sw|sed -r 's/.*/tabopen_adj \0/'
+bind: st "Open keyword search in new tab" ! kwsearch -sw|sed -r 's/.*/tabopen_last \0/'
 bind s/ fillcmdline find
 bind s;; bind s;; composite getclip | fillcmdline searchwithengine
 jsb tri.excmds.bind("s'", "nativelinksearch")
