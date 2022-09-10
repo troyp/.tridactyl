@@ -84,6 +84,8 @@ command: bdoc "provide a description for a bind definition on a separate line" d
 " │ sourced config files │
 " ╰──────────────────────╯
 source /home/troy/.tridactyl/sites.tri
+command: modload "Load module" jsb -d¦ source(`~/.tridactyl/sites/${JS_ARGS[1]}`)¦
+command: modload "Load module" jsb -d¦ sites.load(JS_ARGS[1])¦
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮
@@ -187,7 +189,10 @@ bind <C-o> jumpprev
 bind <C-O> jumpnext
 
 unbind <C-x>
+
+bind <C-x><C-h> showkeys <C-x>
 bind: <C-x><C-c> "Close all windows" qall
+bind: <C-x><C-m> "Load module" fillcmdline modload
 bind: <C-x><C-x> "Restart browser" restart
 
 bind: <A-=> "Increment current URL by 1" urlincrement 1

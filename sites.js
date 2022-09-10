@@ -1,4 +1,13 @@
 var sites = {
+    load: async function(module) {
+        source(`~/.tridactyl/sites/${module}`);
+        try {
+            jsb("-r", `sites/${module}.js`);
+        } catch(e) {};
+        try {
+            js("-r", `sites/${module}.c.js`);
+        } catch(e) {};
+    },
     _: {
         loadCsites: async function() {
             sites.modules ??= [];
