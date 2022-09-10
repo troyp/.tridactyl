@@ -815,6 +815,7 @@ commdoc opendlinbrowser "Open nth last download in browser"
 command opendlinbrowser jsb -d¦ places.dl.getLatest(JS_ARGS[1]).then(dl=>utils.tab.open(`file://${dl.filename}`))¦
 commdoc opendldirinbrowser "Open nth last download directory with dolphin"
 command opendldirinbrowser jsb -d¦ places.dl.getDir(JS_ARGS[1]).then(dl=>utils.tab.open(`file://${dl}`))¦
+command showdldir  jsb -d¦ places.dl.getDir(JS_ARGS[1]).then(dir=>fillcmdline_nofocus(dir))¦
 commdoc yankdlpath "Yank last download path"
 command yankdlpath jsb -d¦ places.dl.yank(JS_ARGS[1]||1, "filename")¦
 commdoc yankdlfilename "Yank last download filename"
@@ -829,6 +830,7 @@ bind: ads "Show all downloads" jsb places.dl.show()
 bind add<C-h> showkeys add
 bind: addd "Open last download directory with dolphin" opendldir dolphin
 bind: adde "Open last download directory with dired" opendldirindired
+bind: addp "Show last download directory in commandline" showdldir
 bind: addr "Open last download directory with ranger" opendldir roxterm -e ranger --selectfile
 bind: adds "Open last download directory with program via mimeopen" opendldir roxterm -e zsh -c "mimeopen -a %s"
 bind: addx "Open last download directory with program" fillcmdline_withcount opendldirn
