@@ -1217,6 +1217,7 @@ command: cshint "Load cutils.js and csites and execute hint" csites ; hint
 bind: ;Y "Yank link text" cuhint -JF e=>cutils.yankelt(e)
 
 bind ,,<C-h> showkeys ,,
+bind: ,,b "Hint buttons" hint button
 bind ,,c hint -c [class*="expand"],[class="togg"]
 
 " | ,,i -- hints/image |
