@@ -1,9 +1,16 @@
+// ───────────────────────────────────────────────────────────────────────────────
+// ╭────────────╮
+// │ MODULE dnd │
+// ╰────────────╯
 
-csites ??= {};
-csites.dndb = {
+mod_dnd = {};
+
+mod_dnd.dndb = {
     go: async function() {
         const url = tri.contentLocation.href;
-        if (url.match(/https:\/\/www\.dndbeyond\.com\/characters\//)) {
+        if (url.match(/https:\/\/www\.dndbeyond\.com\/characters\/\d*\/builder\//)) {
+            hint("-Jc", ".builder-sections a", "-F", "e=>open(e.href.replace(/^help/, 'manage'))");
+        } else if (url.match(/https:\/\/www\.dndbeyond\.com\/characters\//)) {
             tri.controller.acceptExCmd(`js -r sites/dndb.auto.js`);
             hint(
                 "-Jc",
