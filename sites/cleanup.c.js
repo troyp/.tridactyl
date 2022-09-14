@@ -12,6 +12,38 @@ function cleanup() {
     } else if (url.match(/https:\/\/janeblundellart\.blogspot\.com/)) {
         keep("#main");
         rmall("iframe", "script", "#blog-pager");
+    } else if (url.match(/https:\/\/poets\.org\/poem\//)) {
+        keep(".card-header", ".card-body");
+        rmall(".poem__actions");
+    } else if (url.match(/https:\/\/[^/]+\.fandom\.com\//) || url.match(/https:\/\/[^/]+\.wikia\.com\//)) {
+        /* FIXME */
+        rmall(
+            '#WikiaTopAds', '.wikia-ad', '#WikiaArticleBottomAd',
+            'WikiaAdInContentPlaceHolder', '#recirculation-rail', '.recirculation-rail',
+            '.celtra-screen-object-container', '.celtra-view', '.videoAdUi',
+            '#WikiHeader', '.header-tally', '.wikia-button', '.wikia-menu-button', '.editsection', '.WikiaRail',
+            '.navbox', '.WikiaArticleInterlang', '.refpopups-configure-page', '#WikiaArticleFooter', 'footer',
+            '#WikiaFooter', '.wds-global-footer', '#WikiaBar', 'script','#WikiaNotifications', 'iframe', '#ad-skin',
+            '.featured-video__wrapper'
+        );
+        cutils.hide('.wds-global-navigation-wrapper');
+        const divs = Array.from(content.document.getElementsByTagName('div'));
+        const videodivs = divs.filter(e=>e.getAttribute("itemtype")=="http://schema.org/VideoObject");
+        videodivs.forEach(e=>e.parentNode.removeChild(e));
+    } else if (url.match(/https:\/\/forums\.giantitp\.com/)) {
+        keep("#content");
+        rmall("h2>img", "#above_postlist", "#thread_controls", "#below_postlist", ".navlinks", "#thread_info", ".userinfo img");
+        $1("html").style.background = "white";
+        const hd2 = $1("h2");
+        hd2.style.fontSize = "150%";
+        hd2.style.fontStyle = "italic";
+        hd2.style.fontWeight = "normal";
+        const hd1 = $1("h1");
+        hd1.style.background = "white";
+        hd1.style.fontSize = "200%";
+        hd1.style.padding = "5px";
+        hd1.style.border = "black solid 1px";
+        hd1.style.borderRadius = "1px";
     } else if (url.match(/https:\/\/wiki.haskell\.org/)) {
         keep("#content");
         rmall("#catlinks");
