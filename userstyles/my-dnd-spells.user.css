@@ -1,0 +1,9 @@
+@-moz-document domain("dnd-spells.com") {
+    .hidden-print,.spellslot,.call-action,.page-banner {
+        display: none !important;
+    }
+
+    .open-switcher,.switcher-box {
+        display: block !important;
+    }
+}

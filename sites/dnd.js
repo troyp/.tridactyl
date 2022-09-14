@@ -1,4 +1,4 @@
-sites.dndb = {
+const dndb = {
 
         _site: "dndbeyond.com",
 
@@ -39,6 +39,8 @@ sites.dndb = {
         },
 
 };
+
+sites.dndb = dndb;
 
 sites.LISTS.dnd_apps = [
     "https://www.dndbeyond.com/characters",

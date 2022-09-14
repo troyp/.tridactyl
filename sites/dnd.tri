@@ -2,13 +2,14 @@
 " │ DnD module │
 " ╰────────────╯
 command dndbsearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.dndbeyond.com/search?q=${JS_ARGS.join("%20").trim()}`)¦
+command: dndjs "Load dnd.c.js and execute javascript" cujs -r sites/dnd.c.js ; js
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
 " │ D&D Beyond │
 " ╰────────────╯
 autocmd DocLoad  https://www\.dndbeyond\.com/ cujs -r sites/dndb.auto.js
-autocmd TabEnter https://www\.dndbeyond\.com/ cujs -r sites/dndb.auto.js
+autocmd TabEnters://www\.dndbeyond\.com/ cujs -r sites/dndb.auto.js
 
 command dndbbind bindurl dndbeyond.com
 command dndbbind: bindurl: dndbeyond.com
@@ -24,7 +25,7 @@ dndbbind: <C-PageDown> "Load More" cujs $1t("button", /load more/i).click()
 
 dndbbind c<C-h> showkeysurl dndbeyond.com c
 dndbbind: cb "Goto rpgbot.net" openorsummonc https://rpgbot.net/dnd5/
-dndbbind: cc "Lists: open/close row" csites csites.dndb.go();
+dndbbind: cc "Lists: open/close row" dndjs mod_dnd.dndb.go();
 dndbbind: cf "Click category icon" hint .ddb-search-filter-item-wrapper>.icon
 dndbbdoc cv "Toggle collapse Dice Notification"
 dndbbind cv hint -Jc .dice_notification_controls__collapse,.dice_notification_controls__uncollapse
@@ -113,11 +114,17 @@ dndbbind: css "Search" fillcmdline dndbsearch
 dndbbind: cs;s "Goto spell description" fillcmdline dndbspell
 
 " | ct -- dndb/toggle |
-dndbbind: ctt "Toggle all" csites csites.dndb.toggle()
-dndbbind: cty "Toggle all on" csites csites.dndb.toggleOn()
-dndbbind: ctn "Toggle all on" csites csites.dndb.toggleOff()
+dndbbind: ctt "Toggle all" dndjs mod_dnd.dndb.toggle()
+dndbbind: cty "Toggle all on" dndjs mod_dnd.dndb.toggleOn()
+dndbbind: ctn "Toggle all on" dndjs mod_dnd.dndb.toggleOff()
 
-dndbbind: cxtd "Split Damage column of table" csites ; hint -Jc table -F t=>csites.dndb.tableSplitDamageCol(t);
+" | cx -- dndb/misc |
+" | cxt -- dndb/misc/table |
+dndbbind: cxtd "Split Damage column of table" dndjs ; hint -Jc table -F t=>mod_dnd.dndb.tableSplitDamageCol(t);
+
+" | cy -- dndb/yank |
+dndbbind: cya "Copy all entries" yankall .info a
+dndbbind: cyy "Copy entry" cujs yankhint(".info a")
 
 "    ╭────────────────────────────╮
 "    │ D&D Beyond Character Sheet │
@@ -131,11 +138,11 @@ command dndbcsheetbind: bindurl: https://www.dndbeyond.com/characters/[0-9]+
 dndbcsheetbind: <enter> "load dndb.csheet.auto.js" cujs -r sites/dndb.auto.js
 
 dndbcsheetbind: cyy "Yank Content Group" dndbcsheetyankcontentgroup
-command dndbcsheetyankcontentgroup csites ; hint -Jc .ct-content-group -F e=>csites.dndb.yankContentGroup()
+command dndbcsheetyankcontentgroup dndjs ; hint -Jc .ct-content-group -F e=>mod_dnd.dndb.yankContentGroup()
 
 " | cm -- dndb/my/sheet |
 dndbcsheetbind cms<C-h> showkeysurl dndbeyond.com cms
-dndbcsheetbind: cmsc "Goto character builder: class" openorsummonc! https://www.dndbeyond.com/characters
+dndbcsheetbind: cmsc "Goto character builder: class" jsb sites.dndb.gotoBuilder("/class/manage")
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────╮
@@ -196,18 +203,21 @@ command ttbuildbind: bindurl: tabletopbuilds.com
 
 ttbuildbind c<C-h> showkeysurl tabletopbuilds.com c
 ttbuildbind: cb "Goto DnDBeyond.com" openorsummonc https://www.dndbeyond.com
-command ttbuildsearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://tabletopbuild.com/?s=${JS_ARGS.join("%20").trim()}`)¦
+ttbuildbind: cc "Show final build levels" cujs cutils.message(getText1("h3,h3>span", {match: /^level 20:/i}), {cmdline: true})
+
 
 " | co -- ttbuild/goto |
 ttbuildbind co<C-h> showkeysurl tabletopbuilds.com co
 ttbuildbind: cob "Goto DnDBeyond.com" openorsummonc https://www.dndbeyond.com
 ttbuildbind: coc "Goto comments" cujs $id("comments").scrollIntoView()
-ttbuildbind: coe "Goto last level" cujs $$("h3").find(e=>e.id.match(/^level-20-/)).scrollIntoView()
+ttbuildbind: coe "Goto last level" cujs $$("h3,h3>span,h4").find(e=>e.id.match(/^level[-_]20[-_]/i)).scrollIntoView()
 ttbuildbind: cor "Goto rpgbot.net" openorsummonc https://rpgbot.net/dnd5/
 ttbuildbind: cos "Goto dnd-spells.com" openorsummonc! https://www.dnd-spells.com/spells
 ttbuildbind: cot "Goto TabletopBuilds.com" openorsummonc! https://tabletopbuilds.com
 
 " | cs -- ttbuild/search |
+command ttbuildsearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://tabletopbuild.com/?s=${JS_ARGS.join("%20").trim()}`)¦
+
 dndbbind cs<C-h> showkeysurl rpgbot.net cs
 ttbuildbind: csb "Search DnDBeyond.com" fillcmdline dndbsearch
 ttbuildbind: css "Search TableTopBuilds.com" fillcmdline ttbuildsearch

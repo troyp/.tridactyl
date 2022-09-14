@@ -1,0 +1,7 @@
+ul.sub-menu>li>a {
+    border: 1px solid white !important;
+    font-size: 14px !important;
+}
+ul.sub-menu>li>a:hover {
+    background: #900 !important;
+}
