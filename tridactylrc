@@ -1333,6 +1333,21 @@ bind --mode=insert  <C-Z>    withjsb user.postcode   | text.insert_text
 bind --mode=insert  <C-Q>    withjsb user.masterpw   | text.insert_text
 bind --mode=insert  <C-C>    withjsb user.creditcard | text.insert_text
 
+bind --mode=insert  <C-c><C-h> fillcmdline_notrail bind --mode=input <C-c>
+bind --mode=insert  <C-c>m    withjsb user.email      | text.insert_text
+bind --mode=insert  <C-c>M    withjsb user.email2     | text.insert_text
+bind --mode=insert  <C-c>i    withjsb user.name       | text.insert_text
+bind --mode=insert  <C-c>t    withjsb user.firstname  | text.insert_text
+bind --mode=insert  <C-c>l    withjsb user.lastname   | text.insert_text
+bind --mode=insert  <C-c>d    withjsb user.address    | text.insert_text
+bind --mode=insert  <C-c>a    withjsb user.street     | text.insert_text
+bind --mode=insert  <C-c>s    withjsb user.suburb     | text.insert_text
+bind --mode=insert  <C-c>b    withjsb user.mobile     | text.insert_text
+bind --mode=insert  <C-c>z    withjsb user.postcode   | text.insert_text
+bind --mode=insert  <C-c>q    withjsb user.masterpw   | text.insert_text
+bind --mode=insert  <C-c>p    withjsb user.phone      | text.insert_text
+bind --mode=insert  <C-c>c    withjsb user.creditcard | text.insert_text
+
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────╮
 " │ Visual-mode bindings │
