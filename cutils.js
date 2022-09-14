@@ -127,6 +127,12 @@ var cutils = {
         return cutils.yank(data, {cmdline: opts.cmdline});
     },
 
+    cbAppend: async function (s) {
+        await tri.native.run(`echo '${s}' | xsel -aif`);
+        const result = await tri.native.run(`xsel -o`);
+        return result.content;
+    },
+
 
     /**   get(selector, opts)
      *    get(selector, context:HTMLElement)

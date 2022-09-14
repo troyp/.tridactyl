@@ -3,6 +3,13 @@
 // ╰─────────────────────────────────────────────╯
 
 var utils = {
+
+    cbAppend: async function (s) {
+        await tri.native.run(`echo '${s}' | xsel -aif`);
+        const result = await tri.native.run(`xsel -o`);
+        return result.content;
+    },
+
     cbread: async function (index=0, options={}) {
         const s = ( index )
               ? (await tri.native.run(`copyq read ${index}`)).content
