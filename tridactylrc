@@ -347,6 +347,8 @@ bind: g;h "Choose entry in tab's backward history" xdoitem tabhist_prev 3
 bind: g;l "Choose entry in tab's forward history" xdoitem tabhist_next 3
 bind: <C-a> "Switch to first tab, then first nonpinned and back to first" tabfirst:
 bind: <C-e> "Switch to last tab" tablast
+bind: <AC-a> "Move tab to start" tabmove! 1
+bind: <AC-e> "Move tab to end" tabmove! 0
 
 bind: o "Open URL/search in the current tab" fillcmdline open
 bind: t "Open URL/search in a new tab" fillcmdline tabopen
