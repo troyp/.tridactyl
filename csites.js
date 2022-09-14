@@ -21,6 +21,27 @@ csites = {
         }
     },
 
+    g: {
+        _site: "google.com",
+
+        go: async function() {
+            const url = tri.contentLocation.href;
+
+            /* GOOGLE IMAGES: append selected image source URL to clipboard */
+            if (url.match("https://www.google.com/imgres?imgurl=") ||
+                url.match(/https:\/\/www.google.com\/search\?.*#imgrc=/)) {
+                const imgUrl = $1(
+                    "body>div>c-wiz>div:nth-of-type(3)>div:nth-of-type(2)" +
+                        ">div:nth-of-type(3)>div>div>div:nth-of-type(3)" +
+                        ">div:nth-of-type(2)>c-wiz>div:first-of-type>div:first-of-type" +
+                        ">div:first-of-type>div>div>a>img"
+                ).src;
+                const res = await cutils.cbAppend(imgUrl);
+                return res;
+            }
+        },
+    },
+
     j: {
         _site: "https://jisho.org",
 

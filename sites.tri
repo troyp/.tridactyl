@@ -145,15 +145,22 @@ ghbind cs;* ghtabsearchwrapper "search my stars [new tab]" https://github.com/${
 " ╭────────────╮
 " │ Google.com │
 " ╰────────────╯
-command: googlebind "Bind key for www.google.com" bindurl https://www.google.com
-command: googlebind: "Bind key with description for www.google.com" bindurl: https://www.google.com
+command: googlebind "Bind key for www.google.com" bindurl google.com
+command: googlebind: "Bind key with description for www.google.com" bindurl: google.com
 
-googlebind c<C-h> showkeysurl https://www.google.com c
 googlebind: f "Open link in current tab [HINT]" hint -J
 googlebind: F "Open link in new tab [HINT]" hint -Jb
 googlebind: gf "Open multiple tabs in background tabs [HINNTS]" hint -qJb
 
+googlebind c<C-h> showkeysurl google.com c
+googlebind: cc "images: copy src URL" csites csites.g.go()
+
+" | ct -- google/toggle |
+googlebind ct<C-h> showkeysurl google.com ct
 googlebind: ctn "Toggle Top stories" cujs cutils.hide("g-section-with-header", {toggle:true});
+
+" | cy -- google/yank |
+googlebind cy<C-h> showkeysurl google.com cy
 googlebind cyy cujs ; hint -Jc div.g>div div>div>a>div>cite -F e=>cutils.yank(e.firstChild.textContent)
 
 " ───────────────────────────────────────────────────────────────────────────────
