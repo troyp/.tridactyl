@@ -6,49 +6,49 @@ function cleanup() {
     const url = document.location.href;
     if (false) {
     } else if (url.match(/https:\/\/github\.com\/.*\/issues\//)) {
-        isolate("div#show_issue");
+        keep("div#show_issue");
         rmall("img.avatar", "div.sidebar-notifications", ".gh-header-actions",
               "#issue-comment-box", ".discussion-timeline-actions");
     } else if (url.match(/https:\/\/janeblundellart\.blogspot\.com/)) {
-        isolate("#main");
+        keep("#main");
         rmall("iframe", "script", "#blog-pager");
     } else if (url.match(/https:\/\/wiki.haskell\.org/)) {
-        isolate("#content");
+        keep("#content");
         rmall("#catlinks");
     } else if (url.match(/https:\/\/www.codeproject\.com/)) {
-        isolate(".header", "#contentdiv");
+        keep(".header", "#contentdiv");
         rmall("img.avatar");
     } else if (url.match(/https:\/\/onepiece-online-manga\.com/)) {
-        isolate("article");
+        keep("article");
         rmall(".simplesocialbuttons");
     } else if (url.match(/https:\/\/bartoszmilewski.com/))  {
-        isolate("#main");
+        keep("#main");
         rmall(".comment-author.vcard>img");
     } else if (url.match(/https:\/\/patternsinfp.wordpress.com/))  {
-        isolate("#site-title,#content");
+        keep("#site-title,#content");
         rmall("#nav-above,#nav-below,#jp-post-flair,.reply,.post.pingback,#respond,#eu-cookie-law");
     } else if (url.match(/https:\/\/dzone.com/))  {
         rmall("iframe","script",".header",".announcementBar",".breadcrumb-padding",".signin-prompt",
               ".related","#adtoniq-msgr-bar");
     } else if (url.match(/https:\/\/www\.japanesewithanime\.com/)) {
-        isolate("article");
+        keep("article");
         $1("article").style.padding = "1em";
         rmall(".social-buttons-strip", "aside#sub-fold-ad", ".categoryNavbox", ".comment-footer",
               ".avatar-image-container", ".comment-reply", "#top-continue", ".article-end-footer");
     } else if (url.match(/https:\/\/opensource\.com/)) {
-        isolate("#article-template");
+        keep("#article-template");
         rmall(".os-article__image", ".os-article__left", ".os-article__bottom",
               ".authorbio__thumbnail", ".user-picture-badges");
     } else if (url.match(/https:\/\/martinfowler\.com/)) {
         rmall("#banner", "#page-footer", ".author-photo");
     } else if (url.match(/https:\/\/blog\.sigplan\.org/)) {
         if (cleanupDisqus()) return;
-        isolate("article");
+        keep("article");
         rmall(".et_post_meta_wrapper>img");
         $1("body").style.margin = "3em";
     } else if (url.match(/https:\/\/www\.geeksforgeeks\.org/)) {
         if (cleanupDisqus()) return;
-        isolate(".leftSideBarParent", "#primary");
+        keep(".leftSideBarParent", "#primary");
         rmall("iframe[allow*=autoplay]", ".entry-meta", ".upvoteArticle", ".nav-single");
         removeSelectorFiltered("div", e=>e.id.match(/^AP_G4GR/));
         getFirstSelector("#primary").style.width="70%";
@@ -57,11 +57,11 @@ function cleanup() {
               ".tool__product", "._16iRt-container", "section.F0u0G-container", "._1hrQx-container", "footer");
     } else if (url.match(/https:\/\/collider\.com/)) {
         /* fix image height */
-        isolate("article:first-of-type");
+        keep("article:first-of-type");
         rmall("aside", ".heading_breadcrumb", ".heading_sharing", "span.next-single");
         $$("figure").forEach(f=>f.style.height=f.querySelector("img").height+"px");
     } else if (url.match(/https?:\/\/dnd5e\.wikidot\.com/)) {
-        isolate(".main-content-wrap");
+        keep(".main-content-wrap");
         rm([".site-bar", ".mm-mega-menu"], "firstMatch");
     } else if (url.match(/https:\/\/www\.dndbeyond\.com/)) {
         // keep(".p-article-content");
