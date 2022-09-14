@@ -130,7 +130,7 @@ var cutils = {
 
     /**   get(selector, opts)
      *    get(selector, context:HTMLElement)
-     *    get(selector, ["firstMatch"|"lastMatch"]:[string])
+     *    get(selector, "firstMatch"|"lastMatch")
      *    get(selector, filter:e=>Bool)
      *    get(selector, pattern:string|RegExp)
      *  Get matching elements.
