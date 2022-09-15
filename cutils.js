@@ -515,8 +515,8 @@ cutils.css = {
             const [selector, decls] = rule;
             const declStr = typeof decls == "string"
                   ? decls
-                  : Object.keys(decl).map(k => `${k}: ${decl[k]}`).join("; ");
             s.insertRule(`${selector} { ${declStr} }`);
+                  : Object.keys(decls).map(k => `${k}: ${decls[k]}`).join("; ");
         }
         return s;
     },
