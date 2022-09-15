@@ -133,6 +133,50 @@ var sites = {
         },
     },
 
+    reddit: {
+        _site: "https://reddit.com",
+
+        go: async function() {
+            const url = tri.contentLocation.href;
+            if (url.match("https://www.reddit.com/r/")) {
+                return hint("h3");
+            } else if (url == "https://www.reddit.com/subreddits") {
+                return hint("-Jc", "a.title");
+            } else {
+                // return utils.tri.hintOpen(...this.get_linkselectors_all());
+                return hint(
+                    ...this.linkselectors,
+                    ...this.linkselectors_nohref
+                );
+            }
+        },
+
+        linkselectors: [
+            "a.title",
+            "a.comments",
+            "#header-bottom-left a",
+            "#header-bottom-right a",
+            ".contents a",
+            ".contents button",
+            "a.subbarlink",
+        ],
+
+        linkselectors_nohref: [
+            "li.viewSource>a",
+            "li.share>a",
+            "li.link-save-button>a",
+            ".hide-button>span>a",
+        ],
+
+        get_linkselectors_all: function() {
+            return [
+                ...this.linkselectors,
+                ...this.linkselectors_nohref
+            ];
+        },
+
+    },
+
     se: {
         _sites: [
             "https://[^./]*.stackexchange.com",
@@ -208,6 +252,7 @@ var sites = {
             return decodeURIComponent(topic?.replace(/_/g, " "));
         },
     },
+
 };
 
 sites.LISTS = {

@@ -238,8 +238,15 @@ bindurl: ramdajs.com/ cc "Filter methods by category" fillcmdline ramdafiltercat
 " ╭────────────╮
 " │ Reddit.com │
 " ╰────────────╯
-bindurl reddit.com/ c<C-h> showkeysurl reddit.com/ c
-bindurl reddit.com/ cto urltoggle https://www.reddit.com https://old.reddit.com
+command: redditbind "Bind key for reddit.com" bindurl reddit.com
+command: redditbind: "Bind key with description for reddit.com" bindurl: reddit.com
+
+redditbind c<C-h> showkeysurl reddit.com c
+redditbind: cc "Follow reddit link" jsb sites.reddit.go()
+
+" | ct -- reddit/toggle |
+redditbind ct<C-h> showkeysurl reddit.com ct
+redditbind: cto "Toggle old reddit" urltoggle https://www.reddit.com https://old.reddit.com
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────╮
