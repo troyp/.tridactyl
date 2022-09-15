@@ -510,20 +510,21 @@ cutils.css = {
     /* add rules to sheet SHEETID. Each rule is a pair [SELECTOR, DECLARATIONS] */
     /* DECLARATIONS is either a string or an object mapping properties to values */
     addRules: function(styleId, ...rules) {
-        const s = document.getElementById(styleId).sheet;
+        const sheet = document.getElementById(styleId).sheet;
         for (rule of rules) {
             const [selector, decls] = rule;
-            const declStr = typeof decls == "string"
+            const declStr = (typeof decls == "string")
                   ? decls
-            s.insertRule(`${selector} { ${declStr} }`);
                   : Object.keys(decls).map(k => `${k}: ${decls[k]}`).join("; ");
+            sheet.insertRule(`${selector} { ${declStr} }`);
         }
-        return s;
+        return sheet;
     },
 
-    addSheet: function(id) {
+    /* Create a new style with id STYLEID */
+    addSheet: function(styleId) {
         const style = document.createElement("style");
-        style.id = id;
+        style.id = styleId;
         const sheet = document.head.appendChild(style).sheet;
         return sheet;
     },
