@@ -334,3 +334,46 @@ woolbind: csa "Search products in adjacent tab" fillcmdline woolsearch_adj
 woolbind cx<C-h> showkeysurl https://www.woolworths.com.au/ cx
 woolbdoc cxh "Show only half-price products"
 woolbind cxh cujs $$(".product-grid--tile").forEach(e=>{!$1('img[altt"Half Price"]', e) && e.remove()});
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────╮
+" │ Youtube.com │
+" ╰─────────────╯
+command: ytbind "Bind key for youtube.com" bindurl youtube.com
+command: ytbind: "Bind key for youtube.com" bindurl: youtube.com
+command: ytbdoc "Provide a description on a separate line" js ;
+command: ytshowkeys "Show key completions for youtube.com" showkeysurl youtube.com
+command: yt "Run javascript after loading sites/yt.c.js" cujs -r sites/yt.c.js ; js
+command: ytsetmark "Set mark" jsb -p tri.controller.acceptExCmd(`yt yt.setMark('${JS_ARG}')`)
+command: ytgotomark "Goto mark" jsb -p tri.controller.acceptExCmd(`yt yt.gotoMark('${JS_ARG}')`)
+command: ytup "playrate ↑/Show subscriptions ↑" yt -d¦ yt.up(JS_ARGS[1])¦
+command: ytdown "playrate ↓/Show subscriptions ↓" yt -d¦ yt.down(JS_ARGS[1])¦
+command: ytvolup "volume ↑" yt -d¦ yt.volumeAdjust(JS_ARGS[1])¦
+command: ytvoldown "volume ↓" yt -d¦ yt.volumeDown(JS_ARGS[1])¦
+
+ytbind c<C-h> ytshowkeys c
+
+ytbind: cc "Goto item" yt -r capps.js ; js yt.chooseItem()
+ytbind: ck "Youtube: set mark" gobble 1 ytsetmark
+ytbind: cm "Youtube: set mark" gobble 1 ytsetmark
+ytbind: cgo "Youtube: goto mark" gobble 1 ytgotomark
+jsb tri.excmds.bindurl("youtube.com", "c'", "gobble 1 gotomark")
+
+jsb utils.tri.docdef(["bind ' \"Goto mark (page-local)\""], {noDef: true})
+jsb tri.excmds.bindurl("youtube.com", "c'", "gobble 1 ytgotomark")
+
+" | ct -- youtube/toggle |
+ytbind: ctl "Toggle shorts/long-form player" urltoggle /shorts/ /watch?v=
+ytbind: cts "Toggle subtitles" yt yt.player().toggleSubtitles()
+ytbind: ctt "Toggle transcript" yt yt.toggleTranscript()
+
+" | cy -- youtube/yank |
+ytbind cy<C-h> ytshowkeys cy
+ytbind: cyl "Yank playlist items" yt cutils.yank(yt.playlistItems())
+ytbind: cyL "Yank playlist items with numbers" yt cutils.yank(yt.playlistItems(true));
+ytbind: cyt "Yank transcript" yt yt.openAndCopyTranscript()
+
+jsb utils.tri.docBindUrl("youtube.com > \"playrate ↑/Show subscriptions ↑\" ytup")
+jsb utils.tri.docBindUrl("youtube.com < \"playrate ↓/Show subscriptions ↓\" ytdown")
+ytbind: <PageUp> "Volume ↑" ytvolup
+ytbind: <PageDown> "Volume ↓" ytvoldown
