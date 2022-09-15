@@ -321,6 +321,19 @@ var cutils = {
 
     keep: (...selectors) => this.isolate(selectors),
 
+    /* Turn HEADING into a collapsible `details` element, containing CONTENT */
+    makeCollapsible: async function(content, heading) {
+        const det = document.createElement("details");
+        const summ = document.createElement("summary");
+        if (typeof heading == "string")
+            content.before(det);
+        else
+            heading.before(det);
+        det.appendChild(summ);
+        summ.append(heading);
+        det.appendChild(content);
+    },
+
     message: async function(s, opts={}) {
         if (s instanceof Promise) s = await s;
         const s_ = (opts.prefix || "") + s;
