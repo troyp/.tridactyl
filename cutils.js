@@ -507,7 +507,15 @@ var cutils = {
 // ╰─────────────────────────────╯
 
 cutils.css = {
-    /* add rules to sheet SHEETID. Each rule is a pair [SELECTOR, DECLARATIONS] */
+    /* add rules to sheet STYLEID (see addRules()). If sheet doesn't exist, create it */
+    add: async function(styleId, ...rules) {
+        if (!$id(styleId)) {
+            await this.addSheet(styleId);
+        }
+        return this.addRules(styleId, ...rules);
+    },
+
+    /* add rules to sheet STYLEID. Each rule is a pair [SELECTOR, DECLARATIONS] */
     /* DECLARATIONS is either a string or an object mapping properties to values */
     addRules: function(styleId, ...rules) {
         const sheet = document.getElementById(styleId).sheet;
