@@ -335,6 +335,7 @@ var cutils = {
     },
 
     message: async function(s, opts={}) {
+        opts = cutils.tri.parseOpts(opts, {castBoolean: "cmdline"});
         if (s instanceof Promise) s = await s;
         const s_ = (opts.prefix || "") + s;
         if (opts.temp) {
