@@ -1,6 +1,8 @@
 var sites = {
     load: async function(module) {
-        source(`~/.tridactyl/sites/${module}`);
+        try {
+            source(`~/.tridactyl/sites/${module}.tri`);
+        } catch(e) {};
         try {
             jsb("-r", `sites/${module}.js`);
         } catch(e) {};
