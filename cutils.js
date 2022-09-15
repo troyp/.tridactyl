@@ -133,6 +133,7 @@ var cutils = {
         return result.content;
     },
 
+    datetime: () => (new Date).toISOString().replace("T", "-").replace(/:[0-9.]+Z/, ""),
 
     /**   get(selector, opts)
      *    get(selector, context:HTMLElement)
@@ -280,6 +281,26 @@ var cutils = {
         }
         return successful;
     },
+
+    isInViewport: function(e, opts={}) {
+        const rect = e.getBoundingClientRect();
+        const lowerBound = window.innerHeight || document.documentElement.clientHeight;
+        const rightBound = window.innerWidth || document.documentElement.clientWidth;
+        if (opts.checkHorizontal) {
+            if (opts.partial) {
+                if (!( rect.left < rightBound && rect.right > 0 )) return false;
+            }
+        }
+        if (opts.topOnly) {
+            return rect.top >= 0;
+        } else if (opts.partial) {
+            return rect.top < lowerBound && rect.bottom > 0;
+        } else {
+            return rect.top >= 0 && rect.bottom <= lowerBound;
+        }
+    },
+
+    isDisplayed: function(e) { return Boolean(e.offsetParent); },
 
     jumpToHeading: async function(selector="h2,h3,h4", opts={}) {
         opts = cutils.tri.parseOpts(opts, {defaults: {"indentHeadings": true}});
@@ -453,6 +474,14 @@ var cutils = {
         return this.yankhint(this.selectors.yankspan.join(","));
     },
 
+    // ╭──────────────────────╮
+    // │ conversion functions │
+    // ╰──────────────────────╯
+
+    hexToRGB: function(hex) {
+        const re = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/;
+        return hex.match(re).slice(1).map(n_hex=>parseInt(n_hex, 16));
+    },
 };
 
 // ───────────────────────────────────────────────────────────────────────────────
@@ -659,5 +688,6 @@ window.R = R;
     "getSelectionDOM", "getSelectionHtml",
     "isolate", "jumpToHeading", "keep", "rm", "rmall", "toggleprop", "togglepropWr",
     "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankspan",
+    "hexToRGB", "datetime", "isInViewport", "isDisplayed",
 ].forEach(k => window[k]=cutils[k]);
 
