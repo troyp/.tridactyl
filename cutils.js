@@ -389,6 +389,9 @@ var cutils = {
         return res?.content.trim().split("\n");
     },
 
+    /* use `await sleep(ms)` in async function to delay execution */
+    sleep: async function(ms) { return new Promise(res=>setTimeout(res, ms)); },
+
     toggleprop: async function(obj, prop, val1, val2) {
         const val = obj[prop];
         if (val == val1) obj[prop] = val2;
