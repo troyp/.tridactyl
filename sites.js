@@ -11,6 +11,28 @@ var sites = {
         } catch(e) {};
     },
 
+    /* TODO: remove actual subconfigs instead of just nulling bindings */
+    removeSite: async function(url, mode="normal") {
+        const modemaps = {
+            "normal": "nmaps",
+            "ignore": "ignoremaps",
+            "insert": "imaps",
+            "input": "inputmaps",
+            "ex": "exmaps",
+            "hint": "hintmaps",
+            "visual": "visualmaps",
+            "browser": "browsermaps",
+        };
+        const subconfig = tri.config.USERCONFIG.subconfigs[url][modemaps[mode]];
+        // utils.msg(subconfig);
+        const entries = Object.keys(subconfig);
+        const keys = [];
+        for (k in subconfig)
+            if (subconfig.hasOwnProperty(k))
+                tri.controller.acceptExCmd(`unbindurl ${url} --mode=${mode} ${k}`);
+        return subconfig;
+    },
+
     gh: {
         _site: "github.com",
 
