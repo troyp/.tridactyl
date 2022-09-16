@@ -11,8 +11,6 @@ var sites = {
         } catch(e) {};
     },
 
-    },
-
     gh: {
         _site: "github.com",
 
