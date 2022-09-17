@@ -212,10 +212,12 @@ autocmd DocStart ^https?://medium\.com(/|$) urlmodify -r https?://medium\.com/? 
 " ╭────────────────╮
 " │ PrimeVideo.com │
 " ╰────────────────╯
-command: primevbind "Bind key for www.primevideo.com" bindurl https://www.primevideo.com
-command: primevbind: "Bind key with description for www.primevideo.com" bindurl: https://www.primevideo.com
+seturl primevideo.com modeindicator false
 
-primevbind c<C-h> showkeysurl https://www.primevideo.com/ c
+command: primevbind "Bind key for www.primevideo.com" bindurl primevideo.com
+command: primevbind: "Bind key with description for www.primevideo.com" bindurl: primevideo.com
+
+primevbind c<C-h> showkeysurl primevideo.com c
 primevbind: cc "Show episode" cujs cutils.getText1("div.contentTitlePanel>div.subtitle") | show
 primevbind: ct "Show series" cujs cutils.getText1("div.contentTitlePanel>div.title") | show
 primevbind: cyy "Yank episode" cujs cutils.yankby1("div.contentTitlePanel>div.subtitle")
