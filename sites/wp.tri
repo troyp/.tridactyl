@@ -1,0 +1,20 @@
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────────╮
+" │ Wikimedia sites │
+" ╰─────────────────╯
+
+wpbdoc cd "Open page in Wiktionary"
+wpbind cd jsb utils.tab.open(`https://en.wiktionary.org/w/index.php?search=${sites.wp.getTopic()}`, "here")
+wpbdoc cD "Open page in Wiktionary (adjacent tab)"
+wpbind cD jsb utils.tab.open(`https://en.wiktionary.org/w/index.php?search=${sites.wp.getTopic()}`, "related")
+wpbdoc ce "Open page in Wikipedia"
+wpbind ce jsb utils.tab.open(`https://en.wikipedia.org/w/index.php?search=${sites.wp.getTopic()}`, "here")
+wpbdoc cE "Open page in Wikipedia (adjacent tab)"
+wpbind cE jsb utils.tab.open(`https://en.wikipedia.org/w/index.php?search=${sites.wp.getTopic()}`, "related")
+
+" | ct -- wikipedia/toggle |
+wpbind: ctm "Toggle mobile version" urltoggle https://en.m https://en
+wpbind: ctj "Toggle japanese edition" csites csites.wp.toggleJa()
+
+wpbind: cC "Cleanup (remove clutter from page)" csites csites.wp.cleanup()
+wpbind: c;; "Search ENGINES with page title" jsb fillcmdline(`searchwithengines ${sites.wp.getTopic()}`)
