@@ -199,13 +199,13 @@ var sites = {
 
     se: {
         _sites: [
-            "https://[^./]*.stackexchange.com",
-            "https://stackoverflow.com",
-            "https://serverfault.com",
-            "https://superuser.com",
-            "https://askubuntu.com",
-            "https://stackapps.com",
-            "https://mathoverflow.net",
+            "stackexchange.com",
+            "stackoverflow.com",
+            "serverfault.com",
+            "superuser.com",
+            "askubuntu.com",
+            "stackapps.com",
+            "mathoverflow.net",
         ],
 
         bind: async function(...args) {
