@@ -6,6 +6,8 @@
 
 const places = {};
 
+tri.config.set("kwsearch", "~/.tridactyl/scripts/kwsearch");
+
 // ───────────────────────────────────────────────────────────────────────────────
 // ╭────────────────────────╮
 // │ places.bm -- bookmarks │
@@ -34,7 +36,7 @@ places.bm = {
               nullishDefaults: {switches: "-u -s"}
             }
         );
-        const cmd  = `kwsearch ${opts.switches} -- ${opts.args}`;
+        const cmd  = `${tri.config.get("kwsearch")} ${opts.switches} -- ${opts.args}`;
         return tri.native.run(cmd).then(
             res => opts.decode ? utils.decode(res.content, opts.decodeFn) : res.content
         );
@@ -43,7 +45,7 @@ places.bm = {
     rofi: async function(args) {
         const [where, bg, ...switches] = utils.tri.parseArgs(args);
         const switchstr = switches?.length ? switches.join(" ") : "-s -u";
-        const cmd = `kwsearch ${switchstr}`;
+        const cmd = `${tri.config.get("kwsearch")} ${switchstr}`;
         return tri.native.run(cmd).then(
             res => res.content && utils.tab.open(res.content, {where: where||"last", background: bg==="t"})
         );
@@ -59,7 +61,7 @@ places.bm = {
             }
         );
         if (!args && !opts.switches) opts.switches = "-u -s";
-        const cmd  = `kwsearch ${opts.switches} ${args}`;
+        const cmd  = `${tri.config.get("kwsearch")} ${opts.switches} ${args}`;
         return tri.native.run(cmd).then(
             res => utils.yank(opts.decode ? utils.decode(res.content, opts.decodeFn) : res.content)
         );
@@ -73,20 +75,20 @@ places.bm = {
 places.kw = {
     open: async function(args, opts={where: "related"}) {
         const [kw, ...rest] = utils.tri.parseArgs(args);
-        return tri.native.run(`kwsearch -K '${kw}' -- '${shell.singQEscape(rest.join(" "))}'`).then(
+        return tri.native.run(`${tri.config.get("kwsearch")} -K '${kw}' -- '${shell.singQEscape(rest.join(" "))}'`).then(
             res => res.content && utils.tab.open(res.content, opts));
     },
 
     get: async function(args) {
         const [kw, ...rest] = utils.tri.parseArgs(args);
-        const res = await tri.native.run(`kwsearch -K '${kw}' -- '${shell.singQEscape(rest.join(" "))}'`);
+        const res = await tri.native.run(`${tri.config.get("kwsearch")} -K '${kw}' -- '${shell.singQEscape(rest.join(" "))}'`);
         return res.content.trim();
     },
 
     rofi: async function(args, opts={where: "related"}) {
         const switches = opts?.switches || "-u -k -s";
         const where = opts.where || "last";
-        const cmd = `kwsearch ${switches} -- '${shell.singQEscape(args.join?.(" ")?.trim())}'`;
+        const cmd = `${tri.config.get("kwsearch")} ${switches} -- '${shell.singQEscape(args.join?.(" ")?.trim())}'`;
         return tri.native.run(cmd).then(
             res => res.content && utils.tab.open(res.content, opts)
         );
