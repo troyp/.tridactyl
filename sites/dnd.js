@@ -42,7 +42,7 @@ const dndb = {
 
 sites.dndb = dndb;
 
-sites.LISTS.dnd_apps = [
+sites.LISTS.dnd_sites = [
     "https://www.dndbeyond.com/characters",
     "https://rpgbot.net/dnd5/",
 ];

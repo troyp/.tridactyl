@@ -25,7 +25,7 @@ dndbbind: <C-PageDown> "Load More" cujs $1t("button", /load more/i).click()
 
 dndbbind c<C-h> showkeysurl dndbeyond.com c
 dndbbind: cb "Goto rpgbot.net" openorsummonc https://rpgbot.net/dnd5/
-dndbbind: cc "Lists: open/close row" dndjs mod_dnd.dndb.go();
+dndbbind: cc "Lists: open/close row" dndjs dnd.dndb.go();
 dndbbind: cf "Click category icon" hint .ddb-search-filter-item-wrapper>.icon
 dndbbdoc cv "Toggle collapse Dice Notification"
 dndbbind cv hint -Jc .dice_notification_controls__collapse,.dice_notification_controls__uncollapse
@@ -114,13 +114,13 @@ dndbbind: css "Search" fillcmdline dndbsearch
 dndbbind: cs;s "Goto spell description" fillcmdline dndbspell
 
 " | ct -- dndb/toggle |
-dndbbind: ctt "Toggle all" dndjs mod_dnd.dndb.toggle()
-dndbbind: cty "Toggle all on" dndjs mod_dnd.dndb.toggleOn()
-dndbbind: ctn "Toggle all on" dndjs mod_dnd.dndb.toggleOff()
+dndbbind: ctt "Toggle all" dndjs dnd.dndb.toggle()
+dndbbind: cty "Toggle all on" dndjs dnd.dndb.toggleOn()
+dndbbind: ctn "Toggle all on" dndjs dnd.dndb.toggleOff()
 
 " | cx -- dndb/misc |
 " | cxt -- dndb/misc/table |
-dndbbind: cxtd "Split Damage column of table" dndjs ; hint -Jc table -F t=>mod_dnd.dndb.tableSplitDamageCol(t);
+dndbbind: cxtd "Split Damage column of table" dndjs ; hint -Jc table -F t=>dnd.dndb.tableSplitDamageCol(t);
 
 " | cy -- dndb/yank |
 dndbbind: cya "Copy all entries" yankall .info a
@@ -138,7 +138,7 @@ command dndbcsheetbind: bindurl: https://www.dndbeyond.com/characters/[0-9]+
 dndbcsheetbind: <enter> "load dndb.csheet.auto.js" cujs -r sites/dndb.auto.js
 
 dndbcsheetbind: cyy "Yank Content Group" dndbcsheetyankcontentgroup
-command dndbcsheetyankcontentgroup dndjs ; hint -Jc .ct-content-group -F e=>mod_dnd.dndb.yankContentGroup()
+command dndbcsheetyankcontentgroup dndjs ; hint -Jc .ct-content-group -F e=>dnd.dndb.yankContentGroup()
 
 " | cm -- dndb/my/sheet |
 dndbcsheetbind cms<C-h> showkeysurl dndbeyond.com cms

@@ -3,9 +3,9 @@
 // │ MODULE dnd │
 // ╰────────────╯
 
-mod_dnd = {};
+dnd = {};
 
-mod_dnd.dndb = {
+dnd.dndb = {
     go: async function() {
         const url = tri.contentLocation.href;
         if (url.match(/https:\/\/www\.dndbeyond\.com\/characters\/\d*\/builder\//)) {
