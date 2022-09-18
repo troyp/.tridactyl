@@ -260,6 +260,7 @@ command sebind jsb -d¦ sites.se.bind("--mode=normal", ...JS_ARGS)¦
 commdoc sebind: "Bind key with description for stackexchange sites"
 command sebind: jsb -d¦ sites.se.bind_("--mode=normal", ...JS_ARGS)¦
 command: seexpandcomments "Expand all comments" cujs cutils.click("a.js-show-link", {all:true});
+jsb sites.se.bindShowKey()
 
 sebind: cc "Expand all comments" seexpandcomments
 sebind: cC "Cleanup (remove clutter)" se_js se.cleanup()

@@ -208,6 +208,14 @@ var sites = {
             "mathoverflow.net",
         ],
 
+        /* TODO: convert these into general functions and move to top level */
+
+        bindShowKey() {
+            return this._sites.forEach(async site => {
+                await bindurl(site, "--mode=normal", "c<C-h>", `showkeysurl ${site} c`);
+            });
+        },
+
         bind: async function(...args) {
             args = utils.tri.parseTerms(args);
             const [mode, keys, ...excmd] = args;
