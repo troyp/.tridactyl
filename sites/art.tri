@@ -7,8 +7,8 @@ command: artjs "Load art.c.js and execute javascript" cujs -r sites/art.c.js ; j
 " ╭─────────────────╮
 " │ JacksonsArt.com │
 " ╰─────────────────╯
-command artbind bindurl jacksonsart.com
-command artbind: bindurl: jacksonsart.com
+command jabind bindurl jacksonsart.com
+command jabind: bindurl: jacksonsart.com
 
 command jacksonssearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.jacksonsart.com/en-au/search/?limit=60&q=${JS_ARGS.join("%20").trim()}`)¦
 command jacksonssearch_wc jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.jacksonsart.com/en-au/search/?fq[x_application]=Watercolour&limit=60&q=${JS_ARGS.join("%20").trim()}`)¦
