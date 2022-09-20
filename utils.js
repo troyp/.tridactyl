@@ -143,6 +143,7 @@ var utils = {
             opts.prefix ??= "Copied" + (opts.cmdline ? ": " : "...\n");
             this.message(s, opts);
         }
+        return s;
     },
 
     yankf: function(fstr, ...rest) {

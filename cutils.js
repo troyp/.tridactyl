@@ -461,6 +461,7 @@ var cutils = {
             opts.prefix ??= "Copied" + (opts.cmdline ? ": " : "...\n");
             cutils.message(s, opts);
         }
+        return s;
     },
 
     selectors: {
