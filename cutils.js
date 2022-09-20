@@ -77,6 +77,7 @@ var cutils = {
      *  See $$t for details.
      */
     $1t: function(selector, text, opts={}) {
+        text ||= "";
         if (opts instanceof Node) opts = {context: opts};
         opts.textProperty ||= "innerText";
         const elems = $$(selector, opts);
