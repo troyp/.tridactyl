@@ -122,14 +122,38 @@ const ja = {
 
     _site: "jacksonsart.com",
 
-    gotoShippingInfo: async function(where="related") {
-        return utils.tab.openAndRun(
-            "https://www.jacksonsart.com/en-au/shipping-info",
-            ()=>tri.controller.acceptExCmd(`artjs art.ja.showShippingInfo()`),
+    openOrder: async function(n=1, where="related") {
+        const orderSel = "#my-orders-table>tbody>tr>td.a-center>span>a:first-of-type";
+        const cmd = `[...document.querySelectorAll("${orderSel}")][${n}-1].click()`;
+        return utils.tab.openAndRun("https://www.jacksonsart.com/en-au/sales/order/history/", cmd, where);
+    },
+
+    search: async function(where, args) {
+        return utils.tab.openOrSummon(
+            `https://www.jacksonsart.com/en-au/search/?limit=60&q=${args.join("%20").trim()}`,
             where
         );
     },
 
+    searchWC: async function(where, args) {
+        args = utils.tri.parseArgs(args, "string");
+        return utils.tab.openOrSummon(
+            `https://www.jacksonsart.com/en-au/search/?fq[x_application]=Watercolour&limit=60&q=${args}`,
+            where
+        );
+    },
+
+    showShippingInfo: async function() {
+        const intlDeliv = function() {
+            const btns = [...document.getElementsByTagName("button")];
+            const btn = btns.find(b=>b.textContent.match(/international delivery/i));
+            const div = btn?.nextElementSibling;
+            div.style.display = "block";
+            div.scrollIntoView();
+            return Boolean(div);
+        };
+        return utils.tab.openAndRun("https://www.jacksonsart.com/en-au/shipping-info", intlDeliv);
+    },
 };
 
 sites.ja = ja;

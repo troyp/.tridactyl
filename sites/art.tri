@@ -25,18 +25,47 @@ command jabind bindurl jacksonsart.com
 command jabind: bindurl: jacksonsart.com
 command jashowkeys showkeysurl jacksonsart.com
 
-command jasearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.jacksonsart.com/en-au/search/?limit=60&q=${JS_ARGS.join("%20").trim()}`)¦
-command jasearch_wc jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.jacksonsart.com/en-au/search/?fq[x_application]=Watercolour&limit=60&q=${JS_ARGS.join("%20").trim()}`)¦
-command jacart_count_matching artjs -d¦ art.ja.cart.countMatchingWr(JS_ARGS)¦
-
-jabind: cc "Go (cart: checkout; orders page: view most recent)" artjs art.ja.go()
-jabind: cn "Count items" artjs cutils.message(`Number of items: ${art.ja.cart.count()}`, true)
-jabind: cN "Count matching items in cart" fillcmdline jacart_count_matching
+command: jacart_count_matching "Show number of cart items matching" artjs -d¦ art.ja.cart.countMatchingWr(JS_ARGS)¦
+command: ja_open_order "Goto latest order (current tab)" jsb -d¦ sites.ja.openOrder(JS_ARGS[1], "here")¦
+command: ja_tabopen_order "Goto latest order (new tab)" jsb -d¦ sites.ja.openOrder(JS_ARGS[1], "related")¦
 
 jabind: c<C-h> "(show bindings: jacksonsart)" jashowkeys c
 
+jabind: cc "Go (cart: checkout; orders page: view most recent)" artjs art.ja.go()
 jabind: ch "Open handprint.com page in new (count=current) tab" call_handprint_cmd
+jabind: cn "Count items" artjs cutils.message(`Number of items: ${art.ja.cart.count()}`, true)
+jabind: cN "Count matching items in cart" fillcmdline jacart_count_matching
 
+" | co -- ja/goto |
 jabind: co<C-h> "(show bindings: jacksonsart/goto)" jashowkeys co
-jabind: coc "Goto cart" js openorswitchc https://www.jacksonsart.com/en-au/checkout/cart/;
-jabind: coC "Goto cart checkout" js openorswitchc https://www.jacksonsart.com/en-au/checkout/onepage/;
+jabind: coc "Goto cart" openorswitchc https://www.jacksonsart.com/en-au/checkout/cart/
+jabind: coC "Goto cart checkout" openorswitchc https://www.jacksonsart.com/en-au/checkout/onepage/
+jabind: coo "Goto orders" openorswitchc https://www.jacksonsart.com/en-au/sales/order/history/
+jabind: co<C-o> "Goto latest order (current tab)" ja_open_order
+jabind: coO "Goto latest order (new tab)" ja_tabopen_order
+jabind: col "Goto login" openorswitchc https://www.jacksonsart.com/en-au/customer/account/login/?___SID=S
+jabind: cos "Goto shipping information" jsb sites.ja.showShippingInfo()
+jabind: cow "Goto wishlist" openorswitchc https://www.jacksonsart.com/en-au/wishlist/
+jabind: co1 "Switch to tab Info" cujs cutils.click(".product-essential>ul>li>a", /info/i)
+jabind: co2 "Switch to tab Q&A" cujs cutils.click(".product-essential>ul>li>a", /q&a/i)
+jabind: co3 "Switch to tab Spec" cujs cutils.click(".product-essential>ul>li>a", /spec/i)
+jabind: co4 "Switch to tab Reviews" cujs cutils.click(".product-essential>ul>li>a", /reviews/i)
+
+" | cs -- ja/search |
+command: jasearch "Search Jackson's Art (new tab)" jsb -d¦ sites.ja.search("related", JS_ARGS)¦
+command: jasearch! "Search Jackson's Art (current tab)" jsb -d¦ sites.ja.search("here", JS_ARGS)¦
+command: jasearch_wc "Search Jackson's Art for watercolor (new tab)" jsb -d¦ sites.ja.searchWC("related", JS_ARGS)¦
+command: jasearch_wc! "Search Jackson's Art for watercolor (curr tab)" jsb -d¦ sites.ja.searchWC("here", JS_ARGS)¦
+command call_jasearch_cmd jsb -d¦ fillcmdline(JS_ARGS[1]?"jasearch!":"jasearch")¦
+
+jabind: cs<C-h> "(show bindings: ja/search)" jashowkeys cs
+jabind: csc "Find items matching search term in cart" b :jacksonsCartSearch<Space>
+jabind: css "Search Jackson's Art (new tab)" jasearch
+jabind: csS "Search Jackson's Art (current tab)" jasearch!
+jabind: csw "Search Jackson's Art for Watercolour (new tab)" jasearch_wc
+jabind: csW "Search Jackson's Art for Watercolour (current tab)" jasearch_wc!
+
+jabind: cs;s "Clipboard Search Jackson's Art (new tab)" fillcmdline(`${jasearch} ${utils.cbread()}`))
+jabind: cs;S "Clipboard Search Jackson's Art (current tab)" fillcmdline(`${jasearch!} ${utils.cbread()}`))
+jabind: cs;w "Clipboard Search Jackson's Watercolor (new tab)" fillcmdline(`${jasearch_wc} ${utils.cbread()}`))
+jabind: cs;W "Clipboard Search Jackson's Watercolor (current tab)" fillcmdline(`${jasearch_wc!} ${utils.cbread()}`))

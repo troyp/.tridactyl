@@ -69,10 +69,4 @@ art.ja = {
         }
     },
 
-    showShippingInfo: function() {
-        const btn = $1t("button", /international delivery/i);
-        btn?.click();
-        btn?.scrollIntoView();
-        return Boolean(btn);
-    },
 };
