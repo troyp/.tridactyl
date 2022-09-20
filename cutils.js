@@ -719,3 +719,6 @@ window.R = R;
     "hexToRGB", "datetime", "isInViewport", "isDisplayed",
 ].forEach(k => window[k]=cutils[k]);
 
+[
+    "parseArgs", "parseArgsAndCount", "parseOpts", "parseTerms",
+].forEach(k => window[k]=cutils.tri[k]);
