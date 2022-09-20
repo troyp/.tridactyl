@@ -25,8 +25,8 @@ command jabind bindurl jacksonsart.com
 command jabind: bindurl: jacksonsart.com
 command jashowkeys showkeysurl jacksonsart.com
 
-command jacksonssearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.jacksonsart.com/en-au/search/?limit=60&q=${JS_ARGS.join("%20").trim()}`)¦
-command jacksonssearch_wc jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.jacksonsart.com/en-au/search/?fq[x_application]=Watercolour&limit=60&q=${JS_ARGS.join("%20").trim()}`)¦
+command jasearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.jacksonsart.com/en-au/search/?limit=60&q=${JS_ARGS.join("%20").trim()}`)¦
+command jasearch_wc jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.jacksonsart.com/en-au/search/?fq[x_application]=Watercolour&limit=60&q=${JS_ARGS.join("%20").trim()}`)¦
 
 jabind: c<C-h> "(show bindings: jacksonsart)" jashowkeys c
 
