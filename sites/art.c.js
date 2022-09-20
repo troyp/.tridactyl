@@ -19,7 +19,14 @@ art.ja = {
         },
         filterItems: function(rx) {
             const items = $$("#shopping-cart-table>tbody>tr");
-            return items.filter(r=>$1("td.product-name-section",r).textContent.match(rx));
+            /* string filters use smartcase */
+            if (typeof rx == "string" && rx.toLowerCase() == rx) {
+                return items.filter(
+                    r => $1("td.product-name-section", r).textContent.toLowerCase().match(rx.toLowerCase())
+                );
+            } else {
+                return items.filter(r=>$1("td.product-name-section",r).textContent.match(rx));
+            }
         },
         formatRow: function(r) {
             const name = $1("h2.product-name", r).textContent.trim().replace(/\s+/g, " ");
