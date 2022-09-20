@@ -4,6 +4,20 @@
 command: artjs "Load art.c.js and execute javascript" cujs -r sites/art.c.js ; js
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────────╮
+" │ Handprint.com │
+" ╰───────────────╯
+command: handprintbind "Bind key for handprint.com" bindurl handprint.com
+command: handprintbind: "Bind key with description for handprint.com" bindurl: handprint.com
+command: handprintbdoc "Provide a description on a separate line" js ;
+command: handprintshowkeys "(show bindings: handprint)" showkeysurl handprint.com
+
+command: handprint "Open handprint.com page" jsb -d¦ sites.handprint.openOrSelect(...JS_ARGS.slice(1))¦
+command: handprint_here "Open handprint.com page (current tab)" handprint here
+command: handprint_adj "Open handprint.com page (adjacent tab)" handprint related
+command call_handprint_cmd jsb -d¦ fillcmdline("handprint_" + (JS_ARGS[1]?"here":"adj"))¦
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────╮
 " │ JacksonsArt.com │
 " ╰─────────────────╯
@@ -13,3 +27,4 @@ command jabind: bindurl: jacksonsart.com
 command jacksonssearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.jacksonsart.com/en-au/search/?limit=60&q=${JS_ARGS.join("%20").trim()}`)¦
 command jacksonssearch_wc jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.jacksonsart.com/en-au/search/?fq[x_application]=Watercolour&limit=60&q=${JS_ARGS.join("%20").trim()}`)¦
 
+jabind: ch "Open handprint.com page in new (count=current) tab" call_handprint_cmd
