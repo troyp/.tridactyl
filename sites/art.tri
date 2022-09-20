@@ -27,7 +27,16 @@ command jashowkeys showkeysurl jacksonsart.com
 
 command jasearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.jacksonsart.com/en-au/search/?limit=60&q=${JS_ARGS.join("%20").trim()}`)¦
 command jasearch_wc jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.jacksonsart.com/en-au/search/?fq[x_application]=Watercolour&limit=60&q=${JS_ARGS.join("%20").trim()}`)¦
+command jacart_count_matching artjs -d¦ art.ja.cart.countMatchingWr(JS_ARGS)¦
+
+jabind: cc "Go (cart: checkout; orders page: view most recent)" artjs art.ja.go()
+jabind: cn "Count items" artjs cutils.message(`Number of items: ${art.ja.cart.count()}`, true)
+jabind: cN "Count matching items in cart" fillcmdline jacart_count_matching
 
 jabind: c<C-h> "(show bindings: jacksonsart)" jashowkeys c
 
 jabind: ch "Open handprint.com page in new (count=current) tab" call_handprint_cmd
+
+jabind: co<C-h> "(show bindings: jacksonsart/goto)" jashowkeys co
+jabind: coc "Goto cart" js openorswitchc https://www.jacksonsart.com/en-au/checkout/cart/;
+jabind: coC "Goto cart checkout" js openorswitchc https://www.jacksonsart.com/en-au/checkout/onepage/;

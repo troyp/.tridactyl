@@ -14,6 +14,15 @@ art.ja = {
             const elts = $$("input[title='Qty']");
             return elts.length && elts.map(e=>Number(e.value)).reduce((n,s)=>n+s);
         },
+        countMatching: function(rx) {
+            return this.filterItems(rx).length;
+        },
+        countMatchingWr: function(args) {
+            /* TODO: allow regex with readStringOrRegex() */
+            const rx = parseArgs(args, "string");
+            const n = this.countMatching(rx);
+            return cutils.message(`Items matching ${rx}: ${n}`, true);
+        },
         getItems: function() {
             return $$("#shopping-cart-table>tbody>tr");
         },
@@ -48,6 +57,16 @@ art.ja = {
             const s = $1t("td", /total due/i).nextElementSibling.textContent.trim();
             return Number(s.match(/\$(\d+\.\d\d)/)[1]);
         },
+    },
+
+    go: async function(count=null) {
+        const url = tri.contentLocation.href;
+        if (url=="https://www.jacksonsart.com/en-au/sales/order/history/") {
+            const dest = $1t("#my-orders-table>tbody>tr.first a", "View Order").href+"#main-menu";
+            if (count) tabopen(dest); else open(dest);
+        } else if (url=="https://www.jacksonsart.com/en-au/checkout/cart/") {
+            cutils.click("button", "Proceed to Checkout");
+        }
     },
 
     showShippingInfo: function() {
