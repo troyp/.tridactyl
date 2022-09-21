@@ -21,9 +21,10 @@ command call_handprint_cmd jsb -d¦ fillcmdline("handprint_" + (JS_ARGS[1]?"here
 " ╭─────────────────╮
 " │ JacksonsArt.com │
 " ╰─────────────────╯
-command jabind bindurl jacksonsart.com
-command jabind: bindurl: jacksonsart.com
-command jashowkeys showkeysurl jacksonsart.com
+command: jabind "Bind key for jacksonsart.com" bindurl jacksonsart.com
+command: jabind: "Bind key with description for jacksonsart.com" bindurl: jacksonsart.com
+command: jabdoc "Provide a description on a separate line" js ;
+command: jashowkeys "(show bindings: ja)" showkeysurl jacksonsart.com
 
 command: jacart_count_matching "Show number of cart items matching" artjs -d¦ art.ja.cart.countMatchingWr(JS_ARGS)¦
 command: ja_open_order "Goto latest order (current tab)" jsb -d¦ sites.ja.openOrder(JS_ARGS[1], "here")¦
