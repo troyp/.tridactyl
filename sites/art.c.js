@@ -69,4 +69,12 @@ art.ja = {
         }
     },
 
+    toggleOption(option) {
+        return $$("a.media-flex.filter__option>span").find(e=>e.textContent.match(option)).parentElement.click();
+    },
+    toggleOptionWr: function(args) {
+        option = cutils.tri.parseArgs(args, "string");
+        return this.toggleOption(option);
+    },
+
 };

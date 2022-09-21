@@ -111,3 +111,22 @@ jabind: cs;s "Clipboard Search Jackson's Art (new tab)" fillcmdline(`${jasearch}
 jabind: cs;S "Clipboard Search Jackson's Art (current tab)" fillcmdline(`${jasearch!} ${utils.cbread()}`))
 jabind: cs;w "Clipboard Search Jackson's Watercolor (new tab)" fillcmdline(`${jasearch_wc} ${utils.cbread()}`))
 jabind: cs;W "Clipboard Search Jackson's Watercolor (current tab)" fillcmdline(`${jasearch_wc!} ${utils.cbread()}`))
+
+" | ct -- ja/toggle |
+command: jatoggleoption "Toggle option on search/browse" artjs -d¦ art.ja.toggleOptionWr(JS_ARGS)¦
+
+jabind: ct<C-h> "(show bindings: ja/toggle)" jashowkeys ct
+jabind: cta "Toggle Australian site" urltoggle www.jacksonsart.com/en-au/ www.jacksonsart.com/
+jabind: ctl "Toggle limit=60" urltogglequery limit 60 20
+jabind: cto "Toggle option" fillcmdline jatoggleoption
+
+" | cth -- ja/toggle/hairtype |
+jabind: cth<C-h> "(show bindings: ja/toggle/hairtype)" jashowkeys cth
+jabind: cthg "Toggle hairtype: Goat" artjs art.ja.toggleOption(/^Goat$/i);
+jabind: cthh "Toggle hairtype: Hog" artjs art.ja.toggleOption(/^Hog$/i);
+jabind: cthk "Toggle hairtype: Kolinsky Sable" artjs art.ja.toggleOption(/^Kolinsky Sable$/i);
+jabind: cthm "Toggle hairtype: Natural Mix" artjs art.ja.toggleOption(/^Natural Mix$/i);
+jabind: cthM "Toggle hairtype: Natural/Synthetic Mix" artjs art.ja.toggleOption(/^Natural\/Synthetic Mix$/i);
+jabind: cthr "Toggle hairtype: Red Sable" artjs art.ja.toggleOption(/^Red Sable$/i);
+jabind: cthq "Toggle hairtype: Squirrel" artjs art.ja.toggleOption(/^Squirrel$/i);
+jabind: cths "Toggle hairtype: Synthetic" artjs art.ja.toggleOption(/^Synthetic$/i);
