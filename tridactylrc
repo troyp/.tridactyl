@@ -286,6 +286,7 @@ commdoc urlremove "Remove string from current URL"
 command urlremove withurlsjs -p tri.controller.acceptExCmd(`open ${urls.mod.toggle(JS_ARG, "")}`)
 commdoc urlmodorsummon_g "Open URL formed by grafting a path onto the domain, or summon existing tab"
 command urlmodorsummon_g jsb -d¦ urls.mod.graftOrSummon(JS_ARGS[1], 0, {where:JS_ARGS[2]?"related":"here"})¦
+command: urltogglequery "Toggle value of query in URL" jsb -d¦ urls.mod.toggleQuery(...JS_ARGS.slice(1))¦
 command tabopenmultiple jsb -d¦ utils.tab.openMultiple(JS_ARGS.join(" ").split(" "))¦
 
 command !! exclaim_

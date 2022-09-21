@@ -133,6 +133,38 @@ urls = {
         if (n < N) url.search = "";
         return url.href;
     },
+
+    // ╭─────────╮
+    // │ queries │
+    // ╰─────────╯
+    getQuery: function(url, qPattern) {
+        url ||=tri.contentLocation.href;
+        const u = new URL(url);
+        const queries = u.search.slice(1).split("&");
+        for (q of queries) {
+            const [k, v] = q.split("=");
+            if ((typeof qPattern == "string" && k.includes(qPattern)) || k.match(qPattern)) return v;
+        };
+        return null;
+    },
+
+    /** Return URL resulting from setting the query KEY to VALUE in the input URL.
+     */
+    setQuery: function(url, key, value) {
+        url ||=tri.contentLocation.href;
+        const u = new URL(url);
+        const queries = u.search.slice(1).split("&");
+        const q = queries.find(q => { const [k, v] = q.split("="); return (k==key); });
+        if (q) { /* replace existing value */
+            const regex = new RegExp(`\\b${key}=[^?&#]+`);
+            u.search = u.search.replace(regex, `${key}=${value}`);
+        } else { /* add new query */
+            if (u.search) u.search = `${u.search}&${key}=${value}`;
+            else u.search = `?${key}=${value}`;
+        }
+        return u.href;
+    },
+
 };
 
 urls.mod = {
@@ -191,6 +223,16 @@ urls.mod = {
             else
                 window.location.replace(newUrl);
         }
+    },
+
+    toggleQuery: function(key, value1, value2) {
+        const url = tri.contentLocation.href;
+        var newurl;
+        if (urls.getQuery(url, key) != value1)
+            newurl = urls.setQuery(url, key, value1);
+        else
+            newurl = urls.setQuery(url, key, value2);
+        tri.controller.acceptExCmd(`js window.location = "${newurl}"`);
     },
 
     toggleWr: function(argstr) { return this.togglepage(...argstr.trim().split(/ +/)); },
