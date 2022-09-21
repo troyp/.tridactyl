@@ -84,7 +84,6 @@ command: bdoc "provide a description for a bind definition on a separate line" d
 " │ sourced config files │
 " ╰──────────────────────╯
 source /home/troy/.tridactyl/sites.tri
-command: modload "Load module" jsb -d¦ source(`~/.tridactyl/sites/${JS_ARGS[1]}`)¦
 command: modload "Load module" jsb -d¦ sites.load(JS_ARGS[1])¦
 
 " ───────────────────────────────────────────────────────────────────────────────
@@ -260,7 +259,7 @@ commdoc tabopenorswitchc "Open an URL in a new final tab (count: current tab), o
 command tabopenorswitchc jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "related", "here")¦
 commdoc tabopenorswitchc! "Open an (exact) URL in current (with count: adjacent) tab, or switch to existing tab"
 command tabopenorswitchc! jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "related", "here", {exactMatch: true})¦
-command topos tabopenorswitchc
+command: topos "Alias for tabopenorswitchc" tabopenorswitchc
 commdoc openorswitch "Open an URL in current tab, or switch to existing tab"
 command openorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
 commdoc tabopenorswitch "Open an URL in a new (final) tab, or switch to existing tab"
@@ -1326,8 +1325,6 @@ bind --mode=insert  <C-T>    withjsb user.firstname  | text.insert_text
 bind --mode=insert  <C-L>    withjsb user.lastname   | text.insert_text
 bind --mode=insert  <C-A>    withjsb user.street     | text.insert_text
 bind --mode=insert  <C-S>    withjsb user.suburb     | text.insert_text
-bind --mode=insert  <C-D>    withjsb user.address    | text.insert_text
-bind --mode=insert  <C-P>    withjsb user.phone      | text.insert_text
 bind --mode=insert  <C-B>    withjsb user.mobile     | text.insert_text
 bind --mode=insert  <C-Z>    withjsb user.postcode   | text.insert_text
 bind --mode=insert  <C-Q>    withjsb user.masterpw   | text.insert_text
