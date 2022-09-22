@@ -23,18 +23,15 @@ art.ja = {
             const n = this.countMatching(rx);
             return cutils.message(`Items matching ${rx}: ${n}`, true);
         },
-        getItems: function() {
-            return $$("#shopping-cart-table>tbody>tr");
-        },
         filterItems: function(rx) {
-            const items = $$("#shopping-cart-table>tbody>tr");
+            const items = this.getItems();
             /* string filters use smartcase */
             if (typeof rx == "string" && rx.toLowerCase() == rx) {
                 return items.filter(
-                    r => $1("td.product-name-section", r).textContent.toLowerCase().match(rx.toLowerCase())
+                    r => $1("td.product-name-section", r)?.textContent.toLowerCase().match(rx.toLowerCase())
                 );
             } else {
-                return items.filter(r=>$1("td.product-name-section",r).textContent.match(rx));
+                return items.filter(r=>$1("td.product-name-section",r)?.textContent.match(rx));
             }
         },
         formatRow: function(r) {
@@ -44,18 +41,30 @@ art.ja = {
             const price = $1("td.a-center+td>span.cart-price", r).textContent.trim();
             return `${name} - ${unitPrice} × ${qty} = ${price}\n`;
         },
-        yankItems: function(re=/./) {
-            return cutils.yank(this.filterItems(re).map(r=>this.formatRow(r)));
+        getItems: function() {
+            return $$("#shopping-cart-table>tbody>tr");
         },
-        itemNames: function() {
-            return $$(".cart .product-name").map(e=>e.innerText.replace("\n", "\t"));
+        getItemNames: function() {
+            return $$("#shopping-cart-table>tbody>tr>td>.product-name").map(e=>e.innerText.replace(/\s+/, " "));
         },
+
         itemURLs: function() {
             return $$(".cart .product-name>a").map(e=>e.href);
         },
         total: function() {
             const s = $1t("td", /total due/i).nextElementSibling.textContent.trim();
             return Number(s.match(/\$(\d+\.\d\d)/)[1]);
+        },
+        yankItems: function(re=/./) {
+            return cutils.yank(this.filterItems(re).map(r=>this.formatRow(r)));
+        },
+        yankURLs: function(re=/./) {
+            return cutils.yank(this.filterItems(re).map(e=>$1("h2.product-name>a", e).href).join("\n"));
+        },
+        yankNames: function(re=/./) {
+            return cutils.yank(
+                this.filterItems(re).map(e=>$1(".product-name", e).textContent.replace(/\s+/g, " ")).join("\n")
+            );
         },
     },
 
