@@ -70,10 +70,10 @@ art.ja = {
 
     go: async function(count=null) {
         const url = tri.contentLocation.href;
-        if (url=="https://www.jacksonsart.com/en-au/sales/order/history/") {
+        if (url.includes("/sales/order/history/")) {
             const dest = $1t("#my-orders-table>tbody>tr.first a", "View Order").href+"#main-menu";
             if (count) tabopen(dest); else open(dest);
-        } else if (url=="https://www.jacksonsart.com/en-au/checkout/cart/") {
+        } else if (url.includes("/checkout/cart/")) {
             cutils.click("button", "Proceed to Checkout");
         }
     },
