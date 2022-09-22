@@ -130,3 +130,11 @@ jabind: cthM "Toggle hairtype: Natural/Synthetic Mix" artjs art.ja.toggleOption(
 jabind: cthr "Toggle hairtype: Red Sable" artjs art.ja.toggleOption(/^Red Sable$/i);
 jabind: cthq "Toggle hairtype: Squirrel" artjs art.ja.toggleOption(/^Squirrel$/i);
 jabind: cths "Toggle hairtype: Synthetic" artjs art.ja.toggleOption(/^Synthetic$/i);
+
+" | cy -- ja/yank |
+jabind: cy<C-h> "(show bindings: ja/yank)" jashowkeys cy
+jabind: cys "Yank product code [HINT]" artjs art.ja.hint_yank_sku()
+
+jabind: cycc "Copy cart items" artjs art.ja.cart.yankItems()
+jabind: cycn "Copy cart items names" artjs art.ja.cart.yankNames()
+jabind: cycu "Copy cart items URLs" artjs art.ja.cart.yankURLs()

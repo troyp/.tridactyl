@@ -78,6 +78,34 @@ art.ja = {
         }
     },
 
+    hint_yank_sku: function() {
+        if ($1("#shopping-cart-table>tbody>tr")) {
+            return hint(
+                "#shopping-cart-table>tbody>tr",
+                "-F", "e=>cutils.yank(e.querySelector('small')?.textContent)"
+            );
+        } else if ($1("#universal-grid__table>tbody>tr")) {
+            return hint(
+                "#universal-grid__table>tbody>tr",
+                "-F", "e=>cutils.yank(e.querySelector('td.hidden-xs:nth-child(3)').textContent)"
+            );
+        } else if ($1("li.async--grid__element")) {
+            return hint(
+                "li.async--grid__element",
+                "-F", "e=>cutils.yank(e.getAttribute('data-skus'))"
+            );
+        } else if ($1("li.item")) {
+            return hint(
+                "li.item,.product-shop",
+                "-F",
+                "e=>cutils.yank((" +
+                    "    e.querySelector('p[itemprop=sku]') || " +
+                    "    e.querySelector('.product-description>p:first-child')" +
+                    ").textContent)"
+            );
+        } else return "";
+    },
+
     toggleOption(option) {
         return $$("a.media-flex.filter__option>span").find(e=>e.textContent.match(option)).parentElement.click();
     },
