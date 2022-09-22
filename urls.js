@@ -137,6 +137,15 @@ urls = {
     // ╭─────────╮
     // │ queries │
     // ╰─────────╯
+    delQuery: function(url, key) {
+        url ||=tri.contentLocation.href;
+        const u = new URL(url);
+        const queries = u.search.slice(1).split("&");
+        const queries_filtered = queries.filter(q => { const [k, v] = q.split("="); return (k!=key); });
+        u.search = "?" + queries_filtered.join("&");
+        return u.href;
+    },
+
     getQuery: function(url, qPattern) {
         url ||=tri.contentLocation.href;
         const u = new URL(url);
@@ -163,6 +172,19 @@ urls = {
             else u.search = `?${key}=${value}`;
         }
         return u.href;
+    },
+
+    toggleQuery: function(url, key, value1, value2="") {
+        url ||=tri.contentLocation.href;
+        const currentKey = urls.getQuery(url, key);
+        var newurl;
+        if (currentKey != value1)
+            newurl = urls.setQuery(url, key, value1);
+        else {
+            if (value2 == null) newurl = this.delQuery(url, key);
+            else newurl = this.setQuery(url, key, value2);
+        }
+        return newurl;
     },
 
 };
