@@ -75,6 +75,8 @@ art.ja = {
             if (count) tabopen(dest); else open(dest);
         } else if (url.includes("/checkout/cart/")) {
             cutils.click("button", "Proceed to Checkout");
+        } else {
+            hint("-J", "img.is--grid,#universal-grid__table>tbody>tr>td>a,li.item>.product-line");
         }
     },
 
