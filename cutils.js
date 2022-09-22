@@ -95,6 +95,12 @@ var cutils = {
         return elts?.length > 0 && elts;
     },
 
+    click1: function(selector, opts={}) {
+        const elt = this.get(selector, {...opts, firstMatch: true});
+        elt?.click();
+        return elt;
+    },
+
     clickall: (selector, opts={}) => cutils.click(selector, {...opts, all:true}),
 
     extractTblCols: function(table, columns, opts={}) {
@@ -489,6 +495,9 @@ var cutils = {
             `hint -c ${selectors} ${opts.switches} -F e=>cutils.yank(e.value.trim())`);
     },
 
+    yankjs: function(expr) { return this.yank(eval(expr)); },
+    yankjsWr: function(args) { return this.yankjs(cutils.tri.parseArgs(args, "string")); },
+
     yankspan: async function() {
         return this.yankhint(this.selectors.yankspan.join(","));
     },
@@ -715,7 +724,7 @@ window.R = R;
     "getText", "getText1",
     "getSelectionDOM", "getSelectionHtml",
     "isolate", "jumpToHeading", "keep", "rm", "rmall", "toggleprop", "togglepropWr",
-    "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankspan",
+    "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankjs", "yankjsWr", "yankspan",
     "hexToRGB", "datetime", "isInViewport", "isDisplayed",
 ].forEach(k => window[k]=cutils[k]);
 

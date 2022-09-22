@@ -638,6 +638,7 @@ command: yankfirst "Yank first element matching selector" cujs -d¦ yankby(JS_AR
 command: yanknth "Yank nth element matching selector" cujs -d¦ yanknthby(JS_ARGS[1], JS_ARGS[2])¦
 command: yankhint "Yank an element matching selector [HINT]" cujs -d¦ yankhint(JS_ARGS.slice(1).join(","))¦
 command: yankinput "Yank input field [HINT]" cujs -d¦ yankinput(JS_ARGS.slice(1).join(","))¦
+command: yankjs "Yank javascript result" cujs -d¦ cutils.yankjsWr(JS_ARGS)¦
 
 bind y<C-h> showkeys y
 bind: yf "Yank element text by CSS selector (first match)" fillcmdline yankfirst
@@ -1024,8 +1025,10 @@ bind: ,dx "Toggle X-Ray view" capps capps.toggleXray()
 " ╭───────────────────────╮
 " │ ,e -- javascript eval │
 " ╰───────────────────────╯
-commdoc jse "Eval expression to obtain object and display its properties in a message box"
-command jse composite js -r cutils.js ; js -d¦ cutils.message(eval(JS_ARGS.join(" ")))¦
+commdoc showjs "Show javascript expression result on commandline"
+command showjs cujs -d¦ cutils.message(eval(JS_ARGS.join(" ")), true)¦
+commdoc jse "Show javascript expression result in a message box"
+command jse cujs -d¦ cutils.message(eval(JS_ARGS.join(" ")))¦
 commdoc getproperties "Eval expression to obtain object and display its properties in a message box"
 command getproperties js -d¦ alert(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
 command jsb_getproperties jsb -d¦ utils.message(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
