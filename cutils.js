@@ -88,17 +88,23 @@ var cutils = {
      *  If unsuccessful, returns null.
      */
     click: function(selector, opts={}) {
-        opts.firstMatch = !opts.all;
-        delete opts.all;
-        const elts = cutils.get(selector, opts);
-        elts?.forEach(e=>e.click());
-        return elts?.length > 0 && elts;
+        if (selector instanceof Node) return selector.click();
+        else {
+            opts.firstMatch = !opts.all;
+            delete opts.all;
+            const elts = cutils.get(selector, opts);
+            elts?.forEach(e=>e.click());
+            return elts?.length > 0 && elts;
+        }
     },
 
     click1: function(selector, opts={}) {
-        const elt = this.get(selector, {...opts, firstMatch: true});
-        elt?.click();
-        return elt;
+        if (selector instanceof Node) return selector.click();
+        else {
+            const elt = cutils.get(selector, {...opts, firstMatch: true});
+            elt?.click();
+            return elt;
+        }
     },
 
     clickall: (selector, opts={}) => cutils.click(selector, {...opts, all:true}),
@@ -192,6 +198,10 @@ var cutils = {
         return opts.returnParent
             ? elts.map(e=>getParent(e, opts.returnParent))
             : elts;
+    },
+
+    get1: function(selector, opts={}) {
+        return cutils.get(selector, {firstMatch:true, ...opts})?.[0];
     },
 
     getSelectionDOM: function() {
@@ -720,8 +730,8 @@ window.R = R;
 
 [
     "$$", "$1", "$$cls", "$1cls", "$id", "$$tag", "$1tag", "$$t", "$1t",
-    "click", "clickall",
-    "getText", "getText1",
+    "click", "clickall", "click1",
+    "get1", "getText", "getText1",
     "getSelectionDOM", "getSelectionHtml",
     "isolate", "jumpToHeading", "keep", "rm", "rmall", "toggleprop", "togglepropWr",
     "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankjs", "yankjsWr", "yankspan",
