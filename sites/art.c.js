@@ -63,7 +63,7 @@ art.ja = {
         },
         yankNames: function(re=/./) {
             return cutils.yank(
-                this.filterItems(re).map(e=>$1(".product-name", e).textContent.replace(/\s+/g, " ")).join("\n")
+                this.filterItems(re).map(e=>$1(".product-name>a", e).textContent.replace(/\s+/g, " ")).join("\n")
             );
         },
     },
