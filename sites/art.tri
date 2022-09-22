@@ -36,6 +36,7 @@ jabind: cc "Go (cart: checkout; orders page: view most recent)" artjs art.ja.go(
 jabind: ch "Open handprint.com page in new (count=current) tab" call_handprint_cmd
 jabind: cn "Count items" artjs cutils.message(`Number of items: ${art.ja.cart.count()}`, true)
 jabind: cN "Count matching items in cart" fillcmdline jacart_count_matching
+jabind: c4 "Cart total" artjs ; showjs "Cart total: " + art.ja.cart.total()
 
 " | co -- ja/goto |
 jabind: co<C-h> "(show bindings: jacksonsart/goto)" jashowkeys co
@@ -135,6 +136,7 @@ jabind: cths "Toggle hairtype: Synthetic" artjs art.ja.toggleOption(/^Synthetic$
 jabind: cy<C-h> "(show bindings: ja/yank)" jashowkeys cy
 jabind: cys "Yank product code [HINT]" artjs art.ja.hint_yank_sku()
 
+jabind: cyc<C-h> "(show bindings: ja/yank/cart)" jashowkeys cy
 jabind: cycc "Copy cart items" artjs art.ja.cart.yankItems()
 jabind: cycn "Copy cart items names" artjs art.ja.cart.yankNames()
 jabind: cycu "Copy cart items URLs" artjs art.ja.cart.yankURLs()
