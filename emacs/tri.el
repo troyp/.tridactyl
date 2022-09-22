@@ -162,13 +162,17 @@ the first line after POS matching END-REGEX"
 (defun my/tri-bind:-to-bdoc ()
   "Convert a bind: command to a bind command with a bdoc command above"
   (interactive)
-  (my/evil-substitute-region "bind: +([^ ]+) +\"([^\"]+)\" +(.*)" "bdoc \\1 \"\\2\"\nbind \\1 \\3"))
+  (my/evil-substitute-region
+   "(.*)bind: +([^ ]+) +\"([^\"]+)\" +(.*)"
+   "\\1bdoc \\2 \"\\3\"\n\\1bind \\2 \\4"))
 
 (defun my/tri-bdoc-to-bind: ()
   "Convert a bind command with a bdoc command above to a bind: command"
   (interactive)
   (my/select-surrounding-lines "bdoc" "bind")
-  (my/evil-substitute-region "bdoc +([^ ]+) +\"(.*)\"\\nbind +([^ ]+) +(.*)" "bind: \\1 \"\\2\" \\4"))
+  (my/evil-substitute-region
+   "(.*)bdoc +([^ ]+) +\"(.*)\"\\n(.*)bind +([^ ]+) +(.*)"
+   "\\1bind: \\2 \"\\3\" \\6"))
 
 (defun my/tri-command:-to-commdoc ()
   "Convert a command: command to a command command with a commdoc command above"
