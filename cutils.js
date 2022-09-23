@@ -399,9 +399,36 @@ var cutils = {
         return $$(selector)[n-1].scrollIntoView();
     },
 
-    select: async function(input, opts={}) {
-        if (Array.isArray(input)) input = input.join("\n");
-        opts = cutils.tri.parseOpts(opts, {defaults:{prompt:"", format:"s"}});
+    /**  select(items, opts): choose item from array with rofi
+     *   Returns an array of strings or (for format "i" or "d") integers
+     *     items: a string or iterable specifying a list of items
+     *     opts.separator: if ITEMS is a string, specifies the string separating items
+     *     opts.infile: a file to be used as input. The items are the lines of the file
+     *     opts.multiSelect: boolean; if true, allows multiple items to be selected
+     *     opts.prompt: prompt shown to user
+     *     opts.format: output format
+     *       s  -  selected string
+     *       i  -  index, 0-based: 0...N-1
+     *       d  -  index, 1-based: 1...N
+     *       q  -  selected string, quoted
+     *       f  -  filter string (user input)
+     *       F  -  filter string (user input), quoted
+     */
+    select: async function(items, opts={}) {
+        opts = cutils.tri.parseOpts(
+            opts, {
+                defaults:{prompt:"", format:"s"},
+                castString: "format",
+            }
+        );
+        if (typeof items == "string") {
+            if (opts.separator && opts.separator != "\n") {
+                items = items.replaceAll("\n", "\t").replaceAll(opts.separator, "\n");
+            }
+        } else {
+            if (this.isIterable(items)) items = [...items];
+            items = items.join("\n");
+        }
         const rofithemestr = '#window {width: 80%;} #listview {lines: 25;}';
         const rofithemeopt = `-theme-str '${rofithemestr}'`;
         const dmenuOpts = opts.multiSelect ? "-multi-select -i" : "-i";
@@ -411,10 +438,14 @@ var cutils = {
         ].join(" ");
         const inputcmd = opts.infile
               ? `cat ${opts.infile} | `
-              : `dmenuin="$(cat <<'EOF'\n${input}\nEOF\n)"; echo "$dmenuin" | `;
-        const cmd = `${inputcmd} rofi -dmenu ${rofithemeopt} -format ${opts.format} -p "${prompt}" ${dmenuOpts}`;
+              : `dmenuin="$(cat <<'EOF'\n${items}\nEOF\n)"; echo "$dmenuin" | `;
+        const cmd = `${inputcmd} ${tri.config.get("rofi")} -dmenu ${rofithemeopt} ` +
+              `-format ${opts.format} -p "${prompt}" ${dmenuOpts}`;
         const res = await tri.native.run(cmd);
-        return res?.content.trim().split("\n");
+        if (opts.format=="i" || opts.format=="d")
+            return res?.content.trim().split("\n").map(d=>parseInt(d));
+        else
+            return res?.content.trim().split("\n");
     },
 
     /* use `await sleep(ms)` in async function to delay execution */
@@ -522,6 +553,12 @@ var cutils = {
     yankspan: async function() {
         return this.yankhint(this.selectors.yankspan.join(","));
     },
+
+    // ╭────────────────╮
+    // │ pure functions │
+    // ╰────────────────╯
+
+    isIterable: function(x) { return typeof x?.[Symbol.iterator] == "function"; },
 
     // ╭──────────────────────╮
     // │ conversion functions │
