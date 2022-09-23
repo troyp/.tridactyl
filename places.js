@@ -249,7 +249,8 @@ places.hist = {
         const dmenuOpts = opts.multi ? "-multi-select -i" : "-i";
         const rofithemestr='#window {width: 80%;} #listview {lines: 25;}';
         const cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | ` +
-            `rofi -dmenu -theme-str "${rofithemestr}" -format ${opts.format} -p "${opts.prompt}" ${dmenuOpts}`;
+              `${tri.config.get("rofi")} -dmenu -theme-str "${rofithemestr}" -format ${opts.format}` +
+              `                          -p "${opts.prompt}" ${dmenuOpts}`;
         return tri.native.run(cmd).then(
             res => res.content ? res.content.trim().split("\n").map(i=>items[Number(i)]) : null
         );

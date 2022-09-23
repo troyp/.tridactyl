@@ -2,6 +2,8 @@
 // │ utils -- utility functions for .tridactylrc │
 // ╰─────────────────────────────────────────────╯
 
+tri.config.set("rofi", "/opt/bin/rofi");
+
 var utils = {
 
     cbAppend: async function (s) {
@@ -126,7 +128,7 @@ var utils = {
         const inputcmd = opts.tempfile
               ? `cat ${opts.tempfile} | `
               : `dmenuin="$(cat <<'EOF'\n${input}\nEOF\n)"; echo "$dmenuin" | `;
-        const cmd = `${inputcmd} rofi -dmenu ${rofithemeopt} -format ${opts.format} -p "${prompt}" ${dmenuOpts}`;
+        const cmd = `${inputcmd} ${tri.config.get("rofi")} -dmenu ${rofithemeopt} -format ${opts.format} -p "${prompt}" ${dmenuOpts}`;
         const res = await tri.native.run(cmd);
         return res?.content.trim().split("\n");
     },
@@ -544,7 +546,8 @@ utils.tab = {
         const alltabsitems = alltabs.map(formatter);
         const dmenuInput = alltabsitems.join("\n");
         const cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | ` +
-              `rofi -dmenu -width 80 -format ${opts.format} -p "${opts.prompt}" -multi-select -i`;
+              `${tri.config.get("rofi")} -dmenu -width 80 -format ${opts.format}` +
+              ` -p "${opts.prompt}" -multi-select -i`;
         return tri.native.run(cmd).then(
             res => res.content.trim().split("\n").map(Number)
         );
@@ -557,7 +560,7 @@ utils.tab = {
         const alltabsitems = alltabs.map(formatter);
         const dmenuInput = alltabsitems.join("\n");
         const cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | ` +
-              `rofi -dmenu -width 80 -regex -format f -p "${opts.prompt}" -i`;
+              `${tri.config.get("rofi")} -dmenu -width 80 -regex -format f -p "${opts.prompt}" -i`;
         return tri.native.run(cmd).then(
             res => alltabs.filter(t=>t.url.match(res.content.trim()))
         );
