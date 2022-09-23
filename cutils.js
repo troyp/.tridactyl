@@ -383,6 +383,17 @@ var cutils = {
     /** Remove elements matching any of the SELECTORS. For more options, see rm() */
     rmall: (...selectors) => this.rm(selectors),
 
+    saveURL: function(url, name) {
+        url ||= document.location.href;
+        name ||= "download-"+cutils.datetime();
+        const link = document.createElement("a");
+        document.body.appendChild(link);
+        link.href = url; link.download = name;
+        link.click();
+        link.remove();
+        return name;
+    },
+
     scrollNthIntoView: function(selector, n=1) {
         n = parseInt(n);
         return $$(selector)[n-1].scrollIntoView();
