@@ -135,8 +135,9 @@ jabind: cths "Toggle hairtype: Synthetic" artjs art.ja.toggleOption(/^Synthetic$
 " | cy -- ja/yank |
 jabind: cy<C-h> "(show bindings: ja/yank)" jashowkeys cy
 jabind: cys "Yank product code [HINT]" artjs art.ja.hint_yank_sku()
+jabind: cyy "Yank name of item(s) or search term" artjs art.ja.yank()
 
 jabind: cyc<C-h> "(show bindings: ja/yank/cart)" jashowkeys cy
-jabind: cycc "Copy cart items" artjs art.ja.cart.yankItems()
-jabind: cycn "Copy cart items names" artjs art.ja.cart.yankNames()
-jabind: cycu "Copy cart items URLs" artjs art.ja.cart.yankURLs()
+jabind: cycc "Yank cart items" artjs art.ja.cart.yankItems()
+jabind: cycn "Yank cart items names" artjs art.ja.cart.yankNames()
+jabind: cycu "Yank cart items URLs" artjs art.ja.cart.yankURLs()

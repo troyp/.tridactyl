@@ -116,4 +116,10 @@ art.ja = {
         return this.toggleOption(option);
     },
 
+    yank: function() {
+        const url = tri.contentLocation.href;
+        if (url.match("checkout/cart")) return this.cart.yankNames();
+        else if (url.match("/search/?")) return cutils.yank((new URL(url)).searchParams.get("q"));
+        else return cutils.yank($1(".product-name>h1").textContent);
+    }
 };
