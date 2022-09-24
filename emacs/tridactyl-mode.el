@@ -204,6 +204,7 @@
         "bindurl:"
         "command:"
         "commdoc"
+        "definesearch"
         "docbindmode"
         "docdef"
         "set:"
