@@ -11,7 +11,6 @@ var sites = {
         } catch(e) {};
     },
 
-    /* TODO: remove actual subconfigs instead of just nulling bindings */
     removeSite: async function(url, mode="normal") {
         const modemaps = {
             "normal": "nmaps",
@@ -23,13 +22,10 @@ var sites = {
             "visual": "visualmaps",
             "browser": "browsermaps",
         };
-        const subconfig = tri.config.USERCONFIG.subconfigs[url][modemaps[mode]];
-        // utils.msg(subconfig);
-        const entries = Object.keys(subconfig);
-        const keys = [];
+        const subconfigs = tri.config.USERCONFIG.subconfigs;
+        const subconfig = subconfigs[url][modemaps[mode]];
         for (k in subconfig)
-            if (subconfig.hasOwnProperty(k))
-                tri.controller.acceptExCmd(`unbindurl ${url} --mode=${mode} ${k}`);
+            tri.controller.acceptExCmd(`reseturl ${url} --mode=${mode} ${k}`);
         return subconfig;
     },
 
