@@ -495,16 +495,21 @@ utils.tab = {
         return (parseInt(n)-1) % N;
     },
 
-    remove: async function(pred) {
-        const tabs = await browser.tabs.query({pinned: false, currentWindow: true});
+    remove: async function(pred, opts={}) {
+        const tabs = await browser.tabs.query({currentWindow: true});
         const atab = await activeTab();
-        const ids = tabs.filter(t=>{
+        const filtered = tabs.filter(t=>{
+            if (t.pinned && !opts.force) return false;
             t.titleurl = `${t.url}\n${t.title}`;
             const i = t.index + 1;
             const i0 = atab.index + 1;  /* index may change: keep inside loop */
             return pred(t, i, i0);
-        }).map(tab => tab.id);
-        return browser.tabs.remove(ids);
+        });
+        return browser.tabs.remove(filtered.map(tab => tab.id));
+    },
+
+    removeByExprAndMatch: async function(expr, s) {
+        return "TODO";
     },
 
     removeWr: async function(args) {
