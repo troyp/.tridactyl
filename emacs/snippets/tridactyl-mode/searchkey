@@ -2,4 +2,4 @@
 # name: sk
 # key: sk
 # --
-bind $1<C-h> showkeys $1
+bind: $1<C-h> "(show bindings: $2)" showkeys $1

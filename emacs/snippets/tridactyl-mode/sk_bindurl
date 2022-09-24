@@ -3,4 +3,4 @@
 # key: sku
 # expand-env: ((yas-triggers-in-field nil))
 # --
-bindurl $1 $2<C-h> showkeysurl $1 $2
+bindurl: $1 $2<C-h> "(show bindings: $3)" showkeysurl $1 $2
