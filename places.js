@@ -75,13 +75,16 @@ places.bm = {
 places.kw = {
     open: async function(args, opts={where: "related"}) {
         const [kw, ...rest] = utils.tri.parseArgs(args);
-        return tri.native.run(`${tri.config.get("kwsearch")} -K '${kw}' -- '${shell.singQEscape(rest.join(" "))}'`).then(
-            res => res.content && utils.tab.open(res.content, opts));
+        return tri.native.run(
+            `${tri.config.get("kwsearch")} -K '${kw}' -- '${shell.singQEscape(rest.join(" "))}'`
+        ).then(res => res.content && utils.tab.open(res.content, opts));
     },
 
     get: async function(args) {
         const [kw, ...rest] = utils.tri.parseArgs(args);
-        const res = await tri.native.run(`${tri.config.get("kwsearch")} -K '${kw}' -- '${shell.singQEscape(rest.join(" "))}'`);
+        const res = await tri.native.run(
+            `${tri.config.get("kwsearch")} -K '${kw}' -- '${shell.singQEscape(rest.join(" "))}'`
+        );
         return res.content.trim();
     },
 
@@ -89,9 +92,7 @@ places.kw = {
         const switches = opts?.switches || "-u -k -s";
         const where = opts.where || "last";
         const cmd = `${tri.config.get("kwsearch")} ${switches} -- '${shell.singQEscape(args.join?.(" ")?.trim())}'`;
-        return tri.native.run(cmd).then(
-            res => res.content && utils.tab.open(res.content, opts)
-        );
+        return tri.native.run(cmd).then(res => res.content && utils.tab.open(res.content, opts));
     },
 
     multiengine: async function(rawargs, opts={}) {
@@ -112,6 +113,9 @@ places.kw = {
         }
     },
 
+    /*    multi(rawargs): open searches with multiple engines and/or queries
+     *  standard argument syntax:    "SE1 SE2 ..." Q1 Q2 ...
+     *  opts.singleQuery syntax:     "SE1 SE2 ..." Q ...
      */
     multi: async function(rawargs, opts={}) {
         /*  TODO: should I enforce the order of tabs? Or at least statistically */
