@@ -99,11 +99,6 @@ autocmd TabEnter .* unfocus
 
 jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{urls:["<all_urls>"],types:["main_frame"]},["blocking","responseHeaders"])
 
-" ───────────────────────────────────────────────────────────────────────────────
-" ╭────────────╮
-" │ searchurls │
-" ╰────────────╯
-
 " ─────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────────╮
 " │ Browser-mode keybindings │
@@ -502,9 +497,19 @@ bind: wtt "toggle bookmarks toolbar" xdokey accel+B
 bind: wtm "toggle menu bar" xdokeyseq 0.2 menuacc+v → ↵
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────╮
+" │ searchurls │
+" ╰────────────╯
+" FIXME: redefined :tabopen doesn't work with multifield searchurls
+" workaround: to open multifield searchurls in newtab
+command tabopen_searchurl bmarks -t
+
+set searchurls.trxx https://translate.google.com/?sl=%s1&tl=%s2&text=%s3&op=translate
+
 " ╭─────────────╮
 " │ s -- search │
 " ╰─────────────╯
+
 unbind s
 unbind --mode=visual s
 unbind /
@@ -546,6 +551,7 @@ bind sl nativelinksearch
 bind: so "Open keyword search in current tab" ! kwsearch -sw|sed -r 's/.*/open \0/'
 bind: sa "Open keyword search in new tab" ! kwsearch -sw|sed -r 's/.*/tabopen_adj \0/'
 bind: st "Open keyword search in new tab" ! kwsearch -sw|sed -r 's/.*/tabopen_last \0/'
+bind: su "Open searchurl/bmark/URL in new tab" fillcmdline tabopen_searchurl
 bind s/ fillcmdline find
 bind s;; bind s;; composite getclip | fillcmdline searchwithengine
 jsb tri.excmds.bind("s'", "nativelinksearch")
