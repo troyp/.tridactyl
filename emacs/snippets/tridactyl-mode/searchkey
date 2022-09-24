@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: sk
+# key: sk
+# --
+bind $1<C-h> showkeys $1

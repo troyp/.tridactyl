@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: prefix_bindurl
+# key: prefu
+# expand-env: ((yas-triggers-in-field nil))
+# --
+" | $2 -- $0 |
+bindurl $1 $2<C-h> showkeysurl $1 $2

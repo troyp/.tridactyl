@@ -1,0 +1,7 @@
+# -*- m# -*- mode: snippet -*-
+# name: bind-command
+# key: bc
+# --
+command $1 $0
+
+bind $2 fillcmdline $1

@@ -1,0 +1,5 @@
+# -*- m# -*- mode: snippet -*-
+# name: bind-input
+# key: bp
+# --
+bind --mode=input $0

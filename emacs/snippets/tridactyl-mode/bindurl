@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bindurl
+# key: bu
+# --
+bindurl $0

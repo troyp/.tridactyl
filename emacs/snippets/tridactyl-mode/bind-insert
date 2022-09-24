@@ -1,0 +1,5 @@
+# -*- m# -*- mode: snippet -*-
+# name: bind-insert
+# key: bi
+# --
+bind --mode=insert $0

@@ -1,0 +1,5 @@
+# -*- m# -*- mode: snippet -*-
+# name: bind-normal
+# key: bn
+# --
+bind --mode=normal $0

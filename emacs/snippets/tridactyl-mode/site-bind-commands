@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: site-bind-commands
+# key: sitebind
+# --
+command: $1bind "Bind key for $2" bindurl $2
+command: $1bind: "Bind key with description for $2" bindurl: $2
+command: $1bdoc "Provide a description on a separate line" js ;
+command: $1showkeys "(show bindings: $1)" showkeysurl $2
+$0

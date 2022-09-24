@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: prefix
+# key: pref
+# --
+" | $1 -- $0 |
+bind $1<C-h> showkeys $1

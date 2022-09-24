@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: command ... jsb -d¦ ...¦
+# key: jsbd
+# --
+command $1 jsb -d¦ $0¦
