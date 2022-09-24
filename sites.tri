@@ -7,10 +7,15 @@ command definesearch jsb -d¦ utils.tri.defineSearch(...JS_ARGS.slice(1))¦
 " ╭────────────╮
 " │ Amazon.com │
 " ╰────────────╯
-command amazbind bindurl amazon.com
-command amazbind: bindurl: amazon.com
+command: amazbind "Bind key for amazon.com" bindurl amazon.com
+command: amazbind: "Bind key with description for amazon.com" bindurl: amazon.com
+command: amazbdoc "Provide a description on a separate line" js ;
+command: amazshowkeys "(show bindings: amaz)" showkeysurl amazon.com
 
-amazbind c<C-h> showkeysurl amazon.com c
+definesearch amazsearch https://www.amazon.com.au/s?k=%s +
+
+" | co -- amazon/goto |
+amazbind: co<C-h> "(show bindings: amaz/goto)" amazshowkeys co
 amazbind: coc "Goto cart" urlmodorsummon_g /gp/cart/view.html/ref=nav_cart
 amazbind: coh "Goto history" urlmodorsummon_g /gp/history
 amazbind: coi "Scroll to Product Information" cujs $1("#prodDetails").scrollIntoView();
@@ -21,6 +26,10 @@ amazbind: cor "Goto reviews" cujs $1("#customerReviews").scrollIntoView()
 amazbind: coR "Goto all reviews" cujs click("a[data-hook=see-all-reviews-link-foot]")
 amazbind: cow "Goto wish list" urlmodorsummon_g /hz/wishlist/ls/
 amazbind: co! "Goto contact form" urlmodorsummon_g /gp/help/customer/contact-us/ref=cu_surl
+
+" | cs -- amazon/search |
+amazbind: cs<C-h> "(show bindings: amaz/search)" amazshowkeys cs
+amazbind: css "Amazon AU Search" fillcmdline amazsearch
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
