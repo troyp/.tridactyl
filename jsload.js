@@ -4,6 +4,20 @@
 // │             │
 // ╰─────────────╯
 
+/**
+ * jsload("shortopts,longopt1,longopt2,...")
+ * Load js files into content script. Takes a single string consisting of
+ * zero or more single letter short-options, optionally followed by long
+ * options separated by commas
+ *   Short opts:
+ *     a  -  capps
+ *     l  -  links
+ *     p  -  js/sprintf
+ *     s  -  sites
+ *     S  -  S
+ *     u  -  cutils
+ *     U  -  urls
+ */
 const jsload = async function (opts="") {
     [single_letter_optstr, ...long_opts] = opts.split(",");
     single_letter_optstr.split("").forEach(async c => {
