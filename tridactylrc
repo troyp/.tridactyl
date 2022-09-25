@@ -465,6 +465,10 @@ bind: was "Search suggestions in omnibar" omni "? "
 bind: wat "Search page title suggestions in omnibar" omni "# "
 bind: wau "Search URL suggestions in omnibar" omni "$ "
 
+" | wd -- browser/dl |
+bind: wd<C-h> "(show bindings: browser/dl)" showkeys wd
+bind: wdd "Select links to download" withlinks links.dlChooseLinks(document.links)
+
 " | wk -- browser/bookmarks |
 bind wk<C-h> showkeys wk
 bind: wkb "Open bookmark in background adjacent tab [Rofi]" bmrofi related t

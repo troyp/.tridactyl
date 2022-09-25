@@ -56,6 +56,31 @@ links = {
         );
     },
 
+    dlChooseLinks: async function(links, opts={}) {
+        opts = cutils.tri.parseOpts(
+            opts, {
+                defaults: { dir: "~/Downloads", max: 160, },
+                nullishDefaults: { title: "ff_downloads", }
+            }
+        );
+        const newdir = `${opts.dir}/${opts.title}`;
+        await tri.native.run(`mkdir -p "${newdir}"`);
+        const rofiRes = await cutils.select(
+            links, {
+                multiSelect: true,
+                format: "i",
+                prompt: "Links to download",
+            }
+        );
+        const chosen = rofiRes.map(i=>links[Number(i)]);
+        const urls = chosen.map(l => l?.href || "").filter(e=>e);
+        urls.forEach(async u => {
+            await tri.controller.acceptExCmd(`js -r shell.js`);
+            const uq = shell.singQEscape(u);
+            tri.native.run(`wget -pP ${newdir} -e robots=off '${(uq)}'`);
+        });
+    },
+
     mkAppendHtml(title, htmlstr) {
         return `
           <br style=clear:both;>
