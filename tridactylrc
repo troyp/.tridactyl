@@ -470,7 +470,7 @@ bind wk<C-h> showkeys wk
 bind: wkb "Open bookmark in background adjacent tab [Rofi]" bmrofi related t
 bind: wkk "Open bookmark in adjacent tab [Rofi]" bmrofi related
 bind: wkh "Open bookmark in current tab [Rofi]" bmrofi here
-bind: wkl "Open bookmark in last tab [Rofi]" bmrofi
+bind: wkl "Open bookmark in last tab [Rofi]" bmrofi last
 bind: wko "Open bookmark in current tab" fillcmdline bmarks
 bind: wkt "Open bookmark in new tab" fillcmdline bmarks -t
 bind: wkv "View bookmarks JSON file in browser" winopen file:///home/troy/bookmarks/bookmarks.json
@@ -516,47 +516,47 @@ unbind s
 unbind --mode=visual s
 unbind /
 
-commdoc kwsearch "Keyword bookmark search: last tab"
-command kwsearch jsb -d¦ places.kw.open(JS_ARGS)¦
+commdoc kwsearch_last "Keyword bookmark search: last tab"
+command kwsearch_last jsb -d¦ places.kw.open(JS_ARGS)¦
 commdoc kwsearch_adj "Keyword bookmark search: adjacent tab"
 command kwsearch_adj jsb -d¦ places.kw.open(JS_ARGS, {where:"related"})¦
 commdoc kwsearch_bg "Keyword bookmark search: background adjacent tab"
 command kwsearch_bg jsb -d¦ places.kw.open(JS_ARGS, {where:"related", background:true})¦
 commdoc kwsearch_here "Keyword bookmark search: current tab"
 command kwsearch_here jsb -d¦ places.kw.open(JS_ARGS, {where:"here"})¦
-commdoc kwrofi "Keyword bookmark search: current tab [Rofi]"
-command kwrofi jsb -d¦ places.kw.rofi(JS_ARGS)¦
-commdoc multisearch "Search multiple queries"
-command multisearch jsb -d¦ places.kw.multi(JS_ARGS)¦
-commdoc multienginesearch "Search multiple engines with same query [...Es Q]"
-command multienginesearch jsb -d¦ places.kw.multiengine(JS_ARGS)¦
-commdoc multienginesearch! "Search multiple engines (in quotes) with same (multiword) query ['...Es' ...Q]"
-command multienginesearch! jsb -d¦ places.kw.multi(JS_ARGS, {singleQuery:true})¦
+commdoc multienginesearch_last "Search multiple engines with same query [...Es Q]"
+command multienginesearch_last jsb -d¦ places.kw.multiengine(JS_ARGS)¦
+commdoc multienginesearch_last! "Search multiple engines (in quotes) with same (multiword) query ['...Es' ...Q]"
+command multienginesearch_last! jsb -d¦ places.kw.multi(JS_ARGS, {singleQuery:true})¦
+commdoc multienginesearch_adj "Search multiple engines with same query: adjacent tab [...Es Q]"
+command multienginesearch_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {where:"related"})¦
+commdoc multienginesearch_adj! "Search multiple engines (in quotes) with same (multiword) query ['...Es' ...Q]"
+command multienginesearch_adj! jsb -d¦ places.kw.multi(JS_ARGS, {singleQuery:true, where:"related"})¦
+commdoc multisearch_last "Search multiple queries"
+command multisearch_last jsb -d¦ places.kw.multi(JS_ARGS)¦
 commdoc multisearch_adj "Search multiple queries: adjacent tabs"
 command multisearch_adj jsb -d¦ places.kw.multi(JS_ARGS, {where: "related"})¦
-commdoc searchwithengine "Search for a (multiword) query with engine [Q... E]"
-command searchwithengine jsb -d¦ places.kw.multi([JS_ARGS.pop(), ...JS_ARGS],{singleQuery:true})¦
+commdoc searchwithengine_adj "Search for a (multiword) query with engine [Q... E]"
+command searchwithengine_adj jsb -d¦ places.kw.multi([JS_ARGS.pop(), ...JS_ARGS],{singleQuery:true, where:"related"})¦
+commdoc searchwithengine_last "Search for a (multiword) query with engine [Q... E]"
+command searchwithengine_last jsb -d¦ places.kw.multi([JS_ARGS.pop(), ...JS_ARGS],{singleQuery:true, where:"last"})¦
 commdoc multienginesearch_adj "Search multiple engines with same query: adjacent tabs [...Es Q]"
 command multienginesearch_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {where:"related"})¦
-commdoc searchwithengines "Search for query with engines [Q ...Es]"
-command searchwithengines jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst:true})¦
+commdoc searchwithengines_last "Search for query with engines [Q ...Es]"
+command searchwithengines_last jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst:true, where:"related"})¦
 commdoc searchwithengines_adj "Search for query with engines: adjacent tabs [Q ...Es]"
 command searchwithengines_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst:true, where:"related"})¦
+
+command kwsearch kwsearch_adj
+command multienginesearch multienginesearch_adj
+command multienginesearch! multienginesearch_adj!
+command multisearch multisearch_adj
+command searchwithengine searchwithengine_adj
+command searchwithengines searchwithengines_adj
+
 command: nativelinksearch "Search for links (FF builtin)" xdokeyseq 0.2 ctrl+v apostrophe
 command: hl "Highlight text" cujs -d¦ cutils.css.highlightString(JS_ARGS.join(" ").trim())¦
 command: hloff "Highlight text off" cujs -d¦ cutils.css.highlightStringOff()¦
-
-unbind s
-
-bind s<C-h> showkeys s
-bind sl nativelinksearch
-bind: so "Open keyword search in current tab" ! kwsearch -sw|sed -r 's/.*/open \0/'
-bind: sa "Open keyword search in new tab" ! kwsearch -sw|sed -r 's/.*/tabopen_adj \0/'
-bind: st "Open keyword search in new tab" ! kwsearch -sw|sed -r 's/.*/tabopen_last \0/'
-bind: su "Open searchurl/bmark/URL in new tab" fillcmdline tabopen_searchurl
-bind s/ fillcmdline find
-bind s;; bind s;; composite getclip | fillcmdline searchwithengine
-jsb tri.excmds.bind("s'", "nativelinksearch")
 
 bind n findnext
 bind N findnext
@@ -571,6 +571,19 @@ bind: ,<C-/> "Remove browser.find search highlighting" jsb browser.find.removeHi
 bind * js tri.controller.acceptExCmd(`find ${window.getSelection()+""}`);
 bind # js tri.controller.acceptExCmd(`find -? ${window.getSelection()+""}`);
 
+unbind s
+
+bind: s<C-h> "(show bindings: search)" showkeys s
+bind: s;<C-h> "(show bindings: search)" showkeys s;
+bind: sl "Search with firefox link search" nativelinksearch
+bind: sa "Open keyword search in adjacent tab [Rofi]" !  echo -n "tabopen_adj "; kwsearch -Sw1
+bind: sb "Open keyword search in adjacent background tab [Rofi]" !  echo -n "tabopen_bg "; kwsearch -Sw1
+bind: so "Open keyword search in current tab [Rofi]" ! echo -n "open "; kwsearch -Sw1
+bind: st "Open keyword search in last tab [Rofi]" !  echo -n "tabopen_last "; kwsearch -Sw1
+bind: su "Open searchurl/bmark/URL in new tab" fillcmdline tabopen_searchurl
+bind: s/ "Search with :find command" fillcmdline find
+bind: s;; "Search clipboard contents with engine" composite getclip | fillcmdline searchwithengine
+
 " | sh -- search history |
 bind sh<C-h> showkeys sh
 bind: shh "Search history, open item(s) in last tab [rofi]" historysearch last false
@@ -578,34 +591,28 @@ bind: sha "Search history, open item(s) in adjacent tab [rofi]" historysearch re
 bind: shb "Search history, open item(s) in adjacent background tab [rofi]" historysearch related true
 bind: sho "Search history, open item in current tab [rofi]" historysearch here false
 
-" | sk -- search by bookmark keyword  |
+" | sk -- search by bookmark keyword |
 bind sk<C-h> showkeys sk
 bind: skb "Bmark keyword search: background adjacent tab" fillcmdline kwsearch_bg
 bind: skk "Bmark keyword search: adjacent tab" fillcmdline kwsearch_adj
-bind: skl "Bmark keyword search: last tab" fillcmdline kwsearch
+bind: skl "Bmark keyword search: last tab" fillcmdline kwsearch_last
 bind: sko "Bmark keyword search: current tab" fillcmdline kwsearch_here
-
-" | s;k -- search by bookmark keyword  |
-bind: sks "Bmark keyword search: adjacent tab [Rofi, choose engine last]" fillcmdline kwrofi
-bind: s;kb "Bmark keyword search: background adjacent tab [Rofi]" ! kwsearch -Sw|sed -r 's/.*/kwsearch_bg \0/'
-bind: s;kk "Bmark keyword search: adjacent tab [Rofi]" ! kwsearch -Sw|sed -r 's/.*/kwsearch_adj \0/'
-bind: s;kl "Bmark keyword search: last tab [Rofi]" ! kwsearch -Sw|sed -r 's/.*/kwsearch \0/'
 
 " | sm -- search multiple |
 bind sm<C-h> showkeys sm
 bind: smm "Search multiple queries: adjacent tab" fillcmdline multisearch_adj
-bind: smM "Search multiple queries" fillcmdline multisearch
+bind: smM "Search multiple queries: last tab" fillcmdline multisearch_last
 bind: sme "Search multiple engines: adjacent tab" fillcmdline multienginesearch_adj
-bind: smE "Search multiple engines" fillcmdline multienginesearch
+bind: smE "Search multiple engines: last tab" fillcmdline multienginesearch_last
 
 " | s;m -- search multiple (rofi) |
 bind: s;mm "Search multiple queries: adjacent tab [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch_adj "\0"/'
-bind: s;mM "Search multiple queries [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch "\0"/'
+bind: s;mM "Search multiple queries: last tab [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch "\0"/'
 bind: s;me "Search multiple engines: adjacent tab [Rofi]" ! echo -n "multienginesearch_adj "; kwsearch -w -S -m -1
-bind: s;mE "Search multiple engines [Rofi]" ! echo -n "multienginesearch "; kwsearch -w -S -m -1
+bind: s;mE "Search multiple engines: last tab [Rofi]" ! echo -n "multienginesearch_last "; kwsearch -w -S -m -1
 
 " | ss -- shopping search |
-bind: ssz "Search amazon and ebay" fillcmdline multienginesearch! "e amazau"
+bind: ssz "Search amazon and ebay" fillcmdline multienginesearch_last! "e amazau"
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────╮
