@@ -427,7 +427,7 @@ var cutils = {
             }
         } else {
             if (this.isIterable(items)) items = [...items];
-            items = items.join("\n");
+            items = items?.join("\n");
         }
         const rofithemestr = '#window {width: 80%;} #listview {lines: 25;}';
         const rofithemeopt = `-theme-str '${rofithemestr}'`;
