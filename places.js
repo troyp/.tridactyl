@@ -95,6 +95,13 @@ places.kw = {
         return tri.native.run(cmd).then(res => res.content && utils.tab.open(res.content, opts));
     },
 
+    rofiGetKW: async function(opts={where: "related"}) {
+        const switches = opts?.switches || "-Swa";
+        const cmd = `${tri.config.get("kwsearch")} ${switches}`;
+        const res = await tri.native.run(cmd);
+        return res.content;
+    },
+
     multiengine: async function(rawargs, opts={}) {
         opts.where ||= "last";
         opts.background ??= true;
