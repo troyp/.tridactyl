@@ -3,6 +3,7 @@ working.*
 TAGS
 /personal/
 /build/
+/cookies/
 /misc_ignore/
 !.gitignore
 !.ugrep
