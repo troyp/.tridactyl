@@ -34,9 +34,9 @@ tempd=`mktemp -d`;
 # ╭─────────╮
 # │ options │
 # ╰─────────╯
-SHORT="f:,h,I,J,k,K:,m,o:,p:,r:,R:,s,S,u,w,y,Y,1"
-LONG="folder:,help,case-sensitive,js-only,keyword-only,find-keyword:,multi-select,output-format:,protocol:,
-  regex:,rofi-filter:,select,select-keyword,url,kw,yank,yank-only,one-line"
+SHORT="a,f:,h,I,J,k,K:,m,o:,p:,r:,R:,s,S,u,w,y,Y,1"
+LONG="append-space,folder:,help,case-sensitive,js-only,keyword-only,find-keyword:,multi-select,output-format:,
+  protocol:,regex:,rofi-filter:,select,select-keyword,url,kw,yank,yank-only,one-line"
 PARSED=$(getopt -a -n kwsearch --options "$SHORT" --longoptions "$LONG" -- "$@")
 
 eval set -- "$PARSED"
@@ -55,6 +55,7 @@ USAGE: kwsearch [OPTION...]
     the SEARCHTERMs (escaping not yet supported).
 
 Options:
+  -a     --append-space       appends a space to output
   -f RE  --folder RE          restrict results to folders matching regex RE (jq regex)
   -h     --help               show help
   -I     --case-sensitive     make Rofi case-sensitive
@@ -80,6 +81,7 @@ Options:
 EOF
             exit 0
             ;;
+        (-a | --append-space) appendspace=t; shift; ;;
         (-f | --folder) folder="$2"; shift 2; ;;
         (-I | --case-sensitive) case=""; shift; ;;
         (-J | --js-only) protocol="javascript"; shift; ;;
@@ -210,6 +212,13 @@ fi |
     # single-line?
     if [ -n "$oneline" ]; then
         tr "\n" " " | sed -r 's/ +$//';
+    else
+        cat;
+    fi |
+
+    # append-space?
+    if [ -n "$appendspace" ]; then
+        sed -r 's/ *$/ /';
     else
         cat;
     fi |
