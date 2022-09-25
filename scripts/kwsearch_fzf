@@ -1,0 +1,11 @@
+#! /bin/sh
+
+# Currently just selects a bookmark keyword.
+# TODO: import kwsearch functionality.
+
+jq 'recurse(.children[]?)' ~/bookmarks/bookmarks.json |
+    jq -rc 'select(.uri) | {keyword, title, uri}' |
+    jq -c 'select(.keyword)' |
+    perl -pe 's/{"keyword":(null|"(.*)"),"title":"(.*)","uri":"(.*)"}/ sprintf("%-18s \t%s  (<%s>)","$2:",$3,$4)/e' |
+    fzf |
+    sed 's/: .*//';
