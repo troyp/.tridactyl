@@ -1,0 +1,13 @@
+#!/bin/bash
+
+url="$1"
+
+filename="${url#}"
+
+cat <<EOF
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0; url=$filename"/>
+  </head>
+</html>
+EOF

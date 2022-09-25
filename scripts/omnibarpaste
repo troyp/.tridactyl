@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+noreturn=
+
+# ----- options -----
+while [[ $# -gt 1 ]]; do
+    case "$1" in
+        (-n | --no-return)
+            noreturn=t;
+            shift 1 ;;
+        (*) echo "unrecognized option: $1"
+            return 1 ;;
+    esac
+done
+# --- end options ---
+
+xdotool key alt+d key ctrl+u;
+xdotool type "$*";
+xdotool key Return;
