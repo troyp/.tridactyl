@@ -735,6 +735,14 @@ utils.tri = {
         }
     },
 
+    cmdHistory: function(n=1) {
+        n = Number(n);
+        if (["number","string"].includes(typeof args)) args = [args];
+        const hist = tri.state.cmdHistory;
+        const N = hist.length;
+        return hist[N-n];
+    },
+
     /* cmdYankHistory :: number|string|array -> IO string
      */
     cmdYankHistory: function(args) {
