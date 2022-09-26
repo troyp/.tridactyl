@@ -64,10 +64,10 @@ ebaybind: co/ "Goto My saved searches" openorsummon https://www.ebay.com.au/myb/
 " ╭─────────╮
 " │ file:// │
 " ╰─────────╯
-command fbind bindurl file://
 command fbind: bindurl: file://
+command fbind bindurl file://
 
-fbind: c<C-h> showkeysurl file:// c
+fbind: c<C-h> "(show bindings: file:)" showkeysurl file:// c
 fbind: cc "Copy filename" hint -p -c a.file,a.dir
 fbind: ch "Toggle hidden files" cujs $1("#UI_showHidden>label>input").click()
 fbind: cw "Toggle body width" js document.body.style.maxWidth = document.body.style.maxWidth ? "" : "130em"
