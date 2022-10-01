@@ -1,0 +1,50 @@
+" ╭───────────────╮
+" │ Module: Video │
+" ╰───────────────╯
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────────╮
+" │ PrimeVideo.com │
+" ╰────────────────╯
+seturl primevideo.com modeindicator false
+
+command: primevbind "Bind key for www.primevideo.com" bindurl primevideo.com
+command: primevbind: "Bind key with description for www.primevideo.com" bindurl: primevideo.com
+
+primevbind c<C-h> showkeysurl primevideo.com c
+primevbind: cc "Show episode" cujs cutils.getText1("div.contentTitlePanel>div.subtitle") | show
+primevbind: ct "Show series" cujs cutils.getText1("div.contentTitlePanel>div.title") | show
+primevbind: cyy "Yank episode" cujs cutils.yankby1("div.contentTitlePanel>div.subtitle")
+primevbind: cyt "Yank series" cujs cutils.yankby1("div.contentTitlePanel>div.title")
+
+primevbind: <enter> "Play/Pause" xdoclick 943 624
+primevbind: <space> "Play/Pause" xdoclick 943 624
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────────╮
+" │ DisneyPlus.com │
+" ╰────────────────╯
+
+command: disneypbind: "Bind key with description for disneyplus.com" bindurl: disneyplus.com
+command: disneypbind "Bind key for disneyplus.com" bindurl disneyplus.com
+command: disneypbdoc "Provide a description on a separate line" js ;
+command: disneypshowkeys "(show bindings: disneyp)" showkeysurl disneyplus.com
+command: disneypsearch "Search disneyplus.com"
+
+disneypbind: c<C-h> "(show bindings: disneyp/)" disneypshowkeys c
+disneypbind: <space> "Play/Pause" cujs click("button.play-pause-icon")
+disneypbind: cm "Mute" cujs click("button.mute-btn")
+
+" | co -- disneyp/goto |
+disneypbind: co<C-h> "(show bindings: disneyp/goto)" disneypshowkeys co
+disneypbind: cod "Goto Disney" openorswitchc https://www.disneyplus.com/en-gb/brand/disney
+disneypbind: coh "Goto Home" openorswitchc https://www.disneyplus.com/en-gb/home
+disneypbind: com "Goto Marvel" openorswitchc https://www.disneyplus.com/en-gb/brand/marvel
+disneypbind: con "Goto National Geographic" openorswitchc https://www.disneyplus.com/en-gb/brand/national-geographic
+disneypbind: cop "Goto Pixar" openorswitchc https://www.disneyplus.com/en-gb/brand/pixar
+disneypbind: cos "Goto Star" openorswitchc https://www.disneyplus.com/en-gb/brand/star
+disneypbind: cow "Goto Star Wars" openorswitchc https://www.disneyplus.com/en-gb/brand/star-wars
+
+" | cs -- disneyp/search |
+disneypbind: cs<C-h> "(show bindings: disneyp/search)" disneypshowkeys cs
+disneypbind: css "Search disneyplus.com" fillcmdline disneypsearch
