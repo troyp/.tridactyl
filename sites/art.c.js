@@ -68,6 +68,17 @@ art.ja = {
         },
     },
 
+    count: function() {
+        const url = tri.contentLocation.href;
+         if (url.includes("/checkout/cart/")) {
+             return this.cart.count();
+        } else {
+            return $$("img.is--grid")?.length ??
+                $$("#universal-grid__table>tbody>tr>td>a")?.length ??
+                $$("li.item>.product-line")?.length;
+        }
+    },
+
     go: async function(count=null) {
         const url = tri.contentLocation.href;
         if (url.includes("/sales/order/history/")) {

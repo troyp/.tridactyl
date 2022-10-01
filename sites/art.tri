@@ -34,7 +34,7 @@ jabind: c<C-h> "(show bindings: jacksonsart)" jashowkeys c
 
 jabind: cc "Go (cart: checkout; orders page: view most recent)" artjs art.ja.go()
 jabind: ch "Open handprint.com page in new (count=current) tab" call_handprint_cmd
-jabind: cn "Count items" artjs cutils.message(`Number of items: ${art.ja.cart.count()}`, true)
+jabind: cn "Count items" artjs cutils.message(`Number of items: ${art.ja.count()}`, true)
 jabind: cN "Count matching items in cart" fillcmdline jacart_count_matching
 jabind: c4 "Cart total" artjs ; showjs "Cart total: " + art.ja.cart.total()
 
