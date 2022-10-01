@@ -608,11 +608,16 @@ bind: smM "Search multiple queries: last tab" fillcmdline multisearch_last
 bind: sme "Search multiple engines: adjacent tab" fillcmdline multienginesearch_adj
 bind: smE "Search multiple engines: last tab" fillcmdline multienginesearch_last
 
-" | s;m -- search multiple (rofi) |
-bind: s;mm "Search multiple queries: adjacent tab [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch_adj "\0"/'
-bind: s;mM "Search multiple queries: last tab [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch "\0"/'
-bind: s;me "Search multiple engines: adjacent tab [Rofi]" ! echo -n "multienginesearch_adj "; kwsearch -w -S -m -1
-bind: s;mE "Search multiple engines: last tab [Rofi]" ! echo -n "multienginesearch_last "; kwsearch -w -S -m -1
+" | sm; -- search multiple (rofi) |
+bind: sm;<C-h> "(show bindings: search/multi/rofi)" showkeys sm;
+bind: sm;m "Search multiple queries: adjacent tab [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch_adj "\0"/'
+bind: sm;M "Search multiple queries: last tab [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch "\0"/'
+bind: sm;e "Search multiple engines: adjacent tab [Rofi]" ! echo -n "multienginesearch_adj "; kwsearch -w -S -m -1
+bind: sm;E "Search multiple engines: last tab [Rofi]" ! echo -n "multienginesearch_last "; kwsearch -w -S -m -1
+bdoc sm;q "Search multiple engines (quoted): adjacent tab [Rofi]"
+bind sm;q ! kwsearch -w -S -m -1|sed -r 's/.*/multienginesearch_adj! "\0"/'
+bdoc sm;Q "Search multiple engines (quoted): last tab [Rofi]"
+bind sm;Q ! kwsearch -w -S -m -1|sed -r 's/.*/multienginesearch_last! "\0"/'
 
 " | ss -- shopping search |
 bind: ss<C-h> "(show bindings: search/shop)" showkeys ss
