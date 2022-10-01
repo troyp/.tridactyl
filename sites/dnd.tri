@@ -9,7 +9,7 @@ command: dndjs "Load dnd.c.js and execute javascript" cujs -r sites/dnd.c.js ; j
 " │ D&D Beyond │
 " ╰────────────╯
 autocmd DocLoad  https://www\.dndbeyond\.com/ cujs -r sites/dndb.auto.js
-autocmd TabEnters://www\.dndbeyond\.com/ cujs -r sites/dndb.auto.js
+autocmd TabEnter https://www\.dndbeyond\.com/ cujs -r sites/dndb.auto.js
 
 command dndbbind bindurl dndbeyond.com
 command dndbbind: bindurl: dndbeyond.com
