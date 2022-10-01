@@ -1165,7 +1165,7 @@ bind ,r<C-h> showkeys ,r
 commdoc unicodehexcodes "Unicode hex code of characters"
 command unicodehexcodes jsb -d¦ apps.unicodeHexcodes(JS_ARGS.join(""))¦
 commdoc unicode "Describe unicode characters"
-command unicode jsb -d¦ apps.unicode(JS_ARGS.join(""))¦
+command unicode jsb -d¦ apps.unicode(JS_ARGS.join(" "))¦
 
 bind: ,rmm "World map (google)" tabopenorswitchc https://www.google.com/maps/@12.8367482,26.1595951,3z
 
