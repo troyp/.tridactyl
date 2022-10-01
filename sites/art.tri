@@ -102,11 +102,11 @@ command: jasearch_wc! "Search Jackson's Art for watercolor (curr tab)" jsb -d¦ 
 command call_jasearch_cmd jsb -d¦ fillcmdline(JS_ARGS[1]?"jasearch!":"jasearch")¦
 
 jabind: cs<C-h> "(show bindings: ja/search)" jashowkeys cs
-jabind: csc "Find items matching search term in cart" b :jacksonsCartSearch<Space>
-jabind: css "Search Jackson's Art (new tab)" jasearch
-jabind: csS "Search Jackson's Art (current tab)" jasearch!
-jabind: csw "Search Jackson's Art for Watercolour (new tab)" jasearch_wc
-jabind: csW "Search Jackson's Art for Watercolour (current tab)" jasearch_wc!
+jabind: csc "Find items matching search term in cart" fillcmdline jacksonsCartSearch<Space>
+jabind: css "Search Jackson's Art (new tab)" fillcmdline jasearch
+jabind: csS "Search Jackson's Art (current tab)" fillcmdline jasearch!
+jabind: csw "Search Jackson's Art for Watercolour (new tab)" fillcmdline jasearch_wc
+jabind: csW "Search Jackson's Art for Watercolour (current tab)" fillcmdline jasearch_wc!
 
 jabind: cs;s "Clipboard Search Jackson's Art (new tab)" fillcmdline(`${jasearch} ${utils.cbread()}`))
 jabind: cs;S "Clipboard Search Jackson's Art (current tab)" fillcmdline(`${jasearch!} ${utils.cbread()}`))
