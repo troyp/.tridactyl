@@ -1085,6 +1085,27 @@ bind: ,ebp "Display properties of expression in message box" fillcmdline jsb_get
 bind: J "Evaluate javascript expression in commandline" fillcmdline jseq
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────╮
+" │ ,i -- images │
+" ╰──────────────╯
+
+" | ,ii -- images/hints |
+command: imageresize "Resize image [HINTS]" js -d¦ cutils.img.hint.cssTransform(`scale(${JS_ARGS[1]||1})`)¦
+commdoc imagematrix "Transform image with matrix [HINTS]"
+command imagematrix js -d¦ cutils.img.hint.cssTransform(`matrix(${JS_ARGS.slice(1).join(',')})`)¦
+
+bind: ,ii<C-h> "(show bindings: images/hints)" showkeys ,ii
+bind: ,iif "Flip image horizontally [HINTS]" hint img -F e=>e.style.transform="scaleX(-1)"
+bind: ,iiF "Flip image vertically [HINTS]" hint img -F e=>e.style.transform="scaleY(-1)"
+bind: ,iii "Restore image (cancel transform) [HINTS]" hint img -F e=>e.style.transform=""
+bind: ,iim "Transform image using matrix [HINTS]" fillcmdline imagematrix
+bind: ,iir "Resize image [HINTS]" fillcmdline imageresize
+
+" | ,it -- images/transform |
+bind: ,it<C-h> "(show bindings: images/transform)" showkeys ,it
+bind: ,ite "Edit image with pinta" shellcmdonurlfile pinta
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────────╮
 " │ ,j -- japanese │
 " ╰────────────────╯
