@@ -187,6 +187,38 @@ urls = {
         return newurl;
     },
 
+    // ╭───────╮
+    // │ other │
+    // ╰───────╯
+
+    contentType: async function(url=tri.contentLocation.href) {
+        if (url==tri.contentLocation.href)
+            return js("document.contentType");
+        else {
+            const cmd = `curl -sI ${url} |grep -Pio '(?<=content-type: )[a-zA-Z0-9]+/[a-zA-Z0-9]+'`;
+            const res = await tri.native.run(cmd);
+            return (res.code==0) && res.content;
+        }
+    },
+
+    toFilename: async function(url, opts={}) {
+        url ||= tri.contentLocation.href;
+        opts = utils.tri.parseOpts(opts, {castBoolean: "allowSpaces"});
+        var name = (new URL(url))
+            .pathname
+            .replace(/\/?([#?].*)?$/, "")
+            .split("/")
+            .pop();
+        name = decodeURIComponent(name);
+        const extRe = /\.[a-zA-Z0-9]+$/;
+        const m = url.match(extRe);
+        content_type = await this.contentType(url);
+        const ext = m?.[0] || content_type?.split('/').pop();
+        if (ext) name = `${name}.${ext}`;
+        if (!opts.allowSpaces) name = name.replace(' ', '_');
+        return name;
+    },
+
 };
 
 urls.mod = {
