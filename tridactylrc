@@ -300,7 +300,6 @@ command xdoelem! jsb -d¦ xdo.elemWr(JS_ARGS.join(" "))¦
 command: xdokey "Use xdotool to simulate a keypress" jsb -p xdo.key(JS_ARG)
 commdoc xdokeyseq "[DELAY KEYS...] use xdotool to simulate a sequence of keys with pause in between"
 command xdokeyseq jsb -d¦ xdo.keyseq(JS_ARGS)¦
-command xdoitem! jsb -d¦ xdo.clickItem(...JS_ARGS.slice(1))¦
 command: xdoitem "Click item with xdotool" jsb -d¦ xdo.clickItem(JS_ARGS[1], JS_ARGS[2], {return:true})¦
 command: omni! "Enter string in omniboox with xdotool" jsb -d¦ xdo.omniboxEnter(JS_ARGS.join(" "))¦
 
