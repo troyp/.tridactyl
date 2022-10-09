@@ -833,7 +833,7 @@ utils.tri = {
     parseArgs: function(args, opts={}) {
         if (!Array.isArray(args)) args = [args];
         /* opts */
-        opts = this.parseOpts(opts, {castString: "type"});
+        opts = utils.tri.parseOpts(opts, {castString: "type"});
         var result = null, callerOpts = {};
         const finalArg = args.at(-1);
         if (opts.allowOpts && typeof finalArg == "object" && !Array.isArray(finalArg)) {
@@ -843,10 +843,16 @@ utils.tri = {
         const argstr = args.join(" ").trim();
         switch (opts.type) {
           case "string":
+          case "str":
+          case "s":
               result = argstr; break;
           case "number":
+          case "num":
+          case "n":
               result = Number(argstr) || null; break;
           case "array":
+          case "arr":
+          case "a":
           default:
               result = argstr.split(/ +/); break;
         }
@@ -1043,3 +1049,5 @@ utils.tri = {
 // ───────────────────────────────────────────────────────────────────────────────
 
 window.utils = utils;
+window.parseArgs = utils.tri.parseArgs;
+window.parseTerms = utils.tri.parseTerms;

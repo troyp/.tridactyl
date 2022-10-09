@@ -701,10 +701,16 @@ cutils.tri = {
         const argstr = args.join(" ").trim();
         switch (opts.type) {
           case "string":
+          case "str":
+          case "s":
               result = argstr; break;
           case "number":
+          case "num":
+          case "n":
               result = Number(argstr) || null; break;
           case "array":
+          case "arr":
+          case "a":
           default:
               result = argstr.split(/ +/); break;
         }
