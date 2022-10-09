@@ -147,6 +147,38 @@ var sites = {
             const url = urlTempl.replace("%s", encodeURIComponent(value));
             return value && utils.tab.open(url, opts);
         },
+
+        /** kanjiHintSearch: hint japanese text elements for kanji searching on jisho.org
+         *
+         *  Kanji selectors:
+         *      .furigana+span.text  -- jisho result term with kanji
+         *      .furigana+.unlinked  -- jisho term in examples with kanji
+         *      .character.literal>a -- jisho kanji link on right
+         *      .break-unit          -- jisho 'other forms'
+         *      .ja-text             -- japanese.stackexchange kanji/kana term
+         *      .t_nihongo_kanji     -- wikia span class
+         *      #japanese-name       -- wikia with support GM script
+         */
+        kanjiHintSearch: function() {
+            return composite(
+                "hint -pipe" +
+                    " .furigana+span.text,.furigana+.unlinked,.character.literal>a,rb,.ja-text,.break-unit," +
+                    ".t_nihongo_kanji,span[lang=ja],#japanese-name" +
+                    " innerText",
+                "|",
+                "jisho_kanjisearch"
+            );
+        },
+
+        search: async function(s, opts={}) {
+            s = utils.tri.parseArgs(s, "string");
+            opts = utils.tri.parseOpts(opts, {
+                castString: "where",
+                defaults: {where: "related",},
+            });
+            if (opts.ignorecase) s = s.toLowerCase();
+            return utils.tab.open(`http://jisho.org/search/${s}`, opts.where);
+        },
     },
 
     reddit: {
@@ -274,6 +306,14 @@ var sites = {
                 topic = url.pathname.match(/\/wiki\/([A-Za-z]+:)?(.*)/)?.[2];
             }
             return decodeURIComponent(topic?.replace(/_/g, " "));
+        },
+
+        search: function(s, opts={}) {
+            opts = utils.tri.parseOpts(opts, {castString: "where", defaults:{where: "related"}});
+            const url = new URL(tri.contentLocation.href);
+            const host = url.hostname;
+            const search = `https://${host}/w/index.php?go=Go&search=${s}&title=Special%3ASearch&ns0=1`;
+            utils.tab.open(search, opts);
         },
     },
 

@@ -12,7 +12,7 @@ command: amazbind: "Bind key with description for amazon.com" bindurl: amazon.co
 command: amazbdoc "Provide a description on a separate line" js ;
 command: amazshowkeys "(show bindings: amaz)" showkeysurl amazon.com
 
-definesearch amazsearch https://www.amazon.com.au/s?k=%s +
+definesearch amaz_search https://www.amazon.com.au/s?k=%s +
 
 " | co -- amazon/goto |
 amazbind: co<C-h> "(show bindings: amaz/goto)" amazshowkeys co
@@ -29,7 +29,7 @@ amazbind: co! "Goto contact form" urlmodorsummon_g /gp/help/customer/contact-us/
 
 " | cs -- amazon/search |
 amazbind: cs<C-h> "(show bindings: amaz/search)" amazshowkeys cs
-amazbind: css "Amazon AU Search" fillcmdline amazsearch
+amazbind: css "Amazon AU Search" fillcmdline amaz_search
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
@@ -80,10 +80,10 @@ command ghbind bindurl https://github.com
 command ghbind: bindurl: https://github.com
 command ghopenorsummon jsb -p sites.gh.openOrSummon(JS_ARG);
 command ghtabopenorsummon jsb -p sites.gh.openOrSummon(JS_ARG, {where: "related"});
-command ghsearch jsb -d¦ sites.gh.search(window._ghsearchurl, JS_ARGS[1], JS_ARGS.slice(2).join(" "))¦
-command ghtabsearch jsb -d¦ sites.gh.search(window._ghsearchurl, JS_ARGS[1], JS_ARGS.slice(2).join(" "), {where: "related"})¦
-command ghsearchwrapper jsb -d¦ sites.gh.searchWrapper(JS_ARGS)¦
-command ghtabsearchwrapper jsb -d¦ sites.gh.searchWrapper(JS_ARGS, {where: "related"})¦
+command gh_search jsb -d¦ sites.gh.search(window._ghsearchurl, JS_ARGS[1], JS_ARGS.slice(2).join(" "))¦
+command gh_tabsearch jsb -d¦ sites.gh.search(window._ghsearchurl, JS_ARGS[1], JS_ARGS.slice(2).join(" "), {where: "related"})¦
+command gh_searchwrapper jsb -d¦ sites.gh.searchWrapper(JS_ARGS)¦
+command gh_tabsearchwrapper jsb -d¦ sites.gh.searchWrapper(JS_ARGS, {where: "related"})¦
 
 ghbind c<C-h> showkeysurl github.com c
 ghbind cc xdoelem .pl-en -e click 1
@@ -134,23 +134,23 @@ ghbind: co;s "Open settings (new tab)" ghtabopenorsummon https://github.com/sett
 
 " | cs -- Github/Search |
 ghbind cs<C-h> showkeys cs
-ghbind css ghsearchwrapper "search Github" https://github.com/search?utf8=✓&q=${s}&type=Repositories&ref=searchresults
-ghbind csf ghsearchwrapper "search my forks" https://github.com/${a}?tab=repositories&type=fork&q=${s}
-ghbind csg ghsearchwrapper "search gists" https://gist.github.com/search?q=${s}
-ghbind csi ghsearchwrapper "search issues" https://github.com/tridactyl/tridactyl/issues?q=is:issue+${s}
-ghbind csp ghsearchwrapper "search PRs" https://github.com/${u/r}/pulls?q=${s}
-ghbind csr ghsearchwrapper "search repos" https://github.com/${u}?tab=repositories&q=${s}
-ghbind cs* ghsearchwrapper "search my stars" https://github.com/${a}?tab=stars&q=${s}
+ghbind css gh_searchwrapper "search Github" https://github.com/search?utf8=✓&q=${s}&type=Repositories&ref=searchresults
+ghbind csf gh_searchwrapper "search my forks" https://github.com/${a}?tab=repositories&type=fork&q=${s}
+ghbind csg gh_searchwrapper "search gists" https://gist.github.com/search?q=${s}
+ghbind csi gh_searchwrapper "search issues" https://github.com/tridactyl/tridactyl/issues?q=is:issue+${s}
+ghbind csp gh_searchwrapper "search PRs" https://github.com/${u/r}/pulls?q=${s}
+ghbind csr gh_searchwrapper "search repos" https://github.com/${u}?tab=repositories&q=${s}
+ghbind cs* gh_searchwrapper "search my stars" https://github.com/${a}?tab=stars&q=${s}
 
 " | cs; -- Github/Search/New Tab |
 ghbind cs;<C-h> showkeys cs
-ghbind cs;s ghtabsearchwrapper "search Github [new tab]" https://github.com/search?utf8=✓&q=${s}&type=Repositories&ref=searchresults
-ghbind cs;f ghtabsearchwrapper "search my forks [new tab]" https://github.com/${a}?tab=repositories&type=fork&q=${s}
-ghbind cs;g ghtabsearchwrapper "search gists [new tab]" https://gist.github.com/search?q=${s}
-ghbind cs;i ghtabsearchwrapper "search issues [new tab]" https://github.com/tridactyl/tridactyl/issues?q=is:issue+${s}
-ghbind cs;p ghtabsearchwrapper "search PRs [new tab]" https://github.com/${u/r}/pulls?q=${s}
-ghbind cs;r ghtabsearchwrapper "search repos [new tab]" https://github.com/${u}?tab=repositories&q=${s}
-ghbind cs;* ghtabsearchwrapper "search my stars [new tab]" https://github.com/${a}?tab=stars&q=${s}
+ghbind cs;s gh_tabsearchwrapper "search Github [new tab]" https://github.com/search?utf8=✓&q=${s}&type=Repositories&ref=searchresults
+ghbind cs;f gh_tabsearchwrapper "search my forks [new tab]" https://github.com/${a}?tab=repositories&type=fork&q=${s}
+ghbind cs;g gh_tabsearchwrapper "search gists [new tab]" https://gist.github.com/search?q=${s}
+ghbind cs;i gh_tabsearchwrapper "search issues [new tab]" https://github.com/tridactyl/tridactyl/issues?q=is:issue+${s}
+ghbind cs;p gh_tabsearchwrapper "search PRs [new tab]" https://github.com/${u/r}/pulls?q=${s}
+ghbind cs;r gh_tabsearchwrapper "search repos [new tab]" https://github.com/${u}?tab=repositories&q=${s}
+ghbind cs;* gh_tabsearchwrapper "search my stars [new tab]" https://github.com/${a}?tab=stars&q=${s}
 
 ghbind: ctw "Toggle widen README" toggleprop div.Box-body style.maxWidth 1600px
 
@@ -202,6 +202,9 @@ command: jishobind "Bind key for jisho.org" bindurl jisho.org
 command: jishobind: "Bind key with description for jisho.org" bindurl: jisho.org
 command: jishobdoc "Provide a description on a separate line" js ;
 command: jishoshowkeys "(show bindings: jisho)" showkeysurl jisho.org
+
+command: j_search "Search jisho.org" jsb -d¦ sites.j.search(JS_ARGS)¦
+command: j_kanjisearch "Search jisho.org for kanji" jsb -d¦ sites.j.search(JS_ARGS.join("")+"%20%23kanji")¦
 
 jishobind: c<C-h> "(show bindings: jisho)" jishoshowkeys c
 
@@ -279,6 +282,7 @@ bindurl: tvtropes.org cc "Toggle spoilers" csites csites.tvtropes.spoilers()
 " ╰───────────────╯
 
 command: wpbdoc "Provide a description on a separate line" js ;
+command: wp_search "Search current wikimedia site" jsb -d¦ sites.wp.search(JS_ARGS.join(" ").trim())¦
 
 " Define bind commands for wikipedia.org
 command: wpbind "Bind key for wikipedia, etc" bindurl wikipedia.org
@@ -318,10 +322,10 @@ command: woolbind "Bind key for woolworths.com.au" bindurl https://www.woolworth
 command: woolbind: "Bind key with description for woolworths.com.au" bindurl: https://www.woolworths.com.au/
 command: woolbdoc "Provide a description on a separate line" js ;
 
-commdoc woolsearch "Search woolworths"
-command woolsearch jsb -d¦ sites.wool.search(JS_ARGS, "here")¦
-commdoc woolsearch_adj "Search woolworths (adjacent tab)"
-command woolsearch_adj jsb -d¦ sites.wool.search(JS_ARGS, "related")¦
+commdoc wool_search "Search woolworths"
+command wool_search jsb -d¦ sites.wool.search(JS_ARGS, "here")¦
+commdoc wool_search_adj "Search woolworths (adjacent tab)"
+command wool_search_adj jsb -d¦ sites.wool.search(JS_ARGS, "related")¦
 
 woolbind c<C-h> showkeysurl https://www.woolworths.com.au/ c
 
@@ -345,8 +349,8 @@ woolbind cn cujs $$("input[type=checkbox]", $1("wow-checkout-cart")).forEach(e=>
 
 " | cs -- woolworths/search |
 woolbind cs<C-h> showkeysurl https://www.woolworths.com.au/ cs
-woolbind: css "Search products in current tab" fillcmdline woolsearch
-woolbind: csa "Search products in adjacent tab" fillcmdline woolsearch_adj
+woolbind: css "Search products in current tab" fillcmdline wool_search
+woolbind: csa "Search products in adjacent tab" fillcmdline wool_search_adj
 
 " | cx -- woolworths/miscellaneous |
 woolbind cx<C-h> showkeysurl https://www.woolworths.com.au/ cx

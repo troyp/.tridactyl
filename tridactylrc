@@ -1108,15 +1108,14 @@ bind: ,ite "Edit image with pinta" shellcmdonurlfile pinta
 " │ ,j -- japanese │
 " ╰────────────────╯
 bind ,j<C-h> showkeys ,j
-" Jisho kanji search (hints)
-bind ,jf js window._dactylargs=[jishoKanjiSearch]; hints.show('カ');
-" Jisho search (clipboard)
-bind ,jj fillcmdline tabopenorswitchc http://jisho.org/search/
+
+bind: ,jj "Jisho search (clipboard)" :: pastef j_search ${s} | _
 
 " | ,jk -- kanji |
 bind ,jk<C-h> showkeys ,jk
+bind: ,jkk "Jisho kanji search (hints)" jsb sites.j.kanjiHintSearch()
 bind: ,jkh "Google Translate handwritten input" tabopenorsummon https://translate.google.com.au/#ja/en/
-bind: ,jkp "Jisho kanji search (clipboard)" pastef jisho_kanjisearch ${s} | _
+bind: ,jkp "Jisho kanji search (clipboard)" pastef j_kanjisearch ${s} | _
 bind: ,jkr "Jisho kanji radical search" tabopenorswitchc https://jisho.org/#radical
 bind: ,jkv "Visual Kanji Search (clipboard)" pastef https://thekanjimap.com/index.html?k=${s} | tabopenorswitchc
 
