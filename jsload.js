@@ -25,6 +25,9 @@ const jsload = async function (opts="") {
           case "a":
               await tri.controller.acceptExCmd("js -r capps.js");
               break;
+          case "c":
+              await tri.controller.acceptExCmd("js -r csites.js");
+              break;
           case "l":
               await tri.controller.acceptExCmd("js -r links.js");
               break;
