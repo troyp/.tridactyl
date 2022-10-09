@@ -99,7 +99,10 @@ var cutils = {
     },
 
     click1: function(selector, opts={}) {
-        if (selector instanceof Node) return selector.click();
+        if (selector instanceof Node) {
+            selector.click();
+            return selector;
+        }
         else {
             const elt = cutils.get(selector, {...opts, firstMatch: true});
             elt?.click();
