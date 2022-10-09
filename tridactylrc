@@ -531,9 +531,9 @@ command kwsearch_bg jsb -d¦ places.kw.open(JS_ARGS, {where:"related", backgroun
 commdoc kwsearch_here "Keyword bookmark search: current tab"
 command kwsearch_here jsb -d¦ places.kw.open(JS_ARGS, {where:"here"})¦
 commdoc multienginesearch_last "Search multiple engines with same query [...Es Q]"
-command multienginesearch_last jsb -d¦ places.kw.multiengine(JS_ARGS)¦
+command multienginesearch_last jsb -d¦ places.kw.multiengine(JS_ARGS, {background:false})¦
 commdoc multienginesearch_last! "Search multiple engines (in quotes) with same (multiword) query ['...Es' ...Q]"
-command multienginesearch_last! jsb -d¦ places.kw.multi(JS_ARGS, {singleQuery:true})¦
+command multienginesearch_last! jsb -d¦ places.kw.multi(JS_ARGS, {background:false, singleQuery:true})¦
 commdoc multienginesearch_adj "Search multiple engines with same query: adjacent tab [...Es Q]"
 command multienginesearch_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {where:"related"})¦
 commdoc multienginesearch_adj! "Search multiple engines (in quotes) with same (multiword) query ['...Es' ...Q]"
