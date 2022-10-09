@@ -304,7 +304,7 @@ command: xdoitem "Click item with xdotool" jsb -d¦ xdo.clickItem(JS_ARGS[1], JS
 command: omni! "Enter string in omniboox with xdotool" jsb -d¦ xdo.omniboxEnter(JS_ARGS.join(" "))¦
 
 commdoc pastef "Takes a format string and replaces ${S} with clipboard contents; used to pipe to another command"
-command pastef composite jsb -p tri.excmds.getclip().then(s=>JS_ARG.replace(/\$\{s\}/g, s))
+command pastef composite jsb -d¦ tri.excmds.getclip().then(s=>parseArgs(JS_ARGS, "string").replace(/\$\{s\}/g, s))¦
 commdoc expaste "Execute commands in clipboard"
 command expaste jsb utils.cbread().then(s=>s.split("\n").forEach(c=>tri.controller.acceptExCmd(c)));
 commdoc exclaim_ "Run commands in /bin/sh and print the result on the command line"
