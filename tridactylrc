@@ -222,6 +222,7 @@ bind: g;p "Focus first password input field on page" focusinput -p
 command clearconfig jsb browser.storage.local.clear()
 command : fillcmdline
 command :_ fillcmdline_notrail
+command: "Run ex command" _ jsb -d¦ tri.controller.acceptExCmd(JS_ARGS.slice(1).join(" "))¦
 command show fillcmdline_nofocus
 commdoc fillcmdline_withcount "fill cmdline with cmd and optional count:  [CMD COUNT?] -> :CMD COUNT"
 command fillcmdline_withcount jsb -d¦ fillcmdline(JS_ARGS.length>2 ? JS_ARGS.join(" ").trim() : `${JS_ARGS[1]} 1`)¦
