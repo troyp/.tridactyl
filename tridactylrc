@@ -232,6 +232,8 @@ command: capps "Load capps.js and run js" composite js -r capps.js ; js
 commdoc jsload "Load JS files into content script"
 command jsload jsb -p jsload(JS_ARG)
 command: cjs "Load JS files into content script" composite jsload
+commdoc shellcmdonurlfile "Run shell command on document (download if online)"
+command shellcmdonurlfile jsb -d¦ shell.cmdOnURLFile(JS_ARGS, tri.contentLocation.href)¦
 
 " override :open and :tabopen to get builtin completions
 command open open!

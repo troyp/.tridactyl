@@ -17,6 +17,21 @@ const shell = {
     },
 
     singQEscape: function(s) { return s.replace(/'/g, "'\"'\"'"); },
+
+    cmdOnURLFile: async function(cmd, url=tri.contentLocation.href) {
+        if (typeof cmd != "string") cmd = utils.tri.parseArgs(cmd, "string");
+        if (!cmd.includes("%f")) cmd += " %f";
+        const localFileRegex = /^file:\/\/([^?#]*)/;
+        const localFileMatch = url.match(localFileRegex);
+        if (localFileMatch) {
+            const localFile = decodeURIComponent(localFileMatch[1]).replace(/ /g, '\\ ');
+            const localDir = localFile.replace(/[^/]+\/?$/, "");
+            return tri.native.run(`cd ${localDir}; `+cmd.replace("%f", localFile));
+        } else {
+            const name = await urls.toFilename(url);
+            return tri.native.run(`cd $(mktemp -d); curl -s '${url}' > ${name}; ${cmd.replace("%f", name)}`);
+        }
+    },
 };
 
 window.shell = shell;
