@@ -95,23 +95,23 @@ jabdoc cp;dI "Derwent Inktense blocks"
 jabind cp;dI tabopenorswitchc https://www.jacksonsart.com/en-au/derwent-inktense-blocks-au
 
 " | cs -- ja/search |
-command: jasearch "Search Jackson's Art (new tab)" jsb -d¦ sites.ja.search("related", JS_ARGS)¦
-command: jasearch! "Search Jackson's Art (current tab)" jsb -d¦ sites.ja.search("here", JS_ARGS)¦
-command: jasearch_wc "Search Jackson's Art for watercolor (new tab)" jsb -d¦ sites.ja.searchWC("related", JS_ARGS)¦
-command: jasearch_wc! "Search Jackson's Art for watercolor (curr tab)" jsb -d¦ sites.ja.searchWC("here", JS_ARGS)¦
-command call_jasearch_cmd jsb -d¦ fillcmdline(JS_ARGS[1]?"jasearch!":"jasearch")¦
+command: ja_search "Search Jackson's Art (new tab)" jsb -d¦ sites.ja.search("related", JS_ARGS)¦
+command: ja_search! "Search Jackson's Art (current tab)" jsb -d¦ sites.ja.search("here", JS_ARGS)¦
+command: ja_search_wc "Search Jackson's Art for watercolor (new tab)" jsb -d¦ sites.ja.searchWC("related", JS_ARGS)¦
+command: ja_search_wc! "Search Jackson's Art for watercolor (curr tab)" jsb -d¦ sites.ja.searchWC("here", JS_ARGS)¦
+command call_ja_search_cmd jsb -d¦ fillcmdline(JS_ARGS[1]?"ja_search!":"ja_search")¦
 
 jabind: cs<C-h> "(show bindings: ja/search)" jashowkeys cs
 jabind: csc "Find items matching search term in cart" fillcmdline jacksonsCartSearch<Space>
-jabind: css "Search Jackson's Art (new tab)" fillcmdline jasearch
-jabind: csS "Search Jackson's Art (current tab)" fillcmdline jasearch!
-jabind: csw "Search Jackson's Art for Watercolour (new tab)" fillcmdline jasearch_wc
-jabind: csW "Search Jackson's Art for Watercolour (current tab)" fillcmdline jasearch_wc!
+jabind: css "Search Jackson's Art (new tab)" fillcmdline ja_search
+jabind: csS "Search Jackson's Art (current tab)" fillcmdline ja_search!
+jabind: csw "Search Jackson's Art for Watercolour (new tab)" fillcmdline ja_search_wc
+jabind: csW "Search Jackson's Art for Watercolour (current tab)" fillcmdline ja_search_wc!
 
-jabind: cs;s "Clipboard Search Jackson's Art (new tab)" fillcmdline(`${jasearch} ${utils.cbread()}`))
-jabind: cs;S "Clipboard Search Jackson's Art (current tab)" fillcmdline(`${jasearch!} ${utils.cbread()}`))
-jabind: cs;w "Clipboard Search Jackson's Watercolor (new tab)" fillcmdline(`${jasearch_wc} ${utils.cbread()}`))
-jabind: cs;W "Clipboard Search Jackson's Watercolor (current tab)" fillcmdline(`${jasearch_wc!} ${utils.cbread()}`))
+jabind: cs;s "Clipboard Search Jackson's Art (new tab)" fillcmdline(`${ja_search} ${utils.cbread()}`))
+jabind: cs;S "Clipboard Search Jackson's Art (current tab)" fillcmdline(`${ja_search!} ${utils.cbread()}`))
+jabind: cs;w "Clipboard Search Jackson's Watercolor (new tab)" fillcmdline(`${ja_search_wc} ${utils.cbread()}`))
+jabind: cs;W "Clipboard Search Jackson's Watercolor (current tab)" fillcmdline(`${ja_search_wc!} ${utils.cbread()}`))
 
 " | ct -- ja/toggle |
 command: jatoggleoption "Toggle option on search/browse" artjs -d¦ art.ja.toggleOptionWr(JS_ARGS)¦

@@ -29,7 +29,7 @@ command: disneypbind: "Bind key with description for disneyplus.com" bindurl: di
 command: disneypbind "Bind key for disneyplus.com" bindurl disneyplus.com
 command: disneypbdoc "Provide a description on a separate line" js ;
 command: disneypshowkeys "(show bindings: disneyp)" showkeysurl disneyplus.com
-command: disneypsearch "Search disneyplus.com"
+command: disneyp_search "Search disneyplus.com"
 
 disneypbind: c<C-h> "(show bindings: disneyp/)" disneypshowkeys c
 disneypbind: <space> "Play/Pause" cujs click("button.play-pause-icon")
@@ -47,4 +47,4 @@ disneypbind: cow "Goto Star Wars" openorswitchc https://www.disneyplus.com/en-gb
 
 " | cs -- disneyp/search |
 disneypbind: cs<C-h> "(show bindings: disneyp/search)" disneypshowkeys cs
-disneypbind: css "Search disneyplus.com" fillcmdline disneypsearch
+disneypbind: css "Search disneyplus.com" fillcmdline disneyp_search

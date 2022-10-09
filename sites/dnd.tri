@@ -1,7 +1,7 @@
 " ╭────────────╮
 " │ DnD module │
 " ╰────────────╯
-command dndbsearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.dndbeyond.com/search?q=${JS_ARGS.join("%20").trim()}`)¦
+command dndb_search jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.dndbeyond.com/search?q=${JS_ARGS.join("%20").trim()}`)¦
 command: dndjs "Load dnd.c.js and execute javascript" cujs -r sites/dnd.c.js ; js
 
 " ───────────────────────────────────────────────────────────────────────────────
@@ -107,10 +107,10 @@ dndbbind: crs.W "Goto Spells: class=Warlock" openorsummonc! https://www.dndbeyon
 dndbbind: crs<Space> "Open spell description" fillcmdline_notrail tabopen https://www.dndbeyond.com/spells/
 
 " | cs -- dndb/search |
-command dndbsearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.dndbeyond.com/search?q=${JS_ARGS.join("%20").trim()}`)¦
+command dndb_search jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.dndbeyond.com/search?q=${JS_ARGS.join("%20").trim()}`)¦
 command dndbspell jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://www.dndbeyond.com/spells/${JS_ARGS.slice(1).join("-").trim()}`)¦
 
-dndbbind: css "Search" fillcmdline dndbsearch
+dndbbind: css "Search" fillcmdline dndb_search
 dndbbind: cs;s "Goto spell description" fillcmdline dndbspell
 
 " | ct -- dndb/toggle |
@@ -153,7 +153,7 @@ command rpgbotbind: bindurl: rpgbot.net
 
 rpgbotbind c<C-h> showkeysurl rpgbot.net c
 rpgbotbind: cb "Goto DnDBeyond.com" openorsummonc https://www.dndbeyond.com
-command rpgbotsearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://rpgbot.net/?s=${JS_ARGS.join("%20").trim()}`)¦
+command rpgbot_search jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://rpgbot.net/?s=${JS_ARGS.join("%20").trim()}`)¦
 
 rpgbotbind: cba "Artificer Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/artificer/subclasses
 rpgbotbind: cbB "Barbarian Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/barbarian/subclasses
@@ -178,8 +178,8 @@ rpgbotbind: cot "Goto tabletopbuilds.com" openorsummonc! https://tabletopbuilds.
 
 " | co -- rpgbot/search |
 rpgbotbind cs<C-h> showkeysurl rpgbot.net cs
-rpgbotbind: csb "Search DnDBeyond.com" fillcmdline dndbsearch
-rpgbotbind: css "Search RPGBot.net" fillcmdline rpgbotsearch
+rpgbotbind: csb "Search DnDBeyond.com" fillcmdline dndb_search
+rpgbotbind: css "Search RPGBot.net" fillcmdline rpgbot_search
 rpgbotbind: cs;s "Goto spell description" fillcmdline dndbspell
 
 rpgbotbind: c/b "Bard Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/bard/subclasses
@@ -216,9 +216,9 @@ ttbuildbind: cos "Goto dnd-spells.com" openorsummonc! https://www.dnd-spells.com
 ttbuildbind: cot "Goto TabletopBuilds.com" openorsummonc! https://tabletopbuilds.com
 
 " | cs -- ttbuild/search |
-command ttbuildsearch jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://tabletopbuild.com/?s=${JS_ARGS.join("%20").trim()}`)¦
+command ttbuild_search jsb -d¦ tri.controller.acceptExCmd(`openorsummonc! https://tabletopbuild.com/?s=${JS_ARGS.join("%20").trim()}`)¦
 
 dndbbind cs<C-h> showkeysurl rpgbot.net cs
-ttbuildbind: csb "Search DnDBeyond.com" fillcmdline dndbsearch
-ttbuildbind: css "Search TableTopBuilds.com" fillcmdline ttbuildsearch
+ttbuildbind: csb "Search DnDBeyond.com" fillcmdline dndb_search
+ttbuildbind: css "Search TableTopBuilds.com" fillcmdline ttbuild_search
 ttbuildbind: cs;s "Goto spell description" fillcmdline dndbspell
