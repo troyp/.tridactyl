@@ -232,30 +232,25 @@ command withurlsjs composite js -r urls.js ; js
 command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
 command: csites "Load S.js, cutils.js, csites.js, run js" cujs -r csites.js ; js
 command: capps "Load capps.js and run js" composite js -r capps.js ; js
-commdoc jsload "Load JS files into content script"
-command jsload jsb -p jsload(JS_ARG)
-command: cjs "Load JS files into content script" composite jsload
+command: jsload "Load JS files into content script" jsb -p jsload(JS_ARG)
+command: cjs "Load JS files into content script and run commands" composite jsload
 commdoc shellcmdonurlfile "Run shell command on document (download if online)"
 command shellcmdonurlfile jsb -d¦ shell.cmdOnURLFile(JS_ARGS, tri.contentLocation.href)¦
 
 " override :open and :tabopen to get builtin completions
 command open open!
 command tabopen tabopen!
-commdoc open! "Open an URL or search in the current tab, as per :tabopen"
-command open! jsb -d¦ utils.tab.open(JS_ARGS, {where: "here"})¦
-commdoc tabopen! "Open an URL or search in a new tab, as per :tabopen"
-command tabopen! jsb -d¦ utils.tab.open(JS_ARGS, {where: "tabopen"})¦
-commdoc tabopen_adj "Open an URL in an adjacent tab"
-command tabopen_adj jsb -d¦ utils.tab.open(JS_ARGS, {where: "related"})¦
-commdoc tabopen_last "Open an URL in an adjacent tab"
-command tabopen_last jsb -d¦ utils.tab.open(JS_ARGS, {where: "last"})¦
-commdoc tabopen_bg "Open an URL in an adjacent background tab"
+command: open! "Open URL/search or search in the current tab" jsb -d¦ utils.tab.open(JS_ARGS, {where: "here"})¦
+command: tabopen! "Open URL/search or search in a new tab" jsb -d¦ utils.tab.open(JS_ARGS, {where: "tabopen"})¦
+command: tabopen_adj "Open URL/search in an adjacent tab" jsb -d¦ utils.tab.open(JS_ARGS, {where: "related"})¦
+command: tabopen_last "Open URL/search in an adjacent tab" jsb -d¦ utils.tab.open(JS_ARGS, {where: "last"})¦
+commdoc tabopen_bg "Open URL/search in an adjacent background tab"
 command tabopen_bg jsb -d¦ utils.tab.open(JS_ARGS, {where: "related", background: true})¦
-commdoc openorswitchc "Open an URL in current (with count: adjacent) tab, or switch to existing tab"
+commdoc openorswitchc "Open URL/search in current (with count: adjacent) tab, or switch to existing tab"
 command openorswitchc jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "here", "related")¦
 commdoc openorswitchc! "Open an (exact) URL in current (with count: adjacent) tab, or switch to existing tab"
 command openorswitchc! jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "here", "related", {exactMatch: true})¦
-commdoc tabopenorswitchc "Open an URL in a new final tab (count: current tab), or switch to existing tab"
+commdoc tabopenorswitchc "Open URL/search in a new final tab (count: current tab), or switch to existing tab"
 command tabopenorswitchc jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "related", "here")¦
 commdoc tabopenorswitchc! "Open an (exact) URL in current (with count: adjacent) tab, or switch to existing tab"
 command tabopenorswitchc! jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "related", "here", {exactMatch: true})¦
@@ -304,9 +299,9 @@ command xdoelem! jsb -d¦ xdo.elemWr(JS_ARGS.join(" "))¦
 command: xdokey "Use xdotool to simulate a keypress" jsb -p xdo.key(JS_ARG)
 commdoc xdokeyseq "[DELAY KEYS...] use xdotool to simulate a sequence of keys with pause in between"
 command xdokeyseq jsb -d¦ xdo.keyseq(JS_ARGS)¦
-command xdoitem jsb -d¦ xdo.clickItem(JS_ARGS[1], JS_ARGS[2], {return:true})¦
 command xdoitem! jsb -d¦ xdo.clickItem(...JS_ARGS.slice(1))¦
-command omni! jsb -d¦ xdo.omniboxEnter(JS_ARGS.join(" "))¦
+command: xdoitem "Click item with xdotool" jsb -d¦ xdo.clickItem(JS_ARGS[1], JS_ARGS[2], {return:true})¦
+command: omni! "Enter string in omniboox with xdotool" jsb -d¦ xdo.omniboxEnter(JS_ARGS.join(" "))¦
 
 commdoc pastef "Takes a format string and replaces ${S} with clipboard contents; used to pipe to another command"
 command pastef composite jsb -p tri.excmds.getclip().then(s=>JS_ARG.replace(/\$\{s\}/g, s))
@@ -1120,14 +1115,10 @@ bind ,jj fillcmdline tabopenorswitchc http://jisho.org/search/
 
 " | ,jk -- kanji |
 bind ,jk<C-h> showkeys ,jk
-" Google Translate handwritten input
-bind ,jkh tabopenorsummon https://translate.google.com.au/#ja/en/
-" Jisho kanji search (clipboard)
-bind ,jkp pastef http://jisho.org/search/${s}%20%23kanji | tabopenorswitchc
-" Jisho kanji radical search
-bind ,jkr tabopenorswitchc https://jisho.org/#radical
-" Visual Kanji Search - similar kanji (clipboard)
-bind ,jkv pastef https://thekanjimap.com/index.html?k=${s} | tabopenorswitchc
+bind: ,jkh "Google Translate handwritten input" tabopenorsummon https://translate.google.com.au/#ja/en/
+bind: ,jkp "Jisho kanji search (clipboard)" pastef jisho_kanjisearch ${s} | _
+bind: ,jkr "Jisho kanji radical search" tabopenorswitchc https://jisho.org/#radical
+bind: ,jkv "Visual Kanji Search (clipboard)" pastef https://thekanjimap.com/index.html?k=${s} | tabopenorswitchc
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
