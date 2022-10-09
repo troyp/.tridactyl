@@ -38,7 +38,7 @@ csites = {
                 ).src;
                 const res = await cutils.cbAppend(imgUrl);
                 return res;
-            }
+            } else return null;
         },
     },
 
