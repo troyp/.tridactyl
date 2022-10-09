@@ -19,6 +19,8 @@ jsb -r jsload.js
 " general libraries
 jsb -r S.js
 jsb -r js/sprintf.js
+" hints
+jsb -r hints.js
 " tridactyl-specific libraries
 jsb -r utils.js
 " url manipulation library
@@ -39,6 +41,7 @@ jsb -r sites.js
 jsb -r personal/personal.js
 
 jsb window.S = S
+jsb window.hints = hints
 jsb window.utils = utils
 jsb window.urls = urls
 jsb window.xdo = xdo
