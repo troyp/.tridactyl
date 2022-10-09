@@ -1088,9 +1088,9 @@ bind: J "Evaluate javascript expression in commandline" fillcmdline jseq
 " ╰──────────────╯
 
 " | ,ii -- images/hints |
-command: imageresize "Resize image [HINTS]" js -d¦ cutils.img.hint.cssTransform(`scale(${JS_ARGS[1]||1})`)¦
+command: imageresize "Resize image [HINTS]" cujs -d¦ cutils.img.hint.cssTransform(`scale(${JS_ARGS[1]})`)¦
 commdoc imagematrix "Transform image with matrix [HINTS]"
-command imagematrix js -d¦ cutils.img.hint.cssTransform(`matrix(${JS_ARGS.slice(1).join(',')})`)¦
+command imagematrix cujs -d¦ cutils.img.hint.cssTransform(`matrix(${JS_ARGS.slice(1).join(',')})`)¦
 
 bind: ,ii<C-h> "(show bindings: images/hints)" showkeys ,ii
 bind: ,iif "Flip image horizontally [HINTS]" hint img -F e=>e.style.transform="scaleX(-1)"
