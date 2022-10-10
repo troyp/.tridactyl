@@ -2,6 +2,8 @@
 " │ Module: Video │
 " ╰───────────────╯
 
+command: videojs "Load video.c.js and execute javascript" cujs -r sites/video.c.js ; js
+
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────────╮
 " │ PrimeVideo.com │
@@ -31,8 +33,9 @@ command: disneypbdoc "Provide a description on a separate line" js ;
 command: disneypshowkeys "(show bindings: disneyp)" showkeysurl disneyplus.com
 command: disneyp_search "Search disneyplus.com"
 
+disneypbind: <space> "Play/Pause" videojs vid.disneyp.go()
+
 disneypbind: c<C-h> "(show bindings: disneyp/)" disneypshowkeys c
-disneypbind: <space> "Play/Pause" cujs click("button.play-pause-icon")
 disneypbind: cm "Mute" cujs click("button.mute-btn")
 
 " | co -- disneyp/goto |
