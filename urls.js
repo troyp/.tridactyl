@@ -55,6 +55,9 @@ urls = {
             } else {
                 n -= Nr;
             }
+        } else if (opts.stripSubdomains && domainMatch) {
+            const m = domainMatch;
+            u.hostname = `${m[3]}.${m[4]}${m[5]||""}`;
         }
         {
             /* path levels */
@@ -71,6 +74,7 @@ urls = {
 
         return u.href;
     },
+    fromRoot: (...args)=>urls.getNthFromRootPath(...args),
 
     matchToNthLevel: function(n=1, url1, url2=tri.contentLocation.href, opts={}) {
         return getNthFromRootPath(n, url1, opts) == getNthFromRootPath(n, url2, opts);
