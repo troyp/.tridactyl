@@ -131,8 +131,9 @@ S = {
         return arr.map(elem => typeof elem == "undefined" ? "" : String(elem));
     },
     escapeRegexSymbols: function (s, opts={}) {
+        if (typeof opts == "boolean") opts = {slashDelim: opts};
         var regexSpecialCharRegex;
-        if (opts.forwardSlashDelimiters) {
+        if (opts.slashDelim) {
             regexSpecialCharRegex = /[[(){^$\\*+?.|\/]/g;
             return "/" + s.replace(regexSpecialCharRegex, c=>"\\"+c) + "/";
         } else {
@@ -140,6 +141,7 @@ S = {
             return s.replace(regexSpecialCharRegex, c=>"\\"+c);
         }
     },
+    escRegex: (...args)=>S.escapeRegexSymbols(...args),
     /* can be used to check multiple regexes, eg. S.getRegexMatch(re1)||S.getRegexMatch(re2) */
     getRegexMatch: function (s, regex, group_num=1) {
         var match = s.match(regex);
