@@ -238,6 +238,7 @@ command: jsload "Load JS files into content script" jsb -p jsload(JS_ARG)
 command: cjs "Load JS files into content script and run commands" composite jsload
 commdoc shellcmdonurlfile "Run shell command on document (download if online)"
 command shellcmdonurlfile jsb -d¦ shell.cmdOnURLFile(JS_ARGS, tri.contentLocation.href)¦
+command jsb_count jsb -d¦ utils.tri.jsbCount(JS_ARGS)¦
 
 " override :open and :tabopen to get builtin completions
 command open open!

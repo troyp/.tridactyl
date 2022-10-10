@@ -824,6 +824,13 @@ utils.tri = {
         );
     },
 
+    jsbCount: async function(rawargs, defaultCount=1) {
+        const [args, rawcount] = utils.tri.parseArgsAndCount(rawargs);
+        const count = rawcount || defaultCount;
+        const expr = args.join(" ").replace("COUNT", count);
+        return jsb(expr);
+    },
+
     myfocusinput: function(arg) { const n = arg ? Number(arg)-1 : "-l"; focusinput(n); },
 
     /*    parseArgs(args, opts): return args as a string, an array of nonempty strings, or a number
