@@ -104,7 +104,7 @@ var cutils = {
             return selector;
         }
         else {
-            const elt = cutils.get(selector, {...opts, firstMatch: true});
+            const elt = cutils.get1(selector, opts);
             elt?.click();
             return elt;
         }
@@ -204,6 +204,14 @@ var cutils = {
     },
 
     get1: function(selector, opts={}) {
+        opts = cutils.tri.parseOpts(opts, {
+            castHTMLElement: "context",
+            castString: "match",
+            castRegExp: "match",
+            castFunction: "filter",
+            castArrayToBooleanOpts: true,
+            defaults: { "textProperty": "innerText", },
+        });
         return cutils.get(selector, {firstMatch:true, ...opts})?.[0];
     },
 
