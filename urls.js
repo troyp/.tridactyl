@@ -118,7 +118,7 @@ urls = {
         u.hash = "";
         if (!opts.countFragment || !/\#/.test(url) || n > 1)
             u.search = "";
-        return u;
+        return u.href;
     },
 
     /** Uses same interface as tridactyl's `urlmodify -g`.
