@@ -735,7 +735,7 @@ cutils.tri = {
         const n = args.length - 1;
         const hasCount = parseInt(args[n]) > 0;
         const countElem = hasCount && args.pop();
-        const count = countElem && parseInt(countElem);
+        const count = countElem ? parseInt(countElem) : opts.defaultCount;
         return [this.parseArgs(args, opts), count];
     },
 
