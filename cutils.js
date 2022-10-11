@@ -695,6 +695,14 @@ cutils.img = {
 // ╰──────────────────────────────────────────────────────────────────╯
 
 cutils.tri = {
+
+    jsCount: async function(rawargs, defaultCount=1) {
+        const [args, rawcount] = cutils.tri.parseArgsAndCount(rawargs);
+        const count = rawcount || defaultCount;
+        const expr = args.join(" ").replace("COUNT", count);
+        return js(expr);
+    },
+
     /*    parseArgs(args, opts): return args as a string, an array of nonempty strings, or a number
      *  opts.type: desired result type
      *  opts.allowOpts: if true, treat the final arg as an opts object if possible; return [args, opts]
