@@ -209,6 +209,12 @@ the first line after POS matching END-REGEX"
   (interactive)
   (my/evil-substitute-region "js(b?) -p (.*)JS_ARG(.*)" "js\\1 -d¦ \\2JS_ARGS[1]\\3¦"))
 
+(defun my/tri-js-d-to-js_count ()
+  (interactive)
+  (my/evil-substitute-region
+   "command: ([^\" ]+) (\"[^\"]+\") js(b?) -d¦ (.*)JS_ARGS(.*)¦"
+   "bind: \\1 \\2 js\\3_count \\4COUNT\\5"))
+
 ;; ╭────────────────────────────────╮
 ;; │ penta->tri conversion commands │
 ;; ╰────────────────────────────────╯
