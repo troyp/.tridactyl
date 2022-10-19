@@ -831,8 +831,6 @@ utils.tri = {
         return jsb(expr);
     },
 
-    myfocusinput: function(arg) { const n = arg ? Number(arg)-1 : "-l"; focusinput(n); },
-
     /*    parseArgs(args, opts): return args as a string, an array of nonempty strings, or a number
      *  opts.type: desired result type
      *  opts.allowOpts: if true, treat the final arg as an opts object if possible; return [args, opts]

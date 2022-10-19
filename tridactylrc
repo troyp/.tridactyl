@@ -203,14 +203,13 @@ bind: <S-enter> "Jump to heading" cujs jumpToHeading()
 " ╰─────────────╯
 " note: g;h g;l g;u g;U bound to other commands
 
-commdoc myfocusinput "Focus COUNTth input field"
-command myfocusinput jsb -d¦ utils.tri.myfocusinput(JS_ARGS.join(" "))¦
-bind: gi "Focus COUNTth input field" myfocusinput
+bind: gi "Focus COUNTth input field" jsb_count focusinput(COUNT??"-l")
 
 bind g;<C-h> showkeys g;
 bind: g;; "Focus tab containing last focused input" changelistjump -1
-bind: g;i "Focus nth input on page" focusinput 2
+bind: g;i "Focus 2nd input on page" focusinput 2
 bind: g;b "Focus biggest input field on page" focusinput -b
+bind: g;l "Focus last focused input field on page" focusinput -l
 bind: g;n "Focus input on page after last focused one" focusinput -n
 bind: g;N "Focus input on page before last focused one" focusinput -N
 bind: g;p "Focus first password input field on page" focusinput -p
