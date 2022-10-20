@@ -136,34 +136,18 @@ bind: l "Move to previous tab" tabnext
 bind: H "Move back in tab history" back
 bind: L "Move forward in tab history" forward
 
-command: pasten "Open COUNT URLs from clipboard" jsb -d¦ utils.tri.pasten(JS_ARGS, "last")¦
-commdoc pasten_here "Open COUNT URLs from clipboard, starting in current tab"
-command pasten_here jsb -d¦ utils.tri.pasten(JS_ARGS, "here")¦
-commdoc pasten_adj "Open COUNT URLs from clipboard in adjacent tabs"
-command pasten_adj jsb -d¦ utils.tri.pasten(JS_ARGS, "related")¦
-commdoc pasten_bg "Open COUNT URLs from clipboard in background adjacent tabs"
-command pasten_bg jsb -d¦ utils.tri.pasten(JS_ARGS, {where: "related", background: true})¦
-
-bind: p "Open url in clipboard in new adjacent tab" pasten_adj
-bind: P "Open url in clipboard" pasten_here
-bind: gp "Open url in clipboard in new tab" pasten
-bind: gP "Open url in clipboard in new background adjacent tab" pasten_bg
+bind: p "Open COUNT URLs from clipboard (adjacent tabs)" jsb_count utils.tri.pasten(COUNT, "related")
+bind: P "Open COUNT URLs from clipboard (starting in current tab)" jsb_count utils.tri.pasten(COUNT, "here")
 bind: gO "Open :open prompt converting current URL to searchurl string" composite url2args | fillcmdline open
+bind: gp "Open COUNT URLs from clipboard (last tab)" jsb_count utils.tri.pasten(COUNT, "last")
+bdoc gP "Open COUNT URLs from clipboard (background adjacent tabs)"
+bind gP jsb_count utils.tri.pasten(COUNT, {where: "related", background: true})
 
 bind u undo tab_strict
 bind U fillcmdline undo
 
 unbind x
 bind: X "Stop loading" stop
-
-commdoc urlroot_n "Go to the ancestor URL nth from the root domain"
-command urlroot_n jsb -d¦ utils.tab.open(urls.getPathPrefix(JS_ARGS[1]), "here")¦
-commdoc taburlroot_n "Go to the ancestor URL nth from the root domain in new tab"
-command taburlroot_n jsb -d¦ utils.tab.open(urls.getPathPrefix(JS_ARGS[1]), "next")¦
-commdoc urlup_n "Go to the nth parent URL"
-command urlup_n jsb -d¦ utils.tab.open(urls.getNthParent(JS_ARGS[1]), "here")¦
-commdoc taburlup_n "Go to the nth parent URL in new tab"
-command taburlup_n jsb -d¦ utils.tab.open(urls.getNthParent(JS_ARGS[1]), "next")¦
 
 unbind g;
 bind g<C-h> showkeys g
@@ -173,9 +157,10 @@ bind gh jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goBack(t.id));
 bdoc gl "Open the next item in tab history in an adjacent tab"
 bind gl jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goForward(t.id));
 bind: gs "Toggle page source" viewsource
-bind: gU "Go to the ancestor URL nth from the root domain" urlroot_n
-bind: g;u "Go the nth parent URL in new tab" taburlup_n
-bind: g;U "Go to the ancestor URL nth from the root domain in new tab" taburlroot_n
+bind: gu "Go to nth parent URL" jsb_count utils.tab.open(urls.getNthParent(COUNT), "here")
+bind: gU "Go to URL nth from root domain" jsb_count utils.tab.open(urls.fromRoot(COUNT), "here")
+bind: g;u "Go to nth parent URL (new tab)" jsb_count utils.tab.open(urls.getNthParent(COUNT), "related")
+bind: g;U "Go to URL nth from root domain (new tab)" jsb_count utils.tab.open(urls.fromRoot(COUNT), "related")
 
 bind: <C-F10> "Open hamburger menu" xdoitem hamburger_menu
 
@@ -1029,16 +1014,11 @@ bind ,awz tabopenorswitchc https://www.weatherzone.com.au/nsw/northern-rivers/go
 " ╭────────────────────╮
 " │ ,c -- command-line │
 " ╰────────────────────╯
-commdoc cmdYankHistoryItem "Yank the Nth last command-line history item"
-command cmdYankHistoryItem jsb -d¦ utils.tri.cmdYankHistory(utils.tri.parseArgs(JS_ARGS))¦
-commdoc cmdYankHistoryItems "Yank the last N command-line history items"
-command cmdYankHistoryItems jsb -d¦ utils.tri.cmdYankHistoryLastN(JS_ARGS[1]||1)¦
-
 bind: ! "Open command line with exclaim command" fillcmdline !!
 
 bind ,c<C-h> showkeys ,c
-bind: ,cc "Yank the Nth last command-line history item" cmdYankHistoryItem
-bind: ,cC "Yank the last N command-line history items" cmdYankHistoryItems
+bind: ,cc "Yank the Nth last command-line history item" jsb_count utils.tri.cmdYankHistory(COUNT)
+bind: ,cC "Yank the last N command-line history items" jsb_count utils.tri.cmdYankHistoryLastN(COUNT)
 bind: ,cp "Execute commands in clipboard" expaste
 bdoc ,cr "Open command-line with previous command, replacing first argument"
 bind ,cr :: fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word ; js " " | text.insert_text
