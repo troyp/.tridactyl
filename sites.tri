@@ -41,24 +41,27 @@ bindurl archive.org ctt csites -r urls.js ; js csites.archive.toggleToolbarURL()
 " ╭──────────╮
 " │ Ebay.com │
 " ╰──────────╯
-command ebaybind bindurl ebay.com
-command ebaybind: bindurl: ebay.com
+command: ebaybind "Bind key for ebay.com" bindurl ebay.com
+command: ebaybind: "Bind key with description for ebay.com" bindurl: ebay.com
+command: ebaybdoc "Provide a description on a separate line" js ;
+command: ebayshowkeys "(show bindings: ebay)" showkeysurl ebay.com
 
 ebaybind c<C-h> showkeysurl ebay.com c
+
 " | co -- ebay/goto |
 ebaybind co<C-h> showkeysurl ebay.com co
-ebaybind: coa "Goto Account Settings Page" openorsummon https://accountsettings.ebay.com.au/uas
-ebaybind: coc "Goto Cart" openorsummon https://cart.ebay.com.au
-ebaybind: cof "Leave feedback" openorsummon https://www.ebay.com.au/fdbk/leave_feedback
+ebaybind: coa "Goto Account Settings Page" openorsummonc https://accountsettings.ebay.com.au/uas
+ebaybind: coc "Goto Cart" openorsummonc https://cart.ebay.com.au
+ebaybind: cof "Leave feedback" openorsummonc https://www.ebay.com.au/fdbk/leave_feedback
 ebaybind: cok "Goto Similar Items" cujs $1t("section.merch-module", /people who.*also viewed/i).scrollIntoView();
-ebaybind: com "Goto Inbox" openorsummon https://mesg.ebay.com.au/mesgweb/ViewMessages/0
+ebaybind: com "Goto Inbox" openorsummonc https://mesg.ebay.com.au/mesgweb/ViewMessages/0
 
-ebaybind: coo "Goto Orders (Purchase history)" openorsummon https://www.ebay.com.au/mye/myebay/purchase
-ebaybind: cos "Goto My Saved Sellers" openorsummon https://www.ebay.com.au/myb/SavedSellers
-ebaybind: cov "Goto seller's store" csites tri.controller.acceptExCmd(`openorsummon ${csites.e.getStoreURL()}`);
-ebaybind: cow "Goto watch list" openorsummon https://www.ebay.com.au/myb/WatchList
-ebaybind: coy "Goto My eBay" openorsummon https://www.ebay.com.au/myb/Summary
-ebaybind: co/ "Goto My saved searches" openorsummon https://www.ebay.com.au/myb/SavedSearches
+ebaybind: coo "Goto Orders (Purchase history)" openorsummonc https://www.ebay.com.au/mye/myebay/purchase
+ebaybind: cos "Goto My Saved Sellers" openorsummonc https://www.ebay.com.au/myb/SavedSellers
+ebaybind: cov "Goto seller's store" csites tri.controller.acceptExCmd(`openorsummonc ${csites.e.getStoreURL()}`);
+ebaybind: cow "Goto watch list" openorsummonc https://www.ebay.com.au/myb/WatchList
+ebaybind: coy "Goto My eBay" openorsummonc https://www.ebay.com.au/myb/Summary
+ebaybind: co/ "Goto My saved searches" openorsummonc https://www.ebay.com.au/myb/SavedSearches
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────╮
