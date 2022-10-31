@@ -15,6 +15,12 @@ csites = {
     e: {
         _site: "ebay.com.au",
 
+        filterFreePostage: function() {
+            const items = $$("li.s-item");
+            const isFreePost = (item) => $1(".s-item__shipping", item)?.textContent.match(/free postage/i);
+            items.filter(item=>!isFreePost(item)).forEach(item=>item.remove());
+        },
+
         getStoreURL: function() {
             const storelink = $1("#storeSeller>div>a") || $1t("a", "Visit store") || $1t("a", "See other items");
             return storelink?.href;

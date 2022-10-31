@@ -63,6 +63,10 @@ ebaybind: cow "Goto watch list" openorsummonc https://www.ebay.com.au/myb/WatchL
 ebaybind: coy "Goto My eBay" openorsummonc https://www.ebay.com.au/myb/Summary
 ebaybind: co/ "Goto My saved searches" openorsummonc https://www.ebay.com.au/myb/SavedSearches
 
+" | cx -- ebay/misc |
+ebaybind: cx<C-h> "(show bindings: ebay/misc)" ebayshowkeys cx
+ebaybind: cxf "Filter free postage items" csites csites.e.filterFreePostage()
+
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────╮
 " │ file:// │
