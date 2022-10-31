@@ -198,6 +198,8 @@ bind: g;l "Focus last focused input field on page" focusinput -l
 bind: g;n "Focus input on page after last focused one" focusinput -n
 bind: g;N "Focus input on page before last focused one" focusinput -N
 bind: g;p "Focus first password input field on page" focusinput -p
+bdoc g;s "Focus search field"
+bind g;s js_count cutils.get("input", {match: /search/i, textProperty: "placeholder"})?.[COUNT-1].focus()
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────╮
