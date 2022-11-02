@@ -1228,22 +1228,29 @@ bind ,vv fillcmdline convertunits
 " ╰─────────────────────╯
 command scrollnthintoview cujs -d¦ cutils.scrollNthIntoView(JS_ARGS[1], JS_ARGS?.[2])¦
 
+bind ,x<C-h> showkeys ,x
+
+" | ,xf -- misc/fix |
+bind: ,xf<C-h> "(show bindings: misc/fix)" showkeys ,xf
+bind: ,xff "Fix font family" cujs $$("p,h1,h2,h3,h4").forEach(e=>e.style.fontFamily="notoSans")
+
 " | ,xt -- misc/table |
 command: copytablecols "Copy table columns" cujs -d¦ cutils.copytablecols(JS_ARGS)¦
 commdoc copytablecols_strict "Copy table columns (omit rows without enough columns)"
 command copytablecols_strict cujs -d¦ cutils.copytablecols(JS_ARGS, {strict: true})¦
 command scrolltableintoview cujs -d¦ cutils.scrollNthIntoView("table", JS_ARGS?.[1])¦
 
-bind ,x<C-h> showkeys ,x
 bind ,xt<C-h> showkeys ,xt
 bind: ,xtc "Copy table columns [HINT]" fillcmdline copytablecols
 bind: ,xtC "Copy table columns (omit rows without enough columns) [HINT]" fillcmdline copytablecols_strict
 bind: ,xtd "Delete table row [HINT]" hint -Jk tr
 bind: ,xt;d "Delete multiple table rows [HINTS]" hint -Jqk tr
+bind: ,xtt "Scroll table into view" scrolltableintoview
+
+" | ,xts -- misc/table/sort |
 bind: ,xtss "Sort table [HINT]" cujs -r js/sorttables.js ; hint -Jc table -F t=>sorttable.makeSortable(t)
 bind: ,xtsa "Sort all tables" cujs -r js/sorttables.js ; js $$("table").forEach(t=>sorttable.makeSortable(t))
 
-bind: ,xtt "Scroll table into view" scrolltableintoview
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
