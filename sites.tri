@@ -14,6 +14,8 @@ command: amazshowkeys "(show bindings: amaz)" showkeysurl amazon.com
 
 definesearch amaz_search https://www.amazon.com.au/s?k=%s +
 
+amazbind: g;s "Focus search box" cujs $id("twotabsearchtextbox").focus()
+
 " | co -- amazon/goto |
 amazbind: co<C-h> "(show bindings: amaz/goto)" amazshowkeys co
 amazbind: coc "Goto cart" urlmodorsummon_g /gp/cart/view.html/ref=nav_cart
