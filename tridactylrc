@@ -793,6 +793,7 @@ bind: ewk "Open bookmarks manager" xdokeyseq 0.2 menuacc+b ↵
 
 " | ey -- goto/dactyl |
 bind ey<C-h> showkeys ey
+bind: eyy "Goto tridactyl config folder" tabopenorswitchc file:///home/troy/.tridactyl
 
 " | eyr -- goto/dactyl/repo |
 bind eyr<C-h> showkeys ey
