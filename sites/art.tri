@@ -38,6 +38,11 @@ jabind: cn "Count items" artjs cutils.message(`Number of items: ${art.ja.count()
 jabind: cN "Count matching items in cart" fillcmdline jacart_count_matching
 jabind: c4 "Cart total" artjs ; showjs "Cart total: " + art.ja.cart.total()
 
+
+" | ck -- ja/cart |
+jabind: cku "Update cart" click button.btn-update
+jabind: ckz "Zero quantity fields" cujs $$("input[title=Qty]").forEach(e=>{e.value="0"})
+
 " | co -- ja/goto |
 jabind: co<C-h> "(show bindings: jacksonsart/goto)" jashowkeys co
 jabind: coc "Goto cart" openorswitchc https://www.jacksonsart.com/en-au/checkout/cart/
