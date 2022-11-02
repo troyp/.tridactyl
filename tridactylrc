@@ -612,7 +612,12 @@ bind sm;Q ! kwsearch -w -S -m -1|sed -r 's/.*/multienginesearch_last! "\0"/'
 
 " | ss -- shopping search |
 bind: ss<C-h> "(show bindings: search/shop)" showkeys ss
-bind: ssz "Search amazon and ebay" fillcmdline multienginesearch_last! "e amazau"
+bind: ssu "Search supermarkets" fillcmdline multienginesearch! "shopwoo shopcol"
+bind: ssU "Search supermarkets: last tab" fillcmdline multienginesearch_last! "shopwoo shopcol"
+bind: ssz "Search amazon and ebay" fillcmdline multienginesearch! "e amazau"
+bind: ssZ "Search amazon and ebay: last tab" fillcmdline multienginesearch_last! "e amazau"
+bind: ssaj "Search amazon, ebay and jacksonsart" fillcmdline multienginesearch! "e amazau shopja"
+bind: ssaJ "Search amazon, ebay and jacksonsart: last tab" fillcmdline multienginesearch_last! "e amazau shopja"
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────╮
