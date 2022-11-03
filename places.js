@@ -255,7 +255,7 @@ places.hist = {
         const datestr = h=>new Date(h.lastVisitTime)
             .toLocaleString()
             .replace(/(\d\d\/\d\d)\/\d\d(\d\d), (\d\d?:\d\d):\d\d ([ap]m)/, "$1/$2, $3 $4");
-        const formatter = h=>sprintf("%18s\t%-40s\t<%s>", datestr(h), S.ellipsize(h.title, 40), h.url);
+        const formatter = h=>sprintf("%18s\t%-40s\t<%s>", datestr(h), S.ellipsize(h.title||"-", 40), h.url);
         const dmenuInput = items.map(formatter).join("\n");
         const dmenuOpts = opts.multi ? "-multi-select -i" : "-i";
         const rofithemestr='#window {width: 80%;} #listview {lines: 25;}';
