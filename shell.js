@@ -28,8 +28,14 @@ const shell = {
             const localDir = localFile.replace(/[^/]+\/?$/, "");
             return tri.native.run(`cd ${localDir}; `+cmd.replace("%f", localFile));
         } else {
-            const name = await urls.toFilename(url);
-            return tri.native.run(`cd $(mktemp -d); curl -s '${url}' > ${name}; ${cmd.replace("%f", name)}`);
+            return tri.native.run(`
+                cd $(mktemp -d /tmp/TRI.XXXXXX);
+                wget '${url}';
+                f=$(echo *);
+                /usr/bin/rename 's/\\.([a-zA-Z0-9]+)[?#][^.]*$/.\\1/' "$f";
+                convert_webp "$f";
+                ${cmd.replace("%f", "*")}
+            `);
         }
     },
 };

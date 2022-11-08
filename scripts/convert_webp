@@ -1,0 +1,8 @@
+#! /bin/bash
+
+# if file is a webp mimetype, convert it to match its file extension
+# requires libwebp (sudo apt-get webp)
+f="$1";
+if [[ $(file --mime-type -b *) = image/webp ]]; then
+    dwebp "$f" -o "$f";
+fi;
