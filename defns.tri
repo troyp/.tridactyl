@@ -1,0 +1,1305 @@
+
+" ─────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────────────╮
+" │ Browser-mode keybindings │
+" ╰──────────────────────────╯
+bind --mode=browser <A-,> tab #
+bind --mode=browser <AS-,> tabswitchprev!
+" available after changing FF accelerator key to another value via `setpref ui.key.accelKey`
+" see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values#modifier_keys
+bind --mode=browser <C-n> xdo key Down
+bind --mode=browser <C-p> xdo key Up
+" restore Ctrl- based shortcuts removed by setting accelerator to Alt-
+bind --mode=browser <C-r> reloadhard
+bind --mode=browser <C-w> tabclose
+
+" ─────────────────────────────────────────────────────────────────────────────
+" ╭─────────────────────────╮
+" │ Normal-mode keybindings │
+" ╰─────────────────────────╯
+
+" <Escape> is bound to `composite mode normal ; hidecmdline` by default
+" To hide unfocused cmdline, use alternative <C-[> instead
+unbind <Escape>
+
+bind: <CA-h> "Scroll left (50px)" scrollpx -50
+bind: <CA-l> "Scroll right (50px)" scrollpx +50
+bind: j "Scroll down" scrollline +5*
+bind: k "Scroll up" scrollline -5*
+
+bind: h "Move to next tab" tabprev
+bind: l "Move to previous tab" tabnext
+
+bind: H "Move back in tab history" back
+bind: L "Move forward in tab history" forward
+
+bind: p "Open COUNT URLs from clipboard (adjacent tabs)" jsb_count utils.tri.pasten(COUNT, "related")
+bind: P "Open COUNT URLs from clipboard (starting in current tab)" jsb_count utils.tri.pasten(COUNT, "here")
+bind: gO "Open :open prompt converting current URL to searchurl string" composite url2args | fillcmdline open
+bind: gp "Open COUNT URLs from clipboard (last tab)" jsb_count utils.tri.pasten(COUNT, "last")
+bdoc gP "Open COUNT URLs from clipboard (background adjacent tabs)"
+bind gP jsb_count utils.tri.pasten(COUNT, {where: "related", background: true})
+
+bind u undo tab_strict
+bind U fillcmdline undo
+
+unbind x
+bind: X "Stop loading" stop
+
+unbind g;
+bind g<C-h> showkeys g
+bind: gf "Open multiple tabs in background tabs [HINT]" hint -qb
+bdoc gh "Open the previous item in tab history in an adjacent tab"
+bind gh jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goBack(t.id));
+bdoc gl "Open the next item in tab history in an adjacent tab"
+bind gl jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goForward(t.id));
+bind: gs "Toggle page source" viewsource
+bind: gu "Go to nth parent URL" jsb_count utils.tab.open(urls.getNthParent(COUNT), "here")
+bind: gU "Go to URL nth from root domain" jsb_count utils.tab.open(urls.fromRoot(COUNT), "here")
+bind: g;u "Go to nth parent URL (new tab)" jsb_count utils.tab.open(urls.getNthParent(COUNT), "related")
+bind: g;U "Go to URL nth from root domain (new tab)" jsb_count utils.tab.open(urls.fromRoot(COUNT), "related")
+
+bind: <C-F10> "Open hamburger menu" xdoitem hamburger_menu
+
+bind: <C-v> "Enter ignore mode (disable tridactyl bindings)" nmode ignore 1 mode normal
+bind: <C-z> "Enter ignore mode for one keybinding (disable tridactyl bindings)" mode ignore
+
+bind <C-o> jumpprev
+bind <C-O> jumpnext
+
+unbind <C-x>
+
+bind <C-x><C-h> showkeys <C-x>
+bind: <C-x><C-c> "Close all windows" qall
+bind: <C-x><C-m> "Load module" fillcmdline modload
+bind: <C-x><C-x> "Restart browser" restart
+
+bind: <A-=> "Increment current URL by 1" urlincrement 1
+bind: <A--> "Decrement current URL by 1" urlincrement -1
+
+bind: <S-enter> "Jump to heading" cujs jumpToHeading()
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────╮
+" │ g; -- focus │
+" ╰─────────────╯
+" note: g;h g;l g;u g;U bound to other commands
+
+bind: gi "Focus COUNTth input field" jsb_count focusinput(COUNT??"-l")
+
+bind g;<C-h> showkeys g;
+bind: g;; "Focus tab containing last focused input" changelistjump -1
+bind: g;i "Focus 2nd input on page" focusinput 2
+bind: g;b "Focus biggest input field on page" focusinput -b
+bind: g;l "Focus last focused input field on page" focusinput -l
+bind: g;n "Focus input on page after last focused one" focusinput -n
+bind: g;N "Focus input on page before last focused one" focusinput -N
+bind: g;p "Focus first password input field on page" focusinput -p
+bdoc g;s "Focus search field"
+bind g;s js_count cutils.get("input", {match: /search/i, textProperty: "placeholder"})?.[COUNT-1].focus()
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────╮
+" │ general commands │
+" ╰──────────────────╯
+command clearconfig jsb browser.storage.local.clear()
+command : fillcmdline
+command :_ fillcmdline_notrail
+command: "Run ex command" _ jsb -d¦ tri.controller.acceptExCmd(JS_ARGS.slice(1).join(" "))¦
+command show fillcmdline_nofocus
+commdoc fillcmdline_withcount "fill cmdline with cmd and optional count:  [CMD COUNT?] -> :CMD COUNT"
+command fillcmdline_withcount jsb -d¦ fillcmdline(JS_ARGS.length>2 ? JS_ARGS.join(" ").trim() : `${JS_ARGS[1]} 1`)¦
+command :: composite
+command withjs composite js
+command withjsb composite jsb
+command withurlsjs composite js -r urls.js ; js
+command: cUjs "Load cutils.js, urls.js, S.js and run js" cujs -r urls.js ; js -r S.js ; js
+command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
+command: csites "Load S.js, cutils.js, csites.js, run js" cujs -r csites.js ; js
+command: capps "Load capps.js and run js" composite js -r capps.js ; js
+command: jsload "Load JS files into content script" jsb -p jsload(JS_ARG)
+command: cjs "Load JS files into content script and run commands" composite jsload
+commdoc shellcmdonurlfile "Run shell command on document (download if online)"
+command shellcmdonurlfile jsb -d¦ shell.cmdOnURLFile(JS_ARGS, tri.contentLocation.href)¦
+command js_count cujs -d¦ cutils.tri.jsCount(JS_ARGS)¦
+command js_count! cujs -d¦ cutils.tri.jsCount(JS_ARGS, null)¦
+command jsb_count jsb -d¦ utils.tri.jsbCount(JS_ARGS)¦
+command jsb_count! jsb -d¦ utils.tri.jsbCount(JS_ARGS, null)¦
+
+" override :open and :tabopen to get builtin completions
+command open open!
+command tabopen tabopen!
+command: open! "Open URL/search or search in the current tab" jsb -d¦ utils.tab.open(JS_ARGS, {where: "here"})¦
+command: tabopen! "Open URL/search or search in a new tab" jsb -d¦ utils.tab.open(JS_ARGS, {where: "tabopen"})¦
+command: tabopen_adj "Open URL/search in an adjacent tab" jsb -d¦ utils.tab.open(JS_ARGS, {where: "related"})¦
+command: tabopen_last "Open URL/search in an adjacent tab" jsb -d¦ utils.tab.open(JS_ARGS, {where: "last"})¦
+commdoc tabopen_bg "Open URL/search in an adjacent background tab"
+command tabopen_bg jsb -d¦ utils.tab.open(JS_ARGS, {where: "related", background: true})¦
+commdoc openorswitchc "Open URL/search in current (with count: adjacent) tab, or switch to existing tab"
+command openorswitchc jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "here", "related")¦
+commdoc openorswitchc! "Open an (exact) URL in current (with count: adjacent) tab, or switch to existing tab"
+command openorswitchc! jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "here", "related", {exactMatch: true})¦
+commdoc tabopenorswitchc "Open URL/search in a new final tab (count: current tab), or switch to existing tab"
+command tabopenorswitchc jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "related", "here")¦
+commdoc tabopenorswitchc! "Open an (exact) URL in current (with count: adjacent) tab, or switch to existing tab"
+command tabopenorswitchc! jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "related", "here", {exactMatch: true})¦
+command: topos "Alias for tabopenorswitchc" tabopenorswitchc
+commdoc openorswitch "Open an URL in current tab, or switch to existing tab"
+command openorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
+commdoc tabopenorswitch "Open an URL in a new (final) tab, or switch to existing tab"
+command tabopenorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"last"});
+commdoc tabopenorswitch_adj "Open an URL in an afjacent tab, or switch to existing tab"
+command tabopenorswitch_adj jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"related"});
+commdoc openorsummonc "Open an URL in current (with count: adjacent) tab, or summon an existing tab"
+command openorsummonc jsb -d¦ utils.tab.openOrSummon(JS_ARGS[1], {where: JS_ARGS[2]?"related":"here"})¦
+commdoc openorsummonc! "Open an (exact) URL in current (with count: adjacent) tab, or summon existing tab"
+command openorsummonc! jsb -d¦ utils.tab.openorsummonWr(JS_ARGS, "related", "here", {exactMatch: true})¦
+commdoc tabopenorsummonc "Open an URL in a new final tab (count: current tab), or summon an existing tab"
+command tabopenorsummonc jsb -d¦ utils.tab.openorsummonWr(JS_ARGS, "related", "here")¦
+commdoc tabopenorsummonc! "Open an (exact) URL in a new final tab (count: current tab), or summon an existing tab"
+command tabopenorsummonc! jsb -d¦ utils.tab.openorsummonWr(JS_ARGS, "related", "here", {exactMatch: true})¦
+commdoc openorsummon "Open an URL in current tab, or switch to existing tab and move adjacent"
+command openorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"here"});
+commdoc tabopenorsummon "Open an URL in a new adjacent tab, or switch to existing tab and move adjacent"
+command tabopenorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"});
+commdoc tabopenorsummonbg "Open an URL in a new background adjacent tab, or move existing tab adjacent"
+command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related", background: true});
+commdoc urltoggle "Toggle a component of the current URL"
+command urltoggle withurlsjs -d¦ urls.mod.toggleWr(JS_ARGS.join(" "))¦
+commdoc urlremove "Remove string from current URL"
+command urlremove withurlsjs -p tri.controller.acceptExCmd(`open ${urls.mod.toggle(JS_ARG, "")}`)
+commdoc urlmodorsummon_g "Open URL formed by grafting a path onto the domain, or summon existing tab"
+command urlmodorsummon_g jsb -d¦ urls.mod.graftOrSummon(JS_ARGS[1], 0, {where:JS_ARGS[2]?"related":"here"})¦
+command: urltogglequery "Toggle value of query in URL" jsb -d¦ urls.mod.toggleQuery(...JS_ARGS.slice(1))¦
+command tabopenmultiple jsb -d¦ utils.tab.openMultiple(JS_ARGS.join(" ").split(" "))¦
+
+command !! exclaim_
+command !s exclaim_quiet
+
+command xdo !s xdotool
+commdoc xdoclick "Click element at point X Y with button N and return pointer to original position"
+command xdoclick jsb -d¦ xdo.clickWr(JS_ARGS, {return:true})¦
+commdoc xdoclick! "Click element at point X Y with button N"
+command xdoclick! jsb -d¦ xdo.clickWr(JS_ARGS)¦
+commdoc xdoelem "Use xdotool to move the mouse pointer and act on element"
+command xdoelem jsb -d¦ xdo.elemWr(JS_ARGS.join(" "), {return:true})¦
+commdoc xdoelem! "Use xdotool to move the mouse to act on element and return pointer to original position"
+command xdoelem! jsb -d¦ xdo.elemWr(JS_ARGS.join(" "))¦
+command: xdokey "Use xdotool to simulate a keypress" jsb -p xdo.key(JS_ARG)
+commdoc xdokeyseq "[DELAY KEYS...] use xdotool to simulate a sequence of keys with pause in between"
+command xdokeyseq jsb -d¦ xdo.keyseq(JS_ARGS)¦
+command: xdoitem "Click item with xdotool" jsb -d¦ xdo.clickItem(JS_ARGS[1], JS_ARGS[2], {return:true})¦
+command: omni! "Enter string in omniboox with xdotool" jsb -d¦ xdo.omniboxEnter(JS_ARGS.join(" "))¦
+
+commdoc pastef "Takes a format string and replaces ${S} with clipboard contents; used to pipe to another command"
+command pastef composite jsb -d¦ tri.excmds.getclip().then(s=>parseArgs(JS_ARGS, "string").replace(/\$\{s\}/g, s))¦
+commdoc expaste "Execute commands in clipboard"
+command expaste jsb utils.cbread().then(s=>s.split("\n").forEach(c=>tri.controller.acceptExCmd(c)));
+commdoc exclaim_ "Run commands in /bin/sh and print the result on the command line"
+command exclaim_ jsb -d¦ apps.exclaim_(JS_ARGS)¦
+
+command omni xdo key alt+d key ctrl+u sleep 0.5 type
+command omni_focus xdokeyseq 0.2 alt+d ctrl+u
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────╮
+" │ b -- tabs │
+" ╰───────────╯
+unbind b
+
+command: tabremove "Close tabs matching expression" jsb -d¦ utils.tab.removeWr(JS_ARGS)¦
+command: tabfilter "Close tabs not matching expression" jsb -d¦ utils.tab.filterWr(JS_ARGS)¦
+command: tabremovestr "Close tabs matching string" jsb -p utils.tab.remove(t=>S.matchSC(JS_ARG, t.titleurl));
+command: tabfilterstr "Close tabs not matching string" jsb -p utils.tab.filter(t=>S.matchSC(JS_ARG, t.titleurl));
+command: tabrmrange "Close tabs from START to END" jsb -d¦ utils.tab.removeRangeWr(JS_ARGS)¦
+commdoc tabrmrange "Close tabs from START to END (including pinned)"
+command tabrmrange! jsb -d¦ utils.tab.removeRangeWr(JS_ARGS, {force:true})¦
+commdoc tabswitchprev "Switch to last accessed tab"
+command tabswitchprev jsb -d¦ utils.tab.switchAlternate(JS_ARGS[1]||1)¦
+commdoc tabswitchprev! "Switch to last accessed tab and close current tab" 
+command tabswitchprev! jsb -d¦ utils.tab.switchAlternate(JS_ARGS[1]||1, {removeCurrent: true})¦
+command: tabsummon "Move tab adjacent to current tab" jsb -p utils.tab.summon(JS_ARG||"$")
+commdoc tabsummonalt "Move last accessed tab adjacent to current tab"
+command tabsummonalt jsb -d¦ utils.tab.summonAlternate(JS_ARGS[1]||1)¦
+command: tabmove! "Move current tab to specified tab number" jsb -p utils.tab.move(JS_ARG);
+command tabmovetoalt jsb -d¦ utils.tab.moveToAlternate(JS_ARGS[1]||1)¦
+command tabfirst: jsb utils.tab.firstDWIM();
+command tabswitch jsb -d¦ utils.tab.switchWr(JS_ARGS)¦
+
+bind: gt "Switch to tab N, or last tab switched to" tabswitch
+bind: g;h "Choose entry in tab's backward history" xdoitem tabhist_prev 3
+bind: g;l "Choose entry in tab's forward history" xdoitem tabhist_next 3
+bind: <C-a> "Switch to first tab, then first nonpinned and back to first" tabfirst:
+bind: <C-e> "Switch to last tab" tablast
+bind: <AC-a> "Move tab to start" tabmove! 1
+bind: <AC-e> "Move tab to end" tabmove! 0
+
+bind: o "Open URL/search in the current tab" fillcmdline open
+bind: t "Open URL/search in a new tab" fillcmdline tabopen
+
+bind b<C-h> showkeys b
+bind: bb "Switch to tab from completion list" fillcmdline tab
+bind: bo "Open in adjacent tab" fillcmdline tabopen_adj
+bind: bO "Open in adjacent background tab" fillcmdline tabopen_bg
+bind: bl "Open in last tab" fillcmdline tabopen_last
+bind: bn "Show number of tabs" jsb utils.tab.showN(true);
+bind: bp "Pin/unpin tab" pin
+bind: b> "Close all tabs to the right" tabclosealltoright
+bind: b< "Close all tabs to the left"  tabclosealltoleft
+
+" | bd -- tabs/delete |
+" | bd; -- tabs/delete/filter |
+" | bd> -- tabs/delete/left |
+" | bd< -- tabs/delete/right |
+bind bd<C-h> showkeys bd
+bind: bda "Close alternate tab" jsb utils.tab.getAlternate().then(t=>browser.tabs.remove(t.id));
+bind: bdd "Close tabs from START to END ord" fillcmdline tabrmrange
+bind: bdD "Close tabs from START to END ord (including pinned)" fillcmdline tabrmrange!
+bind: bde "Close tabs matching expression" fillcmdline tabremove
+bind: bd<e "Close tabs to left matching expression" fillcmdline tabremove i<i0 &&
+bind: bd>e "Close tabs to right matching expression" fillcmdline tabremove i>i0 &&
+bind: bd;e "Close tabs not matching expression" fillcmdline tabfilter
+bind: bd<;e "Close tabs to left not matching expression" fillcmdline tabfilter i<i0 &&
+bind: bd>;e "Close tabs to right not matching expression" fillcmdline tabfilter i>i0 &&
+bind: bdm "Close tabs matching string" fillcmdline tabremovestr
+bind: bd;m "Close tabs not matching string" fillcmdline tabfilterstr
+bind: bdo "Close other tabs" tabonly
+bind: bds "Select tabs to close with rofi" jsb utils.tab.removeWithRofi();
+bind: bd;s "Select tabs to keep with rofi; close others" jsb utils.tab.removeWithRofi({invert:true});
+
+" | bh -- tabs/highlight |
+bind bh<C-h> showkeys bh
+bind: bhh "Highlight tabs with rofi" jsb utils.tab.rofiHighlight();
+
+" | bm -- tabs/move |
+bind bm<C-h> showkeys bm
+bind: bma "move active tab after alternate tab" tabmovetoalt
+bind: bmA "move alternate tab after active tab" tabsummonalt
+bind: bmm "move tab to position" fillcmdline tabmove!
+bind: bms "move tab after active tab" fillcmdline tabsummon
+bind: bm< "move tab to start (first nonpinned position)" tabmove 1
+bind: bm> "move tab to end" tabmove 0
+
+" | br -- tabs/reload |
+bind br<C-h> showkeys br
+bind: bra "Reload all tabs" reloadall
+bind: brd "Reload dead tabs" reloaddead
+bind: bra "Reload all tabs except current" reloadallbut
+bind: brr "Reload COUNT tabs" reload
+bind: brR "Reload COUNT tabs and bypass cache" reloadhard
+
+bind: C "Duplicate tab" tabduplicate
+bind: <C-k> "Close all tabs to the right inclusive" composite tabclosealltoright ; tabclose
+bind: <C-K> "Close all tabs to the left inclusive"  composite tabclosealltoleft  ; tabclose
+bind: <A-;> "Switch to last accessed tab" tabswitchprev
+bind: <A-:> "Switch to last accessed tab and close current tab" tabswitchprev!
+
+bind: <AC-1> "Move tab to position 1" tabmove! 1
+bind: <AC-2> "Move tab to position 2" tabmove! 2
+bind: <AC-3> "Move tab to position 3" tabmove! 3
+bind: <AC-4> "Move tab to position 4" tabmove! 4
+bind: <AC-5> "Move tab to position 5" tabmove! 5
+bind: <AC-6> "Move tab to position 6" tabmove! 6
+bind: <AC-7> "Move tab to position 7" tabmove! 7
+bind: <AC-8> "Move tab to position 8" tabmove! 8
+bind: <AC-9> "Move tab to position 9" tabmove! 9
+bind: <AC-0> "Move tab to final position" tabmove! 0
+bind: <AC-h> "Move tab one position to right" tabmove -1
+bind: <AC-l> "Move tab one position to left"  tabmove +1
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────────────╮
+" │ w -- window/browser │
+" ╰─────────────────────╯
+unbind w
+
+commdoc copyuserchrome "Copy userChrome.js from .tridactyl/css to default profile"
+command copyuserchrome ! cp -v ~/.tridactyl/css/userChrome.css `echo ~/.mozilla/firefox/*.default`
+command: rmuserchrome "Remove userChrome.js from default profile" ! rm ~/.mozilla/firefox/*.default/userChrome.css
+commdoc bmrofi "[WHERE? BG? OPTS?] Open bookmark via rofi"
+command bmrofi jsb -d¦ places.bm.rofi(JS_ARGS)¦
+" note: The :history command can usually only take a count of about 5 (ie prev 5 days history)
+"       this seems to be due to a limit on how much can be sent to the native client
+"       The :historysearch command takes a search term to filter input *first*, so it can be
+"       used for searching over a longer time range
+command history jsb -d¦ places.hist.openWr(JS_ARGS)¦
+command historysearch jsb -d¦ places.hist.openWr(JS_ARGS, {queryText:true})¦
+command: bmklet "Run bookmarklet [rofi]" jsb places.bm.bmklet();
+command: bmklet! "Run bookmarklet with :open [rofi]" jsb places.bm.bmklet([], {useOpen: true});
+commdoc bmkletkw "Run bookmarklet by keyword"
+command bmkletkw jsb -d¦ places.bm.bmklet(JS_ARGS.slice(2), {kw: JS_ARGS[1]})¦
+commdoc bmkletkw! "Run bookmarklet by keyword with :open"
+command bmkletkw! jsb -d¦ places.bm.bmklet(JS_ARGS.slice(2), {kw: JS_ARGS[1], useOpen: true})¦
+command: ffmenu "Open Firefox (hamburger) menu" xdoitem hamburger_menu
+
+bind w<C-h> showkeys w
+bind: wm "Toggle mute tab" mute toggle
+bind: wM "Mute all tabs" mute all
+bind: wl "Focus and clear omnibox" omni_focus
+bind: wo "Omnibox open" fillcmdline omni!
+bind: wr "Reload tridactylrc file" source ~/.tridactyl/tridactylrc
+bind: wu "Undo window" undo window
+bind: ww "Open URL in new window" fillcmdline winopen
+bind: wx "dismiss update notification" xdoitem update_notification
+
+bind: wcc "Customize toolbar, etc" composite ffmenu ; xdokeyseq 0.2 Up Up Up Right Return
+
+" | wa -- omnibar (awesomebar) |
+bind: wab "Search open tabs in omnibar" omni "% "
+bind: wah "Search history in omnibar" omni "^ "
+bind: wak "Search bookmarks in omnibar" omni "* "
+bind: wal "Search local file suggestions in omnibar" omni "& file:/// "
+bind: was "Search suggestions in omnibar" omni "? "
+bind: wat "Search page title suggestions in omnibar" omni "# "
+bind: wau "Search URL suggestions in omnibar" omni "$ "
+
+" | wd -- browser/dl |
+bind: wd<C-h> "(show bindings: browser/dl)" showkeys wd
+bind: wdd "Select links to download" withlinks links.dlChooseLinks(document.links)
+
+" | wk -- browser/bookmarks |
+bind wk<C-h> showkeys wk
+bind: wkb "Open bookmark in background adjacent tab [Rofi]" bmrofi related t
+bind: wkk "Open bookmark in adjacent tab [Rofi]" bmrofi related
+bind: wkh "Open bookmark in current tab [Rofi]" bmrofi here
+bind: wkl "Open bookmark in last tab [Rofi]" bmrofi last
+bind: wko "Open bookmark in current tab" fillcmdline bmarks
+bind: wkt "Open bookmark in new tab" fillcmdline bmarks -t
+bind: wkv "View bookmarks JSON file in browser" winopen file:///home/troy/bookmarks/bookmarks.json
+
+" | wh -- browser/history |
+bind: whh "Open history item in last tab [rofi]" history last false
+bind: wha "Open history item in adjacent tab [rofi]" history related false
+bind: whb "Open history item in adjacent background tab [rofi]" history related true
+bind: who "Open history item in current tab [rofi]" history here false
+
+" | wj -- browser/bookmarklets |
+bind wj<C-h> showkeys wj
+bind: wjj "Run bookmarklet [rofi]" bmklet
+bind: wjk "Run bookmarklet by keyword" fillcmdline bmkletkw
+bind: wjK "Run bookmarklet by keyword with :open" fillcmdline bmkletkw!
+bind: wjo "Run bookmarklet with :open [rofi]" bmklet!
+
+" | ws -- browser/style |
+bind: wsu "Copy userChrome.css from .tridactyl/css to default profile directory" copyuserchrome
+bind: wsU "Copy userChrome.css and restart browser" composite copyuserchrome ; restart
+
+" | wt -- browser/toggle |
+bind: wtd "toggle downloads menu" xdoitem downloads_menu
+bind: wtk "toggle edit bookmark" xdoitem edit_bookmark
+bind: wtt "toggle bookmarks toolbar" xdokey accel+B
+bind: wtm "toggle menu bar" xdokeyseq 0.2 menuacc+v → ↵
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────╮
+" │ searchurls │
+" ╰────────────╯
+" FIXME: redefined :tabopen doesn't work with multifield searchurls
+" workaround: to open multifield searchurls in newtab
+command tabopen_searchurl bmarks -t
+
+set searchurls.trxx https://translate.google.com/?sl=%s1&tl=%s2&text=%s3&op=translate
+
+" ╭─────────────╮
+" │ s -- search │
+" ╰─────────────╯
+
+unbind s
+unbind --mode=visual s
+unbind /
+
+commdoc kwsearch_last "Keyword bookmark search: last tab"
+command kwsearch_last jsb -d¦ places.kw.open(JS_ARGS)¦
+commdoc kwsearch_adj "Keyword bookmark search: adjacent tab"
+command kwsearch_adj jsb -d¦ places.kw.open(JS_ARGS, {where:"related"})¦
+commdoc kwsearch_bg "Keyword bookmark search: background adjacent tab"
+command kwsearch_bg jsb -d¦ places.kw.open(JS_ARGS, {where:"related", background:true})¦
+commdoc kwsearch_here "Keyword bookmark search: current tab"
+command kwsearch_here jsb -d¦ places.kw.open(JS_ARGS, {where:"here"})¦
+commdoc multienginesearch_last "Search multiple engines with same query [...Es Q]"
+command multienginesearch_last jsb -d¦ places.kw.multiengine(JS_ARGS, {background:false})¦
+commdoc multienginesearch_last! "Search multiple engines (in quotes) with same (multiword) query ['...Es' ...Q]"
+command multienginesearch_last! jsb -d¦ places.kw.multi(JS_ARGS, {background:false, singleQuery:true})¦
+commdoc multienginesearch_adj "Search multiple engines with same query: adjacent tab [...Es Q]"
+command multienginesearch_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {where:"related"})¦
+commdoc multienginesearch_adj! "Search multiple engines (in quotes) with same (multiword) query ['...Es' ...Q]"
+command multienginesearch_adj! jsb -d¦ places.kw.multi(JS_ARGS, {singleQuery:true, where:"related"})¦
+commdoc multisearch_last "Search multiple queries"
+command multisearch_last jsb -d¦ places.kw.multi(JS_ARGS)¦
+commdoc multisearch_adj "Search multiple queries: adjacent tabs"
+command multisearch_adj jsb -d¦ places.kw.multi(JS_ARGS, {where: "related"})¦
+commdoc searchwithengine_adj "Search for a (multiword) query with engine [Q... E]"
+command searchwithengine_adj jsb -d¦ places.kw.multi([JS_ARGS.pop(), ...JS_ARGS],{singleQuery:true, where:"related"})¦
+commdoc searchwithengine_last "Search for a (multiword) query with engine [Q... E]"
+command searchwithengine_last jsb -d¦ places.kw.multi([JS_ARGS.pop(), ...JS_ARGS],{singleQuery:true, where:"last"})¦
+commdoc multienginesearch_adj "Search multiple engines with same query: adjacent tabs [...Es Q]"
+command multienginesearch_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {where:"related"})¦
+commdoc searchwithengines_last "Search for query with engines [Q ...Es]"
+command searchwithengines_last jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst:true, where:"related"})¦
+commdoc searchwithengines_adj "Search for query with engines: adjacent tabs [Q ...Es]"
+command searchwithengines_adj jsb -d¦ places.kw.multiengine(JS_ARGS, {queryFirst:true, where:"related"})¦
+
+command kwsearch kwsearch_adj
+command multienginesearch multienginesearch_adj
+command multienginesearch! multienginesearch_adj!
+command multisearch multisearch_adj
+command searchwithengine searchwithengine_adj
+command searchwithengines searchwithengines_adj
+
+command: nativelinksearch "Search for links (FF builtin)" xdokeyseq 0.2 ctrl+v apostrophe
+command: hl "Highlight text" cujs -d¦ cutils.css.highlightString(JS_ARGS.join(" ").trim())¦
+command: hloff "Highlight text off" cujs -d¦ cutils.css.highlightStringOff()¦
+
+bind n findnext
+bind N findnext
+bind ? fillcmdline find -?
+bind _ fillcmdline hl
+bind <A--> hloff
+bind: <C-/> "Remove tridactyl search highlighting" clearsearchhighlight
+bind: ,<C-/> "Remove browser.find search highlighting" jsb browser.find.removeHighlighting()
+
+" */#: Temporary implementation using find
+" TODO: implement these properly with forwards/backwards cycling
+bind * js tri.controller.acceptExCmd(`find ${window.getSelection()+""}`);
+bind # js tri.controller.acceptExCmd(`find -? ${window.getSelection()+""}`);
+
+unbind s
+
+bind: s<C-h> "(show bindings: search)" showkeys s
+bind: sl "Search with firefox link search" nativelinksearch
+bind: sa "Open keyword search in adjacent tab [Rofi]" !  echo -n "tabopen_adj "; kwsearch -Sw1
+bind: sb "Open keyword search in adjacent background tab [Rofi]" !  echo -n "tabopen_bg "; kwsearch -Sw1
+bind: so "Open keyword search in current tab [Rofi]" ! echo -n "open "; kwsearch -Sw1
+bind: st "Open keyword search in last tab [Rofi]" !  echo -n "tabopen_last "; kwsearch -Sw1
+bind: su "Open searchurl/bmark/URL in new tab" fillcmdline tabopen_searchurl
+bind: s/ "Search with :find command" fillcmdline find
+bind: s;; "Search clipboard contents with engine" composite getclip | fillcmdline searchwithengine
+
+" | sh -- search history |
+bind: sh<C-h> "(show bindings: search/history)" showkeys sh
+bind: shh "Search history, open item(s) in last tab [rofi]" historysearch last false
+bind: sha "Search history, open item(s) in adjacent tab [rofi]" historysearch related false
+bind: shb "Search history, open item(s) in adjacent background tab [rofi]" historysearch related true
+bind: sho "Search history, open item in current tab [rofi]" historysearch here false
+
+" | sk -- search by bookmark keyword |
+bind: sk<C-h> "(show bindings: search/kw)" showkeys sk
+bind: skb "Bmark keyword search: background adjacent tab" fillcmdline kwsearch_bg
+bind: skk "Bmark keyword search: adjacent tab" fillcmdline kwsearch_adj
+bind: skl "Bmark keyword search: last tab" fillcmdline kwsearch_last
+bind: sko "Bmark keyword search: current tab" fillcmdline kwsearch_here
+
+" | sm -- search multiple |
+bind: sm<C-h> "(show bindings: search/multi)" showkeys sm
+bind: smm "Search multiple queries: adjacent tab" fillcmdline multisearch_adj
+bind: smM "Search multiple queries: last tab" fillcmdline multisearch_last
+bind: sme "Search multiple engines: adjacent tab" fillcmdline multienginesearch_adj
+bind: smE "Search multiple engines: last tab" fillcmdline multienginesearch_last
+
+" | sm; -- search multiple (rofi) |
+bind: sm;<C-h> "(show bindings: search/multi/rofi)" showkeys sm;
+bind: sm;m "Search multiple queries: adjacent tab [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch_adj "\0"/'
+bind: sm;M "Search multiple queries: last tab [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch "\0"/'
+bind: sm;e "Search multiple engines: adjacent tab [Rofi]" ! echo -n "multienginesearch_adj "; kwsearch -w -S -m -1
+bind: sm;E "Search multiple engines: last tab [Rofi]" ! echo -n "multienginesearch_last "; kwsearch -w -S -m -1
+bdoc sm;q "Search multiple engines (quoted): adjacent tab [Rofi]"
+bind sm;q ! kwsearch -w -S -m -1|sed -r 's/.*/multienginesearch_adj! "\0"/'
+bdoc sm;Q "Search multiple engines (quoted): last tab [Rofi]"
+bind sm;Q ! kwsearch -w -S -m -1|sed -r 's/.*/multienginesearch_last! "\0"/'
+
+" | ss -- shopping search |
+bind: ss<C-h> "(show bindings: search/shop)" showkeys ss
+bind: ssu "Search supermarkets" fillcmdline multienginesearch! "shopwoo shopcol"
+bind: ssU "Search supermarkets: last tab" fillcmdline multienginesearch_last! "shopwoo shopcol"
+bind: ssz "Search amazon and ebay" fillcmdline multienginesearch! "e amazau"
+bind: ssZ "Search amazon and ebay: last tab" fillcmdline multienginesearch_last! "e amazau"
+bind: ssaj "Search amazon, ebay and jacksonsart" fillcmdline multienginesearch! "e amazau shopja"
+bind: ssaJ "Search amazon, ebay and jacksonsart: last tab" fillcmdline multienginesearch_last! "e amazau shopja"
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────────╮
+" │ <C-h> -- help │
+" ╰───────────────╯
+command showkeys fillcmdline_notrail bind
+command showkeysurl fillcmdline_notrail bindurl
+command searchnmaps jsb -d¦ utils.tri.searchNmapsWrapper(JS_ARGS.join(" "))¦
+
+bind <C-h><C-h> showkeys <C-h>
+bind: <C-h>a "Open list of ui.key.accelKey values" topos https://searchcode.com/codesearch/view/26755902/
+bind: <C-h>b "Search normal keybinding definitions" fillcmdline searchnmaps
+bdoc <C-h>d "Open devtools toolbox"
+bind <C-h>d tabopen about:devtools-toolbox?id=tridactyl.vim.betas%40cmcaine.co.uk&type=extension
+bdoc <C-h>f "Open list of Firefox Keyboard Shortcuts"
+bind <C-h>f tabopenorswitchc https://support.mozilla.org/en-US/kb/keyboard-shortcuts-perform-firefox-tasks-quickly
+bind: <C-h>h "Tridactyl help" fillcmdline help
+bind <C-h>i tabopen moz-extension://926899c1-24a3-4569-9789-2f53b837f92e/static/docs/globals.html
+bind: <C-h>k "View keybindings" fillcmdline bind
+bind <C-h>K tabopenorswitchc https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
+bdoc <C-h>s "Goto tridactyl options"
+bind <C-h>s tabopenorswitchc moz-extension://13341d1e-1f1e-485d-88cc-4d8e57599a91/static/docs/classes/_src_lib_config_.default_config.html
+bind: <C-h>u "View URL-specific keybindings" fillcmdline bindurl
+bdoc <C-h>x "Open xdotool keycodes list"
+bind <C-h>x tabopenorswitchc https://gitlab.com/cunidev/gestures/-/wikis/xdotool-list-of-key-codes
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────╮
+" │ y -- yank │
+" ╰───────────╯
+commdoc bmyank "Yank bookmark data from bookmarks.json file"
+command bmyank jsb -d¦ places.bm.yank(JS_ARGS, "")¦
+commdoc yankmousepos "Yank the mouse pointer position (X Y)"
+command yankmousepos ! echo "yank $(xdotool getmouselocation | perl -pe 's/x:(\d+) y:(\d+) .*/$1 $2/')";
+
+command: yankall "Copy text from elements matching a selector" cujs -d¦ yankby(JS_ARGS.join(" "))¦
+command: yankfirst "Yank first element matching selector" cujs -d¦ yankby(JS_ARGS.join(" "), {firstMatch: true})¦
+command: yanknth "Yank nth element matching selector" cujs -d¦ yanknthby(JS_ARGS[1], JS_ARGS[2])¦
+command: yankhint "Yank an element matching selector [HINT]" cujs -d¦ yankhint(JS_ARGS.slice(1).join(","))¦
+command: yankinput "Yank input field [HINT]" cujs -d¦ yankinput(JS_ARGS.slice(1).join(","))¦
+command: yankjs "Yank javascript result" cujs -d¦ cutils.yankjsWr(JS_ARGS)¦
+
+bind y<C-h> showkeys y
+bind: yf "Yank element text by CSS selector (first match)" fillcmdline yankfirst
+bind: ym "Yank the current mouse position [X Y]" yankmousepos
+bind: yp "Yank paragraph/heading" yankhint p,code,pre,h1,h2,h3,h4,h5,h6,output,table
+bind: ys "Yank element text by CSS selector [HINT]" fillcmdline yankhint
+bind: yS "Yank element text by CSS selector (all)" fillcmdline yankall
+bdoc y? "Yank the current tridactyl config as JSON"
+bind y? jsb tri.excmds.yank(JSON.stringify(tri.config.USERCONFIG))
+
+bind: y0 "Yank newline" jsb utils.yank("\n");
+
+bind: y1 "Yank first H1 heading" yanknth h1
+bind: y2 "Yank first H2 heading" yanknth h2
+bind: y3 "Yank first H3 heading" yanknth h3
+bind: y4 "Yank first H4 heading" yanknth h4
+
+" | yd -- yank/datetime |
+bind: yd<C-h> "(show bindings: yank/datetime)" showkeys yd
+bdoc ydd "Yank current datetime (yyyy-mm-dd-HH-MM-SS)"
+bind ydd jsb utils.yank((new Date).toISOString().replace("T", "-").replace(/:[0-9.]+Z/, ""))
+
+" | yi -- yank/input |
+bind: yii "Yank input field [HINT]" yankinput
+
+" | yI -- yank/image |
+bind: yI<C-h> "(show bindings: yank/image)" showkeys yI
+bind: yII "Yank image source [HINT]" cujs yankhint("img", {property: "src"})
+bind: yIA "Append image source to clipboard [HINT]" cujs ; hint -c img -F i=>cutils.cbAppend(i.src)
+
+" | yk -- yank/bookmarks |
+bind yk<C-h> showkeys yk
+bind: ykk "Yank bookmark data from bookmarks.json file" fillcmdline bmyank
+bind: ykK "Yank keyword bookmark URL" fillcmdline bmyank -K
+bind: yks "Yank bookmark URL with rofi kfrom bookmarks.json file" bmyank -s -u
+bind: ykS "Yank keyword bookmark URL with rofi from bookmarks.json file" fillcmdline bmyank -S -u
+
+" | yl -- yank/links |
+bind: yl<C-h> "(show bindings: yank/links)" showkeys yl
+bind: yll "Yank links" withlinks links.yankAll()
+bind: yls "Yank selected links" withlinks links.yankSelected()
+bind: <A-y> "Yank selected links" withlinks links.yankSelected()
+
+" | yu -- yank/URL |
+bind: yu<C-h> "(show bindings: yank/URL)" showkeys yu
+bind: yugu "Yank nth parent URL" jsb_count utils.yank(urls.getNthParent(COUNT))
+bind: yugU "Yank nth from root URL" jsb_count utils.yank(urls.fromRoot(COUNT))
+
+" | yud -- yank/URL/domain |
+bind: yud<C-h> "(show bindings: yank/URL/domain)" showkeys yud
+bind: yudd "Yank page hostname" cujs cutils.yank(document.location.hostname)
+bind: yudD "Yank page hostname+protocol" cUjs cutils.yank(urls.fromRoot(0))
+bind: yudr "Yank page hostname+protocol as regex literal" cUjs cutils.yank(S.escRegex(urls.fromRoot(0), true))
+bind: yudR "Yank page hostname+protocol as regex source" cUjs cutils.yank(S.escRegex(urls.fromRoot(0)))
+
+" | yx -- yank/text |
+bind yx<C-h> showkeys yx
+bdoc yxh "Yank a text span highlighted with cutils.css.highlight (.tri_hl) [HINT]"
+bind yxh  hint -JVc ._tri_hl -F e=>cutils.yank(e.innerText)
+bind: yxH "Yank all text highlighted with cutils.css.highlight (.tri_hl)" yankall ._tri_hl
+bind: yxp "Yank paragraph/heading" hint -p -c p,code,pre,h1,h2,h3,h4,h5,h6,output,table
+bind: yxs "Yank spans of text, code etc" cujs cutils.yankspan()
+bind: yxx "Yank page text" cujs yankelt($1("body"))
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────╮
+" │ e -- goto │
+" ╰───────────╯
+bind e<C-h> showkeys e
+bind ea tabopen about:addons
+bind ec tabopenorswitchc about:config
+bind ed tabopenorswitchc about:downloads
+bind eD tabopenorswitchc about:debugging
+bdoc en "Open tridactyl newtab page"
+bind en tabopenorswitchc moz-extension://13341d1e-1f1e-485d-88cc-4d8e57599a91/static/newtab.html
+bind es tabopen about:support
+
+" | eb -- goto/sidebar |
+bind: ebh "Open history sidebar" xdokeyseq 0.2 menuacc+v ↓ → ↓ Return
+bind: ebk "Open bookmarks sidebar" xdokeyseq 0.2 menuacc+v ↓ → Return
+
+" | el -- goto/local |
+bind el<C-h> showkeys el
+bind eldw  tabopenorswitchc file:///home/troy/Downloads
+bind eldc  tabopenorswitchc file:///home/troy/Documents
+
+" | el -- goto/local/ebooks |
+bind el<C-h> showkeys el
+bind ele/  tabopenorswitchc file:///home/troy/ebooks
+bind elec  tabopenorswitchc file:///home/troy/ebooks/coding
+bind eled  tabopenorswitchc file:///home/troy/ebooks/dl
+bind elel  tabopenorswitchc file:///home/troy/.readinglist
+bind eles  tabopenorswitchc file:///home/troy/ebooks/cs
+bind elea  tabopenorswitchc file:///home/troy/ebooks/articles
+
+" | el -- goto/local/home |
+bind el<C-h> showkeys el
+bind elhe  tabopenorswitchc file:///home/troy/.emacs.d/private
+bind elhh  tabopenorswitchc file:///home/troy
+bind elhp  tabopenorswitchc file:///home/troy/.pentadactyl
+bind elhr  tabopenorswitchc file:///home/troy/repos
+bind elhs  tabopenorswitchc file:///home/troy/source
+bind elht  tabopenorswitchc file:///home/troy/.tridactyl
+
+" | el -- goto/local/opt |
+bind el<C-h> showkeys el
+bind elo/  tabopenorswitchc file:///opt
+bind eloc  tabopenorswitchc file:///opt/chrome-extensions
+bind elod  tabopenorswitchc file:///opt/deb
+bind elof  tabopenorswitchc file:///opt/ff-addons
+bind elos  tabopenorswitchc file:///opt/scripts
+bind elou  tabopenorswitchc file:///opt/userscripts
+bind eloU  tabopenorswitchc file:///opt/userstyles
+bind elow  tabopenorswitchc file:///opt/webapps
+
+" | el -- goto/local/pictures |
+bind el<C-h> showkeys el
+bind elp/   tabopenorswitchc file:///home/troy/Pictures
+bind elpa   tabopenorswitchc file:///home/troy/Pictures/art
+bind elpd   tabopenorswitchc file:///home/troy/Pictures/downloads
+bind elpv   tabopenorswitchc file:///home/troy/Pictures/vlc-snapshot
+
+" | el -- goto/local/usr |
+bind el<C-h> showkeys el
+bind elud   tabopenorswitchc file:///usr/share/doc/
+bind eluld  tabopenorswitchc file:///usr/local/share/doc/
+
+" | ew -- goto/window |
+bind: ewh "Open history window" xdokeyseq 0.2 menuacc+s ↵
+bind: ewd "Open downloads manager" xdokeyseq 0.2 menuacc+t ↵
+bind: ewk "Open bookmarks manager" xdokeyseq 0.2 menuacc+b ↵
+
+" | ey -- goto/dactyl |
+bind ey<C-h> showkeys ey
+bind: eyy "Goto tridactyl config folder" tabopenorswitchc file:///home/troy/.tridactyl
+
+" | eyr -- goto/dactyl/repo |
+bind eyr<C-h> showkeys ey
+bind: eyrc "Goto .tridactyl config repo" tabopenorswitchc https://github.com/troyp/.tridactyl/
+bind: eyrr "Goto tridactyl repo" tabopenorswitchc https://github.com/tridactyl/tridactyl/
+bind: eyrR "Goto Ramda JS docs" tabopenorswitchc https://ramdajs.com/docs/
+
+" | eys -- goto/dactyl/source |
+command gotoCommandSource jsb -p utils.tri.gotoCommandSource(JS_ARG);
+
+bind eys<C-h> showkeys eys
+bdoc eyss "Goto tridactyl source file"
+bind eyss fillcmdline_notrail tabopenorswitchc https://github.com/tridactyl/tridactyl/tree/master/src/
+bind: "Goto source of builtin tridactyl command" eysc fillcmdline gotoCommandSource
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────╮
+" │ a -- apps │
+" ╰───────────╯
+command: withurl "Pass current URL into command" composite get_current_url |
+command googletranslatepage jsb -d¦ apps.trans.page.google(...JS_ARGS)¦
+command bingtranslatepage jsb -d¦ apps.trans.page.bing(...JS_ARGS)¦
+
+unbind a
+bind a<C-h> showkeys a
+bind: ac "Open URL in Google Chrome" withurl ! /usr/local/bin/google-chrome
+bind: af "Open URL in Waterfox" withurl ! /opt/waterfox/waterfox --new-tab
+bdoc aw "Toggle wayback machine"
+bind aw urltoggle https://web.archive.org/web/https: https: https?://web.archive.org/web/[^:]+/https?: https?:
+bdoc a;w "Open link in wayback machine [HINT]"
+bind a;w composite hint -pipe | js -p tri.controller.acceptExCmd(`tabopen https://web.archive.org/web/${JS_ARG}`)
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────╮
+" │ a; -- apps/hints │
+" ╰──────────────────╯
+bind a;<C-h> showkeys a;
+bind: a;c "Open link in Google Chrome" composite hint -pipe a href | ! /usr/local/bin/google-chrome
+bind: a;f "Open link in Waterfox" composite hint -pipe a href | ! /opt/waterfox/waterfox
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────────╮
+" │ ad -- apps/downloads │
+" ╰──────────────────────╯
+commdoc opendl "[PROGRAM N] open nth last download with program"
+command opendl jsb -d¦ apps.openNthWithWr(c => places.dl.getLatest(c).then(dl=>dl.filename), JS_ARGS)¦
+commdoc opendln "[N PROGRAM] open nth last download with program"
+command opendln  jsb -d¦ places.dl.getLatest(JS_ARGS[1]).then(dl=>apps.openWithWr(dl.filename, JS_ARGS.slice(2)))¦
+commdoc opendldir "[PROGRAM N] open nth last download directory with program"
+command opendldir jsb -d¦ apps.openNthWithWr(c=>places.dl.getDir(c), JS_ARGS)¦
+commdoc opendldirn "[N PROGRAM] open nth last download directory with program"
+command opendldirn jsb -d¦ places.dl.getDir(JS_ARGS[1]).then(dir=>apps.openWith(dir, JS_ARGS[2]))¦
+commdoc opendldirindired "open nth last download directory in Emacs dired"
+command opendldirindired jsb -d¦ places.dl.openDirInDired(JS_ARGS[1])¦
+commdoc opendlinbrowser "Open nth last download in browser"
+command opendlinbrowser jsb -d¦ places.dl.getLatest(JS_ARGS[1]).then(dl=>utils.tab.open(`file://${dl.filename}`))¦
+commdoc opendldirinbrowser "Open nth last download directory with dolphin"
+command opendldirinbrowser jsb -d¦ places.dl.getDir(JS_ARGS[1]).then(dl=>utils.tab.open(`file://${dl}`))¦
+command showdldir  jsb -d¦ places.dl.getDir(JS_ARGS[1]).then(dir=>fillcmdline_nofocus(dir))¦
+commdoc yankdlpath "Yank last download path"
+command yankdlpath jsb -d¦ places.dl.yank(JS_ARGS[1]||1, "filename")¦
+commdoc yankdlfilename "Yank last download filename"
+command yankdlfilename jsb -d¦ places.dl.yank(JS_ARGS[1]||1, dl=>dl.filename.replace(/.*\//, ""))¦
+commdoc yankdldir "Yank directory of nth last download"
+command yankdldir jsb -d¦ places.dl.getDir(JS_ARGS[1]||1).then(dl=>utils.yank(dl))¦
+
+bind ad<C-h> showkeys ad
+bind: ads "Show all downloads" jsb places.dl.show()
+
+" | add -- apps/downloads/dir |
+bind add<C-h> showkeys add
+bind: addd "Open last download directory with dolphin" opendldir dolphin
+bind: adde "Open last download directory with dired" opendldirindired
+bind: addp "Show last download directory in commandline" showdldir
+bind: addr "Open last download directory with ranger" opendldir roxterm -e ranger --selectfile
+bind: adds "Open last download directory with program via mimeopen" opendldir roxterm -e zsh -c "mimeopen -a %s"
+bind: addx "Open last download directory with program" fillcmdline_withcount opendldirn
+
+" | ado -- apps/downloads/open |
+bind ado<C-h> showkeys adx
+bind: adoo "Open last download in browser" opendlinbrowser
+bind: ado// "Open last download directory in browser" opendldirinbrowser
+
+
+" | adx -- apps/downloads/run |
+bind: adxd "Open last download with default program (via mimeopen)" opendl mimeopen -n
+bind: adxs "Open last download with program via mimeopen" opendl roxterm -e zsh -c "mimeopen -a %s"
+bind: adxx "Open last download with program" fillcmdline_withcount opendln
+bind: adx= "Open last download: set default application for type and open" opendl roxterm -e zsh -c "mimeopen -d %s"
+
+" | ady -- apps/downloads/yank |
+bind: adyd "Yank last download directory" yankdldir
+bind: adyf "Yank last download filename" yankdlfilename
+bind: adyy "Yank last download path" yankdlpath
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────────╮
+" │ ap -- apps/pw │
+" ╰───────────────╯
+commdoc pwhashsite "Hash site domain with password-hasher"
+command pwhashsite jsb -d¦ apps.pw.hashSite(parseInt(JS_ARGS?.[1])||1)¦
+
+bind ap<C-h> showkeys ap
+bind: aps "Hash site domain with password-hasher" pwhashsite
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────────╮
+" │ at -- apps/translate │
+" ╰──────────────────────╯
+command trans jsb -d¦ apps.trans.transsh(JS_ARGS)¦
+
+bind at<C-h> showkeys at
+bind: att "Translate text in command line: [sl:tl] TEXT" fillcmdline trans
+
+" | atp -- apps/translate/page |
+bind: atpp "Google translate page" googletranslatepage
+bind: atpb "Bing translate page" bingtranslatepage
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────────╮
+" │ x -- extensions │
+" ╰─────────────────╯
+bind x<C-h> showkeys x
+
+" | xg -- Violentmonkey |
+bind xg<C-h> showkeys xg
+bdoc xgg tabopenorswitchc "Violentmonkey addon page"
+bind xgg tabopenorswitchc moz-extension://db4d65cd-28d4-401b-8744-0faae0d1c402/options/index.html
+bind: xgs "Load gmscript from config dir" tabopenorswitchc file:///home/troy/.tridactyl/gmscripts/
+
+bdoc xhh "referer control extension page"
+bind xhh tabopenorswitchc moz-extension://f8a9790f-55e6-46ab-a00f-9e2dafbbf850/chrome/content/options.html
+
+" | xr -- 10ten japanese reader |
+bind xr<C-h> showkeys xr
+bind: xrr "Toggle 10ten Japanese reader" xdokey alt+r
+abind: <A-F1> "Toggle 10ten Japanese reader" xdokey alt+r
+bind: xra "10ten addon page" tabopenorswitchc https://addons.mozilla.org/en-GB/firefox/addon/10ten-ja-reader/
+bind: xrs "10ten source repo" tabopenorswitchc https://github.com/birchill/10ten-ja-reader
+
+" | xs -- Custom scrollbars |
+bind xs<C-h> showkeys xs
+bdoc xsa "Custom scrollbars addon page"
+bind xsa tabopenorswitchc https://addons.mozilla.org/en-GB/firefox/addon/custom-scrollbars/
+bdoc xss "Custom scrollbars options page"
+bind xss tabopenorswitchc moz-extension://32050eb2-dc60-41e8-9dfa-b5578d309895/options/options.html
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────╮
+" │ , -- leader │
+" ╰─────────────╯
+bind ,<C-h> showkeys ,
+
+" ╭───────────╮
+" │ ,a -- web │
+" ╰───────────╯
+bind: ,a<C-h> showkeys ,a
+bind: ,aa "Open Afterpay" tabopenorswitchc https://portal.afterpay.com/au/
+bind: ,ab "Open banking" withjsb user.bankurl | tabopenorswitchc
+bind: ,ac "Open Google calendar" tabopenorswitch https://calendar.google.com/calendar/u/0/r/month
+bind: ,ap "Open Paypal" tabopenorswitchc https://www.paypal.com/myaccount/home
+bind: ,ay "Open MyGov" tabopenorswitchc https://my.gov.au/LoginServices/main/login?execution=e1s1
+
+" ╭──────────────────╮
+" │ ,ag -- web/games │
+" ╰──────────────────╯
+bind ,ag<C-h> showkeys ,ag
+
+" | ,agd -- games/D&D |
+bind ,agd<C-h> showkeys ,agd
+bind: ,agdb "Open D&D Beyond" tabopenorswitchc https://www.dndbeyond.com/
+bind: ,agdr "Open RPGBot.net" tabopenorswitchc https://rpgbot.net/dnd5/
+bind: ,agdt "Open Tabletop Builds" tabopenorswitchc https://tabletopbuilds.com/
+
+" ╭──────────────────────────╮
+" │ ,am -- web/mail+contacts │
+" ╰──────────────────────────╯
+bind ,am<C-h> showkeys ,am
+bind: ,amc "Open Google Contacts" tabopenorswitchc https://contacts.google.com/?hl=en&tab=mC
+bind: ,amC "Open Gmail Contacts (basic)" tabopenorswitchc https://mail.google.com/mail/u/0/h/k4067n2i55u9/?&v=cl
+bind: ,amm "Open Gmail (basic)" tabopenorswitchc https://mail.google.com/mail/u/0/h/1f0xqcpo2pdl3/?f=1
+bind: ,amM "Open Gmail" tabopenorswitchc https://mail.google.com/mail/u/0/#inbox
+bind: ,amw "Compose mail (gmail)" tabopenorswitchc https://mail.google.com/mail/u/0/h/1vlpaqi99ql4v/?&cs=b&pv=tl&v=b
+bdoc ,amu "Click unsubscribe"
+bind ,amu cujs !click("a", {match: /unsubscribe/i, lastMatch: true}) && tri.excmds.find("unsubscribe")
+bind: ,amy "Open Yahoo Mail" tabopenorswitchc https://au.mail.yahoo.com/d/folders/1
+
+" ╭─────────────────────╮
+" │ ,as -- web/shopping │
+" ╰─────────────────────╯
+bind ,as<C-h> showkeys ,as
+bind: ,asa "Open Amazon AU" tabopenorswitch https://www.amazon.com.au/gp/cart/view.html/ref=nav_cart
+bind: ,asc "Open Coles" tabopenorswitch https://shop.coles.com.au/a/ballina/home
+bind: ,ase "open eBay" tabopenorswitch https://cart.ebay.com.au
+bind: ,asj "open Jackson's Art" tabopenorswitch https://www.jacksonsart.com/en-au/checkout/cart/
+bind: ,asl "Open liquor specials" jsb utils.tab.openMultiple(sites.LISTS.liquor_specials, {background:true});
+bind: ,asp "Open Paypal" tabopenorswitch https://www.paypal.com/myaccount/home
+bind: ,asw "Open Woolworths" tabopenorswitch https://www.woolworths.com.au/shop/mylists
+bind: ,asz "Open Amazon AU" tabopenorswitch https://www.amazon.com.au/gp/cart/view.html/ref=nav_cart
+
+" ╭───────────────╮
+" │ ,av -- web/AV │
+" ╰───────────────╯
+bind ,av<C-h> showkeys ,av
+bind: ,ava "AccuRadio Classical" tabopenorswitchc https://www.accuradio.com/classical/
+bind: ,avd "Open Disney Plus" tabopenorswitchc https://www.disneyplus.com/en-gb/home
+bind: ,avn "Open Netflix" tabopenorswitchc https://www.netflix.com/
+bind: ,avp "Goto Amazon Prime Video" tabopenorswitchc https://www.primevideo.com/storefront/home/ref=atv_nb_logo
+bind: ,avv "Open video apps" jsb utils.tab.openMultiple(sites.LISTS.video_apps)
+bind: ,avy "Goto Youtube" tabopenorswitchc https://www.youtube.com/
+
+" ╭────────────────────╮
+" │ ,aw -- web/weather │
+" ╰────────────────────╯
+bind ,aw<C-h> showkeys ,aw
+" Open Goonellabah Weather: 48 hour daily summary (weatherzone)
+bind ,awd topos https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah/next48hours#daily-summaries
+" Show Goonellabah Sunrise and Sunset Times
+bind ,aws jsb utils.yankf(`SUNRISE: %s\nSUNSET:  %s`, ...apps.sunriseSunset(...user.latlong));
+" Open Lismore Weather (BoM)
+bind ,aww tabopenorswitchc http://www.bom.gov.au/nsw/forecasts/lismore.shtml
+" Open Goonellabah Weather (timeanddate.com)
+bind ,awt tabopenorswitchc https://www.timeanddate.com/weather/@2164966
+" Open Goonellabah Weather (weatherzone)
+bind ,awz tabopenorswitchc https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────────────╮
+" │ ,c -- command-line │
+" ╰────────────────────╯
+bind: ! "Open command line with exclaim command" fillcmdline !!
+
+bind ,c<C-h> showkeys ,c
+bind: ,cc "Yank the Nth last command-line history item" jsb_count utils.tri.cmdYankHistory(COUNT)
+bind: ,cC "Yank the last N command-line history items" jsb_count utils.tri.cmdYankHistoryLastN(COUNT)
+bind: ,cp "Execute commands in clipboard" expaste
+bdoc ,cr "Open command-line with previous command, replacing first argument"
+bind ,cr :: fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.forward_word ; text.kill_word ; js " " | text.insert_text
+bdoc ,cr "Open command-line with previous command, changing 'tabopen' to 'open' and replacing first argument"
+bind ,c;r :: fillcmdline_notrail ; ex.prev_history ; text.beginning_of_line ; text.delete_char; text.delete_char; text.delete_char; text.forward_word ; text.kill_word ; js " " | text.insert_text
+bind: ,cs "Show elements matching selector" fillcmdline getselector
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────╮
+" │ ,d -- dev │
+" ╰───────────╯
+bind: ,dx "Toggle X-Ray view" capps capps.toggleXray()
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────────────────╮
+" │ ,e -- javascript eval │
+" ╰───────────────────────╯
+commdoc showjs "Show javascript expression result on commandline"
+command showjs cujs -d¦ cutils.message(eval(JS_ARGS.join(" ")), true)¦
+commdoc jse "Show javascript expression result in a message box"
+command jse cujs -d¦ cutils.message(eval(JS_ARGS.join(" ")))¦
+commdoc getproperties "Eval expression to obtain object and display its properties in a message box"
+command getproperties js -d¦ alert(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
+command jsb_getproperties jsb -d¦ utils.message(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
+commdoc jsbe "Eval expression and display in commandline"
+command jsbe jsb -d¦ tri.excmds.jsb(`tri.excmds.fillcmdline_nofocus(${JS_ARGS.join(" ")})`)¦
+commdoc jsbm "Eval expression and display in a message box"
+command jsbm jsb -d¦ tri.excmds.jsb(`utils.msg(${JS_ARGS.join(" ")})`)¦
+commdoc jse "Find elements matching selector and display in a message box"
+command getselector js -d¦ alert([...document.querySelectorAll(JS_ARGS.join(" "))].map(t=>t.tagName+"\t"+t.innerText.slice(0,50).replace("\n","\t")).join("\n"))¦
+command jseq composite js -r cutils.js ; js -d¦ fillcmdline_nofocus(eval(JS_ARGS.join(" ")))¦
+command jseq! composite js -r cutils.js ; js -d¦ fillcmdline("jseq! "+eval(JS_ARGS.join(" ")))¦
+
+bind ,e<C-h> showkeys ,e
+bind: ,ec "Evaluate javascript expression iteratively in commandline" fillcmdline jseq!
+bind: ,ee "Evaluate javascript expression" fillcmdline jse
+bind: ,ej "Load cutils and evaluate javascript expression" fillcmdline cujs
+bind: ,ep "Display properties of expression" fillcmdline getproperties
+bind: ,es "Show elements matching SELECTOR" fillcmdline getselector
+
+
+" | ,eb -- jsb eval |
+bind ,eb<C-h> showkeys ,eb
+bind: ,ebb "Eval expression and display in message box" fillcmdline jsbm
+bind: ,ebp "Display properties of expression in message box" fillcmdline jsb_getproperties
+
+bind: J "Evaluate javascript expression in commandline" fillcmdline jseq
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────╮
+" │ ,i -- images │
+" ╰──────────────╯
+
+" | ,ii -- images/hints |
+command: imageresize "Resize image [HINTS]" cujs -d¦ cutils.img.hint.cssTransform(`scale(${JS_ARGS[1]})`)¦
+commdoc imagematrix "Transform image with matrix [HINTS]"
+command imagematrix cujs -d¦ cutils.img.hint.cssTransform(`matrix(${JS_ARGS.slice(1).join(',')})`)¦
+
+bind: ,ii<C-h> "(show bindings: images/hints)" showkeys ,ii
+bind: ,iif "Flip image horizontally [HINTS]" hint img -F e=>e.style.transform="scaleX(-1)"
+bind: ,iiF "Flip image vertically [HINTS]" hint img -F e=>e.style.transform="scaleY(-1)"
+bind: ,iii "Restore image (cancel transform) [HINTS]" hint img -F e=>e.style.transform=""
+bind: ,iim "Transform image using matrix [HINTS]" fillcmdline imagematrix
+bind: ,iir "Resize image [HINTS]" fillcmdline imageresize
+
+" | ,it -- images/transform |
+bind: ,it<C-h> "(show bindings: images/transform)" showkeys ,it
+bind: ,ite "Edit image with pinta" shellcmdonurlfile pinta
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────────╮
+" │ ,j -- japanese │
+" ╰────────────────╯
+bind ,j<C-h> showkeys ,j
+
+bind: ,jj "Jisho search (clipboard)" :: pastef j_search ${s} | _
+
+" | ,jk -- kanji |
+bind ,jk<C-h> showkeys ,jk
+bind: ,jkk "Jisho kanji search (hints)" jsb sites.j.kanjiHintSearch()
+bind: ,jkh "Google Translate handwritten input" tabopenorsummon https://translate.google.com.au/#ja/en/
+bind: ,jkp "Jisho kanji search (clipboard)" pastef j_kanjisearch ${s} | _
+bind: ,jkr "Jisho kanji radical search" tabopenorswitchc https://jisho.org/#radical
+bind: ,jkv "Visual Kanji Search (clipboard)" pastef https://thekanjimap.com/index.html?k=${s} | tabopenorswitchc
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────╮
+" │ ,l -- links │
+" ╰─────────────╯
+bind ,l<C-h> showkeys ,l
+
+command withlinks cujs -r links.js ; js
+
+bind: ,la "Append links to end of page" withlinks links.append()
+bind: ,lm "Append links as markdown to end of page" withlinks links.appendAsMarkdown()
+bind: ,ls "Make links selectable (select-like-a-boss)" js -r js/select-like-a-boss.js
+bind: ,lt "Append link text & destinations to end of page" withlinks links.appendWithText()
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────╮
+" │ ,m -- manipulate │
+" ╰──────────────────╯
+bind ,m<C-h> showkeys ,m
+
+command: click "Click first element matching selectors" cujs -d¦ cutils.click(JS_ARGS.slice(1).join(" "))¦
+commdoc clickall "Click first element matching selectors"
+command clickall cujs -d¦ cutils.click(JS_ARGS.slice(1).join(" "), {all: true})¦
+
+" | ,mx -- manipulate/checkboxes |
+bind ,mx<C-h> showkeys ,mx
+bind: ,mxx "Click all checkboxes" cujs cutils.clickall("input[type=checkbox]")
+bind: ,mxy "Check all checkboxes" cujs $$("input[type=checkbox]").forEach(e=>e.checked=true)
+bind: ,mxn "Uncheck all checkboxes" cujs $$("input[type=checkbox]").forEach(e=>e.checked=false)
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────╮
+" │ ,n -- edit │
+" ╰────────────╯
+bind ,n<C-h> showkeys ,n
+
+command toggleprop cujs -d¦ togglepropWr(JS_ARGS)¦
+command: rm "Remove elements matching selectors" cujs -d¦ rmall(...JS_ARGS)¦
+commdoc rmfirst "Remove first element matching selectors"
+command rmfirst cujs -d¦ rm(JS_ARGS.slice(1).join(","), {firstMatch: true})¦
+command: keep "Remove elements except those matching selectors" cujs -d¦ keep(JS_ARGS)¦
+
+bind: ,nhd "Remove highlighting span from text [HINT]" hint -c ._tri_hl -F e=>e.outerHTML=e.innerHTML
+bind: ,nhD "Remove all highlighting spans from text" cujs $$("span._tri_hl").forEach(e=>e.outerHTML=e.innerHTML)
+bind: ,nhh "Highlight selected text" cujs cutils.css.highlight()
+bind: <A-F3> "Highlight selected text" cujs cutils.css.highlight()
+
+bind: ,nc "Cleanup page (remove clutter)" cujs -r sites/cleanup.c.js
+bind: ,ni "Remove images" rm figure,img
+bind: ,nI "Remove first image" rmfirst figure,img
+bind: ,nn "Remove elements matching selectors" fillcmdline rm
+bind: ,no "Remove elements except those matching selectors" fillcmdline keep
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────────╮
+" │ ,r -- reference │
+" ╰─────────────────╯
+bind ,r<C-h> showkeys ,r
+
+" | ,ru -- reference/unicode |
+commdoc unicodehexcodes "Unicode hex code of characters"
+command unicodehexcodes jsb -d¦ apps.unicodeHexcodes(JS_ARGS.join(""))¦
+commdoc unicode "Describe unicode characters"
+command unicode jsb -d¦ apps.unicode(JS_ARGS.join(" "))¦
+
+bind: ,rmm "World map (google)" tabopenorswitchc https://www.google.com/maps/@12.8367482,26.1595951,3z
+
+bind: ,rp "Periodic table" tabopenorswitchc https://ptable.com
+
+" | ,ru -- reference/unicode |
+bind ,ru<C-h> showkeys ,ru
+bind: ,ruu "Describe unicode characters" fillcmdline unicode
+bind: ,rux "Show unicode hex codes" fillcmdline unicodehexcodes
+
+" | ,rw -- reference/wikipedia |
+command wpeplist jsb -d¦ sites.wp.episodeList(JS_ARGS.join(" "))¦
+
+bind ,rw<C-h> showkeys ,rw
+bind ,rwe fillcmdline wpeplist
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────╮
+" │ ,u -- URL │
+" ╰───────────╯
+bind ,u<C-h> showkeys ,u
+
+" | ,ud -- url/delete |
+bind ,ud<C-h> showkeys ,ud
+bind: ,udd "Remove part of URL" fillcmdline urlremove
+bind: ,udq "Remove URL query and hash" withurlsjs urls.mod.delComponent("search", "hash")
+bind: ,udQ "Remove URL query" withurlsjs urls.mod.delComponent("search")
+bind: ,udh "Remove URL hash (fragment)" withurlsjs urls.mod.delComponent("hash")
+
+" | ,ut -- url/toggle |
+bind ,ut<C-h> showkeys ,ut
+bind: ,uts "Toggle HTTPS:" urltoggle https:// http://
+bind: ,utt "Toggle URL component" urltoggle
+bind: ,ut- "Toggle URL spaces <-> dashes" urltoggle %20 -
+bind: ,utj "Toggle URL en <-> ja" urltoggle /en. /ja.
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────╮
+" │ ,v -- conversion │
+" ╰──────────────────╯
+command convertunits jsb -d¦ apps.convertUnits(JS_ARGS).then(s=>tri.excmds.fillcmdline_nofocus(s))¦
+
+bind ,v<C-h> showkeys ,v
+bind ,vv fillcmdline convertunits
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────────────╮
+" │ ,x -- miscellaneous │
+" ╰─────────────────────╯
+command scrollnthintoview cujs -d¦ cutils.scrollNthIntoView(JS_ARGS[1], JS_ARGS?.[2])¦
+
+bind ,x<C-h> showkeys ,x
+
+" | ,xf -- misc/fix |
+bind: ,xf<C-h> "(show bindings: misc/fix)" showkeys ,xf
+bind: ,xff "Fix font family" cujs $$("p,h1,h2,h3,h4").forEach(e=>e.style.fontFamily="notoSans")
+
+" | ,xt -- misc/table |
+command: copytablecols "Copy table columns" cujs -d¦ cutils.copytablecols(JS_ARGS)¦
+commdoc copytablecols_strict "Copy table columns (omit rows without enough columns)"
+command copytablecols_strict cujs -d¦ cutils.copytablecols(JS_ARGS, {strict: true})¦
+command scrolltableintoview cujs -d¦ cutils.scrollNthIntoView("table", JS_ARGS?.[1])¦
+
+bind ,xt<C-h> showkeys ,xt
+bind: ,xtc "Copy table columns [HINT]" fillcmdline copytablecols
+bind: ,xtC "Copy table columns (omit rows without enough columns) [HINT]" fillcmdline copytablecols_strict
+bind: ,xtd "Delete table row [HINT]" hint -Jk tr
+bind: ,xt;d "Delete multiple table rows [HINTS]" hint -Jqk tr
+bind: ,xtt "Scroll table into view" scrolltableintoview
+
+" | ,xts -- misc/table/sort |
+bind: ,xtss "Sort table [HINT]" cujs -r js/sorttables.js ; hint -Jc table -F t=>sorttable.makeSortable(t)
+bind: ,xtsa "Sort all tables" cujs -r js/sorttables.js ; js $$("table").forEach(t=>sorttable.makeSortable(t))
+
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────╮
+" │ ; -- hints │
+" ╰────────────╯
+" ╭─────────────╮
+" │ ,, -- hints │
+" ╰─────────────╯
+command: cuhint "Load cutils.js and execute hint" cujs ; hint
+command: cshint "Load cutils.js and csites and execute hint" csites ; hint
+
+bind: ;Y "Yank link text" cuhint -JF e=>cutils.yankelt(e)
+
+bind ,,<C-h> showkeys ,,
+bind: ,,b "Hint buttons" hint button
+bind ,,c hint -c [class*="expand"],[class="togg"]
+
+" | ,,i -- hints/image |
+bind ,,i<C-h> showkeys ,,i
+bind: ,,is "Yank image source" composite hint -pipe img src | clipboard yank
+
+" middle and right click using xdotool
+command xhintclick xdoelem a,img,th,button,input,select,details,[onclick],[contenteditable=true],[tabindex] -e click
+bind: ,,x "Middle click element" xhintclick 2
+bind: ,,m "Right click element (context menu)" xhintclick 3
+
+" ╭──────────────────────────────────────────────────╮
+" │ ,,f -- numeric hints: allow alphabetic filtering │
+" ╰──────────────────────────────────────────────────╯
+bind ,,f<C-h> showkeys ,,f
+bind ,,fb  composite set hintchars 0123456789 ; hint -b ; unset hintchars
+bind ,,ff  composite set hintchars 0123456789 ; hint ; unset hintchars
+bind ,,ft  composite set hintchars 0123456789 ; hint -t ; unset hintchars
+
+bind: ,,lu "Follow unvisited link [HINTS]" hint -c :link
+bind: ,,lv "Follow visited link [HINTS]" hint -c :visited
+bind: ,,lU "Follow unvisited link in new tab [HINTS]" hint -c :link
+bind: ,,lV "Follow visited link in new tab [HINTS]" hint -c :visited
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────╮
+" │ marks │
+" ╰───────╯
+
+" | marks -- per-page position marks |
+command: setmark "Set mark" jsb -p tri.controller.acceptExCmd(`js window._tri_mark_reg_${JS_ARG}=window.scrollY`)
+commdoc gotomark "Jump to mark on page"
+command gotomark jsb -p tri.controller.acceptExCmd(`js window.scrollTo(0, window._tri_mark_reg_${JS_ARG})`)
+
+bind: m "Set mark (page-local)" gobble 1 setmark
+jsb utils.tri.docdef(["bind ' \"Goto mark (page-local)\""], {noDef: true})
+jsb tri.excmds.bind("'", "gobble 1 gotomark")
+
+" | quickmarks (qmarks) -- different implementation from tridactyl's |
+jsb tri.config.USERCONFIG.qmarks ||= {}
+command: qmarks "Show qmarks" jsb utils.tri.qmarks()
+command: setqmark "Set qmark" jsb -p utils.tri.qmarkset(JS_ARG)
+command: openqmark "Open qmark in current tab" jsb -p open(tri.config.USERCONFIG.qmarks[JS_ARG])
+commdoc tabopenorswitchqmark "Open qmark in new tab or switch to existing tab"
+command tabopenorswitchqmark jsb -p utils.tab.openOrSwitch(tri.config.USERCONFIG.qmarks[JS_ARG])
+" command: getqmark "Echo qmark" jsb -p tri.config.USERCONFIG.qmarks[JS_ARG]
+
+bind: M "Set qmark" gobble 1 setqmark
+bind: go "Open qmark here" gobble 1 openqmark
+bind: gn "Goto qmark" gobble 1 tabopenorswitchqmark
+bind: <C-h>q "Show qmarks" qmarks
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────────────────────╮
+" │ ex/insert/input-mode keybindings │
+" ╰──────────────────────────────────╯
+
+" src/libs/editor.ts
+bind --mode=ex      <C-a>    text.beginning_of_line
+bind --mode=insert  <C-a>    text.beginning_of_line
+bind --mode=input   <C-a>    text.beginning_of_line
+bind --mode=ex      <C-e>    text.end_of_line
+bind --mode=insert  <C-e>    text.end_of_line
+bind --mode=input   <C-e>    text.end_of_line
+bind --mode=ex      <C-f>    text.forward_char
+bind --mode=insert  <C-f>    text.forward_char
+bind --mode=input   <C-f>    text.forward_char
+bind --mode=ex      <C-b>    text.backward_char
+bind --mode=insert  <C-b>    text.backward_char
+bind --mode=input   <C-b>    text.backward_char
+bind --mode=ex      <C-k>    text.kill_line
+bind --mode=insert  <C-k>    text.kill_line
+bind --mode=input   <C-k>    text.kill_line
+bind --mode=ex      <C-u>    text.backward_kill_line
+bind --mode=insert  <C-u>    text.backward_kill_line
+bind --mode=input   <C-u>    text.backward_kill_line
+bind --mode=ex      <C-l>    text.delete_char
+bind --mode=insert  <C-l>    text.delete_char
+bind --mode=input   <C-l>    text.delete_char
+bind --mode=ex      <C-d>    text.delete_char
+bind --mode=insert  <C-d>    text.delete_char
+bind --mode=input   <C-d>    text.delete_char
+bind --mode=ex      <C-h>    text.delete_backward_char
+bind --mode=insert  <C-h>    text.delete_backward_char
+bind --mode=input   <C-h>    text.delete_backward_char
+bind --mode=ex      <C-y>    composite getclip selection | text.insert_text
+bind --mode=insert  <C-y>    composite getclip selection | text.insert_text
+bind --mode=input   <C-y>    composite getclip selection | text.insert_text
+ibind: <A-;> "Switch to last accessed tab" tabswitchprev
+ibind: <A-:> "Switch to last accessed tab and close current tab" tabswitchprev!
+
+" src/libs/commandline_cmds.ts
+bind --mode=ex  <C-n>      ex.next_history
+bind --mode=ex  <C-p>      ex.prev_history
+bind --mode=ex  <Tab>      ex.next_completion
+bind --mode=ex  <S-Tab>    ex.prev_completion
+bind --mode=ex  <C-/>      ex.deselect_completion
+bind --mode=ex  <A-w>      ex.execute_ex_on_completion clipboard yank
+bind --mode=ex  <C-K>      withjsb places.kw.rofiGetKW() | text.insert_text
+cbind: <A-;> "Switch to last accessed tab" tabswitchprev
+cbind: <A-:> "Switch to last accessed tab and close current tab" tabswitchprev!
+
+bind --mode=insert  <C-m>    withjsb user.email      | text.insert_text
+bind --mode=insert  <C-M>    withjsb user.email2     | text.insert_text
+bind --mode=insert  <C-I>    withjsb user.name       | text.insert_text
+bind --mode=insert  <C-T>    withjsb user.firstname  | text.insert_text
+bind --mode=insert  <C-L>    withjsb user.lastname   | text.insert_text
+bind --mode=insert  <C-A>    withjsb user.street     | text.insert_text
+bind --mode=insert  <C-S>    withjsb user.suburb     | text.insert_text
+bind --mode=insert  <C-B>    withjsb user.mobile     | text.insert_text
+bind --mode=insert  <C-Z>    withjsb user.postcode   | text.insert_text
+bind --mode=insert  <C-Q>    withjsb user.masterpw   | text.insert_text
+bind --mode=insert  <C-C>    withjsb user.creditcard | text.insert_text
+
+bind --mode=insert  <C-c><C-h> fillcmdline_notrail bind --mode=input <C-c>
+bind --mode=insert  <C-c>m    withjsb user.email      | text.insert_text
+bind --mode=insert  <C-c>M    withjsb user.email2     | text.insert_text
+bind --mode=insert  <C-c>i    withjsb user.name       | text.insert_text
+bind --mode=insert  <C-c>t    withjsb user.firstname  | text.insert_text
+bind --mode=insert  <C-c>l    withjsb user.lastname   | text.insert_text
+bind --mode=insert  <C-c>d    withjsb user.address    | text.insert_text
+bind --mode=insert  <C-c>a    withjsb user.street     | text.insert_text
+bind --mode=insert  <C-c>s    withjsb user.suburb     | text.insert_text
+bind --mode=insert  <C-c>b    withjsb user.mobile     | text.insert_text
+bind --mode=insert  <C-c>z    withjsb user.postcode   | text.insert_text
+bind --mode=insert  <C-c>q    withjsb user.masterpw   | text.insert_text
+bind --mode=insert  <C-c>p    withjsb user.phone      | text.insert_text
+bind --mode=insert  <C-c>c    withjsb user.creditcard | text.insert_text
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────────╮
+" │ Visual-mode bindings │
+" ╰──────────────────────╯
+vbind: Y "Yank selected text" cujs cutils.yank(window.getSelection().toString())
+vbind: p "Open selected URL/search term in adjacent tab" cujs window.getSelection().toString() | tabopen_adj
+vbind: P "Open selected URL/search term in current tab" cujs window.getSelection().toString() | open
+
+vbind: <A-;> "Switch to last accessed tab" tabswitchprev
+vbind: <A-:> "Switch to last accessed tab and close current tab" tabswitchprev!
+ 
