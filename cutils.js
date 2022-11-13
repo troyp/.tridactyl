@@ -84,6 +84,25 @@ var cutils = {
         return elems.find(e=>e[opts.textProperty].match(text));
     },
 
+    /**   $$match(SELECTOR, PROP, TEXT)
+     *    $$match(SELECTOR, PROP, TEXT, {context: CONTEXT})
+     *    $$match(SELECTOR, PROP, TEXT, CONTEXT)
+     *  Return an array of elements in subtree CONTEXT matching SELECTOR, whose property PROP matches TEXT.
+     *  TEXT may be either a string or a regular expression.
+     */
+    $$match: function(selector, text, opts={}) {
+        if (opts instanceof Node) opts = {context: opts};
+        opts.textProperty ||= "innerText";
+        const elems = cutils.get(
+            selector,
+            {
+                textProperty: prop,
+                match: text,
+                ...opts
+            });
+        return elems.filter(e=>e[opts.textProperty].match(text));
+    },
+
     /** Clicks matching element(s). If successful, returns an array of clicked items.
      *  If unsuccessful, returns null.
      */
@@ -214,6 +233,17 @@ var cutils = {
         });
         return cutils.get(selector, {firstMatch:true, ...opts})?.[0];
     },
+
+    getSearchField: function(n) {
+        const inputFields = cutils.get("input");
+        const searchFields = inputFields.filter(
+            e => e.placeholder.match(/search/i)
+                || e["aria-label"] == "Search"
+                || e.id == "search" || e.classList.contains("search")
+        );
+        return searchFields?.[n];
+    },
+
 
     getSelectionDOM: function() {
         var str = getSelectionHtml();
@@ -458,6 +488,14 @@ var cutils = {
         else
             return res?.content.trim().split("\n");
     },
+
+    setInput: function(elt, value) {
+        if (!(elt instanceof Node)) elt = $1(elt);
+        elt.value = value;
+        elt.dispatchEvent(new Event("input"));
+        elt.dispatchEvent(new Event("change"));
+    },
+
 
     /* use `await sleep(ms)` in async function to delay execution */
     sleep: async function(ms) { return new Promise(res=>setTimeout(res, ms)); },
@@ -817,11 +855,11 @@ window.cutils = cutils;
 window.R = R;
 
 [
-    "$$", "$1", "$$cls", "$1cls", "$id", "$$tag", "$1tag", "$$t", "$1t",
+    "$$", "$1", "$$cls", "$1cls", "$id", "$$tag", "$1tag", "$$t", "$1t", "$$match",
     "click", "clickall", "click1",
     "get1", "getText", "getText1",
     "getSelectionDOM", "getSelectionHtml",
-    "isolate", "jumpToHeading", "keep", "rm", "rmall", "toggleprop", "togglepropWr",
+    "isolate", "jumpToHeading", "keep", "rm", "rmall", "setInput", "toggleprop", "togglepropWr",
     "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankjs", "yankjsWr", "yankspan",
     "hexToRGB", "datetime", "isInViewport", "isDisplayed",
 ].forEach(k => window[k]=cutils[k]);
