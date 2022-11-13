@@ -1,5 +1,28 @@
+" ╭────────────────────────────────────────────────╮
+" │                                                │
+" │  defns.tri -- command and binding definitions  │
+" │                                                │
+" ╰────────────────────────────────────────────────╯
 
-" ─────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────────────────────╮
+" │ Bind with documentation commands │
+" ╰──────────────────────────────────╯
+command: bind: "bind with description" docdef bind
+command bdoc docset bind
+commdoc docbindmode "bind for mode with description"
+command docbindmode jsb -d¦ utils.tri.docBindMode(JS_ARGS)¦
+command bindmode jsb -d¦ utils.tri.bindMode(JS_ARGS)¦
+command unbindmode jsb -d¦ utils.tri.unbindMode(JS_ARGS)¦
+command: ibind "bind for insert/input-mode" bindmode i
+command: vbind "bind for visual-mode" bind --mode=visual
+command: cbind "bind for ex-mode" bind --mode=ex
+command: abind "bind for normal, insert, input, ex, visual and hint modes" bindmode all
+command: ibind: "bind for insert/input-mode with description" docbindmode i
+command: vbind: "bind for visual-mode with description" docbindmode visual
+command: cbind: "bind for ex-mode with description" docbindmode ex
+command: abind: "bind for normal, insert, input, ex, visual and hint modes with description" docbindmode all
+command: bindurl: "bindurl with description" jsb -d¦ utils.tri.docBindUrl(JS_ARGS)¦
+
 " ╭──────────────────────────╮
 " │ Browser-mode keybindings │
 " ╰──────────────────────────╯
@@ -520,9 +543,9 @@ bind: ssaJ "Search amazon, ebay and jacksonsart: last tab" fillcmdline multiengi
 " ╭───────────────╮
 " │ <C-h> -- help │
 " ╰───────────────╯
-command showkeys fillcmdline_notrail bind
-command showkeysurl fillcmdline_notrail bindurl
-command searchnmaps jsb -d¦ utils.tri.searchNmapsWrapper(JS_ARGS.join(" "))¦
+command: showkeys "Open completion menu for bindings" fillcmdline_notrail bind
+command: showkeysurl "Open completion menu for :bindurl bindings" fillcmdline_notrail bindurl
+command: searchnmaps "Search user-set bindings" jsb -d¦ utils.tri.searchNmapsWrapper(JS_ARGS.join(" "))¦
 
 bind <C-h><C-h> showkeys <C-h>
 bind: <C-h>a "Open list of ui.key.accelKey values" topos https://searchcode.com/codesearch/view/26755902/

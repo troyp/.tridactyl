@@ -59,33 +59,18 @@ command docdef jsb -d‖ utils.tri.docdef(JS_ARGS)‖
 command docset jsb -d‖ utils.tri.docdef(JS_ARGS, { noDef: true })‖
 command command: docdef command
 command commdoc docset command
-command bdoc docset bind
-commdoc docbindmode "bind for mode with description"
-command docbindmode jsb -d¦ utils.tri.docBindMode(JS_ARGS)¦
-command bindmode jsb -d¦ utils.tri.bindMode(JS_ARGS)¦
-command unbindmode jsb -d¦ utils.tri.unbindMode(JS_ARGS)¦
+command: commdoc "provide a description for a command definition on a separate line" docset command
 
-command: ibind "bind for insert/input-mode" bindmode i
-command: vbind "bind for visual-mode" bind --mode=visual
-command: cbind "bind for ex-mode" bind --mode=ex
-command: abind "bind for normal, insert, input, ex, visual and hint modes" bindmode all
-command: bind: "bind with description" docdef bind
-command: ibind: "bind for insert/input-mode with description" docbindmode i
-command: vbind: "bind for visual-mode with description" docbindmode visual
-command: cbind: "bind for ex-mode with description" docbindmode ex
-command: abind: "bind for normal, insert, input, ex, visual and hint modes with description" docbindmode all
-command: bindurl: "bindurl with description" jsb -d¦ utils.tri.docBindUrl(JS_ARGS)¦
 command: set: "set with description" docdef set
 command: setpref: "setpref with description" docdef setpref
 command: guiset_quiet: "guiset_quiet with description" docdef guiset_quiet
-
-command: commdoc "provide a description for a command definition on a separate line" docset command
-command: bdoc "provide a description for a bind definition on a separate line" docset bind
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────╮
 " │ sourced config files │
 " ╰──────────────────────╯
+command: defnsload "Load command and binding definitions from defns.tri" source /home/troy/.tridactyl/defns.tri
+
 source /home/troy/.tridactyl/sites.tri
 command: modload "Load module" jsb -d¦ sites.load(JS_ARGS[1])¦
 
