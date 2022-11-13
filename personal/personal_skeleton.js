@@ -19,10 +19,16 @@ var user = {
     email2:     "",
     bankurl:    "",
     creditcard: "",
-    openexchangeratesappid: "",
-    currencyconverterapikey: "",
     uname: {
         github: "",
+    },
+    apikeys: {
+        openexchangerates: "",
+        currencyconverter: "",
+        exchangeratesdata: "",
+    },
+    passwords: {
+        coles: "",
     },
 }
 
