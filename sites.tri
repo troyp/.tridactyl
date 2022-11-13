@@ -198,6 +198,7 @@ command: gcalbind "Bind key for calendar.google.com" bindurl https://calendar\.g
 command: gcalbind: "Bind key with description for calendar.google.com" bindurl: https://calendar\.google\.com(/|$)
 
 gcalbind: <A-enter> "Load sites/gcal.auto.js" js -r sites/gcal.auto.js
+gcalbind: cc "Load styles for calendar.google.com" js -r sites/gcal.auto.js
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────╮
