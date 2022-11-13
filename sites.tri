@@ -15,8 +15,8 @@ command: amazshowkeys "(show bindings: amaz)" showkeysurl amazon.com
 definesearch amaz_search https://www.amazon.com.au/s?k=%s +
 
 amazbind: g;s "Focus search box" cujs $id("twotabsearchtextbox").focus()
-amazbind: ;i "Open image (full size)" hint img -F e=>open(e.src.replace("._SY88", ""))
-amazbind: ;I "Open image (full size): new tab" hint img -F e=>tabopen(e.src.replace("._SY88", ""))
+amazbind: ;i "Open image (full size)" hint img -F e=>open(e.src.replace(/\._[^.]+\./, "."))
+amazbind: ;I "Open image (full size): new tab" hint img -F e=>tabopen(e.src.replace(/\._[^.]+\./, "."))
 
 " | co -- amazon/goto |
 amazbind: co<C-h> "(show bindings: amaz/goto)" amazshowkeys co
