@@ -12,6 +12,24 @@ csites = {
         },
     },
 
+    coles: {
+        _site: "coles.com.au",
+
+        go: function() {
+            tri.controller.acceptExCmd(`js -r personal/personal.js`);
+            cutils.get1("span[role=text]", /log in.*signup/i).click();
+            setTimeout(
+                ()=>{
+                    cutils.setInput("#login-email-input", user.email);
+                    cutils.setInput("#login-password-input", user.passwords.coles);
+                    $1("button.login-form-btn-submit").click();
+                },
+                500
+            );
+        },
+
+    },
+
     e: {
         _site: "ebay.com.au",
 

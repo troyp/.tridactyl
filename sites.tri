@@ -42,6 +42,19 @@ amazbind: css "Amazon AU Search" fillcmdline amaz_search
 bindurl archive.org ctt csites -r urls.js ; js csites.archive.toggleToolbarURL()
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────╮
+" │ Coles.com.au │
+" ╰──────────────╯
+command: colesbind "Bind key for coles.com.au" bindurl coles.com.au
+command: colesbind: "Bind key with description for coles.com.au" bindurl: coles.com.au
+command: colesbdoc "Provide a description on a separate line" js ;
+command: colesshowkeys "(show bindings: coles)" showkeysurl coles.com.au
+
+colesbind c<C-h> showkeysurl coles.com.au c
+
+colesbind cc csites csites.coles.go()
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮
 " │ Ebay.com │
 " ╰──────────╯
