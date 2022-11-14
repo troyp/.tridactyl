@@ -59,6 +59,11 @@ S = {
         return s.replace(/^\s+|\s+$/g, "");
     },
     strip: s=>S.trim(s),
+    toBool: function(s) {
+        s = s.toLowerCase().trim();
+        if (["false", "no"].includes(s)) return false;
+        else return Boolean(s);
+    },
     toLines: function (s, n=160, sep=/([^, ]+[, ]+)/) {
         var lines = s.split("\n");
         var lines_ = [];
