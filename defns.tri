@@ -133,6 +133,8 @@ command show fillcmdline_nofocus
 commdoc fillcmdline_withcount "fill cmdline with cmd and optional count:  [CMD COUNT?] -> :CMD COUNT"
 command fillcmdline_withcount jsb -d¦ fillcmdline(JS_ARGS.length>2 ? JS_ARGS.join(" ").trim() : `${JS_ARGS[1]} 1`)¦
 command :: composite
+command hintpipe composite hint -pipe
+
 command withjs composite js
 command withjsb composite jsb
 command: ujs "Load urls.js and run js" composite js -r urls.js ; js
@@ -749,15 +751,15 @@ bind: af "Open URL in Waterfox" withurl ! /opt/waterfox/waterfox --new-tab
 bdoc aw "Toggle wayback machine"
 bind aw urltoggle https://web.archive.org/web/https: https: https?://web.archive.org/web/[^:]+/https?: https?:
 bdoc a;w "Open link in wayback machine [HINT]"
-bind a;w composite hint -pipe | js -p tri.controller.acceptExCmd(`tabopen https://web.archive.org/web/${JS_ARG}`)
+bind a;w hintpipe | js -p tri.controller.acceptExCmd(`tabopen https://web.archive.org/web/${JS_ARG}`)
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────╮
 " │ a; -- apps/hints │
 " ╰──────────────────╯
 bind a;<C-h> showkeys a;
-bind: a;c "Open link in Google Chrome" composite hint -pipe a href | ! /usr/local/bin/google-chrome
-bind: a;f "Open link in Waterfox" composite hint -pipe a href | ! /opt/waterfox/waterfox
+bind: a;c "Open link in Google Chrome" hintpipe a href | ! /usr/local/bin/google-chrome
+bind: a;f "Open link in Waterfox" hintpipe a href | ! /opt/waterfox/waterfox
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────╮
@@ -1195,7 +1197,7 @@ bind ,,c hint -c [class*="expand"],[class="togg"]
 
 " | ,,i -- hints/image |
 bind ,,i<C-h> showkeys ,,i
-bind: ,,is "Yank image source" composite hint -pipe img src | clipboard yank
+bind: ,,is "Yank image source" hintpipe img src | clipboard yank
 
 " middle and right click using xdotool
 command xhintclick xdoelem a,img,th,button,input,select,details,[onclick],[contenteditable=true],[tabindex] -e click
