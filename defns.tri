@@ -135,7 +135,7 @@ command fillcmdline_withcount jsb -d¦ fillcmdline(JS_ARGS.length>2 ? JS_ARGS.jo
 command :: composite
 command withjs composite js
 command withjsb composite jsb
-command withurlsjs composite js -r urls.js ; js
+command: ujs "Load urls.js and run js" composite js -r urls.js ; js
 command: cUjs "Load cutils.js, urls.js, S.js and run js" cujs -r urls.js ; js -r S.js ; js
 command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
 command: csites "Load S.js, cutils.js, csites.js, run js" cujs -r csites.js ; js
@@ -193,9 +193,9 @@ command tabopenorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"})
 commdoc tabopenorsummonbg "Open an URL in a new background adjacent tab, or move existing tab adjacent"
 command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related", background: true});
 commdoc urltoggle "Toggle a component of the current URL"
-command urltoggle withurlsjs -d¦ urls.mod.toggleWr(JS_ARGS.join(" "))¦
+command urltoggle ujs -d¦ urls.mod.toggleWr(JS_ARGS.join(" "))¦
 commdoc urlremove "Remove string from current URL"
-command urlremove withurlsjs -p tri.controller.acceptExCmd(`open ${urls.mod.toggle(JS_ARG, "")}`)
+command urlremove ujs -p tri.controller.acceptExCmd(`open ${urls.mod.toggle(JS_ARG, "")}`)
 commdoc urlmodorsummon_g "Open URL formed by grafting a path onto the domain, or summon existing tab"
 command urlmodorsummon_g jsb -d¦ urls.mod.graftOrSummon(JS_ARGS[1], 0, {where:JS_ARGS[2]?"related":"here"})¦
 command: urltogglequery "Toggle value of query in URL" jsb -d¦ urls.mod.toggleQuery(...JS_ARGS.slice(1))¦
@@ -1127,9 +1127,9 @@ bind ,u<C-h> showkeys ,u
 " | ,ud -- url/delete |
 bind ,ud<C-h> showkeys ,ud
 bind: ,udd "Remove part of URL" fillcmdline urlremove
-bind: ,udq "Remove URL query and hash" withurlsjs urls.mod.delComponent("search", "hash")
-bind: ,udQ "Remove URL query" withurlsjs urls.mod.delComponent("search")
-bind: ,udh "Remove URL hash (fragment)" withurlsjs urls.mod.delComponent("hash")
+bind: ,udq "Remove URL query and hash" ujs urls.mod.delComponent("search", "hash")
+bind: ,udQ "Remove URL query" ujs urls.mod.delComponent("search")
+bind: ,udh "Remove URL hash (fragment)" ujs urls.mod.delComponent("hash")
 
 " | ,ut -- url/toggle |
 bind ,ut<C-h> showkeys ,ut
