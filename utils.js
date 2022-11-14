@@ -824,10 +824,18 @@ utils.tri = {
         );
     },
 
+    jsbCmd: async function(rawargs, defaultCount=1) {
+        const [args, rawcount] = utils.tri.parseTermsAndCount(rawargs);
+        const [rawexpr, ...exprargs] = args;
+        const count = rawcount || defaultCount;
+        const expr = rawexpr.replace(/ARGS/g, JSON.stringify(exprargs)).replace(/COUNT/g, count);
+        return jsb(expr);
+    },
+
     jsbCount: async function(rawargs, defaultCount=1) {
         const [args, rawcount] = utils.tri.parseArgsAndCount(rawargs);
         const count = rawcount || defaultCount;
-        const expr = args.join(" ").replace("COUNT", count);
+        const expr = args.join(" ").replace(/COUNT/g, count);
         return jsb(expr);
     },
 
