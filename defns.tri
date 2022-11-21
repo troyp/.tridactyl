@@ -35,6 +35,8 @@ bind --mode=browser <C-p> xdo key Up
 " restore Ctrl- based shortcuts removed by setting accelerator to Alt-
 bind --mode=browser <C-r> reloadhard
 bind --mode=browser <C-w> tabclose
+" toggle reader mode
+bind --mode=browser <AS-r> jsb browser.tabs.toggleReaderMode()
 
 " ─────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────────────╮
