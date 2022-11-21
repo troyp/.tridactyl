@@ -47,7 +47,12 @@ art.ja = {
         getItemNames: function() {
             return $$("#shopping-cart-table>tbody>tr>td>.product-name").map(e=>e.innerText.replace(/\s+/, " "));
         },
-
+        hint_yankName: async function() {
+            return hint(
+                "h2.product-name>a",
+                "-F", "e=>cutils.yank(e.textContent).replace(/\s+/g, ' ')"
+            );
+        },
         itemURLs: function() {
             return $$(".cart .product-name>a").map(e=>e.href);
         },

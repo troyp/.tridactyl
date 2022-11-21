@@ -144,5 +144,6 @@ jabind: cyy "Yank name of item(s) or search term" artjs art.ja.yank()
 
 jabind: cyc<C-h> "(show bindings: ja/yank/cart)" jashowkeys cy
 jabind: cycc "Yank cart items" artjs art.ja.cart.yankItems()
-jabind: cycn "Yank cart items names" artjs art.ja.cart.yankNames()
+jabind: cycN "Yank cart items names" artjs art.ja.cart.yankNames()
+jabind: cycn "Yank cart items name [HINT]" artjs art.ja.cart.hint_yankName()
 jabind: cycu "Yank cart items URLs" artjs art.ja.cart.yankURLs()
