@@ -104,7 +104,6 @@ places.kw = {
 
     multiengine: async function(rawargs, opts={}) {
         opts.where ||= "last";
-        opts.background ??= true;
         const args = utils.tri.parseTerms(rawargs);
         const query = opts.queryFirst
               ? args[0]
@@ -128,7 +127,6 @@ places.kw = {
         /*  TODO: should I enforce the order of tabs? Or at least statistically */
         /*  encourage correct order by introducing a short delay?               */
         opts.where ||= "last";
-        opts.background ??= true;
         const [enginestr, ...queries] = utils.tri.parseTerms(rawargs);
         const SEs = enginestr.split(/ +/);
         if (opts.where=="next") {
@@ -224,7 +222,7 @@ places.hist = {
         });
         /* time range of results */
         if (!opts.hoursAgo && !opts.startTime && !opts.endTime)
-            opts.daysAgo = 4;
+            opts.daysAgo = (opts.queryText||opts.text) ? 14 : 4;
         if (opts.daysAgo && !opts.hoursAgo)
             opts.hoursAgo = 24 * opts.daysAgo;
         if (opts.hoursAgo) {
