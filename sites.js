@@ -6,9 +6,6 @@ var sites = {
         try {
             jsb("-r", `sites/${module}.js`);
         } catch(e) {};
-        try {
-            js("-r", `sites/${module}.c.js`);
-        } catch(e) {};
     },
 
     removeSite: async function(url, mode="normal") {
