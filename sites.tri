@@ -35,6 +35,11 @@ amazbind: co! "Goto contact form" urlmodorsummon_g /gp/help/customer/contact-us/
 amazbind: cs<C-h> "(show bindings: amaz/search)" amazshowkeys cs
 amazbind: css "Amazon AU Search" fillcmdline amaz_search
 
+" | ct -- amazon/toggle |
+amazbind: ct<C-h> "(show bindings: amaz/toggle)" amazshowkeys ct
+amazbdoc cta "Toggle Australian site"
+amazbind cta jsb urls.mod.togglepage('smile.amazon.com/', 'www.amazon.com.au/', /(www|smile)\.amazon\.com\//)
+
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
 " │ archive.org │
