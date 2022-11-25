@@ -4,7 +4,7 @@
 # │          │
 # ╰──────────╯
 
-unalias tri
+unalias tri 2>/dev/null || true
 
 tri () {
     # ╭───────────╮
@@ -70,7 +70,7 @@ ENDHELP
             (-s | --source-dir)     cd $TRI_SRC_DIR; return; ;;
             (-S | --server)
                 http-server $TRI_CONFIG_DIR -c5 -p 8721;
-                $TRI_BROWSER --new-tab http://localhost:8721;
+                $TRI_BROWSER http://localhost:8721;
                 break; ;;
             (-t | --tree)           tree=t; shift; ;;
             (--)                    shift; break ;;
