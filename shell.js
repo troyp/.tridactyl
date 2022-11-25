@@ -5,7 +5,6 @@ const shell = {
         if (!roxtermOpts.includes("--geometry")) roxtermOpts = `--geometry=80x40+182-90 ${roxtermOpts}`;
         const cmdq = shell.dblQEscape(cmd, 2);
         var fullcmd = `roxterm ${roxtermOpts} -e "bash -c \\"${cmdq}; bash\\""`;
-        utils.msg(fullcmd);
         return tri.excmds.exclaim(fullcmd);
     },
 
