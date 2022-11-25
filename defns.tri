@@ -155,6 +155,7 @@ command: jsb_cmd "run jsb, substituting for ARGS & COUNT (default COUNT=1)" jsb 
 command: js_cmd! "run js command, substituting for ARGS & COUNT" cujs -d¦ cutils.tri.jsCmd(JS_ARGS, null)¦
 command: jsb_cmd! "run jsb command, substituting for ARGS & COUNT" jsb -d¦ utils.tri.jsbCmd(JS_ARGS, null)¦
 
+command trish jsb -d¦ shell.cmdRoxterm(`. ~/.tridactyl/scripts/tri.sh && tri ${JS_ARGS.join(" ")}`)¦
 commdoc shellcmdonurlfile "Run shell command on document (download if online)"
 command shellcmdonurlfile jsb -d¦ shell.cmdOnURLFile(JS_ARGS, tri.contentLocation.href)¦
 
