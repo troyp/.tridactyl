@@ -131,6 +131,12 @@ apps.pw = {
         return pw;
     },
 
+    /** hashSite(): hash() wrapper for :pwhash command
+     *    opts.count: count supplied:
+     *      1 (default) -- close pwhasher tab & return
+     *      2           -- keep open & return
+     *      3           -- keep open, don't return
+     */
     hashSite: async function(opts={}) {
         opts = utils.tri.parseOpts(opts,{
             castBoolean: "keepOpen",
@@ -143,6 +149,7 @@ apps.pw = {
         const thisTab = await tri.webext.activeTab();
         const thisTabOrd = thisTab.index +1;
         opts.returnTabNumber ||= thisTabOrd;
+        if (opts.count==3) opts.returnTabNumber = null;
         return this.hash(decoded_domain, opts);
     },
 };
