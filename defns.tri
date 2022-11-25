@@ -841,6 +841,7 @@ command pwhashsite jsb -d¦ apps.pw.hashSite(parseInt(JS_ARGS?.[1])||1)¦
 
 bind ap<C-h> showkeys ap
 bind: aps "Hash site domain with password-hasher" pwhashsite
+bind: app "Run password-hasher server and hash site domain" :: trish -S ; pwhashsite 3
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────╮
