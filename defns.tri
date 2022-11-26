@@ -1176,7 +1176,7 @@ bind ,x<C-h> showkeys ,x
 
 " | ,xf -- misc/fix |
 bind: ,xf<C-h> "(show bindings: misc/fix)" showkeys ,xf
-bind: ,xff "Fix font family" cujs $$("p,h1,h2,h3,h4").forEach(e=>e.style.fontFamily="notoSans")
+bind: ,xff "Fix font family" cujs $$("div,p,h1,h2,h3,h4,td,a").forEach(e=>e.style.fontFamily="notoSans")
 
 " | ,xt -- misc/table |
 command: copytablecols "Copy table columns" cujs -d¦ cutils.copytablecols(JS_ARGS)¦
