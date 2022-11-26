@@ -47,8 +47,8 @@ bind --mode=browser <AS-r> jsb browser.tabs.toggleReaderMode()
 " To hide unfocused cmdline, use alternative <C-[> instead
 unbind <Escape>
 
-bind: <CA-h> "Scroll left (50px)" scrollpx -50
-bind: <CA-l> "Scroll right (50px)" scrollpx +50
+bind: <C-H> "Scroll left (50px)" scrollpx -50
+bind: <C-L> "Scroll right (50px)" scrollpx +50
 bind: j "Scroll down" scrollline +5*
 bind: k "Scroll up" scrollline -5*
 
