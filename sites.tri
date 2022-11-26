@@ -200,6 +200,7 @@ command: googlebind: "Bind key with description for www.google.com" bindurl: goo
 googlebind: f "Open link in current tab [HINT]" hint -J
 googlebind: F "Open link in new tab [HINT]" hint -Jb
 googlebind: gf "Open multiple tabs in background tabs [HINNTS]" hint -qJb
+googlebind: g;s "Focus search box" cujs $1("input[aria-label=Search]").focus()
 
 googlebind c<C-h> showkeysurl google.com c
 googlebind: cc "images: copy src URL" csites csites.g.go()
