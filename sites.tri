@@ -17,6 +17,11 @@ definesearch amaz_search https://www.amazon.com.au/s?k=%s +
 amazbind: g;s "Focus search box" cujs $id("twotabsearchtextbox").focus()
 amazbind: ;i "Open image (full size)" hint img -F e=>open(e.src.replace(/\._[^.]+\./, "."))
 amazbind: ;I "Open image (full size): new tab" hint img -F e=>tabopen(e.src.replace(/\._[^.]+\./, "."))
+amazbind: [[ "Previous page" csites csites.amaz.previous()
+amazbind: ]] "Next page"  csites csites.amaz.next()
+
+amazbind: c<C-h> "(show bindings: amaz)" amazshowkeys c
+amazbind: cc "Add to cart/goto checkout" csites csites.amaz.go()
 
 " | co -- amazon/goto |
 amazbind: co<C-h> "(show bindings: amaz/goto)" amazshowkeys co
@@ -39,6 +44,8 @@ amazbind: css "Amazon AU Search" fillcmdline amaz_search
 amazbind: ct<C-h> "(show bindings: amaz/toggle)" amazshowkeys ct
 amazbdoc cta "Toggle Australian site"
 amazbind cta jsb urls.mod.togglepage('smile.amazon.com/', 'www.amazon.com.au/', /(www|smile)\.amazon\.com\//)
+
+amazbind: cxt "Translate all reviews" cujs click("a",/translate review/i)
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮

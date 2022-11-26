@@ -1,4 +1,20 @@
 csites = {
+    amaz: {
+        _site: "amazon.com",
+
+        go: function() {
+            return cutils.click("#add-to-cart-button") || cutils.click("input[name=proceedToRetailCheckout]");
+        },
+
+        next: function() {
+            cutils.click("a.s-pagination-next") || cutils.click("a", /next/i);
+        },
+        previous: function() {
+            cutils.click("a.s-pagination-previous") || cutils.click("a", /previous/i);
+        },
+
+    },
+
     archive: {
         _site: "archive.org",
 
