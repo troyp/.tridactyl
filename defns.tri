@@ -1349,4 +1349,9 @@ vbind: P "Open selected URL/search term in current tab" cujs window.getSelection
 
 vbind: <A-;> "Switch to last accessed tab" tabswitchprev
 vbind: <A-:> "Switch to last accessed tab and close current tab" tabswitchprev!
- 
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────╮
+" │ Finalize │
+" ╰──────────╯
+fillcmdline_nofocus tridactylrc: defns.tri LOADED
