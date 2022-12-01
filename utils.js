@@ -472,6 +472,13 @@ utils.tab = {
         return idx + 1;
     },
 
+    ordstrRangeToOrdRange: async function(s1, s2) {
+        const t1 = await utils.tab.ordstrToOrd(s1);
+        const t2 = await utils.tab.ordstrToOrd(s2);
+        return [min(t1,t2), max(t1,t2)];
+    },
+
+
     parseTabnum: async function(n) {
         const N = await this.getN();
         switch(n) {
@@ -521,9 +528,8 @@ utils.tab = {
     removeRange: async function(start, end, opts={}) { return this.remove((_,i) => i>=start && i<=end, opts); },
 
     removeRangeWr: async function(args, opts={}) {
-        const [start, end] = utils.tri.parseArgs(args);
-        const t1 = await utils.tab.ordstrToOrd(start);
-        const t2 = await utils.tab.ordstrToOrd(end);
+        const [s1, s2] = utils.tri.parseArgs(args);
+        const [t1, t2] = await utils.tab.ordstrRangeToOrdRange(s1, s2);
         return this.removeRange(t1, t2, opts);
     },
 
