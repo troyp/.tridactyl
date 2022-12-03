@@ -146,13 +146,13 @@ command: csites "Load S.js, cutils.js, csites.js, run js" cujs -r csites.js ; js
 command: capps "Load capps.js and run js" composite js -r capps.js ; js
 command: jsload "Load JS files into content script" jsb -p jsload(JS_ARG)
 command: cjs "Load JS files into content script and run commands" composite jsload
-command: js_count "run js command, substituting for COUNT (default count=1)" cujs -d¦ cutils.tri.jsCount(JS_ARGS)¦
+command: js_count "run js command, substituting for COUNT (default count=1)" cUjs -d¦ cutils.tri.jsCount(JS_ARGS)¦
 command: jsb_count "run jsb command, substituting for COUNT (default count=1)" jsb -d¦ utils.tri.jsbCount(JS_ARGS)¦
-command: js_count! "run js command, substituting for COUNT" cujs -d¦ cutils.tri.jsCount(JS_ARGS, null)¦
+command: js_count! "run js command, substituting for COUNT" cUjs -d¦ cutils.tri.jsCount(JS_ARGS, null)¦
 command: jsb_count! "run js command, substituting for COUNT" jsb -d¦ utils.tri.jsbCount(JS_ARGS, null)¦
-command: js_cmd "run js, substituting for ARGS & COUNT (default COUNT=1)" cujs -d¦ cutils.tri.jsCmd(JS_ARGS)¦
+command: js_cmd "run js, substituting for ARGS & COUNT (default COUNT=1)" cUjs -d¦ cutils.tri.jsCmd(JS_ARGS)¦
 command: jsb_cmd "run jsb, substituting for ARGS & COUNT (default COUNT=1)" jsb -d¦ utils.tri.jsbCmd(JS_ARGS)¦
-command: js_cmd! "run js command, substituting for ARGS & COUNT" cujs -d¦ cutils.tri.jsCmd(JS_ARGS, null)¦
+command: js_cmd! "run js command, substituting for ARGS & COUNT" cUjs -d¦ cutils.tri.jsCmd(JS_ARGS, null)¦
 command: jsb_cmd! "run jsb command, substituting for ARGS & COUNT" jsb -d¦ utils.tri.jsbCmd(JS_ARGS, null)¦
 
 command trish jsb -d¦ shell.cmdRoxterm(`. ~/.tridactyl/scripts/tri.sh && tri ${JS_ARGS.join(" ")}`)¦
