@@ -11,7 +11,7 @@
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────╮
-" │ General │
+" │ Imports │
 " ╰─────────╯
 
 " loader for content script libraries
@@ -58,7 +58,6 @@ jsb window.sprintf = sprintf
 command docdef jsb -d‖ utils.tri.docdef(JS_ARGS)‖
 command docset jsb -d‖ utils.tri.docdef(JS_ARGS, { noDef: true })‖
 command command: docdef command
-command commdoc docset command
 command: commdoc "provide a description for a command definition on a separate line" docset command
 
 command: set: "set with description" docdef set
