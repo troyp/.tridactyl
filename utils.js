@@ -311,6 +311,13 @@ utils.tab = {
         }
     },
 
+/**    openAndRun(url, code, opts): open URL and run CODE.
+ *   code: a string or nullary function containing code to be run
+ *   opts.runAt: when to run CODE
+ *       see https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/extensionTypes/RunAt
+ *   opts.where: where to open
+ *   opts.file:  CODE specifies a file containing the code to be run
+ */
     openAndRun: async function(url, code, opts={}) {
         opts = utils.tri.parseOpts(
             opts, {
