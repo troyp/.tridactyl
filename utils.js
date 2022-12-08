@@ -727,6 +727,21 @@ utils.tab = {
 // ╰─────────────────────────────────────────────────────────────────╯
 
 utils.tri = {
+
+    configmaps: {
+        "bind": {
+            "normal": "nmaps",
+            "ignore": "ignoremaps",
+            "insert": "imaps",
+            "input": "inputmaps",
+            "ex": "exmaps",
+            "hint": "hintmaps",
+            "visual": "visualmaps",
+            "browser": "browsermaps",
+        },
+        "command": "exmaps",
+    },
+
     bindMode: function(args) {
         const argstr = args.join(" ").trim();
         const bindmodeRe = /^([a-z]+) ([^ ]+) (.*)/;
@@ -821,6 +836,43 @@ utils.tri = {
         tri.config.set("_desc", defCmd, key, desc);
         if (!opts.noDef)
             tri.controller.acceptExCmd(`${defCmd} ${key} ${rest}`);
+    },
+
+    getBinding: function(keyseq, mode="normal") {
+        const mapname = this.configmaps.bind[mode];
+        const map = tri.config.get(mapname);
+        const defn = map[keyseq];
+        const desc = tri.config.get("_desc", "bind", keyseq);
+        return [keyseq, desc, defn];
+    },
+
+    getCommand: function(alias) {
+        const map = tri.config.get("exaliases");
+        const defn = map[alias];
+        const desc = tri.config.get("_desc", "command", alias);
+        return [alias, desc, defn];
+    },
+
+    getBindingDocs: function(mode="normal") {
+        /* FIXME: finish - docdef only works for normal mode */
+        if (mode != "normal") utils.message("not implemented");
+
+        const bnds = Object.keys(tri.config.get("_desc", "bind"));
+        const doclines = bnds.map(k=>{
+            const [bnd, doc, def] = this.getBinding(k);
+            return `${bnd}\t"${doc}"\t${def}`;
+        });
+        return doclines;
+    },
+
+    getCommandDocs: function(sort=true) {
+        const cmds = [...Object.keys(tri.config.get("_desc", "command"))];
+        if (sort) cmds.sort();
+        const doclines = cmds.map(k=>{
+            const [cmd, doc, def] = this.getCommand(k);
+            return `${cmd}:\t"${doc}"\t${def}`;
+        });
+        return doclines;
     },
 
     gotoCommandSource: function(s) {
