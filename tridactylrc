@@ -66,6 +66,22 @@ command: setpref: "setpref with description" docdef setpref
 command: guiset_quiet: "guiset_quiet with description" docdef guiset_quiet
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────╮
+" │ unbinding │
+" ╰───────────╯
+unbind <Escape>
+unbind x
+unbind g;
+unbind <C-x>
+unbind b
+unbind w
+unbind s
+unbind --mode=visual s
+unbind /
+unbind s
+unbind a
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────╮
 " │ sourced config files │
 " ╰──────────────────────╯
