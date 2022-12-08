@@ -62,6 +62,7 @@ command: colesbind: "Bind key with description for coles.com.au" bindurl: coles.
 command: colesbdoc "Provide a description on a separate line" js ;
 command: colesshowkeys "(show bindings: coles)" showkeysurl coles.com.au
 
+colesbind g;s cujs $1("#searchTerm").focus()
 colesbind c<C-h> showkeysurl coles.com.au c
 
 colesbind cc csites csites.coles.go()
