@@ -18,7 +18,7 @@
  *  - setQueryValue()
  */
 
-urls = {
+var urls = {
     urlRe: new RegExp(
         "(?<scheme>[^/]+)//"
             + "(?<domain>([^./]+\\.)*[^./]+)/"
@@ -91,7 +91,7 @@ urls = {
         opts.countQuery ??= true;
         opts.countSubdomains ??= true;
         const u = new URL(url);
-        for (i=n; i>0; --i) {
+        for (let i=n; i>0; --i) {
             /* first try removing fragment */
             if (opts.countFragment && u.hash)
                 u.hash = "";
@@ -154,7 +154,7 @@ urls = {
         url ||=tri.contentLocation.href;
         const u = new URL(url);
         const queries = u.search.slice(1).split("&");
-        for (q of queries) {
+        for (const q of queries) {
             const [k, v] = q.split("=");
             if ((typeof qPattern == "string" && k.includes(qPattern)) || k.match(qPattern)) return v;
         };
@@ -244,7 +244,7 @@ urls.mod = {
 
     delComponent: function(...components) {
         const url = new URL(tri.contentLocation);
-        for (c of components)
+        for (const c of components)
             url[c] = "";
         tri.controller.acceptExCmd(`open ${url}`);
     },

@@ -1,4 +1,4 @@
-csites = {
+var csites = {
     amaz: {
         _site: "amazon.com",
 
@@ -162,4 +162,6 @@ csites = {
             }
         },
     },
-}
+};
+
+window.csites = csites;

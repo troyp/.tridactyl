@@ -9,7 +9,7 @@ const shell = {
     },
 
     dblQEscape: function(s, levels=1) {
-        for (i=0; i<levels; ++i) {
+        for (let i=0; i<levels; ++i) {
             s = s.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
         }
         return `${s}`;

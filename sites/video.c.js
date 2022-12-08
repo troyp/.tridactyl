@@ -3,7 +3,7 @@
 // │ MODULE: video │
 // ╰───────────────╯
 
-vid = {};
+var vid = {};
 
 vid.disneyp = {
     go: function() {
@@ -16,3 +16,4 @@ vid.disneyp = {
 
 };
 
+window.vid = vid;

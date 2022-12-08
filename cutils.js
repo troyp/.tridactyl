@@ -2,7 +2,7 @@
 // │ cutils.js ── utility functions for content script context │
 // ╰───────────────────────────────────────────────────────────╯
 
-R = tri.R;
+var R = tri.R;
 
 var cutils = {
 
@@ -22,7 +22,7 @@ var cutils = {
         } else {
             const res = getElems(selector, document);
             const frames = tri.dom.getAllDocumentFrames();
-            for (f of frames) {
+            for (let f of frames) {
                 try {
                     res.push(getElems(selector, frame.contentDocument||frame.contentWindow.document));
                 } catch(_) {};
@@ -42,7 +42,7 @@ var cutils = {
             return res;
         } else {
             const frames = tri.dom.getAllDocumentFrames();
-            for (f of frames) {
+            for (let f of frames) {
                 try {
                     const res = getElem(selector, frame.contentDocument||frame.contentWindow.document);
                     if (res) return res;
@@ -331,7 +331,7 @@ var cutils = {
         if (!opts.noHead) keepElts.push(document.head);
         if (!opts.noCmdline) keepElts.push(document.getElementById("cmdline_iframe"));
         var successful = null;
-        for (elt of $$("*")) {
+        for (const elt of $$("*")) {
             if (keepElts.every(k => !k.contains(elt) && !elt.contains(k))) {
                 elt.remove();
                 successful = true;
@@ -637,7 +637,7 @@ cutils.css = {
     /* DECLARATIONS is either a string or an object mapping properties to values */
     addRules: function(styleId, ...rules) {
         const sheet = document.getElementById(styleId).sheet;
-        for (rule of rules) {
+        for (const rule of rules) {
             const [selector, decls] = rule;
             const declStr = (typeof decls == "string")
                   ? decls
@@ -662,7 +662,7 @@ cutils.css = {
         const span = document.createElement("span");
         span.classList.add("_tri_hl");
         span.style.backgroundColor = "rgba(255,255,100,0.5)";
-        for (k in style) span.style[k] = style[k];
+        for (const k in style) span.style[k] = style[k];
         range.surroundContents(span);
     },
 
@@ -823,10 +823,10 @@ cutils.tri = {
         /* defaults */
         options.defaults ||= {};
         options.nullishDefaults ||= {};
-        for (k of Object.keys(options.defaults)) {
+        for (const k of Object.keys(options.defaults)) {
             opts[k] ||= options.defaults[k];
         }
-        for (k of Object.keys(options.nullishDefaults)) {
+        for (const k of Object.keys(options.nullishDefaults)) {
             opts[k] ??= options.nullishDefaults[k];
         }
         /* return */
@@ -842,7 +842,7 @@ cutils.tri = {
         const argstr = typeof args==="string" ? args : args.join(" ").trim().replace(/ +/, " ");
         const words = argstr.split(" ");
         var terms = [];
-        for (i=0; i<words.length; ++i) {
+        for (var i=0; i<words.length; ++i) {
             /* FIXME? case of an isolated quote surrounded by spaces */
             /* TODO: proper parsing with escapes; decide how to treat mid-word quotes */
             if (words[i].startsWith("\"")) {
@@ -872,7 +872,7 @@ cutils.tri = {
         const endsInQuote = argstr[argstr.length-1]=='"';
         const words = argstr.split(" ");
         var terms = [];
-        for (i=0; i<words.length; ++i) {
+        for (var i=0; i<words.length; ++i) {
             /* FIXME? case of an isolated quote surrounded by spaces */
             /* TODO: proper parsing with escapes; decide how to treat mid-word quotes */
             if (words[i].startsWith("\"")) {
@@ -911,3 +911,5 @@ window.R = R;
 [
     "parseArgs", "parseArgsAndCount", "parseOpts", "parseTerms", "parseTermsAndCount",
 ].forEach(k => window[k]=cutils.tri[k]);
+
+window.cutils = cutils;

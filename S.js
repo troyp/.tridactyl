@@ -1,4 +1,4 @@
-S = {
+var S = {
     // padEnd, padStart: adapted from github.com/uxitten/polyfill
     padEnd: function (s, targetLength, padString) {
         targetLength = targetLength >> 0; //floor if number or convert non-number to 0;
@@ -67,11 +67,11 @@ S = {
     toLines: function (s, n=160, sep=/([^, ]+[, ]+)/) {
         var lines = s.split("\n");
         var lines_ = [];
-        for (var line of lines) {
+        for (let line of lines) {
             var parts = line.split(sep);
             var line_ = "";
             var line_length = 0;
-            for (var part of parts) {
+            for (let part of parts) {
                 if (line_length + part.length > n) {
                     lines_.push(line_);
                     line_ = part; line_length = part.length;
@@ -152,4 +152,6 @@ S = {
         var match = s.match(regex);
         return match && match[group_num] || "";
     }
-}
+};
+
+window.S = S;

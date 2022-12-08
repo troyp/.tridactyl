@@ -21,7 +21,7 @@ var sites = {
         };
         const subconfigs = tri.config.USERCONFIG.subconfigs;
         const subconfig = subconfigs[url][modemaps[mode]];
-        for (k in subconfig)
+        for (const k in subconfig)
             tri.controller.acceptExCmd(`reseturl ${url} --mode=${mode} ${k}`);
         return subconfig;
     },

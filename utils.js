@@ -61,8 +61,8 @@ var utils = {
         const w = parseInt(opts.width) || Infinity;
         const indent = opts.contPrefix || "";
         const d = indent.length;
-        var line, s = "";
-        for (line of lines.map(String)) {
+        var s = "";
+        for (let line of lines.map(String)) {
             s += line.substring(0, w) + "\n";
             line = line.slice(w);
             while (line!=="") {
@@ -925,10 +925,10 @@ utils.tri = {
         /* defaults */
         options.defaults ||= {};
         options.nullishDefaults ||= {};
-        for (k of Object.keys(options.defaults)) {
+        for (const k of Object.keys(options.defaults)) {
             opts[k] ||= options.defaults[k];
         }
-        for (k of Object.keys(options.nullishDefaults)) {
+        for (const k of Object.keys(options.nullishDefaults)) {
             opts[k] ??= options.nullishDefaults[k];
         }
         /* return */
@@ -944,7 +944,7 @@ utils.tri = {
         const argstr = typeof args==="string" ? args : args.join(" ").trim().replace(/ +/, " ");
         const words = argstr.split(" ");
         var terms = [];
-        for (i=0; i<words.length; ++i) {
+        for (let i=0; i<words.length; ++i) {
             /* FIXME? case of an isolated quote surrounded by spaces */
             /* TODO: proper parsing with escapes; decide how to treat mid-word quotes */
             if (words[i].startsWith("\"")) {
@@ -974,7 +974,7 @@ utils.tri = {
         const endsInQuote = argstr[argstr.length-1]=='"';
         const words = argstr.split(" ");
         var terms = [];
-        for (i=0; i<words.length; ++i) {
+        for (let i=0; i<words.length; ++i) {
             /* FIXME? case of an isolated quote surrounded by spaces */
             /* TODO: proper parsing with escapes; decide how to treat mid-word quotes */
             if (words[i].startsWith("\"")) {
@@ -1030,10 +1030,10 @@ utils.tri = {
         const n = Math.max(this.parseArgs(args, "number"), 1);
         if (opts.where=="here") {
             await utils.cbread(0).then(s=>utils.tab.open(s, "here"));
-            for (i=1; i<n; ++i)
+            for (let i=1; i<n; ++i)
                 await utils.cbread(i).then(s=>utils.tab.open(s, {where: "related", background: true}));
         } else {
-            for (i=0; i<n; ++i)
+            for (let i=0; i<n; ++i)
                 await utils.cbread(i).then(s=>utils.tab.open(s, opts));
         }
     },
@@ -1046,7 +1046,7 @@ utils.tri = {
     },
 
     searchNmapsWrapper: async function (r, opts={}) {
-        regexp = new RegExp(r.trim(), opts.caseSensitive ? "" : "i");
+        const regexp = new RegExp(r.trim(), opts.caseSensitive ? "" : "i");
         const conf = this.searchConfig("nmaps", regexp);
         return utils.messageBox(conf, {contPrefix: "\t\t"});
     },

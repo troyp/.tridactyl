@@ -4,7 +4,7 @@
 // │             │
 // ╰─────────────╯
 
-const places = {};
+var places = {};
 
 tri.config.set("kwsearch", "~/.tridactyl/scripts/kwsearch");
 
@@ -136,7 +136,7 @@ places.kw = {
         const searches = opts.singleQuery
               ? SEs.map(se=>[se,queries.join(" ")])
               : SEs.flatMap(se=>queries.map(q=>[se,q]));
-        for (s of searches) await this.open(s, opts);
+        for (const s of searches) await this.open(s, opts);
     },
 
 };
