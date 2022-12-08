@@ -816,11 +816,9 @@ utils.tri = {
         const re = opts.noDef ? docsetRe : docdefRe;
         const match = argstr.match(re);
         [defCmd, key, desc, rest] = match.slice(1);
-        /* store descriptions under tri._doc, eg.
-           tri._doc.command.urlup_n == "Go to the nth parent URL" */
         /* TODO: do bindings have a unique representation for keys?
            if not, convert to canonical representation */
-        ((window.tri._doc ||= {})[defCmd] ||= {})[key] = desc;
+        tri.config.set("_desc", defCmd, key, desc);
         if (!opts.noDef)
             tri.controller.acceptExCmd(`${defCmd} ${key} ${rest}`);
     },
