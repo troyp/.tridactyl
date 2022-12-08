@@ -3,10 +3,25 @@
 // ╰────────────────────────────────────────────╯
 
 var apps = {
-    convertUnits: function(args) {
+    /** :convertunits UNIT
+     *  :convertunits UNIT1 UNIT2
+     *  :convertunits N UNIT1 [UNIT2]
+     *  :convertunits N_UNIT1 [UNIT2]   -- no space between value and unit
+     *  :convertunits (N1 N2 ...)[[ ]UNIT1 [UNIT2]]   -- replace value with parenthesized list of values
+     */
+    convertUnits: async function(args) {
         args = args.filter(a=> a.trim()!== "");
         var n=1, unit1="", unit2="";
-        if (args.length==1) {
+        const argstr = args.join(" ").trim();
+        const argMatch = argstr.match(/^\((.*)\)(.*)/);
+        if (argMatch) {
+            const vals = argMatch[1].split(/ +/);
+            const rest = argMatch[2].split(/ +/);
+            var subresults = [];
+            for (const x of vals) { subresults.push(await apps.convertUnits([x, ...rest])); }
+            return subresults.join("\t");
+        }
+        else if (args.length==1) {
             return tri.native.run(`units -t ${args[0]}`).then(
                 res => res.content
             );
