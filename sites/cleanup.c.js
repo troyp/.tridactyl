@@ -98,6 +98,9 @@ function cleanup() {
         /* haskell wiki */
         keep("#content");
         rmall("#catlinks");
+    } else if (url.match(/https:\/\/www.instructables\.com/)) {
+        keep("article#article");
+        rmall("section.recommendations", "section#imadeits", "div.contest-entries");
     } else if (url.match(/https:\/\/janeblundellart\.blogspot\.com/)) {
         /* janeblundellart */
         keep("#main");
