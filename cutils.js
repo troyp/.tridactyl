@@ -484,7 +484,7 @@ var cutils = {
               `-format ${opts.format} -p "${prompt}" ${dmenuOpts}`;
         const res = await tri.native.run(cmd);
         if (opts.format=="i" || opts.format=="d")
-            return res?.content.trim().split("\n").map(d=>parseInt(d));
+            return res?.content.trim().split("\n").map(d=>parseInt(d)).filter(i=>!isNaN(i));
         else
             return res?.content.trim().split("\n");
     },
