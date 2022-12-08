@@ -56,6 +56,19 @@ art.ja = {
         itemURLs: function() {
             return $$(".cart .product-name>a").map(e=>e.href);
         },
+        /** removeItems(rx): Remove items from cart. Select with rofi after filtering with regex RX
+            note: only a single item is guaranteed to be removed.
+         */
+        removeItems: async function(rx, opts={}) {
+            const items = this.getItems();
+            const selectedIdxs = await cutils.select(
+                items.map(r=>$1("h2.product-name>a", r)?.textContent.trim()).filter(r=>r.match(rx||/./)),
+                { format: "i", multiSelect: opts.multi, }
+            );
+            for (const i in selectedIdxs) {
+                if (i=>!isNaN(i)) $1(".js-basket-remove", items[i]).click();
+            }
+        },
         total: function() {
             const s = $1t("td", /total due/i).nextElementSibling.textContent.trim();
             return Number(s.match(/\$(\d+\.\d\d)/)[1]);
