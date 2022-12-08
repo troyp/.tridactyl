@@ -1,0 +1,17 @@
+@-moz-document url-prefix("file://") {
+    td[sortable-data^="1."]>table>tbody>tr>td>a.dir {
+        color: #70C64F !important;
+        text-decoration: underline !important;
+    }
+    td>table>tbody>tr>td>a.dir {
+        color: #226633 !important;
+    }
+    td[sortable-data^="2."]>table>tbody>tr>td>a.file {
+        color: #666DCA !important;
+        text-decoration: underline !important;
+    }
+    td>table>tbody>tr>td>a.file {
+        color: #1B0F59 !important;
+    }
+
+}

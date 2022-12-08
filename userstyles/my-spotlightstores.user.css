@@ -1,0 +1,5 @@
+@-moz-document domain("spotlightstores.com") {
+    div,p,h1,h2,h3,h4,td,a {
+        font-family: notoSans !important;
+    }
+}
