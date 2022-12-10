@@ -823,7 +823,7 @@ utils.tri = {
         const docsetRe = /^([a-zA-Z_!:]+) ([^ ]+) "([^"]*)"/;
         const re = opts.noDef ? docsetRe : docdefRe;
         const match = argstr.match(re);
-        [defCmd, key, desc, rest] = match.slice(1);
+        const [defCmd, key, desc, rest] = match.slice(1);
         /* TODO: do bindings have a unique representation for keys?
            if not, convert to canonical representation */
         tri.config.set("_desc", defCmd, key, desc);
@@ -994,7 +994,7 @@ utils.tri = {
         const argstr = typeof args==="string" ? args : args.join(" ").trim().replace(/ +/, " ");
         const words = argstr.split(" ");
         var terms = [];
-        for (let i=0; i<words.length; ++i) {
+        for (var i=0; i<words.length; ++i) {
             /* FIXME? case of an isolated quote surrounded by spaces */
             /* TODO: proper parsing with escapes; decide how to treat mid-word quotes */
             if (words[i].startsWith("\"")) {
@@ -1024,7 +1024,7 @@ utils.tri = {
         const endsInQuote = argstr[argstr.length-1]=='"';
         const words = argstr.split(" ");
         var terms = [];
-        for (let i=0; i<words.length; ++i) {
+        for (i=0; i<words.length; ++i) {
             /* FIXME? case of an isolated quote surrounded by spaces */
             /* TODO: proper parsing with escapes; decide how to treat mid-word quotes */
             if (words[i].startsWith("\"")) {
@@ -1096,7 +1096,7 @@ utils.tri = {
     },
 
     searchNmapsWrapper: async function (r, opts={}) {
-        const regexp = new RegExp(r.trim(), opts.caseSensitive ? "" : "i");
+        regexp = new RegExp(r.trim(), opts.caseSensitive ? "" : "i");
         const conf = this.searchConfig("nmaps", regexp);
         return utils.messageBox(conf, {contPrefix: "\t\t"});
     },
@@ -1133,7 +1133,7 @@ utils.tri = {
         const argstr = args.join(" ").trim();
         const bindmodeRe = /^([a-z]+) ([^ ]+)/;
         const match = argstr.match(bindmodeRe);
-        [mode, key] = match.slice(1);
+        const [mode, key] = match.slice(1);
         switch(mode) {
           case "all":
               tri.controller.acceptExCmd(`unbind --mode=normal ${key}`);
