@@ -197,7 +197,7 @@ var urls = {
 
     contentType: async function(url=tri.contentLocation.href) {
         if (url==tri.contentLocation.href)
-            return js("document.contentType");
+            return tri.excmds.js("document.contentType");
         else {
             const cmd = `curl -sI ${url} |grep -Pio '(?<=content-type: )[a-zA-Z0-9]+/[a-zA-Z0-9]+'`;
             const res = await tri.native.run(cmd);

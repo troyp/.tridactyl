@@ -1115,7 +1115,7 @@ utils.tri = {
     },
 
     searchNmapsWrapper: async function (r, opts={}) {
-        regexp = new RegExp(r.trim(), opts.caseSensitive ? "" : "i");
+        const regexp = new RegExp(r.trim(), opts.caseSensitive ? "" : "i");
         const conf = this.searchConfig("nmaps", regexp);
         return utils.messageBox(conf, {contPrefix: "\t\t"});
     },
@@ -1145,7 +1145,7 @@ utils.tri = {
 
     qmarkset: async function(c) {
         tri.config.USERCONFIG.qmarks ||= {};
-        tri.config.USERCONFIG.qmarks[c] = await js("window.location.href");
+        tri.config.USERCONFIG.qmarks[c] = await tri.excmds.js("window.location.href");
     },
 
     unbindMode: function(args) {

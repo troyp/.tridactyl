@@ -739,14 +739,14 @@ cutils.tri = {
         const [rawexpr, ...exprargs] = args;
         const count = rawcount || defaultCount;
         const expr = rawexpr.replace(/ARGS/g, JSON.stringify(exprargs)).replace(/COUNT/g, count);
-        return js(expr);
+        return tri.excmds.js(expr);
     },
 
     jsCount: async function(rawargs, defaultCount=1) {
         const [args, rawcount] = cutils.tri.parseArgsAndCount(rawargs);
         const count = rawcount || defaultCount;
         const expr = args.join(" ").replace(/COUNT/g, count);
-        return js(expr);
+        return tri.excmds.js(expr);
     },
 
     /*    parseArgs(args, opts): return args as a string, an array of nonempty strings, or a number
