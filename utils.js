@@ -56,6 +56,12 @@ var utils = {
         return s;
     },
 
+    message_file: async function(s) {
+        const tempfile = (await tri.native.run("mktemp /tmp/tri.XXXXXX")).content.trim();
+        await tri.native.write(tempfile, s);
+        exclaim(`gview ${tempfile}`);
+    },
+
     messageBox: async function(lines, opts={}) {
         if (typeof lines === "string") lines = lines.split("\n");
         const w = parseInt(opts.width) || Infinity;
@@ -75,7 +81,15 @@ var utils = {
               .replace(/\t/g, "\\t")
               .replace(/'/g, "\\'")
               .replace(/ /g, "\\ ");
-        tri.controller.acceptExCmd(`js alert('${s_}')`);
+        switch(opts.type) {
+          case "file":
+              await utils.message_file(s);
+              break;
+          case "alert":
+          default:
+              await tri.controller.acceptExCmd(`js alert('${s_}')`);
+              break;
+        }
         return s;
     },
 
