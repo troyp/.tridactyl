@@ -377,7 +377,7 @@ var cutils = {
         return selected;
     },
 
-    keep: (...selectors) => this.isolate(selectors),
+    keep: (...selectors) => cutils.isolate(selectors),
 
     /* Turn HEADING into a collapsible `details` element, containing CONTENT */
     makeCollapsible: async function(content, heading) {
@@ -422,7 +422,7 @@ var cutils = {
     },
 
     /** Remove elements matching any of the SELECTORS. For more options, see rm() */
-    rmall: (...selectors) => this.rm(selectors),
+    rmall: (...selectors) => cutils.rm(selectors),
 
     saveURL: function(url, name) {
         url ||= document.location.href;
@@ -527,7 +527,7 @@ var cutils = {
     /** Unhides elements matching any of the SELECTORS. For more options, see rm() */
     unhideall: (...selectors) => cutils.unhide(selectors),
 
-    yankby: (...args) => cutils.yank(this.getText(...args)),
+    yankby: (...args) => cutils.yank(cutils.getText(...args)),
 
     yank1by: function(selector, opts={}) {
         const text = this.getText1(selector, opts);
