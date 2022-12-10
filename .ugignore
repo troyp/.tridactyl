@@ -1,9 +1,13 @@
 /.*/
+/cookies/
 /css/
+/data/
 /emacs/
 /gmscripts/
 /js/
+/misc_ignore/
 /patches/
+/personal/
 /scripts/
 /userstyles/
 /webapps/
