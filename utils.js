@@ -882,6 +882,11 @@ utils.tri = {
         return doclines;
     },
 
+    showMyCommands: function(sort=true) {
+        const cmds = utils.tri.getCommandDocs(sort);
+        return utils.msg(cmds.map(s=>"• "+s).join("\n"), {type:"file"});
+    },
+
     gotoCommandSource: function(s) {
         const repo = "~/source/git-repos/tridactyl";
         const cmd = `grep -inP 'export (async )?function ${s}[(]' ${repo}/src/excmds.ts`;

@@ -566,6 +566,9 @@ bind: ssaJ "Search amazon, ebay and jacksonsart: last tab" fillcmdline multiengi
 " ╭───────────────╮
 " │ <C-h> -- help │
 " ╰───────────────╯
+command: showmycommands "Show user-defined commands a-z" jsb utils.tri.showMyCommands()
+command: showmycommands! "Show user-defined commands" jsb utils.tri.showMyCommands(false)
+command: showmybindings "Show user-defined bindings" jsb utils.message(utils.tri.getBindingDocs().join("\n"))
 command: showkeys "Open completion menu for bindings" fillcmdline_notrail bind
 command: showkeysurl "Open completion menu for :bindurl bindings" fillcmdline_notrail bindurl
 command: searchnmaps "Search user-set bindings" jsb -d¦ utils.tri.searchNmapsWrapper(JS_ARGS.join(" "))¦
@@ -573,6 +576,7 @@ command: searchnmaps "Search user-set bindings" jsb -d¦ utils.tri.searchNmapsWr
 bind <C-h><C-h> showkeys <C-h>
 bind: <C-h>a "Open list of ui.key.accelKey values" topos https://searchcode.com/codesearch/view/26755902/
 bind: <C-h>b "Search normal keybinding definitions" fillcmdline searchnmaps
+bind: <C-h>c "Show user-defined commands" showmycommands
 bdoc <C-h>d "Open devtools toolbox"
 bind <C-h>d tabopen about:devtools-toolbox?id=tridactyl.vim.betas%40cmcaine.co.uk&type=extension
 bdoc <C-h>f "Open list of Firefox Keyboard Shortcuts"
