@@ -110,7 +110,7 @@ bind: <S-enter> "Jump to heading" cujs jumpToHeading()
 " ╰─────────────╯
 " note: g;h g;l g;u g;U bound to other commands
 
-bind: gi "Focus COUNTth input field" jsb_count focusinput(COUNT??"-l")
+bind: gi "Focus COUNTth input field" js_count! focusinput(COUNT?COUNT-1:"-l")
 
 bind g;<C-h> showkeys g;
 bind: g;; "Focus tab containing last focused input" changelistjump -1
