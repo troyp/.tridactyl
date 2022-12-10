@@ -1031,6 +1031,8 @@ command: imageresize "Resize image [HINTS]" cujs -d¦ cutils.img.hint.cssTransfo
 commdoc imagematrix "Transform image with matrix [HINTS]"
 command imagematrix cujs -d¦ cutils.img.hint.cssTransform(`matrix(${JS_ARGS.slice(1).join(',')})`)¦
 
+bind: ,i<C-h> "(show bindings: images)" showkeys ,i
+
 bind: ,ii<C-h> "(show bindings: images/hints)" showkeys ,ii
 bind: ,iif "Flip image horizontally [HINTS]" hint img -F e=>e.style.transform="scaleX(-1)"
 bind: ,iiF "Flip image vertically [HINTS]" hint img -F e=>e.style.transform="scaleY(-1)"
