@@ -160,14 +160,14 @@ the first line after POS matching END-REGEX"
   [107 48 108 108 118 36 104 121 106 48 69 97 58 escape 87 69 97 32 34 34 escape 80 107 100 100])
 
 (defun my/tri-bind:-to-bdoc ()
-  "Convert a bind: command to a bind command with a bdoc command above"
+  "Convert a `bind:` command to a `bind` command with a `bdoc` command above"
   (interactive)
   (my/evil-substitute-region
    "(.*)bind: +([^ ]+) +\"([^\"]+)\" +(.*)"
    "\\1bdoc \\2 \"\\3\"\n\\1bind \\2 \\4"))
 
 (defun my/tri-bdoc-to-bind: ()
-  "Convert a bind command with a bdoc command above to a bind: command"
+  "Convert a `bind` command with a `bdoc` command above to a `bind:` command"
   (interactive)
   (my/select-surrounding-lines "bdoc" "bind")
   (my/evil-substitute-region
@@ -175,15 +175,17 @@ the first line after POS matching END-REGEX"
    "\\1bind: \\2 \"\\3\" \\6"))
 
 (defun my/tri-command:-to-commdoc ()
-  "Convert a command: command to a command command with a commdoc command above"
+  "Convert a `command:` command to a `command` command with a `commdoc` command above"
   (interactive)
   (my/evil-substitute-region "command: +([^ ]+) +\"([^\"]+)\" +(.*)" "commdoc \\1 \"\\2\"\ncommand \\1 \\3"))
 
 (defun my/tri-commdoc-to-command: ()
-  "Convert a command command with a commdoc command above to a command: command"
+  "Convert a `command` command with a `commdoc` command above to a `command:` command"
   (interactive)
-  (my/select-surrounding-lines "commdoc" "command")
-  (my/evil-substitute-region "commdoc +([^ ]+) +\"(.*)\"\\ncommand +([^ ]+) +(.*)" "command: \\1 \"\\2\" \\4"))
+  (my/select-surrounding-lines "commdoc" "^command")
+  (my/evil-substitute-region
+   "commdoc +([^ ]+) +\"(.*)\"\ncommand +([^ ]+)"
+   "command: \\1 \"\\2\""))
 
 (my/kmacro-fset 'my/tri-add-commdoc-above
   "Add a `commdoc` statement above a command definition"
