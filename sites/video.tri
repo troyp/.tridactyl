@@ -16,6 +16,9 @@ command: primevbind: "Bind key with description for www.primevideo.com" bindurl:
 primevbind c<C-h> showkeysurl primevideo.com c
 primevbind: cc "Show episode" cujs cutils.getText1("div.contentTitlePanel>div.subtitle") | show
 primevbind: ct "Show series" cujs cutils.getText1("div.contentTitlePanel>div.title") | show
+
+" | cy -- primev/yank |
+primevbind: cy<C-h> "(show bindings: primev/yank)" primevshowkeys cy
 primevbind: cyy "Yank episode" cujs cutils.yankby1("div.contentTitlePanel>div.subtitle")
 primevbind: cyt "Yank series" cujs cutils.yankby1("div.contentTitlePanel>div.title")
 
