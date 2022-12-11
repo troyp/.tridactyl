@@ -163,6 +163,8 @@ command: js_cmd "run js, substituting for ARGS & COUNT (default COUNT=1)" cUjs -
 command: jsb_cmd "run jsb, substituting for ARGS & COUNT (default COUNT=1)" jsb -d¦ utils.tri.jsbCmd(JS_ARGS)¦
 command: js_cmd! "run js command, substituting for ARGS & COUNT" cUjs -d¦ cutils.tri.jsCmd(JS_ARGS, null)¦
 command: jsb_cmd! "run jsb command, substituting for ARGS & COUNT" jsb -d¦ utils.tri.jsbCmd(JS_ARGS, null)¦
+command: jscheme "Eval js as bookmarklet" js -d¦ tri.controller.acceptExCmd(`open javascript:${JS_ARGS.join(" ")}`)¦
+command: jsinject "Eval js as script tag" cujs -d¦ cutils.jsinject(JS_ARGS.join(" "))¦
 
 " | commands for running shell commands |
 command trish jsb -d¦ shell.cmdRoxterm(`. ~/.tridactyl/scripts/tri.sh && tri ${JS_ARGS.join(" ")}`)¦

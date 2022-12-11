@@ -360,6 +360,13 @@ var cutils = {
 
     isDisplayed: function(e) { return Boolean(e.offsetParent); },
 
+    jsinject: async function(code, doc=document) {
+        const script = doc.createElement("script");
+        script.innerText = code;
+        document.head.appendChild(script);
+        script.parentNode.removeChild(script);
+    },
+
     jumpToHeading: async function(selector="h2,h3,h4", opts={}) {
         opts = cutils.tri.parseOpts(opts, {defaults: {"indentHeadings": true}});
         const tableHeadings = $$(selector);
