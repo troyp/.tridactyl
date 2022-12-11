@@ -128,15 +128,24 @@ bind g;s js_count cutils.get("input", {match: /search/i, textProperty: "placehol
 " │ general commands │
 " ╰──────────────────╯
 command clearconfig jsb browser.storage.local.clear()
+
+" | commands for entering text into commandline |
 command : fillcmdline
 command :_ fillcmdline_notrail
-command: "Run ex command" _ jsb -d¦ tri.controller.acceptExCmd(JS_ARGS.slice(1).join(" "))¦
 command show fillcmdline_nofocus
 commdoc fillcmdline_withcount "fill cmdline with cmd and optional count:  [CMD COUNT?] -> :CMD COUNT"
 command fillcmdline_withcount jsb -d¦ fillcmdline(JS_ARGS.length>2 ? JS_ARGS.join(" ").trim() : `${JS_ARGS[1]} 1`)¦
+
+" | commands for running commands |
+command: _ "Run ex command" jsb -d¦ tri.controller.acceptExCmd(JS_ARGS.slice(1).join(" "))¦
 command :: composite
 command hintpipe composite hint -pipe
+commdoc pastef "Takes a format string and replaces ${S} with clipboard contents; used to pipe to another command"
+command pastef composite jsb -d¦ getclip().then(s=>parseArgs(JS_ARGS, "string").replace(/\$\{s\}/g, s))¦
+commdoc expaste "Execute commands in clipboard"
+command expaste jsb utils.cbread().then(s=>s.split("\n").forEach(c=>tri.controller.acceptExCmd(c)));
 
+" | commands for running javascript |
 command withjs composite js
 command withjsb composite jsb
 command: ujs "Load urls.js and run js" composite js -r urls.js ; js
@@ -155,10 +164,15 @@ command: jsb_cmd "run jsb, substituting for ARGS & COUNT (default COUNT=1)" jsb 
 command: js_cmd! "run js command, substituting for ARGS & COUNT" cUjs -d¦ cutils.tri.jsCmd(JS_ARGS, null)¦
 command: jsb_cmd! "run jsb command, substituting for ARGS & COUNT" jsb -d¦ utils.tri.jsbCmd(JS_ARGS, null)¦
 
+" | commands for running shell commands |
 command trish jsb -d¦ shell.cmdRoxterm(`. ~/.tridactyl/scripts/tri.sh && tri ${JS_ARGS.join(" ")}`)¦
 commdoc shellcmdonurlfile "Run shell command on document (download if online)"
 command shellcmdonurlfile jsb -d¦ shell.cmdOnURLFile(JS_ARGS, tri.contentLocation.href)¦
+command !! exclaim_
+command !s exclaim_quiet
+command: exclaim_ "Run commands in /bin/sh and print the result on the command line" jsb -d¦ apps.exclaim_(JS_ARGS)¦
 
+" | commands for opening URLs |
 " override :open and :tabopen to get builtin completions
 command open open!
 command tabopen tabopen!
@@ -206,9 +220,7 @@ command urlmodorsummon_g jsb -d¦ urls.mod.graftOrSummon(JS_ARGS[1], 0, {where:J
 command: urltogglequery "Toggle value of query in URL" jsb -d¦ urls.mod.toggleQuery(...JS_ARGS.slice(1))¦
 command tabopenmultiple jsb -d¦ utils.tab.openMultiple(JS_ARGS.join(" ").split(" "))¦
 
-command !! exclaim_
-command !s exclaim_quiet
-
+" | xdo commands |
 command xdo !s xdotool
 commdoc xdoclick "Click element at point X Y with button N and return pointer to original position"
 command xdoclick jsb -d¦ xdo.clickWr(JS_ARGS, {return:true})¦
@@ -223,14 +235,6 @@ commdoc xdokeyseq "[DELAY KEYS...] use xdotool to simulate a sequence of keys wi
 command xdokeyseq jsb -d¦ xdo.keyseq(JS_ARGS)¦
 command: xdoitem "Click item with xdotool" jsb -d¦ xdo.clickItem(JS_ARGS[1], JS_ARGS[2], {return:true})¦
 command: omni! "Enter string in omniboox with xdotool" jsb -d¦ xdo.omniboxEnter(JS_ARGS.join(" "))¦
-
-commdoc pastef "Takes a format string and replaces ${S} with clipboard contents; used to pipe to another command"
-command pastef composite jsb -d¦ tri.excmds.getclip().then(s=>parseArgs(JS_ARGS, "string").replace(/\$\{s\}/g, s))¦
-commdoc expaste "Execute commands in clipboard"
-command expaste jsb utils.cbread().then(s=>s.split("\n").forEach(c=>tri.controller.acceptExCmd(c)));
-commdoc exclaim_ "Run commands in /bin/sh and print the result on the command line"
-command exclaim_ jsb -d¦ apps.exclaim_(JS_ARGS)¦
-
 command omni xdo key alt+d key ctrl+u sleep 0.5 type
 command omni_focus xdokeyseq 0.2 alt+d ctrl+u
 
