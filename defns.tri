@@ -513,8 +513,6 @@ bind: ,<C-/> "Remove browser.find search highlighting" jsb browser.find.removeHi
 bind * js tri.controller.acceptExCmd(`find ${window.getSelection()+""}`);
 bind # js tri.controller.acceptExCmd(`find -? ${window.getSelection()+""}`);
 
-unbind s
-
 bind: s<C-h> "(show bindings: search)" showkeys s
 bind: sl "Search with firefox link search" nativelinksearch
 bind: sa "Open keyword search in adjacent tab [Rofi]" !  echo -n "tabopen_adj "; kwsearch -Sw1
@@ -548,13 +546,13 @@ bind: smE "Search multiple engines: last tab" fillcmdline multienginesearch_last
 
 " | sm; -- search multiple (rofi) |
 bind: sm;<C-h> "(show bindings: search/multi/rofi)" showkeys sm;
-bind: sm;m "Search multiple queries: adjacent tab [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch_adj "\0"/'
-bind: sm;M "Search multiple queries: last tab [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch "\0"/'
-bind: sm;e "Search multiple engines: adjacent tab [Rofi]" ! echo -n "multienginesearch_adj "; kwsearch -w -S -m -1
-bind: sm;E "Search multiple engines: last tab [Rofi]" ! echo -n "multienginesearch_last "; kwsearch -w -S -m -1
-bdoc sm;q "Search multiple engines (quoted): adjacent tab [Rofi]"
+bind: sm;m "Multi-query search: adjacent tab [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch_adj "\0"/'
+bind: sm;M "Multi-query search: last tab [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch "\0"/'
+bind: sm;e "Multi-engine search: adjacent tab [Rofi]" ! echo -n "multienginesearch_adj "; kwsearch -w -S -m -1
+bind: sm;E "Multi-engine search: last tab [Rofi]" ! echo -n "multienginesearch_last "; kwsearch -w -S -m -1
+bdoc sm;q "Multi-engine search (quoted): adjacent tab [Rofi]"
 bind sm;q ! kwsearch -w -S -m -1|sed -r 's/.*/multienginesearch_adj! "\0"/'
-bdoc sm;Q "Search multiple engines (quoted): last tab [Rofi]"
+bdoc sm;Q "Multi-engine search (quoted): last tab [Rofi]"
 bind sm;Q ! kwsearch -w -S -m -1|sed -r 's/.*/multienginesearch_last! "\0"/'
 
 " | ss -- shopping search |
