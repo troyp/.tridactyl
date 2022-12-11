@@ -5,6 +5,22 @@
 command: videojs "Load video.c.js and execute javascript" cujs -r sites/video.c.js ; js
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────╮
+" │ Netflix.com │
+" ╰─────────────╯
+
+command: netflixbind "Bind key for netflix.com" bindurl netflix.com
+command: netflixbind: "Bind key with description for netflix.com" bindurl: netflix.com
+command: netflixbdoc "Provide a description on a separate line" js ;
+command: netflixshowkeys "(show bindings: netflix)" showkeysurl netflix.com
+
+netflixbind c<C-h> showkeysurl netflix.com c
+
+netflixbind: cc "Skip content" videojs vid.netflix.go()
+netflixbind: cy<C-h> "(show bindings: netflix/yank)" netflixshowkeys cy
+netflixbind: cyy "Yank title (while showing)" yankfirst h2
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────────╮
 " │ PrimeVideo.com │
 " ╰────────────────╯
