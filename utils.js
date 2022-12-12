@@ -59,7 +59,7 @@ var utils = {
     message_file: async function(s) {
         const tempfile = (await tri.native.run("mktemp /tmp/tri.XXXXXX")).content.trim();
         await tri.native.write(tempfile, s);
-        exclaim(`gview ${tempfile}`);
+        exclaim_quiet(`gview ${tempfile}`);
     },
 
     messageBox: async function(lines, opts={}) {
