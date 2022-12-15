@@ -45,7 +45,7 @@ var utils = {
     message: function(s, opts={}) {
         opts = utils.tri.parseOpts(opts, {castBoolean: "cmdline"});
         const s_ = (opts.prefix || "") + s;
-        if (opts.temp) {
+        if (opts.temp || opts.duration) {
             const t = opts.duration || 3000;
             fillcmdline_tmp(s_, t);
         } else if (opts.cmdline) {
@@ -62,6 +62,16 @@ var utils = {
         exclaim_quiet(`gview ${tempfile}`);
     },
 
+    message_alert: async function(s) {
+        const s_ = s
+              .replace(/\\/g, "\\\\")
+              .replace(/'/g, "\\'")
+              .replace(/\n/g, "\\n")
+              .replace(/\t/g, "\\t");
+        await tri.excmds.js(`alert('${s_}')`);
+        return s;
+    },
+
     messageBox: async function(lines, opts={}) {
         if (typeof lines === "string") lines = lines.split("\n");
         const w = parseInt(opts.width) || Infinity;
@@ -76,18 +86,13 @@ var utils = {
                 line = line.slice(w-d);
             }
         }
-        const s_ = s
-              .replace(/\n/g, "\\n")
-              .replace(/\t/g, "\\t")
-              .replace(/'/g, "\\'")
-              .replace(/ /g, "\\ ");
         switch(opts.type) {
           case "file":
               await utils.message_file(s);
               break;
           case "alert":
           default:
-              await tri.controller.acceptExCmd(`js alert('${s_}')`);
+              await utils.message_alert(s);
               break;
         }
         return s;
