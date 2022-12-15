@@ -82,9 +82,10 @@ var apps = {
         return fillcmdline_nofocus(Array.from(s).map(c => c.charCodeAt(0).toString(16)).join(" "));
     },
 
-    unicode: async function(s) {
+    unicode: async function(args) {
+        const s = utils.tri.parseArgs(args, "str");
         if (s.length == 1) {
-            return tri.controller.acceptExCmd(`exclaim unicode ${s}`);
+            return tri.controller.acceptExCmd(`!! unicode ${s} | sed 's/\s+/ /g'`);
         } else {
             const res = await tri.native.run(`unicode ${s}`);
             return utils.msg(res.content);
