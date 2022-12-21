@@ -1351,6 +1351,21 @@ bind --mode=insert  <C-c>q    withjsb user.masterpw   | text.insert_text
 bind --mode=insert  <C-c>p    withjsb user.phone      | text.insert_text
 bind --mode=insert  <C-c>c    withjsb user.creditcard | text.insert_text
 
+bind <C-c><C-h> fillcmdline_notrail bind <C-c>
+bind <C-c>m    withjsb user.email      | clipboard yank
+bind <C-c>M    withjsb user.email2     | clipboard yank
+bind <C-c>i    withjsb user.name       | clipboard yank
+bind <C-c>t    withjsb user.firstname  | clipboard yank
+bind <C-c>l    withjsb user.lastname   | clipboard yank
+bind <C-c>d    withjsb user.address    | clipboard yank
+bind <C-c>a    withjsb user.street     | clipboard yank
+bind <C-c>s    withjsb user.suburb     | clipboard yank
+bind <C-c>b    withjsb user.mobile     | clipboard yank
+bind <C-c>z    withjsb user.postcode   | clipboard yank
+bind <C-c>q    withjsb user.masterpw   | clipboard yank
+bind <C-c>p    withjsb user.phone      | clipboard yank
+bind <C-c>c    withjsb user.creditcard | clipboard yank
+
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────╮
 " │ Visual-mode bindings │
