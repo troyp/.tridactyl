@@ -221,11 +221,25 @@ googlebind cyy cujs ; hint -Jc div.g>div div>div>a>div>cite -F e=>cutils.yank(e.
 autocmd DocLoad https://calendar\.google\.com(/|$) js -r sites/gcal.auto.js
 autocmd TabEnter https://calendar\.google\.com(/|$) js -r sites/gcal.auto.js
 
-command: gcalbind "Bind key for calendar.google.com" bindurl https://calendar\.google\.com(/|$)
-command: gcalbind: "Bind key with description for calendar.google.com" bindurl: https://calendar\.google\.com(/|$)
+command: gcalbind "Bind key for calendar.google.com" bindurl calendar.google.com
+command: gcalbind: "Bind key with description for calendar.google.com" bindurl: calendar.google.com
+command: gcalbdoc "Provide a description on a separate line" js ;
+command: gcalshowkeys "(show bindings: gcal)" showkeysurl calendar.google.com
+
+gcalbind: c<C-h> "(show bindings: gcal)" showkeysurl calendar.google.com c
 
 gcalbind: <A-enter> "Load sites/gcal.auto.js" js -r sites/gcal.auto.js
 gcalbind: cc "Load styles for calendar.google.com" js -r sites/gcal.auto.js
+
+" | co -- gcal/open |
+gcalbind: co<C-h> "(show bindings: gcal/open)" showkeysurl calendar.google.com co
+gcalbind: coa "Goto Agenda" opos https://calendar.google.com/calendar/u/0/r/agenda/
+gcalbind: coc "Custom view" opos https://calendar.google.com/calendar/u/0/r/customday
+gcalbind: cod "Day view" opos https://calendar.google.com/calendar/u/0/r/day
+gcalbind: com "Month view" opos https://calendar.google.com/calendar/u/0/r/month
+gcalbind: cos "Goto Settings" opos https://calendar.google.com/calendar/u/0/r/settings
+gcalbind: cow "Week view" opos https://calendar.google.com/calendar/u/0/r/week
+gcalbind: coy "Year view" :e `opos https://calendar.google.com/calendar/u/0/r/year/${(new Date).getYear()+1900}`
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────╮
