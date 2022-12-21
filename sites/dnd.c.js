@@ -3,7 +3,7 @@
 // │ MODULE dnd │
 // ╰────────────╯
 
-dnd = {};
+var dnd = {};
 
 dnd.dndb = {
     go: async function() {

@@ -3,7 +3,7 @@
 // │ yt.c.js -- Youtube methods │
 // ╰────────────────────────────╯
 
-yt = {
+var yt = {
     minSpeed: 0.25,
 
     player: () => $id("movie_player").wrappedJSObject,
@@ -156,3 +156,5 @@ yt = {
         const cmd = `!cd ${dir}; youtube-dl -ci ${xtraArgs} --xattrs -o "%(title)s-%(id)s.%(ext)s" "${buffer.URL}"`;
     },
 };
+
+window.yt = yt;

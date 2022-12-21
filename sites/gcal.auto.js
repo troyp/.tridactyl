@@ -4,8 +4,8 @@
 // ╭─────────────────╮
 // │ colored buttons │
 // ╰─────────────────╯
-fade = ratio => component => 255-((255-component)/ratio);
-rgb = (r,g,b)=>`rgb(${r}, ${g}, ${b})`;
+const fade = ratio => component => 255-((255-component)/ratio);
+const rgb = (r,g,b)=>`rgb(${r}, ${g}, ${b})`;
 const buttonFader = fade(5);
 
 document.querySelectorAll("div[role=main] div[role=button]").forEach(e => {
@@ -14,7 +14,7 @@ document.querySelectorAll("div[role=main] div[role=button]").forEach(e => {
         const dotcolor = e.firstChild.firstChild.style.borderColor || rgb(90,90,90);
         const match = dotcolor.match(rgbRE);
         const components = match.slice(1).map(buttonFader);
-        bgcolor = `rgb(${components})`;
+        const bgcolor = `rgb(${components})`;
         e.firstChild.style.color="${dotcolor} !important";
         e.style.backgroundColor=bgcolor;
         e.style.border=`1px solid ${dotcolor}`;
