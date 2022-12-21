@@ -29,6 +29,11 @@ var S = {
         }
     },
     repeat: function (s, n) { return Array(n).fill(s).join(""); },
+    hasUpperCase: function(s) {
+        for (const c of s) if (c >= "A" && c <= "Z") return true;
+        return false;
+    },
+
     isLowerCase: function(s) {
         return s.toLowerCase()===s;
     },
@@ -96,6 +101,14 @@ var S = {
         if (s.length > n) return s.slice(0,n);
         else return this.padEnd(s, n, pad);
     },
+    toStringOrRegex: function(s) {
+        /* toStringOrRegex: converts a string to a regex if possible, else returns */
+        /*     the string. Can be used to accept either a string or regex argument */
+        /*     for a command:     `js doSomething(args.map(readStringOrRegex))`    */
+        const matches = s.match(/^\/([^/]*)\/([gimuy]*)$/);
+        return matches ? RegExp(matches[1], matches[2]) : s;
+    },
+
     titleCaseExceptionWords: ["a", "an", "the", "and", "or", "but", "nor",
                               "yet", "so", "for", "in", "to", "of", "at",
                               "by", "for", "off", "on", "as", "x"],
