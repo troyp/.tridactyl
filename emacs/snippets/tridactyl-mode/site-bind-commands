@@ -7,5 +7,5 @@ command: $1bind: "Bind key with description for $2" bindurl: $2
 command: $1bdoc "Provide a description on a separate line" js ;
 command: $1showkeys "(show bindings: $1)" showkeysurl $2
 
-$1bind c<C-h> showkeysurl $2 c
+$1bind: c<C-h> "(show bindings: $1)" showkeysurl $2 c
 $0
