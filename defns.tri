@@ -1128,10 +1128,8 @@ bind: ,no "Remove elements except those matching selectors" fillcmdline keep
 bind ,r<C-h> showkeys ,r
 
 " | ,ru -- reference/unicode |
-commdoc unicodehexcodes "Unicode hex code of characters"
-command unicodehexcodes jsb -d¦ apps.unicodeHexcodes(JS_ARGS.join(""))¦
-commdoc unicode "Describe unicode characters"
-command unicode jsb -d¦ apps.unicode(JS_ARGS.join(" "))¦
+command: unicodehexcodes "Unicode hex code of characters" jsb -d¦ apps.unicodeHexcodes(JS_ARGS.join(""))¦
+command: unicode "Describe unicode characters" jsb -d¦ apps.unicode(JS_ARGS)¦
 
 bind: ,rmm "World map (google)" tabopenorswitchc https://www.google.com/maps/@12.8367482,26.1595951,3z
 
