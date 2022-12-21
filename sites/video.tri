@@ -52,9 +52,10 @@ command: disneypbdoc "Provide a description on a separate line" js ;
 command: disneypshowkeys "(show bindings: disneyp)" showkeysurl disneyplus.com
 command: disneyp_search "Search disneyplus.com"
 
-disneypbind: <space> "Play/Pause" videojs vid.disneyp.go()
+disneypbind: <space> "Play/Pause" videojs vid.disneyp.playpause()
 
 disneypbind: c<C-h> "(show bindings: disneyp/)" disneypshowkeys c
+disneypbind: cc "Play/Play next" videojs vid.disneyp.go()
 disneypbind: cm "Mute" cujs click("button.mute-btn")
 
 " | co -- disneyp/goto |
