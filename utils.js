@@ -956,6 +956,7 @@ utils.tri = {
     },
 
     parseArgsAndCount: function(args, opts={}) {
+        args = utils.tri.parseArgs(args);
         const n = args.length - 1;
         const hasCount = args[n].match(/^[1-9][0-9]*$/);
         const countElem = hasCount && args.pop();
@@ -1010,60 +1011,68 @@ utils.tri = {
     },
 
     /* Parse raw arguments from tridactyl to return an array of string arguments.
-     * Arguments are separated by spaces, but may be grouped using double quotes.
-     * In this case, the quotes must be preceded or followed by a space (or end of
-     * string), otherwise the double quote is parsed as part of the argument.
+     * Arguments are separated by spaces, but may be grouped using double quotes as
+     * delimiters or slashes as separators (according to choice of opts.char).
+     * Delimiting quotes must be preceded or followed by a space (or end of string),
+     * otherwise the double quote is parsed as part of the argument.
+     * Separating slashes must be surrounded by spaces.
      */
-    parseTerms: function(args) {
-        const argstr = typeof args==="string" ? args : args.join(" ").trim().replace(/ +/, " ");
-        const words = argstr.split(" ");
+    parseTerms: function(args, opts={}) {
+        const argstr = utils.tri.parseArgs(args, "string");
+        const words = argstr.split(/ +/);
+        opts = utils.tri.parseOpts(opts, {
+            castString: "char",
+            defaults: {"char": "\""}
+        });
         var terms = [];
-        for (var i=0; i<words.length; ++i) {
-            /* FIXME? case of an isolated quote surrounded by spaces */
-            /* TODO: proper parsing with escapes; decide how to treat mid-word quotes */
-            if (words[i].startsWith("\"")) {
-                const termwords = [words[i]];
-                if (words[i] == "\"") i++;
-                while (!words[i].endsWith("\"")) {
-                    i++;
-                    termwords.push(words[i]);
-                }
-                terms.push(termwords.join(" ").replace(/^"|"$/g, ""));
-            } else
-                terms.push(words[i]);
+        switch(opts.char) {
+          case "\"":
+              for (let i=0; i<words.length; ++i) {
+                  /* TODO: proper parsing with escapes (decide how to treat mid-word quotes) */
+                  if (words[i].startsWith("\"")) {
+                      const termwords = [];
+                      if (words[i] !== "\"")
+                          termwords.push(words[i].slice(1));
+                      i++;
+                      while (!words[i].endsWith("\"")) {
+                          termwords.push(words[i]);
+                          i++;
+                      }
+                      if (words[i] !== "\"")
+                          termwords.push(words[i].slice(0, -1));
+                      terms.push(termwords.join(" "));
+                  } else
+                      terms.push(words[i]);
+              }
+              break;
+          case "/":
+              let termwords = [];
+              for (let i=0; i<words.length; ++i) {
+                  if (words[i]==="/") {
+                      terms.push(termwords.join(" "));
+                      termwords = [];
+                  } else {
+                      termwords.push(words[i]);
+                  }
+              }
+              terms.push(termwords.join(" "));
+              break;
         }
         return terms;
     },
 
     /* Parse raw arguments from tridactyl to return an array of string arguments and
-     * optional final numeric count. Arguments are separated by spaces, but may be
-     * grouped using double quotes. In this case, the quotes must be preceded or
-     * followed by a space (or end of string), otherwise the double quote is parsed
-     * as part of the argument.
+     * optional final numeric count. Arguments are processed as in parseTerms()
      * If the last raw argument has the form of a positive integer, it is interpreted
      * as COUNT, unless surrounded by double quotes.
      */
     parseTermsAndCount: function(args, opts={}) {
-        const argstr = typeof args==="string" ? args : args.join(" ").trim().replace(/ +/, " ");
+        const argstr = utils.tri.parseArgs(args, "string");
+        const words = argstr.split(/ +/);
         const endsInQuote = argstr[argstr.length-1]=='"';
-        const words = argstr.split(" ");
-        var terms = [];
-        for (i=0; i<words.length; ++i) {
-            /* FIXME? case of an isolated quote surrounded by spaces */
-            /* TODO: proper parsing with escapes; decide how to treat mid-word quotes */
-            if (words[i].startsWith("\"")) {
-                const termwords = [words[i]];
-                if (words[i] == "\"") i++;
-                while (!words[i].endsWith("\"")) {
-                    i++;
-                    termwords.push(words[i]);
-                }
-                terms.push(termwords.join(" ").replace(/^"|"$/g, ""));
-            } else
-                terms.push(words[i]);
-        }
+        var terms = utils.tri.parseTerms(argstr);
         const n = terms.length - 1;
-        const hasCount = args[n].match(/^[1-9][0-9]*$/) && !endsInQuote;
+        const hasCount = terms[n].match(/^[1-9][0-9]*$/) && !endsInQuote;
         const countElem = hasCount && terms.pop();
         const count = countElem ? parseInt(countElem) : opts.defaultCount;
         return [terms, count];
