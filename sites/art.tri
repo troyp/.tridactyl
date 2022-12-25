@@ -46,14 +46,14 @@ jabind: ckz "Zero quantity fields" cujs $$("input[title=Qty]").forEach(e=>{e.val
 
 " | co -- ja/goto |
 jabind: co<C-h> "(show bindings: jacksonsart/goto)" jashowkeys co
-jabind: coc "Goto cart" openorswitchc https://www.jacksonsart.com/en-au/checkout/cart/
-jabind: coC "Goto cart checkout" openorswitchc https://www.jacksonsart.com/en-au/checkout/onepage/
-jabind: coo "Goto orders" openorswitchc https://www.jacksonsart.com/en-au/sales/order/history/
+jabind: coc "Goto cart" opos https://www.jacksonsart.com/en-au/checkout/cart/
+jabind: coC "Goto cart checkout" opos https://www.jacksonsart.com/en-au/checkout/onepage/
+jabind: coo "Goto orders" opos https://www.jacksonsart.com/en-au/sales/order/history/
 jabind: co<C-o> "Goto latest order (current tab)" ja_open_order
 jabind: coO "Goto latest order (new tab)" ja_tabopen_order
-jabind: col "Goto login" openorswitchc https://www.jacksonsart.com/en-au/customer/account/login/?___SID=S
+jabind: col "Goto login" opos https://www.jacksonsart.com/en-au/customer/account/login/?___SID=S
 jabind: cos "Goto shipping information" jsb sites.ja.showShippingInfo()
-jabind: cow "Goto wishlist" openorswitchc https://www.jacksonsart.com/en-au/wishlist/
+jabind: cow "Goto wishlist" opos https://www.jacksonsart.com/en-au/wishlist/
 jabind: co1 "Switch to tab Info" cujs cutils.click(".product-essential>ul>li>a", /info/i)
 jabind: co2 "Switch to tab Q&A" cujs cutils.click(".product-essential>ul>li>a", /q&a/i)
 jabind: co3 "Switch to tab Spec" cujs cutils.click(".product-essential>ul>li>a", /spec/i)
@@ -61,44 +61,33 @@ jabind: co4 "Switch to tab Reviews" cujs cutils.click(".product-essential>ul>li>
 
 " | cp -- ja/pencils |
 jabind: cp<C-h> "(show bindings: ja/pencils)" showkeysurl cp
-jabdoc cpbd "Bruynzeel Design pencils"
-jabind cpbd tabopenorswitchc https://www.jacksonsart.com/en-au/bruynzeel-design-colour-pencils
+jabind: cpbd "Bruynzeel Design pencils" topos https://www.jacksonsart.com/en-au/bruynzeel-design-colour-pencils
 jabdoc cpcl "Caran d'Ache Luminance pencils"
-jabind cpcl tabopenorswitchc https://www.jacksonsart.com/en-au/caran-d-ache-luminance-colour-pencils
-jabdoc cpcn "Caran d'Ache Neocolor I crayons"
-jabind cpcn tabopenorswitchc https://www.jacksonsart.com/en-au/caran-dache-classic-neocolor-i
-jabdoc cpcp "Caran d'Ache Pablo pencils"
-jabind cpcp tabopenorswitchc https://www.jacksonsart.com/en-au/caran-d-ache-pablo-pencils
-jabdoc cpdc "Derwent Coloursoft pencils"
-jabind cpdc tabopenorswitchc https://www.jacksonsart.com/en-au/derwent-coloursoft-pencils-au
-jabdoc cpdl "Derwent Lightfast pencils"
-jabind cpdl tabopenorswitchc https://www.jacksonsart.com/en-au/derwent-lightfast-colour-pencil-au
-jabdoc cpdp "Derwent Procolour pencils"
-jabind cpdp tabopenorswitchc https://www.jacksonsart.com/en-au/derwent-procolour-colour-pencils-au
-jabdoc cpds "Derwent Studio pencils"
-jabind cpds tabopenorswitchc https://www.jacksonsart.com/en-au/derwent-studio-pencil-au
-jabdoc cpha "Holbein Artists' pencils"
-jabind cpha tabopenorswitchc https://www.jacksonsart.com/en-au/holbein-artists-pencil
+jabind cpcl topos https://www.jacksonsart.com/en-au/caran-d-ache-luminance-colour-pencils
+jabind: cpcn "Caran d'Ache NeocolorI crayons" topos https://www.jacksonsart.com/en-au/caran-dache-classic-neocolor-i
+jabind: cpcp "Caran d'Ache Pablo pencils" topos https://www.jacksonsart.com/en-au/caran-d-ache-pablo-pencils
+jabind: cpdc "Derwent Coloursoft pencils" topos https://www.jacksonsart.com/en-au/derwent-coloursoft-pencils-au
+jabind: cpdl "Derwent Lightfast pencils" topos https://www.jacksonsart.com/en-au/derwent-lightfast-colour-pencil-au
+jabind: cpdp "Derwent Procolour pencils" topos https://www.jacksonsart.com/en-au/derwent-procolour-colour-pencils-au
+jabind: cpds "Derwent Studio pencils" topos https://www.jacksonsart.com/en-au/derwent-studio-pencil-au
+jabind: cpha "Holbein Artists' pencils" topos https://www.jacksonsart.com/en-au/holbein-artists-pencil
 jabdoc cppc "Faber Castell Polychromos pencils"
-jabind cppc tabopenorswitchc https://www.jacksonsart.com/en-au/faber-castell-polychromos-pencils
+jabind cppc topos https://www.jacksonsart.com/en-au/faber-castell-polychromos-pencils
 
 jabind: cp;<C-h> "(show bindings: ja/watersoluble pencils)" jashowkeys cp;
-jabdoc cp;cn "Caran d'Ache Neocolor II crayons"
-jabind cp;cn tabopenorswitchc https://www.jacksonsart.com/en-au/caran-dache-neocolor-ii-artists-watercolour-crayons
+jabdoc cp;cn "Caran d'Ache NeocolorII crayons"
+jabind cp;cn topos https://www.jacksonsart.com/en-au/caran-dache-neocolor-ii-artists-watercolour-crayons
 jabdoc cp;cm "Caran d'Ache Museum Aquarelle pencils"
-jabind cp;cm tabopenorswitchc https://www.jacksonsart.com/en-au/caran-d-ache-museum-aquarelle-pencils
+jabind cp;cm topos https://www.jacksonsart.com/en-au/caran-d-ache-museum-aquarelle-pencils
 jabdoc cp;cs "Caran d'Ache Supracolor Soft pencils"
 jabind cp;cs topos https://www.jacksonsart.com/en-au/caran-d-ache-supracolor-soft-watersoluble-artist-s-pencils
 jabdoc cp;fa "Faber Castell Albrecht Dürer pencils"
 jabind cp;fa topos https://www.jacksonsart.com/en-au/faber-castell-albrecht-durer-watercolour-pencils-78151
 jabdoc cp;fA "Faber Castell Albrecht Dürer Magnus pencils"
 jabind cp;fA topos https://www.jacksonsart.com/en-au/faber-castell-albrecht-durer-magnus-watercolour-pencils
-jabdoc cp;dw "Derwent Watercolour pencils"
-jabind cp;dw tabopenorswitchc https://www.jacksonsart.com/en-au/derwent-watercolour-pencils-au
-jabdoc cp;di "Derwent Inktense pencils"
-jabind cp;di tabopenorswitchc https://www.jacksonsart.com/en-au/derwent-inktense-pencil-au
-jabdoc cp;dI "Derwent Inktense blocks"
-jabind cp;dI tabopenorswitchc https://www.jacksonsart.com/en-au/derwent-inktense-blocks-au
+jabind: cp;dw "Derwent Watercolour pencils" topos https://www.jacksonsart.com/en-au/derwent-watercolour-pencils-au
+jabind: cp;di "Derwent Inktense pencils" topos https://www.jacksonsart.com/en-au/derwent-inktense-pencil-au
+jabind: cp;dI "Derwent Inktense blocks" topos https://www.jacksonsart.com/en-au/derwent-inktense-blocks-au
 
 " | cs -- ja/search |
 command: ja_search "Search Jackson's Art (new tab)" jsb -d¦ sites.ja.search("related", JS_ARGS)¦
@@ -148,3 +137,5 @@ jabind: cycc "Yank cart items" artjs art.ja.cart.yankItems()
 jabind: cycN "Yank cart items names" artjs art.ja.cart.yankNames()
 jabind: cycn "Yank cart items name [HINT]" artjs art.ja.cart.hint_yankName()
 jabind: cycu "Yank cart items URLs" artjs art.ja.cart.yankURLs()
+
+" ───────────────────────────────────────────────────────────────────────────────
