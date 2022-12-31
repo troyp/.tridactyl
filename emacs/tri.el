@@ -34,6 +34,7 @@
   (interactive)
   (setq-local imenu-generic-expression `((nil "^\" [|│] .* [|│]$" 0)))
   (setq-local tab-width 4)
+  (yas-minor-mode t)
   )
 
 (add-hook 'tridactyl-mode-hook 'my/tridactyl-init)
