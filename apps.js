@@ -75,7 +75,7 @@ var apps = {
 
     sunriseSunset: function(lat, long) {
         const times = SunCalc.getTimes(new Date(), lat, long);
-        return [sunrise, sunset] = [times.sunrise, times.sunset].map(t=>t.toTimeString());
+        return [times.sunrise, times.sunset].map(t=>t.toTimeString());
     },
 
     unicodeHexcodes: function(s) {
