@@ -64,7 +64,8 @@ jabind: cp<C-h> "(show bindings: ja/pencils)" showkeysurl cp
 jabind: cpbd "Bruynzeel Design pencils" topos https://www.jacksonsart.com/en-au/bruynzeel-design-colour-pencils
 jabdoc cpcl "Caran d'Ache Luminance pencils"
 jabind cpcl topos https://www.jacksonsart.com/en-au/caran-d-ache-luminance-colour-pencils
-jabind: cpcn "Caran d'Ache NeocolorI crayons" topos https://www.jacksonsart.com/en-au/caran-dache-classic-neocolor-i
+jabind: cpcc "Caran d'Ache NeocolorI crayons" topos https://www.jacksonsart.com/en-au/caran-dache-classic-neocolor-i
+jabind: cpcn "Caran d'Ache Neopastels" topos https://www.jacksonsart.com/en-au/caran-dache-artist-neopastel
 jabind: cpcp "Caran d'Ache Pablo pencils" topos https://www.jacksonsart.com/en-au/caran-d-ache-pablo-pencils
 jabind: cpdc "Derwent Coloursoft pencils" topos https://www.jacksonsart.com/en-au/derwent-coloursoft-pencils-au
 jabind: cpdl "Derwent Lightfast pencils" topos https://www.jacksonsart.com/en-au/derwent-lightfast-colour-pencil-au
@@ -75,8 +76,8 @@ jabdoc cppc "Faber Castell Polychromos pencils"
 jabind cppc topos https://www.jacksonsart.com/en-au/faber-castell-polychromos-pencils
 
 jabind: cp;<C-h> "(show bindings: ja/watersoluble pencils)" jashowkeys cp;
-jabdoc cp;cn "Caran d'Ache NeocolorII crayons"
-jabind cp;cn topos https://www.jacksonsart.com/en-au/caran-dache-neocolor-ii-artists-watercolour-crayons
+jabdoc cp;cc "Caran d'Ache NeocolorII crayons"
+jabind cp;cc topos https://www.jacksonsart.com/en-au/caran-dache-neocolor-ii-artists-watercolour-crayons
 jabdoc cp;cm "Caran d'Ache Museum Aquarelle pencils"
 jabind cp;cm topos https://www.jacksonsart.com/en-au/caran-d-ache-museum-aquarelle-pencils
 jabdoc cp;cs "Caran d'Ache Supracolor Soft pencils"
