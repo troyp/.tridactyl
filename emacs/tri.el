@@ -47,8 +47,10 @@
     "cB"    'my/tri-bdoc-to-bind:
     "cc"    'my/tri-command:-to-commdoc
     "cC"    'my/tri-commdoc-to-command:
+    "ce"    'my/tri-penta-command-to-command:
     "cf"    'my/js-fn-to-method
     "cm"    'my/tri-map-to-bind
+    "cM"    'my/tri-map-to-bind:
     "ct"    'my/tri-js-openorselect-to-tabopenorswitch
     "c'"    'my/tri-comment-to-inline-description
     "c-"    'my/tri-js-d-to-js-p
@@ -227,6 +229,19 @@ the first line after POS matching END-REGEX"
   [58 115 47 106 115 32 111 112 101 110 79 114 83 101 108 101 99 116 84 97 98 40 91
       39 34 93 92 40 46 42 92 41 91 39 34 93 41 59 63 47 116 97 98 111 112 101 110 111
       114 115 119 105 116 99 104 99 32 92 49 47 return])
+
+(defun my/tri-map-to-bind: ()
+  "Convert .pentadactylrc definition using map to tridactylrc one with bind:"
+  (interactive)
+  (my/evil-substitute-region
+   "map +([^ ]+) +-description +(\".*\")"
+   "bind: \\1 \\2"))
+
+(defun my/tri-penta-command-to-command: ()
+  (interactive)
+  (my/evil-substitute-region
+   "command!? +([^ ]+) +-description +(\".*\")"
+   "command: \\1 \\2"))
 
 (my/kmacro-fset 'my/tri-js-openorselect-to-tabopenorswitch
   "Convert .pentadactylrc definition using openOrSelect() to tridactylrc one with tabopenorswitch"
