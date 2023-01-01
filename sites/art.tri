@@ -15,7 +15,24 @@ command: handprintshowkeys "(show bindings: handprint)" showkeysurl handprint.co
 command: handprint "Open handprint.com page" jsb -d¦ sites.handprint.openOrSelect(...JS_ARGS.slice(1))¦
 command: handprint_here "Open handprint.com page (current tab)" handprint here
 command: handprint_adj "Open handprint.com page (adjacent tab)" handprint related
-command call_handprint_cmd jsb -d¦ fillcmdline("handprint_" + (JS_ARGS[1]?"here":"adj"))¦
+bind: ,r:hpp "Open handprint watercolor guide" topos https://www.handprint.com/HP/WCL/index.html
+bind: ,r:hpm "Open handprint: magenta" topos https://www.handprint.com/HP/WCL/waterc.html
+bind: ,r:hpr "Open handprint: red" topos https://www.handprint.com/HP/WCL/waterr.html
+bind: ,r:hpo "Open handprint: orange" topos https://www.handprint.com/HP/WCL/watero.html
+bind: ,r:hpe "Open handprint: earth" topos https://www.handprint.com/HP/WCL/watere.html
+bind: ,r:hpy "Open handprint: yellow" topos https://www.handprint.com/HP/WCL/watery.html
+bind: ,r:hpg "Open handprint: green" topos https://www.handprint.com/HP/WCL/waterg.html
+bind: ,r:hpb "Open handprint: blue" topos https://www.handprint.com/HP/WCL/waterb.html
+bind: ,r:hpv "Open handprint: violet" topos https://www.handprint.com/HP/WCL/waterv.html
+bind: ,r:hpk "Open handprint: white/black" topos https://www.handprint.com/HP/WCL/waterw.html
+bind: ,r:hpw "Open handprint: white/black" topos https://www.handprint.com/HP/WCL/waterw.html
+
+handprintbind: c<C-h> "(show bindings: handprint/)" handprintshowkeys c
+handprintbind: cc "Goto page/pigment" :count `handprint_${COUNT?"here":"adj"}`
+handprintbind: cg "Goto pigment guide" handprint guide
+handprintbind: ch "Pigment table: key to ratings" jsb utils.message(handprintTableKey);
+handprintbind: c/ "Search handprint" :count `${COUNT?"":"tab"}open g site:handprint.com`
+handprintbind: <f1> "Pigment table: key to ratings" js utils.message(handprintTableKey);
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────╮
