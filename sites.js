@@ -290,9 +290,9 @@ var sites = {
             utils.tab.open(url, opts);
         },
 
-        getTopic: function() {
-            const url = new URL(tri.contentLocation);
-            q = k => url.searchParams.get(k);
+        getTopic: function(url=tri.contentLocation) {
+            url = new URL(url);
+            const q = k => url.searchParams.get(k);
             var topic = null;
             if (url.pathname == "/w/index.php") {
                 if  (q("title").match(/Special(:|%3A)Search/))
