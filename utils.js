@@ -850,6 +850,16 @@ utils.tri = {
             tri.controller.acceptExCmd(`${defCmd} ${key} ${rest}`);
     },
 
+    exCount: async function(rawargs, defaultCount=1, run=false) {
+        const [args, rawcount] = utils.tri.parseArgsAndCount(rawargs);
+        const count = rawcount || defaultCount;
+        const expr = eval(args.join(" ").replace(/COUNT/g, count));
+        if (run)
+            return tri.controller.acceptExCmd(expr);
+        else
+            return fillcmdline(expr);
+    },
+
     getBinding: function(keyseq, mode="normal") {
         const mapname = this.configmaps.bind[mode];
         const map = tri.config.get(mapname);

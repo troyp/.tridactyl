@@ -140,6 +140,8 @@ command fillcmdline_withcount jsb -d¦ fillcmdline(JS_ARGS.length>2 ? JS_ARGS.jo
 command: _ "Run ex command" jsb -d¦ tri.controller.acceptExCmd(JS_ARGS.slice(1).join(" "))¦
 commdoc :e "Eval JS string and run as ex command"
 command :e jsb -d¦ tri.controller.acceptExCmd(eval(JS_ARGS.slice(1).join(" ")))¦
+command: ex_count "Eval js string, sub for COUNT, run as ex cmd" jsb -d¦ utils.tri.exCount(JS_ARGS, null, true)¦
+command: :count "Eval js string, sub for COUNT, fill cmdline" jsb -d¦ utils.tri.exCount(JS_ARGS, null)¦
 command :: composite
 command hintpipe composite hint -pipe
 commdoc pastef "Takes a format string and replaces ${S} with clipboard contents; used to pipe to another command"
