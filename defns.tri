@@ -158,6 +158,14 @@ command: jsb_cmd "run jsb, substituting for ARGS & COUNT (default COUNT=1)" jsb 
 command: js_cmd! "run js command, substituting for ARGS & COUNT" cUjs -d¦ cutils.tri.jsCmd(JS_ARGS, null)¦
 command: jsb_cmd! "run jsb command, substituting for ARGS & COUNT" jsb -d¦ utils.tri.jsbCmd(JS_ARGS, null)¦
 
+
+command: :prev "Open previous cmdline command" :: fillcmdline_notrail ; ex.prev_history
+command: :prev_beg "Open previous cmdline command: start of line" :prev ; text.beginning_of_line
+commdoc :prev_ch_arg1 "Open previous cmdline command to change first argument"
+command :prev_ch_arg1 :prev_beg ; text.forward_word ; text.kill_word ; js " " | text.insert_text
+commdoc :prev_ch_cmd "Open previous cmdline command to change command (keep arguments)"
+command :prev_ch_cmd :prev_beg ; text.forward_word ; js " " | text.insert_text
+
 " | commands for running javascript |
 command withjs composite js
 command withjsb composite jsb
