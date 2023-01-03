@@ -360,11 +360,17 @@ var cutils = {
 
     isDisplayed: function(e) { return Boolean(e.offsetParent); },
 
-    jsinject: async function(code, doc=document) {
+    jsinject: async function(code, opts={}) {
+        opts = cutils.tri.parseOpts(opts, {
+            castBoolean: "file",
+            castHTMLElement: "doc",
+        });
+        const doc = opts.doc || document;
+        if (opts.file) code = (await tri.native.read(code)).content;
         const script = doc.createElement("script");
         script.innerText = code;
         document.head.appendChild(script);
-        script.parentNode.removeChild(script);
+        /* script.parentNode.removeChild(script); */
     },
 
     jumpToHeading: async function(selector="h2,h3,h4", opts={}) {
