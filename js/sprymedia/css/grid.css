@@ -1,0 +1,346 @@
+#GridControl {
+	position: fixed;
+	top: 40px;
+	left: 50px;
+	width: 398px;
+	z-index: 32301;
+	color: white;
+	font-size: 11px;
+	overflow: hidden;
+	font: 11px/19px "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+	display: none; /* Allow to render first */
+}
+
+#GridControl_Select {
+	position: absolute;
+	display: none;
+	z-index: 32305;
+	background-color: white;
+	font-size: 11px;
+	font: 11px/19px "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+	cursor: pointer;
+}
+
+#GridControl_SelectBg {
+	/* Invisible box used for cancelling a select action */
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+	height: 100%;
+	width: 100%;
+	z-index: 32304;
+}
+
+#GridControl_Close {
+	position: absolute;
+	top: 1px;
+	left: 1px;
+	height: 19px;
+	width: 18px;
+	background: url('../images/close.png') no-repeat center center;
+}
+
+#GridControl_Close:hover {
+	background: url('../images/close_hover.png') no-repeat center center;
+}
+
+#GridControl_Print {
+	position: absolute;
+	top: 23px;
+	left: 1px;
+	height: 19px;
+	width: 18px;
+	background: url('../images/print.png') no-repeat center center;
+}
+
+#GridControl_Print:hover {
+	background: url('../images/print_hover.png') no-repeat center center;
+}
+
+#GridControl_BlockerInfo {
+	font-family: "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	padding: 5px 10px;
+	color: white;
+	background-color: #202020;
+	opacity: 0.8;
+}
+
+
+#GridControl_Select .selectOption {
+	height: 19px;
+	width: 70px;
+	padding-left: 10px;
+}
+
+#GridControl_Select .selectOption:hover {
+	background-color: blue;
+	color: white;
+}
+
+#GridControl_DragHandle {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 19px;
+	cursor: pointer;
+}
+
+#GridControl input {
+	width: 46px;
+	height: 19px;
+	float: left;
+	margin: 0;
+	padding: 0;
+	border: 0px solid black;
+	background-color: white;
+	vertical-align: bottom;
+}
+
+#GridControl input.error {
+	background-color: #FDC9CB;
+}
+
+#GridControl .GridControl_Class {
+}
+
+#GridControl .select {
+	width: 39px;
+	height: 19px;
+	float: left;
+	padding-left: 5px;
+	background: url('../images/select.jpg') no-repeat top left;
+	color: black;
+	cursor: pointer;
+}
+
+
+#horiz_align {
+	width: 136px;
+	height: 21px;
+}
+
+#vert_align {
+	width: 136px;
+	height: 21px;
+}
+
+#GridControl .align_ip {
+	width: 45px;
+	height: 21px;
+	float: left;
+}
+
+#GridControl .horiz_left   { background: url('../images/horiz_left.jpg') no-repeat top right; }
+#GridControl .horiz_center { background: url('../images/horiz_center.jpg') no-repeat top right; }
+#GridControl .horiz_right  { background: url('../images/horiz_right.jpg') no-repeat top right; }
+
+#GridControl .vert_top     { background: url('../images/vert_top.jpg') no-repeat top left; }
+#GridControl .vert_center  { background: url('../images/vert_center.jpg') no-repeat top left; }
+#GridControl .vert_bottom  { background: url('../images/vert_bottom.jpg') no-repeat top left; }
+
+#GridControl .level1 {
+	width: 700px;
+	padding-left: 19px;
+}
+
+#GridControl .level2 {
+	padding-left: 19px;
+}
+
+#GridControl .level3 {
+	position: relative;
+	padding-left: 19px;
+	overflow: hidden;
+}
+
+#GridControl .level4 {
+	position: relative;
+	overflow: hidden;
+}
+
+#GridControl .level5 {
+	position: relative;
+	top: 0;
+	left: 0;
+	padding: 4px 0 0 19px;
+}
+
+#GridControl .level6 {
+	height: 7px;
+}
+
+#GridControl .split1 {
+	width: 136px;
+	padding-right: 12px;
+	padding-top: 3px;
+	float: left;
+	text-align: right;
+}
+
+#GridControl .split2 {
+	width: 138px;
+	padding-top: 3px;
+	padding-right: 38px; /* Use 2*19 to ensure no visual overlap */
+	float: left;
+}
+
+#GridControl .split3 {
+	width: 136px;
+	padding-top: 3px;
+	padding-right: 9px;
+	float: left;
+	text-align: right;
+}
+
+#GridControl .split4 {
+	width: 136px;
+	padding-top: 3px;
+	float: left;
+}
+
+#GridControl .clear {
+	clear: both;
+	display: block;
+}
+
+#GridControl_Class { background: url('../images/grid.png') no-repeat bottom left; }
+
+#Page { background: url('../images/page.png') no-repeat bottom left;
+        border-top: 2px solid #88180E; }
+#Lattice { background: url('../images/lattice.png') no-repeat bottom left;
+           border-top: 2px solid #177F21; }
+#Gutter { background: url('../images/gutter.png') no-repeat bottom left;
+          border-top: 2px solid #28177F; }
+
+#Align { background: url('../images/align.png') no-repeat bottom left; }
+#Size { background: url('../images/size.png') no-repeat bottom left; }
+#Margin { background: url('../images/margin.png') no-repeat bottom left; }
+#Columns { background: url('../images/columns.png') no-repeat bottom left; }
+#Rows { background: url('../images/rows.png') no-repeat bottom left; }
+#Gutter2 { background: url('../images/gutter2.png') no-repeat bottom left; }
+
+
+.level5 { background: url('../images/bg.png') repeat bottom left; }
+#Align .level5 { background: url('../images/bg_shade.png') repeat top left; }
+#Margin .level5 { background: url('../images/bg_shade.png') repeat top left; }
+#Rows .level5 { background: url('../images/bg_shade.png') repeat top left; }
+
+#GridControl_Fold {
+	position: absolute;
+	bottom: 37px;
+	left: 0;
+	width: 19px;
+	height: 19px;
+}
+
+#GridControl .open { background: url('../images/open.png') repeat top left; }
+
+#GridControl .folded { background: url('../images/folded.png') repeat top left; }
+
+#GridControl .colour {
+	height: 8px;
+	width: 22px;
+	float: left;
+	cursor: pointer;
+}
+
+#GridControl .colour_selected {
+	height: 4px;
+	width: 18px;
+	float: left;
+	cursor: pointer;
+	border: 2px solid #A3C8F0;
+}
+
+#GridControl .c1 { background-color: #000000; }  /* Black      */
+#GridControl .c2 { background-color: #BF0303; }  /* Red        */
+#GridControl .c3 { background-color: #BF0361; }  /* Pink       */
+#GridControl .c4 { background-color: #85026C; }  /* Violet     */
+#GridControl .c5 { background-color: #34176E; }  /* Navy       */
+#GridControl .c6 { background-color: #00438A; }  /* Blue       */
+#GridControl .c7 { background-color: #006066; }  /* Blue-green */
+#GridControl .c8 { background-color: #00734D; }  /* Dark green */
+#GridControl .c9 { background-color: #00892C; }  /* Green      */
+#GridControl .c10 { background-color: #F3C300; } /* Yellow     */
+#GridControl .c11 { background-color: #888A85; } /* Grey       */
+#GridControl .c12 { background-color: #FFFFFF; } /* White      */
+
+#GridControl .auto {
+	width: 44px;
+	height: 19px;
+	float: left;
+	text-align: center;
+	background: url('../images/auto.png') repeat top left;
+	display: none;
+}
+
+#GridControl table td {
+	font: 11px/19px "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+	color: white;
+}
+
+#GridControl .slide0 {
+	width: 22px;
+	height: 19px;
+	text-align: center;
+}
+
+#GridControl .slide {
+	position: relative; /* Are you serious? */
+	width: 88px;
+	height: 19px;
+	background: url('../images/slide.png') no-repeat center center;
+}
+
+#GridControl .slider_cont {
+	position: relative; /* Are you serious? */
+}
+
+#GridControl .slide1 {
+	width: 22px;
+	height: 19px;
+	text-align: right;
+}
+
+#GridControl .absolute {
+}
+
+#GridControl .slider {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 12px;
+	height: 19px;
+	background: url('../images/slider.png') no-repeat center center;
+	cursor: pointer;
+}
+
+#GridControl .control_switcher {
+	position: absolute;
+	top: 0;
+	left: 341px;
+	width: 19px;
+	height: 100%;
+	cursor: pointer;
+	z-index: 32302;
+}
+
+#Align .control_switcher_open { 
+	background: url('../images/colours_grey_open.png') no-repeat top left;
+	cursor: default;
+}
+
+#Size .control_switcher_open { background: url('../images/colours_black_open.png') no-repeat bottom left; }
+#Margin .control_switcher_open { background: url('../images/colours_grey_open.png') no-repeat bottom left; }
+#Columns .control_switcher_open { background: url('../images/colours_black_open.png') no-repeat bottom left; }
+#Rows .control_switcher_open { background: url('../images/colours_grey_open.png') no-repeat bottom left; }
+#Gutter2 .control_switcher_open { background: url('../images/colours_black_open.png') no-repeat bottom left; }
+
+#Size .control_switcher_close { background: url('../images/colours_black_close.png') no-repeat bottom left; }
+#Margin .control_switcher_close { background: url('../images/colours_grey_close.png') no-repeat bottom left; }
+#Columns .control_switcher_close { background: url('../images/colours_black_close.png') no-repeat bottom left; }
+#Rows .control_switcher_close { background: url('../images/colours_grey_close.png') no-repeat bottom left; }
+#Gutter2 .control_switcher_close { background: url('../images/colours_black_close.png') no-repeat bottom left; }

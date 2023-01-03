@@ -1,0 +1,230 @@
+#RuleControl_Container {
+	position: fixed;
+	top: 40px;
+	left: 50px;
+	width: 290px;
+	z-index: 32301;
+	color: white;
+	font-size: 11px;
+	overflow: hidden;
+	font: 11px/19px "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+	display: none;
+}
+
+#RuleControl_Origin {
+	position: fixed;
+	top: 20px;
+	left: 30px;
+	width: 12px;
+	height: 12px;
+	cursor: pointer;
+	background: url('../images/origin.png') no-repeat center center;
+}
+
+#RuleControl_ShowHide {
+	position: fixed;
+	top: 42px;
+	left: 30px;
+	width: 12px;
+	height: 12px;
+	cursor: pointer;
+}
+
+.RuleControl_Hide {
+	background: url('../images/cog.png') no-repeat center center;
+}
+
+.RuleControl_Show {
+	background: url('../images/cog_over.png') no-repeat center center;
+}
+
+#RuleControl_Close {
+	position: fixed;
+	top: 63px;
+	left: 30px;
+	width: 12px;
+	height: 12px;
+	background: url('../images/close.png') no-repeat center center;
+	cursor: pointer;
+}
+
+#RuleControl_Close:hover {
+	background: url('../images/close_hover.png') no-repeat center center;
+}
+
+
+
+#RuleControl_Container .level1 {
+	padding-left: 0px;
+}
+
+#RuleControl_Container .level2 {
+	padding-left: 19px;
+}
+
+#RuleControl_Container .level3 {
+	position: relative;
+	padding-left: 19px;
+	overflow: hidden;
+}
+
+#RuleControl_Container .level4 {
+	position: relative;
+	overflow: hidden;
+}
+
+#RuleControl_Container .level5 {
+	position: relative;
+	top: 0;
+	left: 0;
+	padding: 4px 0 0 0;
+}
+
+#RuleControl_Container .level6 {
+	height: 7px;
+}
+
+#RuleControl_Container .split1 {
+	width: 92px;
+	padding-right: 12px;
+	padding-top: 3px;
+	float: left;
+	text-align: right;
+}
+
+#RuleControl_Container .split2 {
+	width: 138px;
+	padding-top: 3px;
+	float: left;
+}
+
+#RuleControl_Container .split3 {
+	width: 136px;
+	padding-top: 3px;
+	padding-right: 9px;
+	float: left;
+	text-align: right;
+}
+
+#RuleControl_Container .split4 {
+	width: 136px;
+	padding-top: 3px;
+	float: left;
+}
+
+#RuleControl_Container .clear {
+	clear: both;
+}
+
+
+
+#RuleControl_Ruler {
+	background: url('../images/Ruler.png') no-repeat bottom left;
+	border-top: 2px solid #DEE517;
+}
+#RuleControl_Guides {
+	background: url('../images/Guides.png') no-repeat bottom left;
+	border-top: 2px solid #8720B8;
+}
+
+#RuleControl_Background { background: url('../images/Background.png') no-repeat bottom left; }
+#RuleControl_Ticks { background: url('../images/Ticks.png') no-repeat bottom left; }
+#RuleControl_Snap { background: url('../images/Snap.png') no-repeat bottom left; }
+#RuleControl_GuideColour { background: url('../images/Colours.png') no-repeat bottom left; }
+#RuleControl_GuideControl { background: url('../images/control.png') no-repeat bottom left; }
+
+.level5 { background: url('../images/bg.png') repeat bottom left; }
+#RuleControl_Ticks .level5 { background: url('../images/bg_shade.png') repeat top left; }
+#RuleControl_GuideColour .level5 { background: url('../images/bg_shade.png') repeat top left; }
+
+
+
+
+
+
+#RuleControl_Container .colour {
+	height: 8px;
+	width: 22px;
+	float: left;
+	cursor: pointer;
+}
+
+#RuleControl_Container .colour_selected {
+	height: 4px;
+	width: 18px;
+	float: left;
+	cursor: pointer;
+	border: 2px solid #A3C8F0;
+}
+
+#RuleControl_Container .c1 { background-color: #000000; }  /* Black      */
+#RuleControl_Container .c2 { background-color: #BF0303; }  /* Red        */
+#RuleControl_Container .c3 { background-color: #BF0361; }  /* Pink       */
+#RuleControl_Container .c4 { background-color: #85026C; }  /* Violet     */
+#RuleControl_Container .c5 { background-color: #34176E; }  /* Navy       */
+#RuleControl_Container .c6 { background-color: #00438A; }  /* Blue       */
+#RuleControl_Container .c7 { background-color: #006066; }  /* Blue-green */
+#RuleControl_Container .c8 { background-color: #00734D; }  /* Dark green */
+#RuleControl_Container .c9 { background-color: #00892C; }  /* Green      */
+#RuleControl_Container .c10 { background-color: #F3C300; } /* Yellow     */
+#RuleControl_Container .c11 { background-color: #888A85; } /* Grey       */
+#RuleControl_Container .c12 { background-color: #FFFFFF; } /* White      */
+
+#RuleControl_Container .auto {
+	width: 44px;
+	height: 19px;
+	float: left;
+	text-align: center;
+	background: url('../images/auto.png') repeat top left;
+	display: none;
+}
+
+#RuleControl_Container table td {
+	font: 11px/19px "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+	color: white;
+}
+
+#RuleControl_Container .slide0 {
+	width: 22px;
+	height: 19px;
+	text-align: center;
+}
+
+#RuleControl_Container .slide {
+	position: relative; /* Are you serious? */
+	width: 88px;
+	height: 19px;
+	background: url('../images/slide.png') no-repeat center center;
+}
+
+#RuleControl_Container .slider_cont {
+	position: relative; /* Are you serious? */
+}
+
+#RuleControl_Container .slide1 {
+	width: 22px;
+	height: 19px;
+	text-align: right;
+}
+
+#RuleControl_Container .absolute {
+}
+
+#RuleControl_Container .slider {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 12px;
+	height: 19px;
+	background: url('../images/slider.png') no-repeat center center;
+	cursor: pointer;
+}
+
+#RuleControl_Container .boolIndicator {
+	width: 136px;
+	height: 19px;
+	float: left;
+	text-align: center;
+	background: url('../images/auto.png') repeat top left;
+	cursor: pointer;
+}
