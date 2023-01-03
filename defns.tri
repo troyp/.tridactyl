@@ -166,7 +166,7 @@ command :prev_ch_cmd :prev_beg ; text.kill_word ; js " " | text.insert_text
 " | commands for running javascript |
 command withjs composite js
 command withjsb composite jsb
-command: ujs "Load urls.js and run js" composite js -r urls.js ; js
+command: ujs "Load urls.js, S.js and run js" composite js -r urls.js ; js -r S.js ; js
 command: cUjs "Load cutils.js, urls.js, S.js and run js" cujs -r urls.js ; js -r S.js ; js
 command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
 command: csites "Load S.js, cutils.js, csites.js, run js" cujs -r csites.js ; js
@@ -1011,8 +1011,8 @@ bind: ,dx "Toggle X-Ray view" capps capps.toggleXray()
 " ╰───────────────────────╯
 commdoc showjs "Show javascript expression result on commandline"
 command showjs cujs -d¦ cutils.message(eval(JS_ARGS.join(" ")), true)¦
-commdoc jse "Show javascript expression result in a message box"
-command jse cujs -d¦ cutils.message(eval(JS_ARGS.join(" ")))¦
+command: jse "Show js expression result" cujs -d¦ cutils.message(eval(JS_ARGS.join(" ")))¦
+command: jsE "Show js expression result (load cutils, S, urls.js)" cUjs -d¦ cutils.message(eval(JS_ARGS.join(" ")))¦
 commdoc getproperties "Eval expression to obtain object and display its properties in a message box"
 command getproperties js -d¦ alert(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
 command jsb_getproperties jsb -d¦ utils.message(Object.getOwnPropertyNames(eval(JS_ARGS.join(" "))).join("\n"))¦
@@ -1028,6 +1028,7 @@ command jseq! composite js -r cutils.js ; js -d¦ fillcmdline("jseq! "+eval(JS_A
 bind ,e<C-h> showkeys ,e
 bind: ,ec "Evaluate javascript expression iteratively in commandline" fillcmdline jseq!
 bind: ,ee "Evaluate javascript expression" fillcmdline jse
+bind: ,eE "Evaluate javascript expression (load cutils, S, urls.js)" fillcmdline jsE
 bind: ,ej "Load cutils and evaluate javascript expression" fillcmdline cujs
 bind: ,ep "Display properties of expression" fillcmdline getproperties
 bind: ,es "Show elements matching SELECTOR" fillcmdline getselector
