@@ -239,7 +239,7 @@ gcalbind: cod "Day view" opos https://calendar.google.com/calendar/u/0/r/day
 gcalbind: com "Month view" opos https://calendar.google.com/calendar/u/0/r/month
 gcalbind: cos "Goto Settings" opos https://calendar.google.com/calendar/u/0/r/settings
 gcalbind: cow "Week view" opos https://calendar.google.com/calendar/u/0/r/week
-gcalbind: coy "Year view" :e `opos https://calendar.google.com/calendar/u/0/r/year/${(new Date).getYear()+1900}`
+gcalbind: coy "Year view" :exec `opos https://calendar.google.com/calendar/u/0/r/year/${(new Date).getYear()+1900}`
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────╮

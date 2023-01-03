@@ -28,10 +28,10 @@ bind: ,r:hpk "Open handprint: white/black" topos https://www.handprint.com/HP/WC
 bind: ,r:hpw "Open handprint: white/black" topos https://www.handprint.com/HP/WCL/waterw.html
 
 handprintbind: c<C-h> "(show bindings: handprint/)" handprintshowkeys c
-handprintbind: cc "Goto page/pigment" :count `handprint_${COUNT?"here":"adj"}`
+handprintbind: cc "Goto page/pigment" :fill `handprint_${COUNT?"here":"adj"}`
 handprintbind: cg "Goto pigment guide" handprint guide
 handprintbind: ch "Pigment table: key to ratings" jsb utils.message(handprintTableKey);
-handprintbind: c/ "Search handprint" :count `${COUNT?"":"tab"}open g site:handprint.com`
+handprintbind: c/ "Search handprint" :fill `${COUNT?"":"t"}opos g site:handprint.com`
 handprintbind: <f1> "Pigment table: key to ratings" js utils.message(handprintTableKey);
 
 " ───────────────────────────────────────────────────────────────────────────────
