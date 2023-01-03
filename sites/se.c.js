@@ -1,4 +1,4 @@
-se = {
+var se = {
     cleanup: function(showSnippetResults) {
         if (showSnippetResults) {
             cutils.get(".snippet-ctas button", e=>!e.classList.contains("hideResults")).forEach(e=>e.click());
@@ -64,3 +64,5 @@ se = {
         cutils.css.toggleOrCreate("_tri_widen", ...cssrules);
     },
 }
+
+window.se = se;
