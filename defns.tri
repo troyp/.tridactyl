@@ -227,8 +227,8 @@ commdoc tabopenorsummon "Open an URL in a new adjacent tab, or switch to existin
 command tabopenorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"});
 commdoc tabopenorsummonbg "Open an URL in a new background adjacent tab, or move existing tab adjacent"
 command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related", background: true});
-commdoc urltoggle "Toggle a component of the current URL"
-command urltoggle ujs -d¦ urls.mod.toggleWr(JS_ARGS.join(" "))¦
+command: urltoggle "Toggle s1<->s2 in current URL" cUjs -d¦ urls.mod.toggleWr(JS_ARGS)¦
+command: urltoggle! "Toggle s1<->s2 (global) in current URL" cUjs -d¦ urls.mod.toggleWr(JS_ARGS, { global:true })¦
 commdoc urlremove "Remove string from current URL"
 command urlremove ujs -p tri.controller.acceptExCmd(`open ${urls.mod.toggle(JS_ARG, "")}`)
 commdoc urlmodorsummon_g "Open URL formed by grafting a path onto the domain, or summon existing tab"

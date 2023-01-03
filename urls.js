@@ -293,7 +293,18 @@ urls.mod = {
         tri.controller.acceptExCmd(`js window.location = "${newurl}"`);
     },
 
-    toggleWr: function(argstr) { return this.togglepage(...argstr.trim().split(/ +/)); },
+    toggleWr: function(argstr, opts={}) {
+        const args = cutils.tri.parseArgs(argstr, "array");
+        if (opts.global) {
+            const [s1, s2] = args;
+            const [r1, r2] = args.map(s=>new RegExp(s, "g"));
+            return this.togglepage(s1, s2, r1, r2);
+        } else {
+            return this.togglepage(...args.map(s=>S.toStringOrRegex(s)));
+        }
+
+        return this.togglepage();
+    },
 
 };
 
