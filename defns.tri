@@ -164,7 +164,7 @@ command: :prev_beg "Open previous cmdline command: start of line" :prev ; text.b
 commdoc :prev_ch_arg1 "Open previous cmdline command to change first argument"
 command :prev_ch_arg1 :prev_beg ; text.forward_word ; text.kill_word ; js " " | text.insert_text
 commdoc :prev_ch_cmd "Open previous cmdline command to change command (keep arguments)"
-command :prev_ch_cmd :prev_beg ; text.forward_word ; js " " | text.insert_text
+command :prev_ch_cmd :prev_beg ; text.kill_word ; js " " | text.insert_text
 
 " | commands for running javascript |
 command withjs composite js
