@@ -153,11 +153,8 @@ command: js_count "run js command, substituting for COUNT (default count=1)" cUj
 command: jsb_count "run jsb command, substituting for COUNT (default count=1)" jsb -d¦ utils.tri.jsbCount(JS_ARGS)¦
 command: js_count! "run js command, substituting for COUNT" cUjs -d¦ cutils.tri.jsCount(JS_ARGS, null)¦
 command: jsb_count! "run js command, substituting for COUNT" jsb -d¦ utils.tri.jsbCount(JS_ARGS, null)¦
-command: js_cmd "run js, substituting for ARGS & COUNT (default COUNT=1)" cUjs -d¦ cutils.tri.jsCmd(JS_ARGS)¦
-command: jsb_cmd "run jsb, substituting for ARGS & COUNT (default COUNT=1)" jsb -d¦ utils.tri.jsbCmd(JS_ARGS)¦
-command: js_cmd! "run js command, substituting for ARGS & COUNT" cUjs -d¦ cutils.tri.jsCmd(JS_ARGS, null)¦
-command: jsb_cmd! "run jsb command, substituting for ARGS & COUNT" jsb -d¦ utils.tri.jsbCmd(JS_ARGS, null)¦
-
+command: js_cmd "run first term as js expr with other terms as ARGS" cUjs -d¦ cutils.tri.jsCmd(JS_ARGS)¦
+command: jsb_cmd "run first term as jsb expr with other terms as ARGS" jsb -d¦ utils.tri.jsbCmd(JS_ARGS)¦
 
 command: :prev "Open previous cmdline command" :: fillcmdline_notrail ; ex.prev_history
 command: :prev_beg "Open previous cmdline command: start of line" :prev ; text.beginning_of_line

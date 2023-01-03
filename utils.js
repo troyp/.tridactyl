@@ -914,11 +914,10 @@ utils.tri = {
         );
     },
 
-    jsbCmd: async function(rawargs, defaultCount=1) {
-        const [args, rawcount] = utils.tri.parseTermsAndCount(rawargs);
-        const [rawexpr, ...exprargs] = args;
-        const count = rawcount || defaultCount;
-        const expr = rawexpr.replace(/ARGS/g, JSON.stringify(exprargs)).replace(/COUNT/g, count);
+    jsbCmd: async function(rawargs, opts={}) {
+        const terms = utils.tri.parseTerms(rawargs, opts);
+        const [rawexpr, ...exprargs] = terms;
+        const expr = rawexpr.replace(/ARGS/g, JSON.stringify(exprargs));
         return jsb(expr);
     },
 

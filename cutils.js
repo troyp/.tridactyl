@@ -747,11 +747,10 @@ cutils.img = {
 
 cutils.tri = {
 
-    jsCmd: async function(rawargs, defaultCount=1) {
-        const [args, rawcount] = cutils.tri.parseTermsAndCount(rawargs);
-        const [rawexpr, ...exprargs] = args;
-        const count = rawcount || defaultCount;
-        const expr = rawexpr.replace(/ARGS/g, JSON.stringify(exprargs)).replace(/COUNT/g, count);
+    jsCmd: async function(rawargs, opts={}) {
+        const terms = cutils.tri.parseTerms(rawargs, opts);
+        const [rawexpr, ...exprargs] = terms;
+        const expr = rawexpr.replace(/ARGS/g, JSON.stringify(exprargs));
         return tri.excmds.js(expr);
     },
 
