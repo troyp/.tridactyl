@@ -316,20 +316,23 @@ var cutils = {
             const filter_ok = !opts.filter || opts.filter(e);
             return match_ok && filter_ok;
         }
-        /* selector */
-        if (Array.isArray(selector)) selector = selector.filter(identity).join(",");
-        /* main logic */
+        /* keepElts */
         var keepElts = [];
-        if (opts.firstMatch) {
-            if ((elt = $$(selector, opts.context).find(pred))) {
-                keepElts = [elt];
-            } else
-                return null;
+        if (Array.isArray(selector)) {
+            if (selector.every(e => typeof e == "string")) {
+                selector = selector.filter(identity).join(",");
+            } else if (selector.length == 1 && selector[0] instanceof HTMLElement){
+                selector = selector[0];
+            }
+        }
+        if (selector instanceof HTMLElement) {
+            keepElts = [selector];
         } else {
-            keepElts = $$(selector, opts.context).filter(pred);
+            keepElts = cutils.get(selector, opts);
         }
         if (!opts.noHead) keepElts.push(document.head);
         if (!opts.noCmdline) keepElts.push(document.getElementById("cmdline_iframe"));
+        /* remove other elements */
         var successful = null;
         for (const elt of $$("*")) {
             if (keepElts.every(k => !k.contains(elt) && !elt.contains(k))) {
