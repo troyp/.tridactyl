@@ -101,6 +101,10 @@ function cleanup() {
     } else if (url.match(/https:\/\/www.instructables\.com/)) {
         keep("article#article");
         rmall("section.recommendations", "section#imadeits", "div.contest-entries");
+    } else if (url.match(/https:\/\/imsdb\.com\/scripts\//)) {
+        const table = $1(".scrtext").closest("table");
+        keep(table);
+        table.style.margin = "4em";
     } else if (url.match(/https:\/\/janeblundellart\.blogspot\.com/)) {
         /* janeblundellart */
         keep("#main");
