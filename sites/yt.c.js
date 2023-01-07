@@ -70,10 +70,12 @@ var yt = {
         });
     },
 
-    ytdl: function(dir=downloadsdir, video=true) {
-        if (!dir) dir = downloadsdir;
-        const xtraArgs = video ? "--all-subs" : "-f bestaudio";
-        const cmd = `!cd ${dir}; youtube-dl -ci ${xtraArgs} --xattrs -o "%(title)s-%(id)s.%(ext)s" "${buffer.URL}"`;
+    ytdl: function(dir="~/Downloads", video=true) {
+        dir = cutils.tri.parseArgs(dir, "string");
+        const extraArgs = video ? "--all-subs" : "-f bestaudio";
+        const cmd =
+              "! cd ${dir};"
+              + `youtube-dl -ci ${extraArgs} --xattrs -o "%(title)s-%(id)s.%(ext)s" "${buffer.URL}"`;
         dactyl.execute(cmd);
     },
 
