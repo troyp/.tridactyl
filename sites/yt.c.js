@@ -88,7 +88,11 @@ var yt = {
     },
 
     screenshot: function(opts={}) {
-        opts.type ||= "jpeg";
+        opts = cutils.tri.parseOpts(opts, {
+            castBoolean: "save",
+            castString: "type",
+            defaults: { type: "jpeg", },
+        });
         var title = opts.title || $1("#container>h1.title").textContent;
         const video = document.querySelector("video");
         const canvas = document.createElement("canvas");
