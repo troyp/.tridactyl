@@ -419,26 +419,43 @@ command: ytbind "Bind key for youtube.com" bindurl youtube.com
 command: ytbind: "Bind key for youtube.com" bindurl: youtube.com
 command: ytbdoc "Provide a description on a separate line" js ;
 command: ytshowkeys "Show key completions for youtube.com" showkeysurl youtube.com
-command: yt "Run javascript after loading sites/yt.c.js" cujs -r sites/yt.c.js ; js
+command: yt "Run JS after loading sites/yt.c.js" cujs -r sites/yt.c.js ; js
+command: yt_count "Run JS after loading sites/yt.c.js (default COUNT:1)" cujs -r sites/yt.c.js ; js_count
+command: yt_count! "Run JS after loading sites/yt.c.js (default COUNT:null)" cujs -r sites/yt.c.js ; js_count!
+command: yt_cmd "Run javascript with ARGS after loading sites/yt.c.js" cujs -r sites/yt.c.js ; js_cmd
+
 command: ytsetmark "Set mark" jsb -p tri.controller.acceptExCmd(`yt yt.setMark('${JS_ARG}')`)
 command: ytgotomark "Goto mark" jsb -p tri.controller.acceptExCmd(`yt yt.gotoMark('${JS_ARG}')`)
 command: ytup "playrate ↑/Show subscriptions ↑" yt -d¦ yt.up(JS_ARGS[1])¦
 command: ytdown "playrate ↓/Show subscriptions ↓" yt -d¦ yt.down(JS_ARGS[1])¦
 command: ytvolup "volume ↑" yt -d¦ yt.volumeAdjust(JS_ARGS[1])¦
 command: ytvoldown "volume ↓" yt -d¦ yt.volumeDown(JS_ARGS[1])¦
+command: ytdl "Download video/playlist with youtube-dl" ytjs -d¦ ytDL(JS_ARGS)¦
+command: ytdlaudio "Download audio with youtube-dl" ytjs -d¦ ytDL(JS_ARGS, false)¦
+command: ytrate "set playback rate (normal rate = 10)" yt_cmd yt.setSpeed(NUMARG)
 
 ytbind c<C-h> ytshowkeys c
 
 ytbind: cc "Goto item" yt -r capps.js ; js yt.chooseItem()
 ytbind: ck "Youtube: set mark" gobble 1 ytsetmark
 ytbind: cm "Youtube: set mark" gobble 1 ytsetmark
+ytbind: cr "Set rate" fillcmdline ytrate
+ytbind: cR "Show rate" yt cutils.message(`playback rate: ${yt.getSpeed()}`, true)
 ytbind: cgo "Youtube: goto mark" gobble 1 ytgotomark
 jsb tri.excmds.bindurl("youtube.com", "c'", "gobble 1 gotomark")
 
-jsb utils.tri.docdef(["bind ' \"Goto mark (page-local)\""], {noDef: true})
-jsb tri.excmds.bindurl("youtube.com", "c'", "gobble 1 ytgotomark")
+ytbind: cd<C-h> "(show bindings: yt/dl)" ytshowkeys cd
+ytbind: cdd<C-h> "(show bindings: yt/dl/video)" ytshowkeys cdd
+ytbind: cddd "Download video to Downloads" ytdl
+ytbind: cdd: "Download video" fillcmdline ytdl
+ytbind: cda<C-h> "(show bindings: yt/dl/audio)" ytshowkeys cda
+ytbind: cdaa "Download audio to Music directory" ytdlaudio
+ytbind: cda: "Download audio" fillcmdline ytdlaudio
+ytbind: cds "Screenshot" yt_count! yt.screenshot(Boolean(COUNT))
 
 " | ct -- youtube/toggle |
+ytbind: ctc "Toggle cinema" click .ytp-size-button
+ytbind: ctf "Toggle fullscreen" click .ytp-fullscreen-button
 ytbind: ctl "Toggle shorts/long-form player" urltoggle /shorts/ /watch?v=
 ytbind: cts "Toggle subtitles" yt yt.player().toggleSubtitles()
 ytbind: ctt "Toggle transcript" yt yt.toggleTranscript()
