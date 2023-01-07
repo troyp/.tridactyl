@@ -914,10 +914,28 @@ utils.tri = {
         );
     },
 
+    /** jsbCmd(): run javascript command with arguments
+     *    Special terms (substitutions):
+     *      ARGS:    argument array
+     *      ARG:     first argument (or null)
+     *      ARGLEN:  number of arguments
+     *      NUMARGS: array of numeric arguments
+     *      NUMARG:  first numeric argument (or null)
+     */
     jsbCmd: async function(rawargs, opts={}) {
         const terms = utils.tri.parseTerms(rawargs, opts);
-        const [rawexpr, ...exprargs] = terms;
-        const expr = rawexpr.replace(/ARGS/g, JSON.stringify(exprargs));
+        const [rawexpr, ...rawexprargs] = terms;
+        const exprargs = JSON.stringify(rawexprargs);
+        const firstarg = JSON.stringify(rawexprargs?.[0]);
+        const N = JSON.stringify(rawexprargs.length);
+        const numargs = JSON.stringify(rawexprargs.map(s=>Number(s)));
+        const firstnumarg = JSON.stringify(Number(rawexprargs?.[0]));
+        const expr =
+              rawexpr.replace(/\bARGS\b/g, exprargs)
+              .replace(/\bARG\b/g, firstarg)
+              .replace(/\bARGLEN\b/g, N)
+              .replace(/\bNUMARGS\b/g, numargs)
+              .replace(/\bNUMARG\b/g, firstnumarg);
         return jsb(expr);
     },
 
