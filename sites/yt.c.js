@@ -11,8 +11,9 @@ var yt = {
     controls: () => $1('.ytp-chrome-bottom'),
 
     /* speed */
-    getSpeed: () => $id("movie_player").wrappedJSObject.getPlaybackRate(),
+    getSpeed: function() { return this.player().getPlaybackRate(); },
     setSpeed: function(r) {
+        r ??= 1;
         r = Math.max(r, this.minSpeed);
         return this.player().setPlaybackRate(r) && r;
     },
