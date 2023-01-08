@@ -384,10 +384,8 @@ command: woolbind "Bind key for woolworths.com.au" bindurl https://www.woolworth
 command: woolbind: "Bind key with description for woolworths.com.au" bindurl: https://www.woolworths.com.au/
 command: woolbdoc "Provide a description on a separate line" js ;
 
-commdoc wool_search "Search woolworths"
-command wool_search jsb -d¦ sites.wool.search(JS_ARGS, "here")¦
-commdoc wool_search_adj "Search woolworths (adjacent tab)"
-command wool_search_adj jsb -d¦ sites.wool.search(JS_ARGS, "related")¦
+command: wool_search "Search woolworths" jsb -d¦ sites.wool.search(JS_ARGS, "here")¦
+command: wool_search_adj "Search woolworths (adjacent tab)" jsb -d¦ sites.wool.search(JS_ARGS, "related")¦
 
 woolbind c<C-h> showkeysurl https://www.woolworths.com.au/ c
 
@@ -396,7 +394,9 @@ woolbind co<C-h> showkeysurl https://www.woolworths.com.au/ co
 bdoc coc "Goto cart"
 woolbind coc cujs if (!cutils.click("button.close-button")) cutils.click("#header-checkout-cart-button")
 woolbind: coC "Goto checkout" openorsummon https://www.woolworths.com.au/shop/checkout
+woolbind: col "Goto lists" openorsummon https://www.woolworths.com.au/shop/mylists
 woolbind: coo "Goto orders" openorsummon https://www.woolworths.com.au/shop/myaccount/myorders
+woolbind: cor "Goto reorder" openorsummon https://www.woolworths.com.au/shop/mylists/reorder
 woolbind: cot "Open tracking in Chrome" jsb sites.wool.openTracking();
 
 " | cos -- woolworths/open/specials |
