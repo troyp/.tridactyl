@@ -34,7 +34,7 @@ var sites = {
         },
 
         getUser: function() {
-            return ghGetUserAndRepo()?.[0] || this.getAccountUser();
+            return this.getUserAndRepo()?.[0] || this.getAccountUser();
         },
 
         getUserAndRepo: function(url) {
