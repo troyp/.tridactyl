@@ -113,8 +113,8 @@ fbind: cw "Toggle body width" js document.body.style.maxWidth = document.body.st
 " ╭────────────╮
 " │ Github.com │
 " ╰────────────╯
-command ghbind bindurl https://github.com
-command ghbind: bindurl: https://github.com
+command ghbind bindurl github.com
+command ghbind: bindurl: github.com
 command ghopenorsummon jsb -p sites.gh.openOrSummon(JS_ARG);
 command ghtabopenorsummon jsb -p sites.gh.openOrSummon(JS_ARG, {where: "related"});
 command gh_search jsb -d¦ sites.gh.search(window._ghsearchurl, JS_ARGS[1], JS_ARGS.slice(2).join(" "))¦
@@ -190,6 +190,15 @@ ghbind cs;r gh_tabsearchwrapper "search repos [new tab]" https://github.com/${u}
 ghbind cs;* gh_tabsearchwrapper "search my stars [new tab]" https://github.com/${a}?tab=stars&q=${s}
 
 ghbind: ctw "Toggle widen README" toggleprop div.Box-body style.maxWidth 1600px
+
+" | cy -- gh/yank |
+ghbind: cy<C-h> "(show bindings: gh/yank)" ghshowkeys cy
+ghbind: cya "Yank About text" cujs $1t(".BorderGrid-cell>h2", "About").nextElementSibling.textContent | yank!
+ghbind: cyn "Yank repo name" :: jsb sites.gh.getUserAndRepo()[1] | yank!
+ghbind: cyN "Yank title" cujs $1("article>h1").textContent | yank!
+ghbind: cyR "Yank repo name with URL" :: jsb `${sites.gh.getUser()} (${tri.contentLocation})` | yank!
+ghbind: cyu "Yank user/repo name" :: jsb sites.gh.getUserAndRepo().join("/") | yank!
+ghbind: cyU "Yank user name"  :: jsb sites.gh.getUser() | yank!
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
