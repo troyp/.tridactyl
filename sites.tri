@@ -221,7 +221,7 @@ googlebind: ctn "Toggle Top stories" cujs cutils.hide("g-section-with-header", {
 
 " | cy -- google/yank |
 googlebind cy<C-h> showkeysurl google.com cy
-googlebind cyy cujs ; hint -Jc div.g>div div>div>a>div>cite -F e=>cutils.yank(e.firstChild.textContent)
+googlebind cyy cujs ; hint -Jpipe div.g>div>div>div>a href | yank!
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────╮
