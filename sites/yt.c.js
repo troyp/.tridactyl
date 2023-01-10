@@ -108,10 +108,16 @@ var yt = {
     },
 
     up: function(count) {
-        cutils.click("a", /Show \d+ more/) || this.adjustSpeed(0.25 * (count || 1));
+        if (tri.contentLocation.href.match("https://www.youtube.com/watch?v="))
+            return cutils.click("a", /Show \d+ more/);
+        else
+            return this.adjustSpeed(0.25 * (count || 1));
     },
     down: function(count) {
-        cutils.click("a", /Show fewer/) || this.adjustSpeed(-0.25 * (count || 1));
+        if (tri.contentLocation.href.match("https://www.youtube.com/watch?v="))
+            return cutils.click("a", /Show fewer/);
+        else
+            return this.adjustSpeed(-0.25 * (count || 1));
     },
 
     openTranscript: function() {
