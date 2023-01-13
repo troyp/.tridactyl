@@ -98,6 +98,22 @@ ebaybind: cx<C-h> "(show bindings: ebay/misc)" ebayshowkeys cx
 ebaybind: cxf "Filter free postage items" csites csites.e.filterFreePostage()
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────╮
+" │ fandom.com │
+" ╰────────────╯
+command: fandombind "Bind key for fandom.com" bindurl fandom.com
+command: fandombind: "Bind key with description for fandom.com" bindurl: fandom.com
+command: fandombdoc "Provide a description on a separate line" js ;
+command: fandomshowkeys "(show bindings: fandom)" showkeysurl fandom.com
+
+command: fandom_search "Search fandom.com" csites -d¦ csites.f.search(JS_ARGS.join(" "), "here")¦
+command: fandom_tabsearch "Search fandom.com" csites -d¦ csites.f.search(JS_ARGS.join(" "), "related")¦
+
+fandombind: c<C-h> "(show bindings: fandom)" showkeysurl fandom.com c
+fandombind: cs<C-h> "(show bindings: fandom/search)" showkeysurl fandom.com cs
+fandombind: css "Search wiki" :fill `fandom_${COUNT?"":"tab"}search`
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────╮
 " │ file:// │
 " ╰─────────╯

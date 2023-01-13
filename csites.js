@@ -61,6 +61,22 @@ var csites = {
         }
     },
 
+    f: {
+        baseURL: function(withProtocol=true) {
+            const match = tri.contentLocation.href.match(/https?:\/\/([^./]+\.(wikia|fandom).com)/);
+            return match?.[withProtocol?0:1];
+        },
+        search: function(s, opts={}) {
+            s = cutils.tri.parseArgs(s, "str");
+            opts = cutils.tri.parseOpts(opts, { castString: "where" });
+            opts.where ||= "related";
+            const baseurl = this.baseURL();
+            return tri.excmds.jsb(
+                `utils.tab.open('${baseurl}/wiki/Special:Search?query=${s}','${opts.where}')`
+            );
+        },
+    },
+
     g: {
         _site: "google.com",
 
