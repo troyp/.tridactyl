@@ -3,6 +3,7 @@
 " │ Wikimedia sites │
 " ╰─────────────────╯
 
+wpbind: c<C-h> "(show bindings: wp)" wpshowkeys c
 wpbdoc cd "Open page in Wiktionary"
 wpbind cd jsb utils.tab.open(`https://en.wiktionary.org/w/index.php?search=${sites.wp.getTopic()}`, "here")
 wpbdoc cD "Open page in Wiktionary (adjacent tab)"
@@ -11,6 +12,11 @@ wpbdoc ce "Open page in Wikipedia"
 wpbind ce jsb utils.tab.open(`https://en.wikipedia.org/w/index.php?search=${sites.wp.getTopic()}`, "here")
 wpbdoc cE "Open page in Wikipedia (adjacent tab)"
 wpbind cE jsb utils.tab.open(`https://en.wikipedia.org/w/index.php?search=${sites.wp.getTopic()}`, "related")
+
+" | cs -- wikimedia/search |
+wpbind: cs<C-h> "(show bindings: wp/search)" wpshowkeys cs
+wpbind: csg "Search google for topic" jsb utils.tab.open(`g ${sites.wp.getTopic()}`)
+wpbind: css "Search site" fillcmdline wp_search
 
 " | ct -- wikipedia/toggle |
 wpbind: ctm "Toggle mobile version" urltoggle https://en.m https://en
