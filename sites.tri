@@ -457,8 +457,8 @@ command: ytup "playrate ↑/Show subscriptions ↑" yt -d¦ yt.up(JS_ARGS[1])¦
 command: ytdown "playrate ↓/Show subscriptions ↓" yt -d¦ yt.down(JS_ARGS[1])¦
 command: ytvolup "volume ↑" yt -d¦ yt.volumeAdjust(JS_ARGS[1])¦
 command: ytvoldown "volume ↓" yt -d¦ yt.volumeDown(JS_ARGS[1])¦
-command: ytdl "Download video/playlist with youtube-dl" ytjs -d¦ ytDL(JS_ARGS)¦
-command: ytdlaudio "Download audio with youtube-dl" ytjs -d¦ ytDL(JS_ARGS, false)¦
+command: ytdl "Download video/playlist with youtube-dl" yt -d¦ yt.ytdl(JS_ARGS)¦
+command: ytdlaudio "Download audio with youtube-dl" yt -d¦ yt.ytdl(JS_ARGS, false)¦
 command: ytrate "set playback rate (normal rate = 10)" yt_cmd yt.setSpeed(NUMARG)
 
 ytbind c<C-h> ytshowkeys c
@@ -493,7 +493,8 @@ ytbind: cyl "Yank playlist items" yt cutils.yank(yt.playlistItems())
 ytbind: cyL "Yank playlist items with numbers" yt cutils.yank(yt.playlistItems(true));
 ytbind: cyt "Yank transcript" yt yt.openAndCopyTranscript()
 
-jsb utils.tri.docBindUrl("youtube.com > \"playrate ↑/Show subscriptions ↑\" ytup")
-jsb utils.tri.docBindUrl("youtube.com < \"playrate ↓/Show subscriptions ↓\" ytdown")
+ytbind: <Enter> "Play/Pause" yt yt.togglePause()
 ytbind: <PageUp> "Volume ↑" ytvolup
 ytbind: <PageDown> "Volume ↓" ytvoldown
+jsb utils.tri.docBindUrl("youtube.com > \"playrate ↑/Show subscriptions ↑\" ytup")
+jsb utils.tri.docBindUrl("youtube.com < \"playrate ↓/Show subscriptions ↓\" ytdown")
