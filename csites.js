@@ -98,6 +98,18 @@ var csites = {
         },
     },
 
+    gh: {
+        _site: "https://github.com",
+
+        getDescription: function() {
+            return $1t(".BorderGrid-cell>h2", "About")?.nextElementSibling?.textContent.trim().replace(/\.$/, "");
+        },
+
+        getTitle: function() {
+            return $1("article>h1")?.textContent.trim();
+        },
+    },
+
     j: {
         _site: "https://jisho.org",
 
