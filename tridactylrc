@@ -27,8 +27,6 @@ jsb -r utils.js
 jsb -r urls.js
 " xdotool library
 jsb -r xdo.js
-" app-specific libraries
-jsb -r js/suncalc.js
 " shell commands library
 jsb -r shell.js
 " app-specific code

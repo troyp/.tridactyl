@@ -73,11 +73,6 @@ var apps = {
         return this.openWith(file, cmd);
     },
 
-    sunriseSunset: function(lat, long) {
-        const times = SunCalc.getTimes(new Date(), lat, long);
-        return [times.sunrise, times.sunset].map(t=>t.toTimeString());
-    },
-
     unicodeHexcodes: function(s) {
         return fillcmdline_nofocus(Array.from(s).map(c => c.charCodeAt(0).toString(16)).join(" "));
     },

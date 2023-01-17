@@ -2,7 +2,12 @@
 // │ capps.js -- Content Script Application code for .tridactyl │
 // ╰────────────────────────────────────────────────────────────╯
 
-capps = {
+var capps = {
+
+    sunriseSunset: function(lat, long) {
+        const times = SunCalc.getTimes(new Date(), lat, long);
+        return [times.sunrise, times.sunset].map(t=>t.toTimeString());
+    },
 
     /* https://github.com/benscabbia/x-ray */
     toggleXray: function() {
@@ -24,3 +29,5 @@ capps = {
         }
     },
 };
+
+window.capps = capps;
