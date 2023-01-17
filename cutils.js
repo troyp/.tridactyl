@@ -516,6 +516,10 @@ var cutils = {
     /* use `await sleep(ms)` in async function to delay execution */
     sleep: async function(ms) { return new Promise(res=>setTimeout(res, ms)); },
 
+    sprintf: async function(...args) {
+        return tri.excmds.jsb(`sprintf(...${JSON.stringify(args)})`);
+    },
+
     toggleprop: async function(obj, prop, val1, val2) {
         const val = obj[prop];
         if (val == val1) obj[prop] = val2;
@@ -617,6 +621,14 @@ var cutils = {
 
     yankspan: async function() {
         return this.yankhint(this.selectors.yankspan.join(","));
+    },
+
+    yankf: async function(fstr, ...rest) {
+        const opts = typeof rest.at(-1) == "object"
+              ? rest.pop()
+              : {};
+        const result = await this.sprintf(fstr, ...rest);
+        return this.yank(result, opts);
     },
 
     // ╭────────────────╮
@@ -937,8 +949,8 @@ window.R = R;
     "get1", "getText", "getText1",
     "getSelectionDOM", "getSelectionHtml",
     "isolate", "jumpToHeading", "keep", "rm", "rmall", "setInput", "toggleprop", "togglepropWr",
-    "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankjs", "yankjsWr", "yankspan",
-    "hexToRGB", "datetime", "isInViewport", "isDisplayed",
+    "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankjs", "yankjsWr", "yankspan", "yankf",
+    "hexToRGB", "datetime", "isInViewport", "isDisplayed", "sprintf",
 ].forEach(k => window[k]=cutils[k]);
 
 [
