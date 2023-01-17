@@ -527,10 +527,12 @@ utils.tab = {
         const filtered = tabs.filter(t=>{
             if (t.pinned && !opts.force) return false;
             t.titleurl = `${t.url}\n${t.title}`;
+            t.location = new URL(t.url);
             const i = t.index + 1;
             const idx0 = atab.index;
             const i0 = idx0 + 1;  /* index may change: keep inside loop */
             const t0 = tabs[idx0];
+            t0.location = new URL(t0.url);
             return pred(i, i0, t, t0);
         });
         return browser.tabs.remove(filtered.map(tab => tab.id));
