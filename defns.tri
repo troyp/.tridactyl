@@ -331,9 +331,10 @@ bind: bdoo "Close other tabs" tabonly
 bind: bdoe "Close other tabs matching expression" fillcmdline tabrm i!=i0 &&
 bdoc bdo;e "Close other tabs not matching expression"
 bind bdo;e fillcmdline tabfilter i==i0 ‖
+bind: bdoh "Close other tabs with the same hostname" tabrm i!=i0 && t.location.hostname == t0.location.hostname
+bind: bdo;h "Close other tabs with different hostname" tabrm i!=i0 && t.location.hostname != t0.location.hostname
 bind: bdom "Close other tabs matching string" fillcmdline tabrmstr_other
 bind: bdo;m "Close other tabs not matching string" fillcmdline tabfilterstr_other
-bind: bdoh "Close other tabs with the same hostname" tabrm i!=i0 && t.location.hostname == t0.location.hostname
 
 " | bd> -- tabs/delete/left |
 bind: bd>e "Close tabs to right matching expression" fillcmdline tabrm i>i0 &&
@@ -342,15 +343,19 @@ bind: bd<<C-h> "(show bindings: tabs/delete/left)" showkeys bd<
 bind: bd<e "Close tabs to left matching expression" fillcmdline tabrm i<i0 &&
 bdoc bd<;e "Close tabs to left not matching expression"
 bind bd<;e fillcmdline tabfilter i>=i0 ‖
+bind: bd<h "Close tabs to left with the same hostname" tabrm i<i0 && t.location.hostname == t0.location.hostname
+bind: bd<;h "Close tabs to left with different hostname" tabrm i<i0 && t.location.hostname != t0.location.hostname
 bind: bd<m "Close tabs to left matching string" fillcmdline tabrmstr_toleft
-bind: bd>;m "Close tabs to right not matching string" fillcmdline tabfilterstr_toright
+bind: bd<;m "Close tabs to left not matching string" fillcmdline tabfilterstr_toleft
 " | bd< -- tabs/delete/right |
 bind: bd><C-h> "(show bindings: tabs/delete/right)" showkeys bd>
 bind: bd>e "Close tabs to right matching expression" fillcmdline tabrm i>i0 &&
 bdoc bd>;e "Close tabs to right not matching expression"
 bind bd>;e fillcmdline tabfilter i<=i0 ‖
+bind: bd>h "Close tabs to right with the same hostname" tabrm i>i0 && t.location.hostname == t0.location.hostname
+bind: bd>;h "Close tabs to right with different hostname" tabrm i>i0 && t.location.hostname != t0.location.hostname
 bind: bd>m "Close tabs to right matching string" fillcmdline tabrmstr_toright
-bind: bd<;m "Close tabs to left not matching string" fillcmdline tabfilterstr_toleft
+bind: bd>;m "Close tabs to right not matching string" fillcmdline tabfilterstr_toright
 
 " | bh -- tabs/highlight |
 bind bh<C-h> showkeys bh
