@@ -330,6 +330,7 @@ bdoc bdo;e "Close other tabs not matching expression"
 bind bdo;e fillcmdline tabfilter i==i0 ‖
 bind: bdom "Close other tabs matching string" fillcmdline tabrmstr_other
 bind: bdo;m "Close other tabs not matching string" fillcmdline tabfilterstr_other
+bind: bdoh "Close other tabs with the same hostname" tabrm i!=i0 && t.location.hostname == t0.location.hostname
 
 " | bd> -- tabs/delete/left |
 bind: bd>e "Close tabs to right matching expression" fillcmdline tabrm i>i0 &&
