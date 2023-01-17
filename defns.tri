@@ -256,18 +256,18 @@ command omni_focus xdokeyseq 0.2 alt+d ctrl+u
 " ╰───────────╯
 unbind b
 
-command: tabremove "Close tabs matching expression" jsb -d¦ utils.tab.removeWr(JS_ARGS)¦
+command: tabrm "Close tabs matching expression" jsb -d¦ utils.tab.removeWr(JS_ARGS)¦
 command: tabfilter "Close tabs not matching expression" jsb -d¦ utils.tab.filterWr(JS_ARGS)¦
-command: tabremovestr "Close tabs matching string" jsb -p utils.tab.remove(t=>S.matchSC(JS_ARG, t.titleurl));
+command: tabrmstr "Close tabs matching string" jsb -p utils.tab.remove(t=>S.matchSC(JS_ARG, t.titleurl));
 command: tabfilterstr "Close tabs not matching string" jsb -p utils.tab.filter(t=>S.matchSC(JS_ARG, t.titleurl));
-commdoc tabremovestrtoright "Close tabs matching string to right"
-command tabremovestrtoright jsb -p utils.tab.remove((i,i0,t,t0)=>S.matchSC(JS_ARG, t.titleurl) && i>i0);
-commdoc tabfilterstrtoright "Close tabs not matching string to right"
-command tabfilterstrtoright jsb -p utils.tab.filter((i,i0,t,t0)=>S.matchSC(JS_ARG, t.titleurl) || i<=i0);
-commdoc tabremovestrtoleft "Close tabs matching string to left"
-command tabremovestrtoleft jsb -p utils.tab.remove((i,i0,t,t0)=>S.matchSC(JS_ARG, t.titleurl) && i<i0);
-commdoc tabfilterstrtoleft "Close tabs not matching string to left"
-command tabfilterstrtoleft jsb -p utils.tab.filter((i,i0,t,t0)=>S.matchSC(JS_ARG, t.titleurl) || i>=i0);
+commdoc tabrmstr_toright "Close tabs matching string to right"
+command tabrmstr_toright jsb -p utils.tab.remove((i,i0,t,t0)=>S.matchSC(JS_ARG, t.titleurl) && i>i0);
+commdoc tabfilterstr_toright "Close tabs not matching string to right"
+command tabfilterstr_toright jsb -p utils.tab.filter((i,i0,t,t0)=>S.matchSC(JS_ARG, t.titleurl) || i<=i0);
+commdoc tabrmstr_toleft "Close tabs matching string to left"
+command tabrmstr_toleft jsb -p utils.tab.remove((i,i0,t,t0)=>S.matchSC(JS_ARG, t.titleurl) && i<i0);
+commdoc tabfilterstr_toleft "Close tabs not matching string to left"
+command tabfilterstr_toleft jsb -p utils.tab.filter((i,i0,t,t0)=>S.matchSC(JS_ARG, t.titleurl) || i>=i0);
 command: tabrmrange "Close tabs from START to END" jsb -d¦ utils.tab.removeRangeWr(JS_ARGS)¦
 commdoc tabrmrange "Close tabs from START to END (including pinned)"
 command tabrmrange! jsb -d¦ utils.tab.removeRangeWr(JS_ARGS, {force:true})¦
@@ -309,9 +309,9 @@ bind bd<C-h> showkeys bd
 bind: bda "Close alternate tab" jsb utils.tab.getAlternate().then(t=>browser.tabs.remove(t.id));
 bind: bdd "Close tabs from START to END ord" fillcmdline tabrmrange
 bind: bdD "Close tabs from START to END ord (including pinned)" fillcmdline tabrmrange!
-bind: bde "Close tabs matching expression" fillcmdline tabremove
-bind: bdm "Close tabs matching string" fillcmdline tabremovestr
 bind: bdo "Close other tabs" tabonly
+bind: bde "Close tabs matching expression" fillcmdline tabrm
+bind: bdm "Close tabs matching string" fillcmdline tabrmstr
 bind: bds "Select tabs to close with rofi" jsb utils.tab.removeWithRofi();
 " | bd; -- tabs/delete/filter |
 bind: bd;e "Close tabs not matching expression" fillcmdline tabfilter
@@ -319,15 +319,15 @@ bind: bd;m "Close tabs not matching string" fillcmdline tabfilterstr
 bind: bd;s "Select tabs to keep with rofi; close others" jsb utils.tab.removeWithRofi({invert:true});
 
 " | bd< -- tabs/delete/right |
-bind: bd<e "Close tabs to left matching expression" fillcmdline tabremove i<i0 &&
 bind: bd<;e "Close tabs to left not matching expression" fillcmdline tabfilter i<i0 &&
-bind: bd<m "Close tabs to left matching string" fillcmdline tabremovestrtoleft
 bind: bd>;m "Close tabs to right not matching string" fillcmdline tabfilterstrtoright
+bind: bd<e "Close tabs to left matching expression" fillcmdline tabrm i<i0 &&
+bind: bd<m "Close tabs to left matching string" fillcmdline tabrmstr_toleft
 " | bd> -- tabs/delete/left |
-bind: bd>e "Close tabs to right matching expression" fillcmdline tabremove i>i0 &&
-bind: bd>;e "Close tabs to right not matching expression" fillcmdline tabfilter i>i0 &&
-bind: bd>m "Close tabs to right matching string" fillcmdline tabremovestrtoright
-bind: bd<;m "Close tabs to left not matching string" fillcmdline tabfilterstrtoleft
+bind: bd>e "Close tabs to right matching expression" fillcmdline tabrm i>i0 &&
+bind: bd>m "Close tabs to right matching string" fillcmdline tabrmstr_toright
+bind: bd<e "Close tabs to left matching expression" fillcmdline tabrm i<i0 &&
+bind: bd<m "Close tabs to left matching string" fillcmdline tabrmstr_toleft
 
 " | bh -- tabs/highlight |
 bind bh<C-h> showkeys bh
