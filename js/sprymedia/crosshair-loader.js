@@ -7,50 +7,48 @@ if (typeof CrosshairLoader != "undefined" && typeof Crosshair != "undefined") {
 } else {
     var CrosshairLoader = {};
     CrosshairLoader.bLoadingComplete = false;
-    CrosshairLoader.fnLoadFile = function(c, d) {
-        var a;
-        if (d == "css") {
-            a = document.createElement("link");
-            a.classList.add("spry-crosshair");
-            a.type = "text/css";
-            a.rel = "stylesheet";
-            a.href = c;
-            a.media = "screen";
-            document.getElementsByTagName("head")[0].appendChild(a);
+    CrosshairLoader.fnLoadFile = function(source, tagname) {
+        var resourceElt;
+        if (tagname == "css") {
+            resourceElt = document.createElement("link");
+            resourceElt.classList.add("spry-crosshair");
+            resourceElt.type = "text/css";
+            resourceElt.rel = "stylesheet";
+            resourceElt.href = source;
+            resourceElt.media = "screen";
+            document.getElementsByTagName("head")[0].appendChild(resourceElt);
+        } else if (tagname == "image") {
+            var b = new Image(1, 1);
+            b.src = source;
         } else {
-            if (d == "image") {
-                var b = new Image(1, 1);
-                b.src = c;
-            } else {
-                a = document.createElement("script");
-                a.classList.add("spry-crosshair");
-                a.setAttribute("language", "JavaScript");
-                a.setAttribute("src", c);
-                document.getElementsByTagName("body")[0].appendChild(a);
-            }
+            resourceElt = document.createElement("script");
+            resourceElt.classList.add("spry-crosshair");
+            resourceElt.setAttribute("language", "JavaScript");
+            resourceElt.setAttribute("src", source);
+            document.getElementsByTagName("body")[0].appendChild(resourceElt);
         }
     };
     CrosshairLoader.fnLoad = function() {
         if (typeof Crosshair == "object" && typeof jsCore == "object") {
             return 0;
         } else {
-            var a = document.createElement("div");
-            a.classList.add("spry-crosshair");
-            a.style.position = "absolute";
-            a.style.top = "0";
-            a.style.left = "0";
-            a.style.color = "white";
-            a.style.padding = "5px 10px";
-            a.style.fontSize = "11px";
-            a.style.fontFamily = '"Lucida Grande", Verdana, Arial, Helvetica, sans-serif';
-            a.style.zIndex = "32501";
-            a.style.backgroundColor = "#a2392d";
-            a.setAttribute("id", "LoadingCrosshair");
-            a.appendChild(document.createTextNode("Loading Crosshair..."));
-            document.getElementsByTagName("body")[0].insertBefore(a, document.body.childNodes[0]);
+            const div = document.createElement("div");
+            div.classList.add("spry-crosshair");
+            div.style.position = "absolute";
+            div.style.top = "0";
+            div.style.left = "0";
+            div.style.color = "white";
+            div.style.padding = "5px 10px";
+            div.style.fontSize = "11px";
+            div.style.fontFamily = '"Lucida Grande", Verdana, Arial, Helvetica, sans-serif';
+            div.style.zIndex = "32501";
+            div.style.backgroundColor = "#a2392d";
+            div.setAttribute("id", "LoadingCrosshair");
+            div.appendChild(document.createTextNode("Loading Crosshair..."));
+            document.getElementsByTagName("body")[0].insertBefore(div, document.body.childNodes[0]);
             CrosshairLoader.fnLoadFile("http://localhost:8721/js/sprymedia/crosshair-complete.js", "js");
             return true;
         }
     };
     CrosshairLoader.fnLoad();
-};
+}
