@@ -1221,6 +1221,7 @@ command scrollnthintoview cujs -d¦ cutils.scrollNthIntoView(JS_ARGS[1], JS_ARGS
 
 bind ,x<C-h> showkeys ,x
 
+" | ,xd -- misc/draw |
 bind: ,xd<C-h> "(show bindings: drawing)" showkeys ,xd
 bind: ,xdd "Drawing mode: toggle eraser" drawingerasertoggle
 bind: ,xds "Drawing mode: start" drawingstart
@@ -1232,12 +1233,17 @@ bind: <C-\> "Mouse mode: cancel no-mouse/drawing modes" no_mouse_mode
 bind: ,xf<C-h> "(show bindings: misc/fix)" showkeys ,xf
 bind: ,xff "Fix font family" cujs $$("div,p,h1,h2,h3,h4,td,a").forEach(e=>e.style.fontFamily="notoSans")
 
+bind: ,xjg "Grid bookmarklet" js -r js/sprymedia/grid-loader
+bind: ,xjx "Crosshair bookmarklet" capps capps.toggleCrosshair()
+bind: ,xju "Unit bookmarklet" js -r js/sprymedia/unit-loader
+
 " | ,xt -- misc/table |
 command: copytablecols "Copy table columns" cujs -d¦ cutils.copytablecols(JS_ARGS)¦
 commdoc copytablecols_strict "Copy table columns (omit rows without enough columns)"
 command copytablecols_strict cujs -d¦ cutils.copytablecols(JS_ARGS, {strict: true})¦
 command scrolltableintoview cujs -d¦ cutils.scrollNthIntoView("table", JS_ARGS?.[1])¦
 
+" | ,xt -- misc/table |
 bind ,xt<C-h> showkeys ,xt
 bind: ,xtc "Copy table columns [HINT]" fillcmdline copytablecols
 bind: ,xtC "Copy table columns (omit rows without enough columns) [HINT]" fillcmdline copytablecols_strict

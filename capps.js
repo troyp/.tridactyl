@@ -9,6 +9,15 @@ var capps = {
         return [times.sunrise, times.sunset].map(t=>t.toTimeString());
     },
 
+    toggleCrosshair: function() {
+        if ($1(".spry-crosshair"))
+            cutils.rmall(".spry-crosshair");
+        else
+            tri.excmds.js("-r", "js/sprymedia/crosshair-loader.js");
+        document.dispatchEvent(new Event("input"));
+        document.dispatchEvent(new Event("change"));
+    },
+
     /* https://github.com/benscabbia/x-ray */
     toggleXray: function() {
         const ghostCSS = `
