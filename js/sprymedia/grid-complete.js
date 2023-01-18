@@ -204,7 +204,7 @@ jsCore.addListener({mElement:document.getElementById("GridControl_Close"),sType:
 var c=this.fnGetState();if(c!=null){Grid.goContainer=c.oContainer;Grid.goMargins=c.oMargins;
 Grid.oGrids=c.oGrid;Grid.oColours=c.oColours;this.oPanel=c.oPanel;if(this.oPanel.sX!=null){this.nGridControl.style.left=this.oPanel.sX;
 this.nGridControl.style.top=this.oPanel.sY}if(this.oPanel.bOpen===false){document.getElementById("GridControl_Fold").className="folded";
-document.getElementById("GridControl").style.width="19px"}}else{Grid.goContainer={sVertAlign:"top",sHorizAlign:"center",sWidth:"800px",sHeight:"100%"};
+document.getElementById("GridControl").style.width="19px"}}else{Grid.goContainer={sVertAlign:"top",sHorizAlign:"center",sWidth:"1900px",sHeight:"100%"};
 Grid.goMargins={sTop:"1em",sBottom:"1em",sLeft:"1em",sRight:"1em"};Grid.oGrids={iColumns:3,sColumnWidth:null,sGutterWidth:"1em",iRows:null,sRowHeight:"1em",sGutterHeight:null};
 Grid.oColours={sPage:"#000000",sPageMargins:"#00438A",sGridVertical:"#00892C",sGridHoriz:"#888A85",sGutter:"#BF0303",iPageMarginsOpacity:1,iGridVerticalOpacity:1,iGridHorizOpacity:1,iGutterOpacity:0.15}
 }var a=window.innerHeight||document.documentElement.clientHeight;if(this.fnGetValue(this.oPanel.sY)>a){this.nGridControl.style.top="10px";
