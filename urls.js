@@ -249,6 +249,25 @@ urls.mod = {
         tri.controller.acceptExCmd(`open ${url}`);
     },
 
+    setQuery: function(key, value, opts={}) {
+        opts = cutils.tri.parseOpts(opts, {
+            defaults: {
+                where: "here",
+                bg: false,
+            },
+            castString: "where",
+        });
+        const url = tri.contentLocation.href;
+        const newurl = urls.setQuery(url, key, value);
+        var opencmd;
+        if (opts.where=="related" && opts.bg == false)      opencmd = "tabopen_adj";
+        else if (opts.where=="related" && opts.bg == true)  opencmd = "tabopen_bg";
+        else if (opts.where=="last" && opts.bg == false)    opencmd = "tabopen_bg";
+        else if (opts.where=="last" && opts.bg == true)     opencmd = "tabopen";
+        else                                                opencmd = "open";
+        tri.controller.acceptExCmd(`${opencmd} ${newurl}`);
+    },
+
     /** urltoggle(s1, s2, url)                Replace s1 with s2, or else s2 with s1
      *  urltoggle(s1, s2, url, {re1, re2})    Replace regex1 with s2, or else regex2 with s1
      */
