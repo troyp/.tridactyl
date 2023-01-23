@@ -536,6 +536,10 @@ command multisearch multisearch_adj
 command searchwithengine searchwithengine_adj
 command searchwithengines searchwithengines_adj
 
+command: searchreplace "Replace search term on current URL" cUjs -d¦ urls.mod.setQuery("q",parseArgs(JS_ARGS,"s"))¦ 
+commdoc searchreplace_adj "Open search based on current URL in new adjacent tab"
+command searchreplace_adj cUjs -d¦ urls.mod.setQuery("q", parseArgs(JS_ARGS, "s"), "related")¦
+
 command: nativelinksearch "Search for links (FF builtin)" xdokeyseq 0.2 ctrl+v apostrophe
 command: hl "Highlight text" cujs -d¦ cutils.css.highlightString(JS_ARGS.join(" ").trim())¦
 command: hloff "Highlight text off" cujs -d¦ cutils.css.highlightStringOff()¦
@@ -559,6 +563,7 @@ bind: sa "Open keyword search in adjacent tab [Rofi]" !  echo -n "tabopen_adj ";
 bind: sb "Open keyword search in adjacent background tab [Rofi]" !  echo -n "tabopen_bg "; kwsearch -Sw1
 bind: so "Open keyword search in current tab [Rofi]" ! echo -n "open "; kwsearch -Sw1
 bind: st "Open keyword search in last tab [Rofi]" !  echo -n "tabopen_last "; kwsearch -Sw1
+bind: sr "Repeat current search with new search term" :fill `searchreplace${COUNT?"_adj":""}`
 bind: su "Open searchurl/bmark/URL in new tab" fillcmdline tabopen_searchurl
 bind: s/ "Search with :find command" fillcmdline find
 bind: s;; "Search clipboard contents with engine" composite getclip | fillcmdline searchwithengine
