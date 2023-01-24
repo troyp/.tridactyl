@@ -195,7 +195,7 @@ utils.tab = {
 
     filterWr: async function(args) {
         const expr = utils.tri.parseExpr(args);
-        const pred = eval(`(i, i0, t, t0)=>${expr}`);
+        const pred = eval(`(t, t0, i, i0)=>${expr}`);
         return this.filter(pred);
     },
 
@@ -533,7 +533,7 @@ utils.tab = {
             const i0 = idx0 + 1;  /* index may change: keep inside loop */
             const t0 = tabs[idx0];
             t0.location = new URL(t0.url);
-            return pred(i, i0, t, t0);
+            return pred(t, t0, i, i0);
         });
         return browser.tabs.remove(filtered.map(tab => tab.id));
     },
@@ -544,7 +544,7 @@ utils.tab = {
 
     removeWr: async function(args) {
         const expr = utils.tri.parseExpr(args);
-        const pred = eval(`(i, i0, t, t0)=>${expr}`);
+        const pred = eval(`(t, t0, i, i0)=>${expr}`);
         return this.remove(pred);
     },
 

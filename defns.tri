@@ -264,17 +264,17 @@ command: tabfilter "Close tabs not matching expression" jsb -d¦ utils.tab.filte
 command: tabrmstr "Close tabs matching string" jsb -p utils.tab.remove(t=>S.matchSC(JS_ARG, t.titleurl));
 command: tabfilterstr "Close tabs not matching string" jsb -p utils.tab.filter(t=>S.matchSC(JS_ARG, t.titleurl));
 commdoc tabrmstr_toright "Close tabs matching string to right"
-command tabrmstr_toright jsb -p utils.tab.remove((i,i0,t,t0)=>S.matchSC(JS_ARG, t.titleurl) && i>i0);
+command tabrmstr_toright jsb -p utils.tab.remove((t, t0, i, i0)=>S.matchSC(JS_ARG, t.titleurl) && i>i0);
 commdoc tabfilterstr_toright "Close tabs not matching string to right"
-command tabfilterstr_toright jsb -p utils.tab.filter((i,i0,t,t0)=>S.matchSC(JS_ARG, t.titleurl) || i<=i0);
+command tabfilterstr_toright jsb -p utils.tab.filter((t, t0, i, i0)=>S.matchSC(JS_ARG, t.titleurl) || i<=i0);
 commdoc tabrmstr_toleft "Close tabs matching string to left"
-command tabrmstr_toleft jsb -p utils.tab.remove((i,i0,t,t0)=>S.matchSC(JS_ARG, t.titleurl) && i<i0);
+command tabrmstr_toleft jsb -p utils.tab.remove((t, t0, i, i0)=>S.matchSC(JS_ARG, t.titleurl) && i<i0);
 commdoc tabfilterstr_toleft "Close tabs not matching string to left"
-command tabfilterstr_toleft jsb -p utils.tab.filter((i,i0,t,t0)=>S.matchSC(JS_ARG, t.titleurl) || i>=i0);
+command tabfilterstr_toleft jsb -p utils.tab.filter((t, t0, i, i0)=>S.matchSC(JS_ARG, t.titleurl) || i>=i0);
 commdoc tabrmstr_other "Close other tabs matching string"
-command tabrmstr_other jsb -p utils.tab.remove((i,i0,t,t0)=>S.matchSC(JS_ARG, t.titleurl) && i!=i0);
+command tabrmstr_other jsb -p utils.tab.remove((t, t0, i, i0)=>S.matchSC(JS_ARG, t.titleurl) && i!=i0);
 commdoc tabfilterstr_other "Close other tabs not matching string"
-command tabfilterstr_other jsb -p utils.tab.filter((i,i0,t,t0)=>S.matchSC(JS_ARG, t.titleurl) || i==i0);
+command tabfilterstr_other jsb -p utils.tab.filter((t, t0, i, i0)=>S.matchSC(JS_ARG, t.titleurl) || i==i0);
 command: tabrmrange "Close tabs from START to END" jsb -d¦ utils.tab.removeRangeWr(JS_ARGS)¦
 commdoc tabrmrange "Close tabs from START to END (including pinned)"
 command tabrmrange! jsb -d¦ utils.tab.removeRangeWr(JS_ARGS, {force:true})¦
