@@ -1,10 +1,83 @@
-// ╭────────────╮
-// │ MODULE art │
-// ╰────────────╯
+// ╭────────╮
+// │ art.js │
+// ╰────────╯
 
 sites.LISTS.art_sites = [
+    "handprint.com",
     "jacksonsart.com",
 ];
+
+// ───────────────────────────────────────────────────────────────────────────────
+// ╭───────────────────╮
+// │ ArtIsCreation.com │
+// ╰───────────────────╯
+const artiscreation = {
+    getURL: function(...args) {
+        const wcUrl = "http://www.artiscreation.com/";
+        var match, colpage;
+        if ( args.length==0 || args[0].match(/index/ ) ) return wcUrl;
+        else if ( args[0].match(/blog/ ) )    return wcUrl + "https://toxicgraphix.blogspot.com/";
+        else if ( args[0].match(/pig(ments?)?|db/ ) )                return wcUrl + "Color_index_names.html";
+        else if ( args[0].match(/charts?/ ) )                        return wcUrl + "ColorCharts.html";
+        else if ( args[0].match(/ma[kd]e|making|pig(ments?)?/) )     return wcUrl + "pigment.html";
+        else if ( args[0].match(/formulas?|mediums?/ ) )             return wcUrl + "mediums.html";
+        else if ( args[0].match(/books?/) )                          return wcUrl + "books.html";
+        else if ( args[0].match(/key/) )                             return wcUrl + "pigment_key.html";
+        else if (( match = args[0].trim().match(/^\/?(P|N)?(Y|O|R|G|B[rk]?|V|W|M)([0-9]*)/i) )) {
+            /* precede pigment with slash to find pigment page but exclude fragment from URL */
+            var nofrag = (match[0][0] == "/");
+            /* default pigment prefix is "P" */
+            const pref = (match[1] || "P").toUpperCase();
+            const col = match[2] && (match[2][0].toUpperCase()+match[2].slice(1).toLowerCase());
+            const num = match[3];
+            const pigment = pref + col + num;
+            const frag = (nofrag || num=="") ? "" : ("#"+pigment);
+            /* for pigment with no code, fragment can be given with #, eg. 'pb#apatite' */
+            var argFragSplit = args[0].split("#");
+            if (argFragSplit.length > 1) frag = "#" + argFragSplit[1];
+            switch (col) {
+              case "Y":  colpage = "yellow"; break;
+              case "O":  colpage = "orange"; break;
+              case "R":  colpage = "red"; break;
+              case "V":  colpage = "violet"; break;
+              case "B":  colpage = "blue"; break;
+              case "G":  colpage = "green"; break;
+              case "Br": colpage = "brown"; break;
+              case "Bk": colpage = "black"; break;
+              case "W":  colpage = "white"; break;
+              case "M":  colpage = "metal"; break;
+            }
+            return wcUrl + colpage + ".html" + frag;
+        } else return wcUrl;
+    },
+
+    openOrSelect: function(where, ...args) {
+        const [page,fragment] = this.getURL(...args).split("#");
+        return utils.tab.openAndRun(
+            page,
+            `[...document.getElementsByTagName("td")]`
+                + `.find(e=>e.textContent.match(RegExp("^${fragment}", "i")))`
+                + `.scrollIntoView()`,
+            where,
+            RegExp(page+"($|#)")
+        );
+    },
+
+    artiscreationTableKey: [
+        "01 CI Color Index | Generic Name",
+        "02 CI Common or Historical Name",
+        "03 Common, Historic or Marketing Names",
+        "04 CI Constitution Number",
+        "05 Chemical Composition",
+        "06 Color Description († = long term effects of light)",
+        "07 Opacity (1=opaque ... 4=transparent)",
+        "08 Light Fastness (I=excellent ... IV=fugitive)",
+        "09 Oil Absorption (g/100g)",
+        "10 Toxicity",
+        "11 Side Notes"
+    ].join("\n"),
+};
+sites.artiscreation = artiscreation;
 
 // ───────────────────────────────────────────────────────────────────────────────
 // ╭───────────────╮
@@ -45,10 +118,10 @@ const handprint = {
             /* precede pigment with slash to find pigment page but exclude fragment from URL                 */
             /* a pigment name can be used instead of a number, by placing a colon after the page colour code */
             /*     eg. br:quinacridone orange                                                                */
-            var nopig = (match[0][0] == "/");
+            const nopig = (match[0][0] == "/");
             /* default pigment prefix is "P" */
-            var pref = (match[1] || "P").toUpperCase();
-            var col = match[2] && (match[2][0].toUpperCase()+match[2].slice(1).toLowerCase());
+            const pref = (match[1] || "P").toUpperCase();
+            const col = match[2] && (match[2][0].toUpperCase()+match[2].slice(1).toLowerCase());
             if (match[3].startsWith(":")) {
                 pigment = [match[3].slice(1), args.slice(1)].join(" ");
             } else {

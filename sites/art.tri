@@ -4,6 +4,26 @@
 command: artjs "Load art.c.js and execute javascript" cujs -r sites/art.c.js ; js
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────────────╮
+" │ ArtIsCreation.com │
+" ╰───────────────────╯
+command: artiscreationbind "Bind key for artiscreation" bindurl artiscreation
+command: artiscreationbind: "Bind key with description for artiscreation" bindurl: artiscreation
+command: artiscreationbdoc "Provide a description on a separate line" js ;
+command: artiscreationshowkeys "(show bindings: artiscreation)" showkeysurl artiscreation
+
+command: artiscreation "Open artiscreation.com page" jsb -d¦ sites.handprint.openOrSelect(...JS_ARGS.slice(1))¦
+command: artiscreation_here "Open artiscreation.com page (current tab)" artiscreation here
+command: artiscreation_adj "Open artiscreation.com page (adjacent tab)" artiscreation related
+
+artiscreationbind: c<C-h> "(show bindings: artiscreation)" showkeysurl artiscreation c
+artiscreationbind: cc "Goto page/pigment" :fill `artiscreation_${COUNT?"here":"adj"}`
+artiscreationbind: ch "Goto handprint page/pigment" fillcmdline handprint
+artiscreationbind: cH "Repeat pigment search on handprint" :: js "handprint" | :prev_ch_cmd
+artiscreationbind: c/ "Search artiscreation" :fill `${COUNT?"":"tab"}open g site:artiscreation.com`
+artiscreationbind: c<f1> "Pigment table: key to ratings" -js utils.message(artiscreationTableKey)
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────╮
 " │ Handprint.com │
 " ╰───────────────╯
@@ -28,11 +48,13 @@ bind: ,r:hpk "Open handprint: white/black" topos https://www.handprint.com/HP/WC
 bind: ,r:hpw "Open handprint: white/black" topos https://www.handprint.com/HP/WCL/waterw.html
 
 handprintbind: c<C-h> "(show bindings: handprint/)" handprintshowkeys c
+handprintbind: ca "Goto ArtIsCreation page/pigment" fillcmdline artiscreation
+handprintbind: cA "Repeat pigment search on ArtIsCreation" :: js "artiscreation" | :prev_ch_cmd
 handprintbind: cc "Goto page/pigment" :fill `handprint_${COUNT?"here":"adj"}`
 handprintbind: cg "Goto pigment guide" handprint guide
-handprintbind: ch "Pigment table: key to ratings" jsb utils.message(handprintTableKey);
+handprintbind: ch "Pigment table: key to ratings" jsb utils.message(handprintTableKey)
 handprintbind: c/ "Search handprint" :fill `${COUNT?"":"t"}opos g site:handprint.com`
-handprintbind: <f1> "Pigment table: key to ratings" js utils.message(handprintTableKey);
+handprintbind: <f1> "Pigment table: key to ratings" js utils.message(handprintTableKey)
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────╮
@@ -77,7 +99,7 @@ jabind: co3 "Switch to tab Spec" cujs cutils.click(".product-essential>ul>li>a",
 jabind: co4 "Switch to tab Reviews" cujs cutils.click(".product-essential>ul>li>a", /reviews/i)
 
 " | cp -- ja/pencils |
-jabind: cp<C-h> "(show bindings: ja/pencils)" showkeysurl cp
+jabind: cp<C-h> "(show bindings: ja/pencils)" jashowkeys cp
 jabind: cpbd "Bruynzeel Design pencils" topos https://www.jacksonsart.com/en-au/bruynzeel-design-colour-pencils
 jabdoc cpcl "Caran d'Ache Luminance pencils"
 jabind cpcl topos https://www.jacksonsart.com/en-au/caran-d-ache-luminance-colour-pencils
@@ -157,3 +179,5 @@ jabind: cycn "Yank cart items name [HINT]" artjs art.ja.cart.hint_yankName()
 jabind: cycu "Yank cart items URLs" artjs art.ja.cart.yankURLs()
 
 " ───────────────────────────────────────────────────────────────────────────────
+
+fillcmdline art.tri LOADED
