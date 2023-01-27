@@ -48,7 +48,7 @@ var yt = {
 
     volumeAdjust: function(dvol=1) {
         const step = 5;
-        cutoff = (num, min, max) => Math.min(Math.max(num, min), max);
+        const cutoff = (num, min, max) => Math.min(Math.max(num, min), max);
         const player = this.player();
         const vol = cutoff(player.getVolume() + step*dvol, 0, 100);
         this.showVolumeSlider();
