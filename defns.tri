@@ -196,7 +196,7 @@ command tabopen tabopen!
 command: open! "Open URL/search or search in the current tab" jsb -d¦ utils.tab.open(JS_ARGS, {where: "here"})¦
 command: tabopen! "Open URL/search or search in a new tab" jsb -d¦ utils.tab.open(JS_ARGS, {where: "tabopen"})¦
 command: tabopen_adj "Open URL/search in an adjacent tab" jsb -d¦ utils.tab.open(JS_ARGS, {where: "related"})¦
-command: tabopen_last "Open URL/search in an adjacent tab" jsb -d¦ utils.tab.open(JS_ARGS, {where: "last"})¦
+command: tabopen_last "Open URL/search in final tab" jsb -d¦ utils.tab.open(JS_ARGS, {where: "last"})¦
 commdoc tabopen_bg "Open URL/search in an adjacent background tab"
 command tabopen_bg jsb -d¦ utils.tab.open(JS_ARGS, {where: "related", background: true})¦
 commdoc openorswitchc "Open URL/search in current (with count: adjacent) tab, or switch to existing tab"
@@ -951,11 +951,11 @@ bind ,<C-h> showkeys ,
 " │ ,a -- web │
 " ╰───────────╯
 bind: ,a<C-h> showkeys ,a
-bind: ,aa "Open Afterpay" tabopenorswitchc https://portal.afterpay.com/au/
-bind: ,ab "Open banking" withjsb user.bankurl | tabopenorswitchc
-bind: ,ac "Open Google calendar" tabopenorswitch https://calendar.google.com/calendar/u/0/r/month
-bind: ,ap "Open Paypal" tabopenorswitchc https://www.paypal.com/myaccount/home
-bind: ,ay "Open MyGov" tabopenorswitchc https://my.gov.au/LoginServices/main/login?execution=e1s1
+bind: ,aa "Open Afterpay" topos https://portal.afterpay.com/au/
+bind: ,ab "Open banking" withjsb user.bankurl | topos
+bind: ,ac "Open Google calendar" topos https://calendar.google.com/calendar/u/0/r/month
+bind: ,ap "Open Paypal" topos https://www.paypal.com/myaccount/home
+bind: ,ay "Open MyGov" topos https://my.gov.au/LoginServices/main/login?execution=e1s1
 
 " ╭──────────────────╮
 " │ ,ag -- web/games │
@@ -964,9 +964,9 @@ bind ,ag<C-h> showkeys ,ag
 
 " | ,agd -- games/D&D |
 bind ,agd<C-h> showkeys ,agd
-bind: ,agdb "Open D&D Beyond" tabopenorswitchc https://www.dndbeyond.com/
-bind: ,agdr "Open RPGBot.net" tabopenorswitchc https://rpgbot.net/dnd5/
-bind: ,agdt "Open Tabletop Builds" tabopenorswitchc https://tabletopbuilds.com/
+bind: ,agdb "Open D&D Beyond" topos https://www.dndbeyond.com/
+bind: ,agdr "Open RPGBot.net" topos https://rpgbot.net/dnd5/
+bind: ,agdt "Open Tabletop Builds" topos https://tabletopbuilds.com/
 
 " ╭──────────────────────────╮
 " │ ,am -- web/mail+contacts │
@@ -985,25 +985,25 @@ bind: ,amy "Open Yahoo Mail" tabopenorswitchc https://au.mail.yahoo.com/d/folder
 " │ ,as -- web/shopping │
 " ╰─────────────────────╯
 bind ,as<C-h> showkeys ,as
-bind: ,asa "Open Amazon AU" tabopenorswitch https://www.amazon.com.au/gp/cart/view.html/ref=nav_cart
-bind: ,asc "Open Coles" tabopenorswitch https://shop.coles.com.au/a/ballina/home
-bind: ,ase "open eBay" tabopenorswitch https://cart.ebay.com.au
-bind: ,asj "open Jackson's Art" tabopenorswitch https://www.jacksonsart.com/en-au/checkout/cart/
+bind: ,asa "Open Amazon AU" topos https://www.amazon.com.au/gp/cart/view.html/ref=nav_cart
+bind: ,asc "Open Coles" topos https://shop.coles.com.au/a/casino/home
+bind: ,ase "open eBay" topos https://cart.ebay.com.au
+bind: ,asj "open Jackson's Art" topos https://www.jacksonsart.com/en-au/checkout/cart/
 bind: ,asl "Open liquor specials" jsb utils.tab.openMultiple(sites.LISTS.liquor_specials, {background:true});
-bind: ,asp "Open Paypal" tabopenorswitch https://www.paypal.com/myaccount/home
-bind: ,asw "Open Woolworths" tabopenorswitch https://www.woolworths.com.au/shop/mylists
-bind: ,asz "Open Amazon AU" tabopenorswitch https://www.amazon.com.au/gp/cart/view.html/ref=nav_cart
+bind: ,asp "Open Paypal" topos https://www.paypal.com/myaccount/home
+bind: ,asw "Open Woolworths" topos https://www.woolworths.com.au/shop/mylists
+bind: ,asz "Open Amazon AU" topos https://www.amazon.com.au/gp/cart/view.html/ref=nav_cart
 
 " ╭───────────────╮
 " │ ,av -- web/AV │
 " ╰───────────────╯
 bind ,av<C-h> showkeys ,av
-bind: ,ava "AccuRadio Classical" tabopenorswitchc https://www.accuradio.com/classical/
-bind: ,avd "Open Disney Plus" tabopenorswitchc https://www.disneyplus.com/en-gb/home
-bind: ,avn "Open Netflix" tabopenorswitchc https://www.netflix.com/
-bind: ,avp "Goto Amazon Prime Video" tabopenorswitchc https://www.primevideo.com/storefront/home/ref=atv_nb_logo
+bind: ,ava "AccuRadio Classical" topos https://www.accuradio.com/classical/
+bind: ,avd "Open Disney Plus" topos https://www.disneyplus.com/en-gb/home
+bind: ,avn "Open Netflix" topos https://www.netflix.com/
+bind: ,avp "Goto Amazon Prime Video" topos https://www.primevideo.com/storefront/home/ref=atv_nb_logo
 bind: ,avv "Open video apps" jsb utils.tab.openMultiple(sites.LISTS.video_apps)
-bind: ,avy "Goto Youtube" tabopenorswitchc https://www.youtube.com/
+bind: ,avy "Goto Youtube" topos https://www.youtube.com/
 
 " ╭────────────────────╮
 " │ ,aw -- web/weather │
@@ -1014,11 +1014,11 @@ bind ,awd topos https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah/n
 " Show Goonellabah Sunrise and Sunset Times
 bind ,aws suncalc cutils.yankf(`SUNRISE: %s\nSUNSET:  %s`, ...capps.sunriseSunset(...user.latlong));
 " Open Lismore Weather (BoM)
-bind ,aww tabopenorswitchc http://www.bom.gov.au/nsw/forecasts/lismore.shtml
+bind ,aww topos http://www.bom.gov.au/nsw/forecasts/lismore.shtml
 " Open Goonellabah Weather (timeanddate.com)
-bind ,awt tabopenorswitchc https://www.timeanddate.com/weather/@2164966
+bind ,awt topos https://www.timeanddate.com/weather/@2164966
 " Open Goonellabah Weather (weatherzone)
-bind ,awz tabopenorswitchc https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah
+bind ,awz topos https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────────────╮
