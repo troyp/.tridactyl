@@ -35,6 +35,10 @@ jsb -r apps.js
 jsb -r places.js
 " site-specific code
 jsb -r sites.js
+jsb -r sites/art.js
+jsb -r sites/dnd.js
+jsb -r sites/video.js
+jsb -r sites/yt.js
 " personal info
 jsb -r personal/personal.js
 
