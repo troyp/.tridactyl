@@ -15,13 +15,16 @@ tri.config.set("kwsearch", "~/.tridactyl/scripts/kwsearch");
 
 places.bm = {
     /* Choose bookmarklet with keyword or rofi, then query for parameters if %s in URI */
-    bmklet: async function(args=[], opts={}) {
-        const switches = opts.kw
-              ? `-u -J -K ${opts.kw} --`
+    bmklet: async function(kw=null, opts={}) {
+        const switches = kw
+              ? `-u -J -K ${kw} --`
               : ( opts.filter
                   ? `-u -J -F "${opts.filter}" --`
                   : `-u -J -s --` );
-        const bmk = await this.get({args: args, switches: switches, decode: true});
+        const bmk_res = await this.get({switches: switches, decode: true});
+        // return bmk_res;
+        // utils.message(bmk_res);
+        const bmk = bmk_res.replace(/^\n/, "").replace(/\n.*/, "");
         const query = bmk.includes("%s")
               ? await utils.prompt("parameters:")
               : "";
