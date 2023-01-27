@@ -199,6 +199,8 @@ command: tabopen_adj "Open URL/search in an adjacent tab" jsb -d¦ utils.tab.ope
 command: tabopen_last "Open URL/search in final tab" jsb -d¦ utils.tab.open(JS_ARGS, {where: "last"})¦
 commdoc tabopen_bg "Open URL/search in an adjacent background tab"
 command tabopen_bg jsb -d¦ utils.tab.open(JS_ARGS, {where: "related", background: true})¦
+commdoc tabopen_bg! "Open URL/search in background final tab"
+command tabopen_bg! jsb -d¦ utils.tab.open(JS_ARGS, {where: "last", background: true})¦
 commdoc openorswitchc "Open URL/search in current (with count: adjacent) tab, or switch to existing tab"
 command openorswitchc jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "here", "related")¦
 commdoc openorswitchc! "Open an (exact) URL in current (with count: adjacent) tab, or switch to existing tab"
