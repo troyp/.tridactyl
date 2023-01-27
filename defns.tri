@@ -1243,9 +1243,9 @@ bind: <C-\> "Mouse mode: cancel no-mouse/drawing modes" no_mouse_mode
 bind: ,xf<C-h> "(show bindings: misc/fix)" showkeys ,xf
 bind: ,xff "Fix font family" cujs $$("div,p,h1,h2,h3,h4,td,a").forEach(e=>e.style.fontFamily="notoSans")
 
-bind: ,xjg "Grid bookmarklet" js -r js/sprymedia/grid-loader
+bind: ,xjg "Grid bookmarklet" js -r js/sprymedia/grid-loader.js
 bind: ,xjx "Crosshair bookmarklet" capps capps.toggleCrosshair()
-bind: ,xju "Unit bookmarklet" js -r js/sprymedia/unit-loader
+bind: ,xju "Unit bookmarklet" js -r js/sprymedia/unit-loader.js
 
 " | ,xt -- misc/table |
 command: copytablecols "Copy table columns" cujs -d¦ cutils.copytablecols(JS_ARGS)¦
