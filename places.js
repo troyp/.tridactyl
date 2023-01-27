@@ -32,7 +32,7 @@ places.bm = {
     },
 
     get: async function(opts={}) {
-        args = utils.tri.parseArgs(opts.args, {type: "string"});
+        const args = utils.tri.parseArgs(opts.args, {type: "string"});
         opts = utils.tri.parseOpts(
             opts,
             { castString: "switches",
@@ -222,6 +222,8 @@ places.hist = {
             nullishDefaults: {
                 prompt: "Select tabs (S-Enter): ",
             },
+            castString: "text",
+            castNumber: daysAgo,
         });
         /* time range of results */
         if (!opts.hoursAgo && !opts.startTime && !opts.endTime)
