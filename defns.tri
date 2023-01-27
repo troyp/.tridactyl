@@ -84,6 +84,11 @@ bind: gU "Go to URL nth from root domain" jsb_count utils.tab.open(urls.fromRoot
 bind: g;u "Go to nth parent URL (new tab)" jsb_count utils.tab.open(urls.getNthParent(COUNT), "related")
 bind: g;U "Go to URL nth from root domain (new tab)" jsb_count utils.tab.open(urls.fromRoot(COUNT), "related")
 
+bind: z<C-h> "(show bindings: zoom)" showkeys z
+bind: z? "Show zoom level" jsb browser.tabs.getZoom().then(r=>fillcmdline_tmp(1000, `zoom: ${r}`))
+bind: <C-=> "Zoom in" zoom +20 true
+bind: <C--> "Zoom out" zoom -20 true
+
 bind: <C-F10> "Open hamburger menu" xdoitem hamburger_menu
 
 bind: <C-v> "Enter ignore mode (disable tridactyl bindings)" nmode ignore 1 mode normal
