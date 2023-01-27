@@ -615,6 +615,9 @@ bind: ssz "Search amazon and ebay" fillcmdline multienginesearch! "e amazau"
 bind: ssZ "Search amazon and ebay: last tab" fillcmdline multienginesearch_last! "e amazau"
 bind: ssaj "Search amazon, ebay and jacksonsart" fillcmdline multienginesearch! "e amazau shopja"
 bind: ssaJ "Search amazon, ebay and jacksonsart: last tab" fillcmdline multienginesearch_last! "e amazau shopja"
+bind: ssac "Search amazon, ebay, jacksonsart and cultpens" fillcmdline multienginesearch! "e amazau shopja shopcult"
+bdoc ssaC "Search amazon, ebay, jacksonsart and cultpens: last tab"
+bind ssaC fillcmdline multienginesearch_last! "e amazau shopja shopcult"
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────╮
