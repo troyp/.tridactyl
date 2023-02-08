@@ -548,7 +548,11 @@ utils.tab = {
         return this.remove(pred);
     },
 
-    removeRange: async function(start, end, opts={}) { return this.remove((_,i) => i>=start && i<=end, opts); },
+    removeRange: async function(start, end, opts={}) {
+        start = await this.parseTabnum(start);
+        end = await this.parseTabnum(end);
+        return this.remove((_,__,i) => i>=start && i<=end, opts);
+    },
 
     removeRangeWr: async function(args, opts={}) {
         const [s1, s2] = utils.tri.parseArgs(args);
