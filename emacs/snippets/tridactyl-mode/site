@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: site definition with js commands
+# key: site
+# --
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────╮
+" │ $2 │
+" ╰─────────╯
+command: $1bind "Bind key for $2" bindurl $2
+command: $1bind: "Bind key with description for $2" bindurl: $2
+command: $1bdoc "Provide a description on a separate line" js ;
+command: $1showkeys "(show bindings: $1)" showkeysurl $2
+
+command ${3:$1_js} "Run javascript after loading $4 file (default COUNT=1)" cujs -r $4 ; js_count
+command $3! "Run javascript after loading $4 file (default COUNT=null)" cujs -r $4 ; js_count!
+
+$1bind: c<C-h> "(show bindings: $1)" showkeysurl $2 c
+$0

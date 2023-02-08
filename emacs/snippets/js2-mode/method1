@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: t -*-
+# name: method (one-line)
+# key: m1
+# group: es6
+# --
+${1:name}(${2:arg}) { $0 },

@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: t -*-
+# name: async method (one line)
+# key: a1
+# group: es6
+# --
+async ${1:name}(${2:arg}) { $0 },

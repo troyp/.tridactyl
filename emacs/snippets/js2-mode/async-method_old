@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: t -*-
+# name: async method (old syntax)
+# key: a:
+# --
+${1:name}: async function(${2:arg}) {
+$0
+},

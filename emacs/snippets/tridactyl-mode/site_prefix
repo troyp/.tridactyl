@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: site prefix
+# key: sskh
+# expand-env: ((yas-triggers-in-field nil))
+# --
+" | $1 -- $2/$3 |
+$2bind: $1<C-h> "(show bindings: $2/$3)" $2showkeys $1
+$0

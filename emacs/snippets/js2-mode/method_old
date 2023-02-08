@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: t -*-
+# name: method (old syntax)
+# key: m:
+# --
+${1:name}: function(${2:arg}) {
+$0
+},
