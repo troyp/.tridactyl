@@ -223,7 +223,7 @@ places.hist = {
                 prompt: "Select tabs (S-Enter): ",
             },
             castString: "text",
-            castNumber: daysAgo,
+            castNumber: "daysAgo",
         });
         /* time range of results */
         if (!opts.hoursAgo && !opts.startTime && !opts.endTime)
