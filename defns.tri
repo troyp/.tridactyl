@@ -157,6 +157,7 @@ command: js_count "run js command, substituting for COUNT (default count=1)" cUj
 command: jsb_count "run jsb command, substituting for COUNT (default count=1)" jsb -d¦ utils.tri.jsbCount(JS_ARGS)¦
 command: js_count! "run js command, substituting for COUNT" cUjs -d¦ cutils.tri.jsCount(JS_ARGS, null)¦
 command: jsb_count! "run js command, substituting for COUNT" jsb -d¦ utils.tri.jsbCount(JS_ARGS, null)¦
+" js[b]_cmd can be used when piping in results from other commands
 command: js_cmd "run first term as js expr with other terms as ARGS" cUjs -d¦ cutils.tri.jsCmd(JS_ARGS)¦
 command: jsb_cmd "run first term as jsb expr with other terms as ARGS" jsb -d¦ utils.tri.jsbCmd(JS_ARGS)¦
 command: sitejs_count "run js, sub for COUNT (default count=1)" sitejs -d¦ cutils.tri.jsCount(JS_ARGS)¦
@@ -212,6 +213,7 @@ commdoc tabopenorswitchc "Open URL/search in a new final tab (count: current tab
 command tabopenorswitchc jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "related", "here")¦
 commdoc tabopenorswitchc! "Open an (exact) URL in current (with count: adjacent) tab, or switch to existing tab"
 command tabopenorswitchc! jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "related", "here", {exactMatch: true})¦
+command: opos "Alias for openorswitchc" openorswitchc
 command: topos "Alias for tabopenorswitchc" tabopenorswitchc
 commdoc openorswitch "Open an URL in current tab, or switch to existing tab"
 command openorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
@@ -311,7 +313,7 @@ bind: <AC-e> "Move tab to end" tabmove! 0
 bind: o "Open URL/search in the current tab" fillcmdline open
 bind: t "Open URL/search in a new tab" fillcmdline tabopen
 
-bind b<C-h> showkeys b
+bind: b<C-h> "show bindings: tabs" showkeys b
 bind: bb "Switch to tab from completion list" fillcmdline tab
 bind: bo "Open in adjacent tab" fillcmdline tabopen_adj
 bind: bO "Open in adjacent background tab" fillcmdline tabopen_bg
@@ -322,7 +324,7 @@ bind: b> "Close all tabs to the right" tabclosealltoright
 bind: b< "Close all tabs to the left"  tabclosealltoleft
 
 " | bd -- tabs/delete |
-bind bd<C-h> showkeys bd
+bind: bd<C-h> "show bindings: tabs/delete" showkeys bd
 bind: bda "Close alternate tab" jsb utils.tab.getAlternate().then(t=>browser.tabs.remove(t.id));
 bind: bdd "Close tabs from START to END ord" fillcmdline tabrmrange
 bind: bdD "Close tabs from START to END ord (including pinned)" fillcmdline tabrmrange!
@@ -330,6 +332,7 @@ bind: bde "Close tabs matching expression" fillcmdline tabrm
 bind: bdm "Close tabs matching string" fillcmdline tabrmstr
 bind: bds "Select tabs to close with rofi" jsb utils.tab.removeWithRofi();
 " | bd; -- tabs/delete/filter |
+bind: bd;<C-h> "(show bindings: tabs/delete/filter)" showkeys bd;
 bind: bd;e "Close tabs not matching expression" fillcmdline tabfilter
 bind: bd;m "Close tabs not matching string" fillcmdline tabfilterstr
 bind: bd;s "Select tabs to keep with rofi; close others" jsb utils.tab.removeWithRofi({invert:true});
@@ -337,6 +340,7 @@ bind: bd;s "Select tabs to keep with rofi; close others" jsb utils.tab.removeWit
 bind: bd<e "Close tabs to left matching expression" fillcmdline tabrm i<i0 &&
 bind: bd<m "Close tabs to left matching string" fillcmdline tabrmstr_toleft
 " | bdo -- tabs/delete/other |
+bind: bdo<C-h> "(show bindings: tabs/delete/other)" showkeys bdo
 bind: bdoo "Close other tabs" tabonly
 bind: bdoe "Close other tabs matching expression" fillcmdline tabrm i!=i0 &&
 bdoc bdo;e "Close other tabs not matching expression"
@@ -346,9 +350,7 @@ bind: bdo;h "Close other tabs with different hostname" tabrm i!=i0 && t.location
 bind: bdom "Close other tabs matching string" fillcmdline tabrmstr_other
 bind: bdo;m "Close other tabs not matching string" fillcmdline tabfilterstr_other
 
-" | bd> -- tabs/delete/left |
-bind: bd>e "Close tabs to right matching expression" fillcmdline tabrm i>i0 &&
-bind: bd>m "Close tabs to right matching string" fillcmdline tabrmstr_toright
+" | bd< -- tabs/delete/left |
 bind: bd<<C-h> "(show bindings: tabs/delete/left)" showkeys bd<
 bind: bd<e "Close tabs to left matching expression" fillcmdline tabrm i<i0 &&
 bdoc bd<;e "Close tabs to left not matching expression"
@@ -357,7 +359,7 @@ bind: bd<h "Close tabs to left with the same hostname" tabrm i<i0 && t.location.
 bind: bd<;h "Close tabs to left with different hostname" tabrm i<i0 && t.location.hostname != t0.location.hostname
 bind: bd<m "Close tabs to left matching string" fillcmdline tabrmstr_toleft
 bind: bd<;m "Close tabs to left not matching string" fillcmdline tabfilterstr_toleft
-" | bd< -- tabs/delete/right |
+" | bd> -- tabs/delete/right |
 bind: bd><C-h> "(show bindings: tabs/delete/right)" showkeys bd>
 bind: bd>e "Close tabs to right matching expression" fillcmdline tabrm i>i0 &&
 bdoc bd>;e "Close tabs to right not matching expression"
@@ -673,6 +675,7 @@ bind: ym "Yank the current mouse position [X Y]" yankmousepos
 bind: yp "Yank paragraph/heading" yankhint p,code,pre,h1,h2,h3,h4,h5,h6,output,table
 bind: ys "Yank element text by CSS selector [HINT]" fillcmdline yankhint
 bind: yS "Yank element text by CSS selector (all)" fillcmdline yankall
+
 bdoc y? "Yank the current tridactyl config as JSON"
 bind y? jsb tri.excmds.yank(JSON.stringify(tri.config.USERCONFIG))
 
@@ -722,7 +725,7 @@ bind: yudr "Yank page hostname+protocol as regex literal" cUjs cutils.yank(S.esc
 bind: yudR "Yank page hostname+protocol as regex source" cUjs cutils.yank(S.escRegex(urls.fromRoot(0)))
 
 " | yx -- yank/text |
-bind yx<C-h> showkeys yx
+bind: yx<C-h> "(show bindings: yank/text)" showkeys yx
 bdoc yxh "Yank a text span highlighted with cutils.css.highlight (.tri_hl) [HINT]"
 bind yxh  hint -JVc ._tri_hl -F e=>cutils.yank(e.innerText)
 bind: yxH "Yank all text highlighted with cutils.css.highlight (.tri_hl)" yankall ._tri_hl
