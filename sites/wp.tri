@@ -20,7 +20,11 @@ wpbind: css "Search site" fillcmdline wp_search
 
 " | ct -- wikipedia/toggle |
 wpbind: ctm "Toggle mobile version" urltoggle https://en.m https://en
-wpbind: ctj "Toggle japanese edition" csites csites.wp.toggleJa()
+wpbind: ctj "Toggle japanese edition" sitejs csites.wp.toggleJa()
 
-wpbind: cC "Cleanup (remove clutter from page)" csites csites.wp.cleanup()
+wpbind: cC "Cleanup (remove clutter from page)" sitejs csites.wp.cleanup()
 wpbind: c;; "Search ENGINES with page title" jsb fillcmdline(`searchwithengines ${sites.wp.getTopic()}`)
+
+" ───────────────────────────────────────────────────────────────────────────────
+
+fillcmdline wp.tri LOADED

@@ -17,11 +17,11 @@ definesearch amaz_search https://www.amazon.com.au/s?k=%s +
 amazbind: g;s "Focus search box" cujs $id("twotabsearchtextbox").focus()
 amazbind: ;i "Open image (full size)" hint img -F e=>open(e.src.replace(/\._[^.]+\./, "."))
 amazbind: ;I "Open image (full size): new tab" hint img -F e=>tabopen(e.src.replace(/\._[^.]+\./, "."))
-amazbind: [[ "Previous page" csites csites.amaz.previous()
-amazbind: ]] "Next page"  csites csites.amaz.next()
+amazbind: [[ "Previous page" sitejs csites.amaz.previous()
+amazbind: ]] "Next page"  sitejs csites.amaz.next()
 
 amazbind: c<C-h> "(show bindings: amaz)" amazshowkeys c
-amazbind: cc "Add to cart/goto checkout" csites csites.amaz.go()
+amazbind: cc "Add to cart/goto checkout" sitejs csites.amaz.go()
 
 " | co -- amazon/goto |
 amazbind: co<C-h> "(show bindings: amaz/goto)" amazshowkeys co
@@ -51,7 +51,7 @@ amazbind: cxt "Translate all reviews" cujs click("a",/translate review/i)
 " ╭─────────────╮
 " │ archive.org │
 " ╰─────────────╯
-bindurl archive.org ctt csites -r urls.js ; js csites.archive.toggleToolbarURL()
+bindurl archive.org ctt sitejs -r urls.js ; js csites.archive.toggleToolbarURL()
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────╮
@@ -65,7 +65,7 @@ command: colesshowkeys "(show bindings: coles)" showkeysurl coles.com.au
 colesbind g;s cujs $1("#searchTerm").focus()
 colesbind c<C-h> showkeysurl coles.com.au c
 
-colesbind cc csites csites.coles.go()
+colesbind cc sitejs csites.coles.go()
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮
@@ -88,14 +88,14 @@ ebaybind: com "Goto Inbox" openorsummonc https://mesg.ebay.com.au/mesgweb/ViewMe
 
 ebaybind: coo "Goto Orders (Purchase history)" openorsummonc https://www.ebay.com.au/mye/myebay/purchase
 ebaybind: cos "Goto My Saved Sellers" openorsummonc https://www.ebay.com.au/myb/SavedSellers
-ebaybind: cov "Goto seller's store" csites tri.controller.acceptExCmd(`openorsummonc ${csites.e.getStoreURL()}`);
+ebaybind: cov "Goto seller's store" sitejs tri.controller.acceptExCmd(`openorsummonc ${csites.e.getStoreURL()}`);
 ebaybind: cow "Goto watch list" openorsummonc https://www.ebay.com.au/myb/WatchList
 ebaybind: coy "Goto My eBay" openorsummonc https://www.ebay.com.au/myb/Summary
 ebaybind: co/ "Goto My saved searches" openorsummonc https://www.ebay.com.au/myb/SavedSearches
 
 " | cx -- ebay/misc |
 ebaybind: cx<C-h> "(show bindings: ebay/misc)" ebayshowkeys cx
-ebaybind: cxf "Filter free postage items" csites csites.e.filterFreePostage()
+ebaybind: cxf "Filter free postage items" sitejs csites.e.filterFreePostage()
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
@@ -106,8 +106,8 @@ command: fandombind: "Bind key with description for fandom.com" bindurl: fandom.
 command: fandombdoc "Provide a description on a separate line" js ;
 command: fandomshowkeys "(show bindings: fandom)" showkeysurl fandom.com
 
-command: fandom_search "Search fandom.com" csites -d¦ csites.f.search(JS_ARGS.join(" "), "here")¦
-command: fandom_tabsearch "Search fandom.com" csites -d¦ csites.f.search(JS_ARGS.join(" "), "related")¦
+command: fandom_search "Search fandom.com" sitejs -d¦ csites.f.search(JS_ARGS.join(" "), "here")¦
+command: fandom_tabsearch "Search fandom.com" sitejs -d¦ csites.f.search(JS_ARGS.join(" "), "related")¦
 
 fandombind: c<C-h> "(show bindings: fandom)" showkeysurl fandom.com c
 fandombind: cs<C-h> "(show bindings: fandom/search)" showkeysurl fandom.com cs
@@ -209,11 +209,11 @@ ghbind: ctw "Toggle widen README" toggleprop div.Box-body style.maxWidth 1600px
 
 " | cy -- gh/yank |
 ghbind: cy<C-h> "(show bindings: gh/yank)" ghshowkeys cy
-ghbind: cya "Yank About text" csites csites.gh.getDescription() | yank!
+ghbind: cya "Yank About text" sitejs csites.gh.getDescription() | yank!
 ghbdoc cym "Yank * name: description ( <url> )"
-ghbind cym csites `* ${csites.gh.getTitle()}: ${csites.gh.getDescription()} ( < ${tri.contentLocation} > )` | yank!
+ghbind cym sitejs `* ${csites.gh.getTitle()}: ${csites.gh.getDescription()} ( < ${tri.contentLocation} > )` | yank!
 ghbind: cyn "Yank repo name" :: jsb sites.gh.getUserAndRepo()[1] | yank!
-ghbind: cyN "Yank title" csites csites.gh.getTitle() | yank!
+ghbind: cyN "Yank title" sitejs csites.gh.getTitle() | yank!
 ghbind: cyR "Yank repo name with URL" :: jsb `${sites.gh.getUser()} (${tri.contentLocation})` | yank!
 ghbind: cyu "Yank user/repo name" :: jsb sites.gh.getUserAndRepo().join("/") | yank!
 ghbind: cyU "Yank user name"  :: jsb sites.gh.getUser() | yank!
@@ -231,7 +231,7 @@ googlebind: gf "Open multiple tabs in background tabs [HINNTS]" hint -qJb
 googlebind: g;s "Focus search box" cujs $1("input[aria-label=Search]").focus()
 
 googlebind c<C-h> showkeysurl google.com c
-googlebind: cc "images: copy src URL" csites csites.g.go()
+googlebind: cc "images: copy src URL" sitejs csites.g.go()
 
 " | ct -- google/toggle |
 googlebind ct<C-h> showkeysurl google.com ct
@@ -313,7 +313,7 @@ autocmd DocStart ^https?://medium\.com(/|$) urlmodify -r https?://medium\.com/? 
 " │ RamdaJS.com │
 " ╰─────────────╯
 commdoc ramdafiltercat "Filter methods by category"
-command ramdafiltercat csites -r S.js ; js -p csites.ramda.filterCategory(S.capitalize(JS_ARG));
+command ramdafiltercat sitejs -r S.js ; js -p csites.ramda.filterCategory(S.capitalize(JS_ARG));
 
 bindurl ramdajs.com/ c<C-h> showkeysurl ramdajs.com/ c
 bindurl: ramdajs.com/ cc "Filter methods by category" fillcmdline ramdafiltercat
@@ -354,7 +354,7 @@ sebind: ctw "Toggle widen content" se_js se.widen()
 " ╭──────────────╮
 " │ TVTropes.org │
 " ╰──────────────╯
-bindurl: tvtropes.org cc "Toggle spoilers" csites csites.tvtropes.spoilers()
+bindurl: tvtropes.org cc "Toggle spoilers" sitejs csites.tvtropes.spoilers()
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────╮

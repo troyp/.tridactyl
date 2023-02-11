@@ -173,8 +173,9 @@ command withjsb composite jsb
 command: ujs "Load urls.js, S.js and run js" composite js -r urls.js ; js -r S.js ; js
 command: cUjs "Load cutils.js, urls.js, S.js and run js" cujs -r urls.js ; js -r S.js ; js
 command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
-command: csites "Load S.js, cutils.js, csites.js, run js" cujs -r csites.js ; js
-command: capps "Load libs + personal.js & capps and run js" cUjs -r personal/personal.js ; js -r capps.js ; js
+command: sitejs "Load S.js, cutils.js, csites.js, run js" cUjs -r csites.js ; js
+command: linkjs "Load cutils & links.js, run" cujs -r links.js ; js
+command: appjs "Load libs, personal.js, capps.js, run js" cUjs -r personal/personal.js ; js -r capps.js ; js
 command: jsload "Load JS files into content script" jsb -p jsload(JS_ARG)
 command: cjs "Load JS files into content script and run commands" composite jsload
 command: jscheme "Eval js as bookmarklet" js -d¦ tri.controller.acceptExCmd(`open javascript:${JS_ARGS.join(" ")}`)¦
@@ -258,7 +259,7 @@ command omni xdo key alt+d key ctrl+u sleep 0.5 type
 command omni_focus xdokeyseq 0.2 alt+d ctrl+u
 
 " | application-specific commands |
-command: suncalc "Load suncalc.js and run js" capps -r js/suncalc.js ; js
+command: suncalc "Load suncalc.js and run js" appjs -r js/suncalc.js ; js
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────╮
@@ -452,7 +453,7 @@ bind: wau "Search URL suggestions in omnibar" omni "$ "
 
 " | wd -- browser/dl |
 bind: wd<C-h> "(show bindings: browser/dl)" showkeys wd
-bind: wdd "Select links to download" withlinks links.dlChooseLinks(document.links)
+bind: wdd "Select links to download" linkjs links.dlChooseLinks(document.links)
 
 " | wk -- browser/bookmarks |
 bind wk<C-h> showkeys wk
@@ -702,9 +703,9 @@ bind: ykS "Yank keyword bookmark URL with rofi from bookmarks.json file" fillcmd
 
 " | yl -- yank/links |
 bind: yl<C-h> "(show bindings: yank/links)" showkeys yl
-bind: yll "Yank links" withlinks links.yankAll()
-bind: yls "Yank selected links" withlinks links.yankSelected()
-bind: <A-y> "Yank selected links" withlinks links.yankSelected()
+bind: yll "Yank links" linkjs links.yankAll()
+bind: yls "Yank selected links" linkjs links.yankSelected()
+bind: <A-y> "Yank selected links" linkjs links.yankSelected()
 
 " | yu -- yank/URL |
 bind: yu<C-h> "(show bindings: yank/URL)" showkeys yu
@@ -1045,7 +1046,7 @@ bind: ,cs "Show elements matching selector" fillcmdline getselector
 " ╭───────────╮
 " │ ,d -- dev │
 " ╰───────────╯
-bind: ,dx "Toggle X-Ray view" capps capps.toggleXray()
+bind: ,dx "Toggle X-Ray view" appjs capps.toggleXray()
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────────╮
@@ -1128,12 +1129,10 @@ bind: ,jkv "Visual Kanji Search (clipboard)" pastef https://thekanjimap.com/inde
 " ╰─────────────╯
 bind ,l<C-h> showkeys ,l
 
-command withlinks cujs -r links.js ; js
-
-bind: ,la "Append links to end of page" withlinks links.append()
-bind: ,lm "Append links as markdown to end of page" withlinks links.appendAsMarkdown()
+bind: ,la "Append links to end of page" linkjs links.append()
+bind: ,lm "Append links as markdown to end of page" linkjs links.appendAsMarkdown()
 bind: ,ls "Make links selectable (select-like-a-boss)" js -r js/select-like-a-boss.js
-bind: ,lt "Append link text & destinations to end of page" withlinks links.appendWithText()
+bind: ,lt "Append link text & destinations to end of page" linkjs links.appendWithText()
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────╮
@@ -1249,7 +1248,7 @@ bind: ,xf<C-h> "(show bindings: misc/fix)" showkeys ,xf
 bind: ,xff "Fix font family" cujs $$("div,p,h1,h2,h3,h4,td,a").forEach(e=>e.style.fontFamily="notoSans")
 
 bind: ,xjg "Grid bookmarklet" js -r js/sprymedia/grid-loader.js
-bind: ,xjx "Crosshair bookmarklet" capps capps.toggleCrosshair()
+bind: ,xjx "Crosshair bookmarklet" appjs capps.toggleCrosshair()
 bind: ,xju "Unit bookmarklet" js -r js/sprymedia/unit-loader.js
 
 " | ,xt -- misc/table |
@@ -1279,7 +1278,7 @@ bind: ,xtsa "Sort all tables" cujs -r js/sorttables.js ; js $$("table").forEach(
 " │ ,, -- hints │
 " ╰─────────────╯
 command: cuhint "Load cutils.js and execute hint" cujs ; hint
-command: cshint "Load cutils.js and csites and execute hint" csites ; hint
+command: cshint "Load cutils.js and sitejs and execute hint" sitejs ; hint
 
 bind: ;gu "Open nth parent of link URL [HINT]" js_count hint("-F","e=>tabopen(urls.getNthParent(COUNT,e.href))")
 bind: ;gU "Open nth from root URL of link [HINT]" js_count hint("-F","e=>tabopen(urls.fromRoot(COUNT,e.href))")
