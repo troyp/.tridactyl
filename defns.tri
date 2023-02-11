@@ -159,6 +159,8 @@ command: js_count! "run js command, substituting for COUNT" cUjs -d¦ cutils.tri
 command: jsb_count! "run js command, substituting for COUNT" jsb -d¦ utils.tri.jsbCount(JS_ARGS, null)¦
 command: js_cmd "run first term as js expr with other terms as ARGS" cUjs -d¦ cutils.tri.jsCmd(JS_ARGS)¦
 command: jsb_cmd "run first term as jsb expr with other terms as ARGS" jsb -d¦ utils.tri.jsbCmd(JS_ARGS)¦
+command: sitejs_count "run js, sub for COUNT (default count=1)" sitejs -d¦ cutils.tri.jsCount(JS_ARGS)¦
+command: sitejs_count! "run js, sub for COUNT" sitejs -d¦ cutils.tri.jsCount(JS_ARGS, null)¦
 
 command: :prev "Open previous cmdline command" :: fillcmdline_notrail ; ex.prev_history
 command: :prev_beg "Open previous cmdline command: start of line" :prev ; text.beginning_of_line
