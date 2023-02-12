@@ -591,7 +591,7 @@ var cutils = {
         return s;
     },
 
-    selectors: {
+    SEL: {
         yankspan: [
             "span", "em", "strong", "u", "sub", "sup", "ruby",
             "a", "tr", "td", "cite", "data", "dd", "dt",
@@ -618,10 +618,6 @@ var cutils = {
 
     yankjs: function(expr) { return this.yank(eval(expr)); },
     yankjsWr: function(args) { return this.yankjs(cutils.tri.parseArgs(args, "string")); },
-
-    yankspan: async function() {
-        return this.yankhint(this.selectors.yankspan.join(","));
-    },
 
     yankf: async function(fstr, ...rest) {
         const opts = typeof rest.at(-1) == "object"
@@ -949,7 +945,7 @@ window.R = R;
     "get1", "getText", "getText1",
     "getSelectionDOM", "getSelectionHtml",
     "isolate", "jumpToHeading", "keep", "rm", "rmall", "setInput", "toggleprop", "togglepropWr",
-    "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankjs", "yankjsWr", "yankspan", "yankf",
+    "SEL", "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankjs", "yankjsWr", "yankf",
     "hexToRGB", "datetime", "isInViewport", "isDisplayed", "sprintf",
 ].forEach(k => window[k]=cutils[k]);
 
