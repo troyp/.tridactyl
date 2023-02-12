@@ -1292,6 +1292,8 @@ bind: ,xtsa "Sort all tables" cujs -r js/sorttables.js ; js $$("table").forEach(
 command: cuhint "Load cutils.js and execute hint" cujs ; hint
 command: cshint "Load cutils.js and sitejs and execute hint" sitejs ; hint
 
+bind: ;<C-h> "(show bindings: hints)" showkeys ;
+
 bind: ;gu "Open nth parent of link URL [HINT]" js_count hint("-F","e=>tabopen(urls.getNthParent(COUNT,e.href))")
 bind: ;gU "Open nth from root URL of link [HINT]" js_count hint("-F","e=>tabopen(urls.fromRoot(COUNT,e.href))")
 
