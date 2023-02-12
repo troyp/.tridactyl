@@ -235,6 +235,8 @@ googlebind: g;s "Focus search box" cujs $1("input[aria-label=Search]").focus()
 googlebind c<C-h> showkeysurl google.com c
 googlebind: cc "images: copy src URL" sitejs csites.g.go()
 
+googlebind: cii "Save selected image" hint -A #islsp c-wiz>div>div>div:nth-child(2) img
+
 " | ct -- google/toggle |
 googlebind ct<C-h> showkeysurl google.com ct
 googlebind: ctn "Toggle Top stories" cujs cutils.hide("g-section-with-header", {toggle:true});
