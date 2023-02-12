@@ -552,17 +552,24 @@ command: searchreplace "Replace search term on current URL" cUjs -d¦ urls.mod.s
 commdoc searchreplace_adj "Open search based on current URL in new adjacent tab"
 command searchreplace_adj cUjs -d¦ urls.mod.setQuery("q", parseArgs(JS_ARGS, "s"), "related")¦
 
+" | tridactyl find command |
+bind: n "Tridactyl find: next match" findnext --search-from-view
+bind: N "Tridactyl find: previous match" findnext --search-from-view --reverse
+bind: ? "Tridactyl find: search from bottom" fillcmdline find -?
+bind: <C-/> "Tridactyl find: remove search highlighting" clearsearchhighlight
+
+" | firefox find command |
 command: nativelinksearch "Search for links (FF builtin)" xdokeyseq 0.2 ctrl+v apostrophe
+bind: sl "Search with firefox link search" nativelinksearch
+bind: sn "Native find: next match" xdo key F3
+bind: sN "Native find: previous match" xdo key Shift+F3
+bind: ,<C-/> "Native find: remove search highlighting" jsb browser.find.removeHighlighting()
+
+" | :hl highlighting command |
 command: hl "Highlight text" cujs -d¦ cutils.css.highlightString(JS_ARGS.join(" ").trim())¦
 command: hloff "Highlight text off" cujs -d¦ cutils.css.highlightStringOff()¦
-
-bind n findnext
-bind N findnext
-bind ? fillcmdline find -?
-bind _ fillcmdline hl
-bind <A--> hloff
-bind: <C-/> "Remove tridactyl search highlighting" clearsearchhighlight
-bind: ,<C-/> "Remove browser.find search highlighting" jsb browser.find.removeHighlighting()
+bind: _ "hl: highlight matched text" fillcmdline hl
+bind: <A--> "hl: turn off highlighting" hloff
 
 " */#: Temporary implementation using find
 " TODO: implement these properly with forwards/backwards cycling
@@ -570,7 +577,6 @@ bind * js tri.controller.acceptExCmd(`find ${window.getSelection()+""}`);
 bind # js tri.controller.acceptExCmd(`find -? ${window.getSelection()+""}`);
 
 bind: s<C-h> "(show bindings: search)" showkeys s
-bind: sl "Search with firefox link search" nativelinksearch
 bind: sa "Open keyword search in adjacent tab [Rofi]" !  echo -n "tabopen_adj "; kwsearch -Sw1
 bind: sb "Open keyword search in adjacent background tab [Rofi]" !  echo -n "tabopen_bg "; kwsearch -Sw1
 bind: so "Open keyword search in current tab [Rofi]" ! echo -n "open "; kwsearch -Sw1
@@ -578,6 +584,7 @@ bind: st "Open keyword search in last tab [Rofi]" !  echo -n "tabopen_last "; kw
 bind: sr "Repeat current search with new search term" :fill `searchreplace${COUNT?"_adj":""}`
 bind: su "Open searchurl/bmark/URL in new tab" fillcmdline tabopen_searchurl
 bind: s/ "Search with :find command" fillcmdline find
+bind: s? "Enter visual mode, show :find result" :: findselect ; findnext --search-from-view
 bind: s;; "Search clipboard contents with engine" composite getclip | fillcmdline searchwithengine
 
 " | sh -- search history |
