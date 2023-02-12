@@ -475,14 +475,24 @@ ytbind: cR "Show rate" yt cutils.message(`playback rate: ${yt.getSpeed()}`, true
 ytbind: cgo "Youtube: goto mark" gobble 1 ytgotomark
 jsb tri.excmds.bindurl("youtube.com", "c'", "gobble 1 gotomark")
 
+" | cd -- youtube/dl |
 ytbind: cd<C-h> "(show bindings: yt/dl)" ytshowkeys cd
+
+" | cdd -- youtube/dl/video |
 ytbind: cdd<C-h> "(show bindings: yt/dl/video)" ytshowkeys cdd
 ytbind: cddd "Download video to Downloads" ytdl
 ytbind: cdd: "Download video" fillcmdline ytdl
+
+" | cda -- youtube/dl/audio |
 ytbind: cda<C-h> "(show bindings: yt/dl/audio)" ytshowkeys cda
 ytbind: cdaa "Download audio to Music directory" ytdlaudio
 ytbind: cda: "Download audio" fillcmdline ytdlaudio
 ytbind: cds "Screenshot" yt_count! yt.screenshot(Boolean(COUNT))
+
+" | co -- youtube/goto |
+ytbind: co<C-h> "(show bindings: youtube/goto)" showkeys co
+ytbind: coh "Goto history" opos https://www.youtube.com/feed/history
+ytbind: col "Goto library" opos https://www.youtube.com/feed/library
 
 " | ct -- youtube/toggle |
 ytbind: ctc "Toggle cinema" click .ytp-size-button
