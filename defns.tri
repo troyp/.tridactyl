@@ -1111,6 +1111,7 @@ bind: ,i<C-h> "(show bindings: images)" showkeys ,i
 bind: ,ii<C-h> "(show bindings: images/hints)" showkeys ,ii
 bind: ,iif "Flip image horizontally [HINTS]" hint img -F e=>e.style.transform="scaleX(-1)"
 bind: ,iiF "Flip image vertically [HINTS]" hint img -F e=>e.style.transform="scaleY(-1)"
+bind: ,iig "Show image in greyscale [HINTS]" hint img -F e=>e.style.filter="grayscale(1)"
 bind: ,iii "Restore image (cancel transform) [HINTS]" hint img -F e=>e.style.transform=""
 bind: ,iim "Transform image using matrix [HINTS]" fillcmdline imagematrix
 bind: ,iir "Resize image [HINTS]" fillcmdline imageresize
