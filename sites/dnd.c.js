@@ -78,3 +78,5 @@ dnd.dndb = {
         }
     },
 };
+
+window.dnd = dnd;
