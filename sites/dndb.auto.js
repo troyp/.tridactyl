@@ -37,6 +37,8 @@ $$(".builder-sections a").forEach(l => {
 
 if (document.location.href.match(/https:\/\/www.dndbeyond.com\/characters\/[0-9]+/)) {
 
+    document.querySelector(".ct-character-sheet__inner").style.marginLeft="6em";
+
     const typemap = {
         "fire": ["#f78c19", "#c52400", "rgba(247, 140, 25, 0.2)"],
         "cold": ["lightSkyBlue", "black", "rgba(135, 206, 250, 0.2)"],
