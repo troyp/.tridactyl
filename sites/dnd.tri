@@ -25,7 +25,7 @@ dndbbind: <C-PageDown> "Load More" cujs $1t("button", /load more/i).click()
 
 dndbbind c<C-h> showkeysurl dndbeyond.com c
 dndbbind: cb "Goto rpgbot.net" openorsummonc https://rpgbot.net/dnd5/
-dndbbind: cc "Lists: open/close row" dndjs dnd.dndb.go();
+dndbbind: cc "Lists: open/close row" dndjs dnd.dndb.go()
 dndbbind: cf "Click category icon" hint .ddb-search-filter-item-wrapper>.icon
 dndbbdoc cv "Toggle collapse Dice Notification"
 dndbbind cv hint -Jc .dice_notification_controls__collapse,.dice_notification_controls__uncollapse
@@ -120,7 +120,7 @@ dndbbind: ctn "Toggle all on" dndjs dnd.dndb.toggleOff()
 
 " | cx -- dndb/misc |
 " | cxt -- dndb/misc/table |
-dndbbind: cxtd "Split Damage column of table" dndjs ; hint -Jc table -F t=>dnd.dndb.tableSplitDamageCol(t);
+dndbbind: cxtd "Split Damage column of table" dndjs ; hint -Jc table -F t=>dnd.dndb.tableSplitDamageCol(t)
 
 " | cy -- dndb/yank |
 dndbbind: cya "Copy all entries" yankall .info a
@@ -222,3 +222,7 @@ dndbbind cs<C-h> showkeysurl rpgbot.net cs
 ttbuildbind: csb "Search DnDBeyond.com" fillcmdline dndb_search
 ttbuildbind: css "Search TableTopBuilds.com" fillcmdline ttbuild_search
 ttbuildbind: cs;s "Goto spell description" fillcmdline dndbspell
+
+" ───────────────────────────────────────────────────────────────────────────────
+
+fillcmdline dnd.tri LOADED
