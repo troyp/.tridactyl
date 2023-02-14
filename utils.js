@@ -440,6 +440,14 @@ utils.tab = {
         return this.openOrSummon(args[0], {where: (count ? whereAlt : where), ...opts});
     },
 
+    openorsummonWhere: function(args) {
+        args = utils.tri.parseArgs(args);
+        var where = "here";
+        if (["here", "related", "next", "last"].indexOf(args[0]) > -1) { [where, ...args] = args; }
+        const url = args.join(" ");
+        return this.openOrSummon(url, where);
+    },
+
     /**   openOrSwitch(URL, { OPTIONS... })
      *    openOrSwitch(URL, WHERE)
      *  opts.where ["last" (default), "here", "related", "next"]: where to open new tab (if any)
@@ -449,7 +457,7 @@ utils.tab = {
      */
     openOrSwitch: async function (url, opts={}) {
         if (!url) return null;
-        if (typeof opts == "string") opts = {where: opts};
+        opts = utils.tri.parseOpts(opts, {castString: "where", nullishDefaults:{where:"here"}});
         opts.closeCurrent ??= (opts.where=="here");
         const currentTab = await tri.webext.activeTab();
         const testfn = opts.regex
@@ -472,6 +480,14 @@ utils.tab = {
     openorswitchWr: async function(argscount, where, whereAlt, opts={}) {
         const [args, count] = utils.tri.parseArgsAndCount(argscount);
         return this.openOrSwitch(args[0], {where: (count ? whereAlt : where), ...opts});
+    },
+
+    openorswitchWhere: function(args) {
+        args = utils.tri.parseArgs(args);
+        var where = "here";
+        if (["here", "related", "next", "last"].indexOf(args[0]) > -1) { [where, ...args] = args; }
+        const url = args.join(" ");
+        return this.openOrSwitch(url, where);
     },
 
     ordstrToIndex: async function(n) {

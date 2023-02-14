@@ -209,6 +209,8 @@ command tabopenmultiple jsb -d¦ utils.tab.openMultiple(JS_ARGS.join(" ").split(
 " openorswitch...
 commdoc openorswitch "Open an URL in current tab, or switch to existing tab"
 command openorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
+commdoc openorswitch_ "Open an URL in specified location, or switch to existing tab"
+command openorswitch_ jsb -d¦ utils.tab.openorswitchWhere(JS_ARGS)¦
 commdoc tabopenorswitch "Open an URL in a new (final) tab, or switch to existing tab"
 command tabopenorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"last"});
 commdoc tabopenorswitch_adj "Open an URL in an afjacent tab, or switch to existing tab"
@@ -226,6 +228,8 @@ command: topos "Alias for tabopenorswitchc" tabopenorswitchc
 " openorsummon...
 commdoc openorsummon "Open an URL in current tab, or switch to existing tab and move adjacent"
 command openorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"here"});
+commdoc openorsummon_ "Open an URL in specified location, or summon existing tab"
+command openorsummon_ jsb -d¦ utils.tab.openorsummonWhere(JS_ARGS)¦
 commdoc tabopenorsummon "Open an URL in a new adjacent tab, or switch to existing tab and move adjacent"
 command tabopenorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"});
 commdoc tabopenorsummonbg "Open an URL in a new background adjacent tab, or move existing tab adjacent"
