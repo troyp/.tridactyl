@@ -205,6 +205,14 @@ commdoc tabopen_bg "Open URL/search in an adjacent background tab"
 command tabopen_bg jsb -d¦ utils.tab.open(JS_ARGS, {where: "related", background: true})¦
 commdoc tabopen_bg! "Open URL/search in background final tab"
 command tabopen_bg! jsb -d¦ utils.tab.open(JS_ARGS, {where: "last", background: true})¦
+command tabopenmultiple jsb -d¦ utils.tab.openMultiple(JS_ARGS.join(" ").split(" "))¦
+" openorswitch...
+commdoc openorswitch "Open an URL in current tab, or switch to existing tab"
+command openorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
+commdoc tabopenorswitch "Open an URL in a new (final) tab, or switch to existing tab"
+command tabopenorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"last"});
+commdoc tabopenorswitch_adj "Open an URL in an afjacent tab, or switch to existing tab"
+command tabopenorswitch_adj jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"related"});
 commdoc openorswitchc "Open URL/search in current (with count: adjacent) tab, or switch to existing tab"
 command openorswitchc jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "here", "related")¦
 commdoc openorswitchc! "Open an (exact) URL in current (with count: adjacent) tab, or switch to existing tab"
@@ -215,12 +223,13 @@ commdoc tabopenorswitchc! "Open an (exact) URL in current (with count: adjacent)
 command tabopenorswitchc! jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "related", "here", {exactMatch: true})¦
 command: opos "Alias for openorswitchc" openorswitchc
 command: topos "Alias for tabopenorswitchc" tabopenorswitchc
-commdoc openorswitch "Open an URL in current tab, or switch to existing tab"
-command openorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
-commdoc tabopenorswitch "Open an URL in a new (final) tab, or switch to existing tab"
-command tabopenorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"last"});
-commdoc tabopenorswitch_adj "Open an URL in an afjacent tab, or switch to existing tab"
-command tabopenorswitch_adj jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"related"});
+" openorsummon...
+commdoc openorsummon "Open an URL in current tab, or switch to existing tab and move adjacent"
+command openorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"here"});
+commdoc tabopenorsummon "Open an URL in a new adjacent tab, or switch to existing tab and move adjacent"
+command tabopenorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"});
+commdoc tabopenorsummonbg "Open an URL in a new background adjacent tab, or move existing tab adjacent"
+command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related", background: true});
 commdoc openorsummonc "Open an URL in current (with count: adjacent) tab, or summon an existing tab"
 command openorsummonc jsb -d¦ utils.tab.openOrSummon(JS_ARGS[1], {where: JS_ARGS[2]?"related":"here"})¦
 commdoc openorsummonc! "Open an (exact) URL in current (with count: adjacent) tab, or summon existing tab"
@@ -229,12 +238,9 @@ commdoc tabopenorsummonc "Open an URL in a new final tab (count: current tab), o
 command tabopenorsummonc jsb -d¦ utils.tab.openorsummonWr(JS_ARGS, "related", "here")¦
 commdoc tabopenorsummonc! "Open an (exact) URL in a new final tab (count: current tab), or summon an existing tab"
 command tabopenorsummonc! jsb -d¦ utils.tab.openorsummonWr(JS_ARGS, "related", "here", {exactMatch: true})¦
-commdoc openorsummon "Open an URL in current tab, or switch to existing tab and move adjacent"
-command openorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"here"});
-commdoc tabopenorsummon "Open an URL in a new adjacent tab, or switch to existing tab and move adjacent"
-command tabopenorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related"});
-commdoc tabopenorsummonbg "Open an URL in a new background adjacent tab, or move existing tab adjacent"
-command tabopenorsummonbg jsb -p utils.tab.openOrSummon(JS_ARG, {where:"related", background: true});
+command: oposu "Alias for openorsummonc" openorsummonc
+command: toposu "Alias for tabopenorsummonc" tabopenorsummonc
+" url toggle/mod...
 command: urltoggle "Toggle s1<->s2 in current URL" cUjs -d¦ urls.mod.toggleWr(JS_ARGS)¦
 command: urltoggle! "Toggle s1<->s2 (global) in current URL" cUjs -d¦ urls.mod.toggleWr(JS_ARGS, { global:true })¦
 commdoc urlremove "Remove string from current URL"
@@ -242,7 +248,6 @@ command urlremove ujs -p tri.controller.acceptExCmd(`open ${urls.mod.toggle(JS_A
 commdoc urlmodorsummon_g "Open URL formed by grafting a path onto the domain, or summon existing tab"
 command urlmodorsummon_g jsb -d¦ urls.mod.graftOrSummon(JS_ARGS[1], 0, {where:JS_ARGS[2]?"related":"here"})¦
 command: urltogglequery "Toggle value of query in URL" jsb -d¦ urls.mod.toggleQuery(...JS_ARGS.slice(1))¦
-command tabopenmultiple jsb -d¦ utils.tab.openMultiple(JS_ARGS.join(" ").split(" "))¦
 
 " | xdo commands |
 command xdo !s xdotool
