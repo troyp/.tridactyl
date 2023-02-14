@@ -810,7 +810,7 @@ utils.tri = {
 
     defineSearch: async function(cmdName, urlTemplate, wordSep="%20") {
         const urlExpr = urlTemplate.replace("%s", '${JS_ARGS.slice(1)?.join("' + wordSep + '").trim()}');
-        const excmd = "jsb -d¦ tri.controller.acceptExCmd(`tabopenorswitchc "+urlExpr+"`)¦";
+        const excmd = "jsb -d¦ tri.controller.acceptExCmd(`tabopenorsummonc "+urlExpr+"`)¦";
         return command(cmdName, excmd);
     },
 
