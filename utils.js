@@ -437,7 +437,7 @@ utils.tab = {
 
     openorsummonWr: async function(argscount, where, whereAlt, opts={}) {
         const [args, count] = utils.tri.parseArgsAndCount(argscount);
-        return this.openOrSwitch(args[0], {where: (count ? whereAlt : where), ...opts});
+        return this.openOrSummon(args[0], {where: (count ? whereAlt : where), ...opts});
     },
 
     /**   openOrSwitch(URL, { OPTIONS... })
