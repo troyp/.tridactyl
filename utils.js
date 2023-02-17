@@ -443,8 +443,9 @@ utils.tab = {
     openorsummonWhere: function(args) {
         args = utils.tri.parseArgs(args);
         var where = "here";
-        if (["here", "related", "next", "last"].indexOf(args[0]) > -1) { [where, ...args] = args; }
+        if (["here", "tab", "related", "next", "last"].indexOf(args[0]) > -1) { [where, ...args] = args; }
         const url = args.join(" ");
+        if (where === "tab") where = "related";
         return this.openOrSummon(url, where);
     },
 
