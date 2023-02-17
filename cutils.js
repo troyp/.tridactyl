@@ -632,7 +632,16 @@ var cutils = {
     // │ pure functions │
     // ╰────────────────╯
 
-    isIterable: function(x) { return typeof x?.[Symbol.iterator] == "function"; },
+    asArr: x => cutils.isArrayConvertible(x) ? Array.from(x) : [x].flat(1),
+    isIterable: x => typeof x?.[Symbol.iterator] == "function",
+    isArraylike: x => Array.isArray(x) || (
+        typeof x === "object"
+            && typeof x.length == 'number'
+            && (x.length-1 in x || x.length===0)
+    ),
+    isArrayConvertible: x => cutils.isIterable(x) || cutils.isArraylike(x),
+
+
 
     // ╭──────────────────────╮
     // │ conversion functions │
@@ -947,7 +956,8 @@ window.R = R;
     "getSelectionDOM", "getSelectionHtml",
     "isolate", "jumpToHeading", "keep", "rm", "rmall", "setInput", "toggleprop", "togglepropWr",
     "SEL", "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankjs", "yankjsWr", "yankf",
-    "hexToRGB", "datetime", "isInViewport", "isDisplayed", "sprintf",
+    "datetime", "isInViewport", "isDisplayed", "sprintf",
+    "asArr", "hexToRGB", "isArraylike", "isArrayConvertible", "isIterable",
 ].forEach(k => window[k]=cutils[k]);
 
 [
