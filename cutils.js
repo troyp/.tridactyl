@@ -548,6 +548,12 @@ var cutils = {
     /** Unhides elements matching any of the SELECTORS. For more options, see rm() */
     unhideall: (...selectors) => cutils.unhide(selectors),
 
+    urlopen: function(url, opts={}) {
+        const urlstr = JSON.stringify(url);
+        const optstr = JSON.stringify(opts);
+        return tri.controller.acceptExCmd(`jsb utils.tab.open(${urlstr}, ${optstr})`);
+    },
+
     yankby: (...args) => cutils.yank(cutils.getText(...args)),
 
     yank1by: function(selector, opts={}) {
@@ -955,6 +961,7 @@ window.R = R;
     "get1", "getText", "getText1",
     "getSelectionDOM", "getSelectionHtml",
     "isolate", "jumpToHeading", "keep", "rm", "rmall", "setInput", "toggleprop", "togglepropWr",
+    "urlopen",
     "SEL", "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankjs", "yankjsWr", "yankf",
     "datetime", "isInViewport", "isDisplayed", "sprintf",
     "asArr", "hexToRGB", "isArraylike", "isArrayConvertible", "isIterable",
