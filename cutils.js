@@ -13,7 +13,7 @@ var cutils = {
      *  if CONTEXT is omitted, the root document and all frames are searched.
      */
     $$: function(selector, opts={}) {
-        if (opts instanceof Node) opts = {context: opts};
+        opts = cutils.tri.parseOpts(opts, { castNode: "context", });
         selector = selector.replace(/^,+|,+$/, "").replace(/,,+/, ",");
         if (!selector) return [];
         const getElems = (sel, top) => [...top.querySelectorAll(sel)];
@@ -35,6 +35,7 @@ var cutils = {
      *  See $$ above.
      */
     $1: function(selector, opts={}) {
+        selector = [selector].flat(1).join(",");
         if (opts instanceof Node) opts = {context: opts};
         const getElem = (sel, top) => top.querySelector(sel);
         const res = getElem(selector, opts.context||document);
