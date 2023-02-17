@@ -7,3 +7,4 @@ perl-regexp
 hidden
 ignore-files=.gitignore
 ignore-files=.ugignore
+binary-files=text
