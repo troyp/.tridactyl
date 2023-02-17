@@ -171,7 +171,7 @@ var cutils = {
     datetime: () => (new Date).toISOString().replace("T", "-").replace(/:[0-9.]+Z/, ""),
 
     /**   get(selector, opts)
-     *    get(selector, context:HTMLElement)
+     *    get(selector, context:Node)
      *    get(selector, "firstMatch"|"lastMatch")
      *    get(selector, filter:e=>Bool)
      *    get(selector, pattern:string|RegExp)
@@ -190,7 +190,7 @@ var cutils = {
         selector = [selector].flat(1).join(",");
         /* opts */
         opts = cutils.tri.parseOpts(opts, {
-            castHTMLElement: "context",
+            castNode: "context",
             castString: "match",
             castRegExp: "match",
             castFunction: "filter",
@@ -224,7 +224,7 @@ var cutils = {
 
     get1: function(selector, opts={}) {
         opts = cutils.tri.parseOpts(opts, {
-            castHTMLElement: "context",
+            castNode: "context",
             castString: "match",
             castRegExp: "match",
             castFunction: "filter",
@@ -289,7 +289,7 @@ var cutils = {
     hideall: (...selectors) => cutils.hide(selectors),
 
     /**   isolate(selector, opts)
-     *    isolate(selector, context:HTMLElement)
+     *    isolate(selector, context:Node)
      *    isolate(selector, ["firstMatch"]:[string])
      *    isolate(selector, filter:e=>Bool)
      *    isolate(selector, pattern:string|RegExp)
@@ -306,7 +306,7 @@ var cutils = {
     isolate: function(selector, opts={}) {
         /* opts */
         if (Array.isArray(opts)) opts = opts.reduce((acc,e)=>(acc[e]=true) && acc, {});
-        else if (opts instanceof HTMLElement) opts = { context: opts };
+        else if (opts instanceof Node) opts = { context: opts };
         else if (opts instanceof RegExp)      opts = { match: opts };
         else if (typeof opts === "function")  opts = { filter: opts };
         else if (typeof opts === "string")    opts = { match: opts };
@@ -321,11 +321,11 @@ var cutils = {
         if (Array.isArray(selector)) {
             if (selector.every(e => typeof e == "string")) {
                 selector = selector.filter(identity).join(",");
-            } else if (selector.length == 1 && selector[0] instanceof HTMLElement){
+            } else if (selector.length == 1 && selector[0] instanceof Node){
                 selector = selector[0];
             }
         }
-        if (selector instanceof HTMLElement) {
+        if (selector instanceof Node) {
             keepElts = [selector];
         } else {
             keepElts = cutils.get(selector, opts);
@@ -366,7 +366,7 @@ var cutils = {
     jsinject: async function(code, opts={}) {
         opts = cutils.tri.parseOpts(opts, {
             castBoolean: "file",
-            castHTMLElement: "doc",
+            castNode: "doc",
         });
         const doc = opts.doc || document;
         if (opts.file) code = (await tri.native.read(code)).content;
@@ -850,8 +850,8 @@ cutils.tri = {
             opts[options.castBoolean] = rawopts;
         } else if (options.castNumber && typeof rawopts == "number") {
             opts[options.castNumber] = rawopts;
-        } else if (options.castHTMLElement && rawopts instanceof HTMLElement) {
-            opts[options.castHTMLElement] = rawopts;
+        } else if (options.castNode && rawopts instanceof Node) {
+            opts[options.castNode] = rawopts;
         } else if (options.castRegExp && rawopts instanceof RegExp) {
             opts[options.castRegExp] = rawopts;
         } else if (options.castArray && Array.isArray(rawopts)) {

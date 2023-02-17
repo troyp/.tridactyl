@@ -1037,8 +1037,8 @@ utils.tri = {
             opts[options.castBoolean] = rawopts;
         } else if (options.castNumber && typeof rawopts == "number") {
             opts[options.castNumber] = rawopts;
-        } else if (options.castHTMLElement && rawopts instanceof HTMLElement) {
-            opts[options.castHTMLElement] = rawopts;
+        } else if (options.castNode && rawopts instanceof Node) {
+            opts[options.castNode] = rawopts;
         } else if (options.castRegExp && rawopts instanceof RegExp) {
             opts[options.castRegExp] = rawopts;
         } else if (options.castArray && Array.isArray(rawopts)) {
