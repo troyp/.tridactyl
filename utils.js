@@ -825,11 +825,23 @@ utils.tri = {
         return utils.yank(cmds.join("\n"));
     },
 
-    defineSearch: async function(cmdName, urlTemplate, wordSep="%20") {
-        const urlExpr = urlTemplate.replace("%s", '${JS_ARGS.slice(1)?.join("' + wordSep + '").trim()}');
-        const excmd = "jsb -d¦ tri.controller.acceptExCmd(`tabopenorsummonc "+urlExpr+"`)¦";
+    defineSearch: async function(cmdName, urlTemplate, wordSep) {
+        wordSep ||= "%20";
+        const urlExpr = urlTemplate.replace("%s", '${JS_ARGS.slice(2)?.join("' + wordSep + '").trim()}');
+        const excmd = "jsb -d¦ tri.controller.acceptExCmd(`openorsummon_ ${JS_ARGS[1]} "+urlExpr+"`)¦";
         return command(cmdName, excmd);
     },
+
+    /* defineSearchWr([cmdName, urlTemplate, where="related", whereAlt="here"])
+     */
+    definesearchWr: function(args) {
+        args = utils.tri.parseArgs(args);
+        var [cmdName, urlTemplate, where, whereAlt] = args;
+        where ||= "related";
+        whereAlt ||= (where=="here" ? "related" : "here");
+        return this.defineSearch(cmdName, urlTemplate, null, [whereAlt, where]);
+    },
+
 
     docBindMode: function(args) {
         const argstr = args.join(" ").trim();
