@@ -38,7 +38,8 @@ amazbind: co! "Goto contact form" urlmodorsummon_g /gp/help/customer/contact-us/
 
 " | cs -- amazon/search |
 amazbind: cs<C-h> "(show bindings: amaz/search)" amazshowkeys cs
-amazbind: css "Amazon AU Search" fillcmdline amaz_search
+amazbind: css "Amazon AU Search (new tab)" : amaz_search tab
+amazbind: csS "Amazon AU Search (current tab)" : amaz_search here
 amazbind: csg "Search Google for term" sitejs_count! urlopen(`g ${csites.amaz.term()}`, COUNT?"here":"related")
 amazbind: csG "Search Google for item" sitejs_count! urlopen(`g ${csites.amaz.title()}`, COUNT?"here":"related")
 

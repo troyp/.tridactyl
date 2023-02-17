@@ -135,18 +135,20 @@ command: ja_search! "Search Jackson's Art (current tab)" jsb -d¦ sites.ja.searc
 command: ja_search_wc "Search Jackson's Art for watercolor (new tab)" jsb -d¦ sites.ja.searchWC("related", JS_ARGS)¦
 command: ja_search_wc! "Search Jackson's Art for watercolor (curr tab)" jsb -d¦ sites.ja.searchWC("here", JS_ARGS)¦
 command call_ja_search_cmd jsb -d¦ fillcmdline(JS_ARGS[1]?"ja_search!":"ja_search")¦
+definesearch ja_search https://www.jacksonsart.com/en-au/search/?limit=60&q=%s
+definesearch ja_wcsearch https://www.jacksonsart.com/en-au/search/?fq[x_application]=Watercolour&limit=60&q=
 
 jabind: cs<C-h> "(show bindings: ja/search)" jashowkeys cs
 jabind: csc "Find items matching search term in cart" fillcmdline jacksonsCartSearch<Space>
-jabind: css "Search Jackson's Art (new tab)" fillcmdline ja_search
-jabind: csS "Search Jackson's Art (current tab)" fillcmdline ja_search!
-jabind: csw "Search Jackson's Art for Watercolour (new tab)" fillcmdline ja_search_wc
-jabind: csW "Search Jackson's Art for Watercolour (current tab)" fillcmdline ja_search_wc!
+jabind: css "Search Jackson's Art (new tab)" : ja_search tab
+jabind: csS "Search Jackson's Art (current tab)" : ja_search here
+jabind: csw "Search Jackson's Art for Watercolour (new tab)" : ja_search_wc tab
+jabind: csW "Search Jackson's Art for Watercolour (current tab)" : ja_search_wc here
 
-jabind: cs;s "Clipboard Search Jackson's Art (new tab)" fillcmdline(`${ja_search} ${utils.cbread()}`))
-jabind: cs;S "Clipboard Search Jackson's Art (current tab)" fillcmdline(`${ja_search!} ${utils.cbread()}`))
-jabind: cs;w "Clipboard Search Jackson's Watercolor (new tab)" fillcmdline(`${ja_search_wc} ${utils.cbread()}`))
-jabind: cs;W "Clipboard Search Jackson's Watercolor (current tab)" fillcmdline(`${ja_search_wc!} ${utils.cbread()}`))
+jabind: cs;s "Clipboard Search Jackson's Art (new tab)" :: getclip | ja_search tab
+jabind: cs;S "Clipboard Search Jackson's Art (current tab)" :: getclip | ja_search here
+jabind: cs;w "Clipboard Search Jackson's Watercolor (new tab)" :: getclip | ja_search_wc tab
+jabind: cs;W "Clipboard Search Jackson's Watercolor (current tab)" :: getclip | ja_search_wc here
 
 " | ct -- ja/toggle |
 command: jatoggleoption "Toggle option on search/browse" artjs -d¦ art.ja.toggleOptionWr(JS_ARGS)¦
