@@ -63,6 +63,47 @@ handprintbind: c/ "Search handprint" :fill `${COUNT?"":"t"}opos g site:handprint
 handprintbind: <f1> "Pigment table: key to ratings" js utils.message(handprintTableKey)
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────╮
+" │             │
+" │  ART SHOPS  │
+" │             │
+" ╰─────────────╯
+" ╭──────────────╮
+" │ cultpens.com │
+" ╰──────────────╯
+command: cultpensbind "Bind key for cultpens.com" bindurl cultpens.com
+command: cultpensbind: "Bind key with description for cultpens.com" bindurl: cultpens.com
+command: cultpensbdoc "Provide a description on a separate line" js ;
+command: cultpensshowkeys "(show bindings: cultpens)" showkeysurl cultpens.com
+
+
+definesearch cultpens_search https://www.cultpens.com/s?q=%s
+command: cultpens_title "Get item title (for pipe)" cujs $1("div.product-name>h1").firstChild.textContent.trim()
+
+cultpensbind: c<C-h> "(show bindings: cultpens)" cultpensshowkeys c
+cultpensbind: cc "Add to basket" hint -V!f add\ to\ basket
+cultpensbind: cc "Add to basket" cujs ($1("button.ks-addtobag,#pay-card-btn")).click()
+cultpensbind: cn "Show number of items in wishlist/cart" artjs art.cult.nItemsShow()
+cultpensbind: cw "Add to wishlist" click #ks-wishlist-add
+
+" | co -- cultpens/goto |
+cultpensbind: co<C-h> "(show bindings: cultpens/goto)" cultpensshowkeys co
+cultpensbind: coa "Goto account" topos https://www.cultpens.com/my-account
+cultpensbind: col "Goto login page" topos https://www.cultpens.com/login
+cultpensbind: cow "Open all wishlist items in new tabs" hint -JbV!c tr[id^=wishlist]>td>.basket-product-info>h5>a
+
+" | cs -- cultpens/search |
+cultpensbind: cs<C-h> "(show bindings: cultpens/search)" cultpensshowkeys cs
+cultpensbind: csg "Search Google for item" cultpens_title | tabopen g
+cultpensbind: css "Search culltpens.com" :fill `cultpens_search ${COUNT?"here":"related"}`
+cultpensbdoc cso "Search gmail acct for order number [HINTS]"
+cultpensbind cso hintpipe #recent-orders>tbody>tr>td:first-child textContent | js_cmd "tri.excmds.tabopen(`https://mail.google.com/mail/u/0/?s=q&q=${ARG}&nvp_site_mail=Search%20Mail#search/${ARG}`)"
+cultpensbind: csz "Search eBay & Amazon for product" cultpens_title | multienginesearch! "e amazau"
+
+" | "cy -- cultpens/yank |
+cultpensbind: cy<C-h> "(show bindings: cultpens/yank)" cultpensshowkeys cy
+cultpensbind: cyy "Yank product title" cultpens_title | yank!
+
 " ╭─────────────────╮
 " │ JacksonsArt.com │
 " ╰─────────────────╯

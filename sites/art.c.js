@@ -3,6 +3,29 @@
 // ╰────────────╯
 var art = {};
 
+// ╭──────────────╮
+// │ Cultpens.com │
+// ╰──────────────╯
+
+art.cult = {
+    nItems: function() {
+        if (tri.contentLocation.href.match("https://www.cultpens.com/basket")) {
+            const total = sum($$(".ks-product-qty").map(e=>e.value));
+            const distinct = $$("tr.basket-item").length;
+            return [total, distinct];
+        } else {
+            return $$("tr[id|=wishlist]").length;
+        }
+    },
+
+    nItemsShow: function() {
+        const nitems = cutils.asArr(this.nItems());
+        const s = `number of items: ${nitems[0]}` + (nitems.length>1 ? ` (${nitems[1]} distinct)` : "");
+        cutils.message(s, true);
+    },
+
+};
+
 // ───────────────────────────────────────────────────────────────────────────────
 // ╭─────────────────╮
 // │ JacksonsArt.com │
