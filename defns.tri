@@ -609,6 +609,9 @@ bind: shh "Search history, open item(s) in last tab [rofi]" historysearch last f
 bind: sha "Search history, open item(s) in adjacent tab [rofi]" historysearch related false
 bind: shb "Search history, open item(s) in adjacent background tab [rofi]" historysearch related true
 bind: sho "Search history, open item in current tab [rofi]" historysearch here false
+" | shu -- search/history/URL |
+bdoc shud "Search history for current domain"
+bind shud jsb_count places.hist.openWr(["related", false, {text: urls.fromRoot(0), daysAgo: (COUNT||1)*30)
 
 " | sk -- search/bookmark keyword |
 bind: sk<C-h> "(show bindings: search/kw)" showkeys sk
