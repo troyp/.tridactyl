@@ -171,6 +171,8 @@ var cutils = {
 
     datetime: () => (new Date).toISOString().replace("T", "-").replace(/:[0-9.]+Z/, ""),
 
+    ex: function(cmd) { return tri.controller.acceptExCmd(cmd); },
+
     /**   get(selector, opts)
      *    get(selector, context:Node)
      *    get(selector, "firstMatch"|"lastMatch")
@@ -375,6 +377,10 @@ var cutils = {
         script.innerText = code;
         document.head.appendChild(script);
         /* script.parentNode.removeChild(script); */
+    },
+
+    kwrofi: async function(switches="-Swa") {
+        return jsb(`places.kw.rofiGetKW("${switches}")`);
     },
 
     jumpToHeading: async function(selector="h2,h3,h4", opts={}) {

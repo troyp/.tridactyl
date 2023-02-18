@@ -26,6 +26,8 @@ var utils = {
         return components.map(decodeFn).join("%s");
     },
 
+    ex: function(cmd) { return tri.controller.acceptExCmd(cmd); },
+
     /*    jsurirun(url, opts): execute javascript URI in page
      *  opts.searchterm [string]: search term for javscript bookmarklet (to replace %s)
      *  opts.searchterm [true: boolean]: prompt for search term if necessary
