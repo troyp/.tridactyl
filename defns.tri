@@ -1348,13 +1348,18 @@ bind: ,,lV "Follow visited link in new tab [HINTS]" hint -c :visited
 " ╰───────╯
 
 " | marks -- per-page position marks |
-command: setmark "Set mark" jsb -p tri.controller.acceptExCmd(`js window._tri_mark_reg_${JS_ARG}=window.scrollY`)
-commdoc gotomark "Jump to mark on page"
-command gotomark jsb -p tri.controller.acceptExCmd(`js window.scrollTo(0, window._tri_mark_reg_${JS_ARG})`)
+" command: setmark "Set mark" jsb -p tri.controller.acceptExCmd(`js window._tri_mark_reg_${JS_ARG}=window.scrollY`)
+" commdoc gotomark "Jump to mark on page"
+" command gotomark jsb -p tri.controller.acceptExCmd(`js window.scrollTo(0, window._tri_mark_reg_${JS_ARG})`)
 
-bind: m "Set mark (page-local)" gobble 1 setmark
-jsb utils.tri.docdef(["bind ' \"Goto mark (page-local)\""], {noDef: true})
-jsb tri.excmds.bind("'", "gobble 1 gotomark")
+" bind: m "Set mark (page-local)" gobble 1 setmark
+" jsb utils.tri.docdef(["bind ' \"Goto mark (page-local)\""], {noDef: true})
+" jsb tri.excmds.bind("'", "gobble 1 gotomark")
+
+bind: m "Add (local/global) mark" gobble 1 markadd
+jsb utils.tri.docdef(["bind ' \"Goto mark\""], {noDef: true})
+jsb tri.excmds.bind("'", "gobble 1 markjump")
+bind: g<A-;> "Jump to location before last mark jump" markjumpbefore
 
 " | quickmarks (qmarks) -- different implementation from tridactyl's |
 jsb tri.config.USERCONFIG.qmarks ||= {}
