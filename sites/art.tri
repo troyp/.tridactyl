@@ -78,7 +78,7 @@ command: cultpensshowkeys "(show bindings: cultpens)" showkeysurl cultpens.com
 
 
 definesearch cultpens_search https://www.cultpens.com/s?q=%s
-command: cultpens_title "Get item title (for pipe)" cujs $1("div.product-name>h1").firstChild.textContent.trim()
+command: cultpens_title "Get item title (for pipe)" artjs art.cult.title()
 
 cultpensbind: c<C-h> "(show bindings: cultpens)" cultpensshowkeys c
 cultpensbind: cc "Add to basket" hint -V!f add\ to\ basket
@@ -95,9 +95,12 @@ cultpensbind: cow "Open all wishlist items in new tabs" hint -JbV!c tr[id^=wishl
 " | cs -- cultpens/search |
 cultpensbind: cs<C-h> "(show bindings: cultpens/search)" cultpensshowkeys cs
 cultpensbind: csg "Search Google for item" cultpens_title | tabopen g
-cultpensbind: css "Search culltpens.com" :fill `cultpens_search ${COUNT?"here":"related"}`
+cultpensbind: css "Search cultpens.com (new tab)" : cultpens_search tab
+cultpensbind: csS "Search cultpens.com (current tab)" : cultpens_search here
 cultpensbdoc cso "Search gmail acct for order number [HINTS]"
 cultpensbind cso hintpipe #recent-orders>tbody>tr>td:first-child textContent | js_cmd "tri.excmds.tabopen(`https://mail.google.com/mail/u/0/?s=q&q=${ARG}&nvp_site_mail=Search%20Mail#search/${ARG}`)"
+cultpensbdoc cst "Search engine for product [ROFI]"
+cultpensbind cst artjs cutils.kwrofi().then(kw=>cutils.ex(`multienginesearch! "${kw}" ${art.cult.title()}`))
 cultpensbind: csz "Search eBay & Amazon for product" cultpens_title | multienginesearch! "e amazau"
 
 " | "cy -- cultpens/yank |

@@ -22,7 +22,9 @@ art.cult = {
         const nitems = cutils.asArr(this.nItems());
         const s = `number of items: ${nitems[0]}` + (nitems.length>1 ? ` (${nitems[1]} distinct)` : "");
         cutils.message(s, true);
-    },
+ },
+
+    title: () => $1("div.product-name>h1").firstChild.textContent.trim(),
 
 };
 
