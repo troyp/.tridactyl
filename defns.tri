@@ -950,6 +950,20 @@ bind: atpp "Google translate page" googletranslatepage
 bind: atpb "Bing translate page" bingtranslatepage
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────────╮
+" | ax -- apps/run |
+" ╰────────────────╯
+" FIXME: shellcmdonurlfile! mimeopen -a not working with scripts
+" TODO: use mimeopen --database to use custom list of programs
+bind: axa "Open file/URL with mimeopen (ask app)" shellcmdonurlfile! mimeopen -a
+bind: axd "Open file/URL with mimeopen (default)" shellcmdonurlfile mimeopen -n
+bind: ax= "Open file/URL and set default with mimeopen" shellcmdonurlfile mimeopen -d
+bind: axx "Open file/URL (enter program)" fillcmdline shellcmdonurlfile
+bdoc ax;x "Open file/URL (enter program in prompt)"
+bind ax;x jsb utils.prompt("cmd: ").then(s=>shell.cmdOnURLFile(s, null, true))
+bind: "Yank filename & open terminal in directory" ax. jsb shell.cmdOnURLFile("echo -n '%f' | xclip -i", null, true)
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────╮
 " │ x -- extensions │
 " ╰─────────────────╯
