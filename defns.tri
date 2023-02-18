@@ -603,28 +603,28 @@ bind: s/ "Search with :find command" fillcmdline find
 bind: s? "Enter visual mode, show :find result" :: findselect ; findnext --search-from-view
 bind: s;; "Search clipboard contents with engine" composite getclip | fillcmdline searchwithengine
 
-" | sh -- search history |
+" | sh -- search/history |
 bind: sh<C-h> "(show bindings: search/history)" showkeys sh
 bind: shh "Search history, open item(s) in last tab [rofi]" historysearch last false
 bind: sha "Search history, open item(s) in adjacent tab [rofi]" historysearch related false
 bind: shb "Search history, open item(s) in adjacent background tab [rofi]" historysearch related true
 bind: sho "Search history, open item in current tab [rofi]" historysearch here false
 
-" | sk -- search by bookmark keyword |
+" | sk -- search/bookmark keyword |
 bind: sk<C-h> "(show bindings: search/kw)" showkeys sk
 bind: skb "Bmark keyword search: background adjacent tab" fillcmdline kwsearch_bg
 bind: skk "Bmark keyword search: adjacent tab" fillcmdline kwsearch_adj
 bind: skl "Bmark keyword search: last tab" fillcmdline kwsearch_last
 bind: sko "Bmark keyword search: current tab" fillcmdline kwsearch_here
 
-" | sm -- search multiple |
+" | sm -- search/multiple |
 bind: sm<C-h> "(show bindings: search/multi)" showkeys sm
 bind: smm "Search multiple queries: adjacent tab" fillcmdline multisearch_adj
 bind: smM "Search multiple queries: last tab" fillcmdline multisearch_last
 bind: sme "Search multiple engines: adjacent tab" fillcmdline multienginesearch_adj
 bind: smE "Search multiple engines: last tab" fillcmdline multienginesearch_last
 
-" | sm; -- search multiple (rofi) |
+" | sm; -- search/multiple/rofi |
 bind: sm;<C-h> "(show bindings: search/multi/rofi)" showkeys sm;
 bind: sm;m "Multi-query search: adjacent tab [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch_adj "\0"/'
 bind: sm;M "Multi-query search: last tab [Rofi]" ! kwsearch -w -S -m -1|sed -r 's/.*/multisearch "\0"/'
@@ -635,7 +635,7 @@ bind sm;q ! kwsearch -w -S -m -1|sed -r 's/.*/multienginesearch_adj! "\0"/'
 bdoc sm;Q "Multi-engine search (quoted): last tab [Rofi]"
 bind sm;Q ! kwsearch -w -S -m -1|sed -r 's/.*/multienginesearch_last! "\0"/'
 
-" | ss -- shopping search |
+" | ss -- search/shopping |
 bind: ss<C-h> "(show bindings: search/shop)" showkeys ss
 bind: ssu "Search supermarkets" fillcmdline multienginesearch! "shopwoo shopcol"
 bind: ssU "Search supermarkets: last tab" fillcmdline multienginesearch_last! "shopwoo shopcol"
