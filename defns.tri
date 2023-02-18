@@ -152,6 +152,7 @@ commdoc pastef "Takes a format string and replaces ${S} with clipboard contents;
 command pastef composite jsb -d¦ getclip().then(s=>parseArgs(JS_ARGS, "string").replace(/\$\{s\}/g, s))¦
 commdoc expaste "Execute commands in clipboard"
 command expaste jsb utils.cbread().then(s=>s.split("\n").forEach(c=>tri.controller.acceptExCmd(c)));
+command: quot "Quote arguments; used in pipe" js_cmd `"${ARGS.join("\x20")}"`
 
 command: js_count "run js command, substituting for COUNT (default count=1)" cUjs -d¦ cutils.tri.jsCount(JS_ARGS)¦
 command: jsb_count "run jsb command, substituting for COUNT (default count=1)" jsb -d¦ utils.tri.jsbCount(JS_ARGS)¦
@@ -187,10 +188,14 @@ command: jsinject! "Eval js in file as script tag" cujs -d¦ cutils.jsinject(JS_
 
 " | commands for running shell commands |
 command trish jsb -d¦ shell.cmdRoxterm(`. ~/.tridactyl/scripts/tri.sh && tri ${JS_ARGS.join(" ")}`)¦
+" TODO: allow substitutions for ";" and "|"
 commdoc shellcmdonurlfile "Run shell command on document (download if online)"
-command shellcmdonurlfile jsb -d¦ shell.cmdOnURLFile(JS_ARGS, tri.contentLocation.href)¦
-command !! exclaim_
+command shellcmdonurlfile jsb -d¦ shell.cmdOnURLFile(JS_ARGS)¦
+commdoc shellcmdonurlfile! "Run shell command on document in terminal (download if online)"
+command shellcmdonurlfile! jsb -d¦ shell.cmdOnURLFile(JS_ARGS, null, true)¦
+command: !! "Run commands in /bin/sh and print the result on the command line" exclaim_
 command !s exclaim_quiet
+command: :!! "Run commands in /bin/sh and send the result to the command line" :: exclaim_
 command: exclaim_ "Run commands in /bin/sh and print the result on the command line" jsb -d¦ apps.exclaim_(JS_ARGS)¦
 
 " | commands for opening URLs |
@@ -556,6 +561,8 @@ command multienginesearch! multienginesearch_adj!
 command multisearch multisearch_adj
 command searchwithengine searchwithengine_adj
 command searchwithengines searchwithengines_adj
+
+command: kwrofi "Choose search engines (bmark kwords) via rofi" :!! kwsearch -w -S -m -1
 
 command: searchreplace "Replace search term on current URL" cUjs -d¦ urls.mod.setQuery("q",parseArgs(JS_ARGS,"s"))¦ 
 commdoc searchreplace_adj "Open search based on current URL in new adjacent tab"
