@@ -26,6 +26,15 @@ art.cult = {
 
     title: () => $1("div.product-name>h1").firstChild.textContent.trim(),
 
+    totalCost: function() {
+        if (tri.contentLocation.href.match("https://www.cultpens.com/basket")) {
+            return $1("div.grand-total>span[ge-data-converted-price]").getAttribute("ge-data-converted-price");
+        } else {
+            return sum($$("td.basket-item-price>i").map(e=>e.getAttribute("ge-data-converted-price"))).toFixed(2);
+        }
+    },
+
+
 };
 
 // ───────────────────────────────────────────────────────────────────────────────

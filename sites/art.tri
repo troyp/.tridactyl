@@ -85,22 +85,25 @@ cultpensbind: cc "Add to basket" hint -V!f add\ to\ basket
 cultpensbind: cc "Add to basket" cujs ($1("button.ks-addtobag,#pay-card-btn")).click()
 cultpensbind: cn "Show number of items in wishlist/cart" artjs art.cult.nItemsShow()
 cultpensbind: cw "Add to wishlist" click #ks-wishlist-add
+cultpensbind: c$ "Show total cost" artjs cutils.message(`total cost: ${art.cult.totalCost()}`, true)
 
 " | co -- cultpens/goto |
 cultpensbind: co<C-h> "(show bindings: cultpens/goto)" cultpensshowkeys co
 cultpensbind: coa "Goto account" topos https://www.cultpens.com/my-account
+cultpensbind: cob "Goto basket" topos https://www.cultpens.com/basket
 cultpensbind: col "Goto login page" topos https://www.cultpens.com/login
 cultpensbind: cow "Open all wishlist items in new tabs" hint -JbV!c tr[id^=wishlist]>td>.basket-product-info>h5>a
 
 " | cs -- cultpens/search |
 cultpensbind: cs<C-h> "(show bindings: cultpens/search)" cultpensshowkeys cs
 cultpensbind: csg "Search Google for item" cultpens_title | tabopen g
+cultpensbind: csk "Search engine for product" : cultpens_title | quot | multienginesearch
 cultpensbind: css "Search cultpens.com (new tab)" : cultpens_search tab
 cultpensbind: csS "Search cultpens.com (current tab)" : cultpens_search here
 cultpensbdoc cso "Search gmail acct for order number [HINTS]"
 cultpensbind cso hintpipe #recent-orders>tbody>tr>td:first-child textContent | js_cmd "tri.excmds.tabopen(`https://mail.google.com/mail/u/0/?s=q&q=${ARG}&nvp_site_mail=Search%20Mail#search/${ARG}`)"
-cultpensbdoc cst "Search engine for product [ROFI]"
-cultpensbind cst artjs cutils.kwrofi().then(kw=>cutils.ex(`multienginesearch! "${kw}" ${art.cult.title()}`))
+cultpensbdoc csr "Search engine for product [ROFI]"
+cultpensbind csr artjs cutils.kwrofi().then(kw=>cutils.ex(`multienginesearch! "${kw}" ${art.cult.title()}`))
 cultpensbind: csz "Search eBay & Amazon for product" cultpens_title | multienginesearch! "e amazau"
 
 " | "cy -- cultpens/yank |
