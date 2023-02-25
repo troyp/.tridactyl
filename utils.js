@@ -1037,9 +1037,6 @@ utils.tri = {
     },
 
     /** options.castString:               if a string is passed for opts rather than an array, it
-     *                                    represents the value of the property opts[options.castString].
-     *  options.defaults.key=val:         if key if falsey, set to value
-     *  options.nullishDefaults.key=val:  if key is nullish, set to value
      */
     parseOpts: function(rawopts, options={}) {
         /* cast opts */
