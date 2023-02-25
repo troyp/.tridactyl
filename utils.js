@@ -1191,9 +1191,17 @@ utils.tri = {
         return Object.keys(conf).map(k=>sprintf("%-8s\t%-s", k, conf[k])).filter(s=>s.match(term));
     },
 
+    searchSubconfig: function(subconfig, key, term) {
+        const conf = tri.config.get("subconfigs", subconfig, key);
+        return Object.keys(conf).map(k=>sprintf("%-8s\t%-s", k, conf[k])).filter(s=>s.match(term));
+    },
+
     searchNmapsWrapper: async function (r, opts={}) {
+        opts = utils.tri.parseOpts(opts, { castString: "subconfig", });
         const regexp = new RegExp(r.trim(), opts.caseSensitive ? "" : "i");
-        const conf = this.searchConfig("nmaps", regexp);
+        const conf = opts.subconfig
+              ? this.searchSubconfig(opts.subconfig, "nmaps", regexp)
+              : this.searchConfig("nmaps", regexp);
         return utils.messageBox(conf, {contPrefix: "\t\t"});
     },
 

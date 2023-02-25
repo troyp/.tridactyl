@@ -660,10 +660,13 @@ command: showmybindings "Show user-defined bindings" jsb utils.message(utils.tri
 command: showkeys "Open completion menu for bindings" fillcmdline_notrail bind
 command: showkeysurl "Open completion menu for :bindurl bindings" fillcmdline_notrail bindurl
 command: searchnmaps "Search user-set bindings" jsb -d¦ utils.tri.searchNmapsWrapper(JS_ARGS.join(" "))¦
+commdoc searchnmaps! "Search user subconfig bindings"
+command searchnmaps! jsb -d¦ utils.tri.searchNmapsWrapper(JS_ARGS.slice(2).join(" "), {subconfig:JS_ARGS[1]})¦
 
 bind <C-h><C-h> showkeys <C-h>
 bind: <C-h>a "Open list of ui.key.accelKey values" topos https://searchcode.com/codesearch/view/26755902/
 bind: <C-h>b "Search normal keybinding definitions" fillcmdline searchnmaps
+bind: <C-h>B "Search normal keybinding definitions (subconfigs)" fillcmdline searchnmaps!
 bind: <C-h>c "Show user-defined commands" showmycommands
 bdoc <C-h>d "Open devtools toolbox"
 bind <C-h>d tabopen about:devtools-toolbox?id=tridactyl.vim.betas%40cmcaine.co.uk&type=extension
