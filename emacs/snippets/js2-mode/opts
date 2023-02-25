@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: opts = utils.tri.parseOpts(...)
+# key: opts
+# --
+opts = $1utils.tri.parseOpts(opts, {
+    $2
+});

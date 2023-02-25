@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: tri.controller.acceptExCmd(``)
+# key: aec
+# --
+tri.controller.acceptExCmd(\`$0\`)
