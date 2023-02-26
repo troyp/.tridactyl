@@ -1,30 +1,37 @@
 " ───────────────────────────────────────────────────────────────────────────────
-" ╭─────────────────╮
-" │ Wikimedia sites │
-" ╰─────────────────╯
+" ╭───────────────╮
+" │ Wikipedia.org │
+" ╰───────────────╯
 
-wpbind: c<C-h> "(show bindings: wp)" wpshowkeys c
-wpbdoc cd "Open page in Wiktionary"
-wpbind cd jsb utils.tab.open(`https://en.wiktionary.org/w/index.php?search=${sites.wp.getTopic()}`, "here")
-wpbdoc cD "Open page in Wiktionary (adjacent tab)"
-wpbind cD jsb utils.tab.open(`https://en.wiktionary.org/w/index.php?search=${sites.wp.getTopic()}`, "related")
-wpbdoc ce "Open page in Wikipedia"
-wpbind ce jsb utils.tab.open(`https://en.wikipedia.org/w/index.php?search=${sites.wp.getTopic()}`, "here")
-wpbdoc cE "Open page in Wikipedia (adjacent tab)"
-wpbind cE jsb utils.tab.open(`https://en.wikipedia.org/w/index.php?search=${sites.wp.getTopic()}`, "related")
+command: wpbdoc "Provide a description on a separate line" js ;
+command: wp_search "Search current wikimedia site" jsb -d¦ sites.wp.search(JS_ARGS.join(" ").trim())¦
 
-" | cs -- wikimedia/search |
-wpbind: cs<C-h> "(show bindings: wp/search)" wpshowkeys cs
-wpbind: csg "Search google for topic" jsb utils.tab.open(`g ${sites.wp.getTopic()}`)
-wpbind: css "Search site" fillcmdline wp_search
+" Define bind commands for wikipedia.org
+command: wpbind "Bind key for wikipedia, etc" bindurl wikipedia.org
+command: wpbind: "Bind key with description for wikipedia, etc" bindurl: wikipedia.org
+" Load definitions
+source ~/.tridactyl/sites/wp_bindings.tri
+wpbind c<C-h> showkeysurl wikipedia.org c
+wpbind ct<C-h> showkeysurl wikipedia.org ct
 
-" | ct -- wikipedia/toggle |
-wpbind: ctm "Toggle mobile version" urltoggle https://en.m https://en
-wpbind: ctj "Toggle japanese edition" sitejs csites.wp.toggleJa()
+" ╭────────────────╮
+" │ Wiktionary.org │
+" ╰────────────────╯
+" Redefine bind commands for wiktionary.org
+command: wpbind "Bind key for wikipedia, etc" bindurl wiktionary.org
+command: wpbind: "Bind key with description for wikipedia, etc" bindurl: wiktionary.org
+# Load definitions
+source ~/.tridactyl/sites/wp_bindings.tri
+wpbind c<C-h> showkeysurl wiktionary.org c
+wpbind ct<C-h> showkeysurl wiktionary.org ct
 
-wpbind: cC "Cleanup (remove clutter from page)" sitejs csites.wp.cleanup()
-wpbind: c;; "Search ENGINES with page title" jsb fillcmdline(`searchwithengines ${sites.wp.getTopic()}`)
-
-" ───────────────────────────────────────────────────────────────────────────────
-
-fillcmdline wp.tri LOADED
+" ╭───────────────╮
+" │ Wikimedia.org │
+" ╰───────────────╯
+" Redefine bind commands for wikimedia.org
+command: wpbind "Bind key for wikipedia, etc" bindurl wikimedia.org
+command: wpbind: "Bind key with description for wikipedia, etc" bindurl: wikimedia.org
+# Load definitions
+source ~/.tridactyl/sites/wp_bindings.tri
+wpbind c<C-h> showkeysurl wikimedia.org c
+wpbind ct<C-h> showkeysurl wikimedia.org ct

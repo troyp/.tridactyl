@@ -366,44 +366,6 @@ sebind: ctw "Toggle widen content" se_js se.widen()
 bindurl: tvtropes.org cc "Toggle spoilers" sitejs csites.tvtropes.spoilers()
 
 " ───────────────────────────────────────────────────────────────────────────────
-" ╭───────────────╮
-" │ Wikipedia.org │
-" ╰───────────────╯
-
-command: wpbdoc "Provide a description on a separate line" js ;
-command: wp_search "Search current wikimedia site" jsb -d¦ sites.wp.search(JS_ARGS.join(" ").trim())¦
-
-" Define bind commands for wikipedia.org
-command: wpbind "Bind key for wikipedia, etc" bindurl wikipedia.org
-command: wpbind: "Bind key with description for wikipedia, etc" bindurl: wikipedia.org
-" Load definitions
-source ~/.tridactyl/sites/wp.tri
-wpbind c<C-h> showkeysurl wikipedia.org c
-wpbind ct<C-h> showkeysurl wikipedia.org ct
-
-" ╭────────────────╮
-" │ Wiktionary.org │
-" ╰────────────────╯
-" Redefine bind commands for wiktionary.org
-command: wpbind "Bind key for wikipedia, etc" bindurl wiktionary.org
-command: wpbind: "Bind key with description for wikipedia, etc" bindurl: wiktionary.org
-# Load definitions
-source ~/.tridactyl/sites/wp.tri
-wpbind c<C-h> showkeysurl wiktionary.org c
-wpbind ct<C-h> showkeysurl wiktionary.org ct
-
-" ╭───────────────╮
-" │ Wikimedia.org │
-" ╰───────────────╯
-" Redefine bind commands for wikimedia.org
-command: wpbind "Bind key for wikipedia, etc" bindurl wikimedia.org
-command: wpbind: "Bind key with description for wikipedia, etc" bindurl: wikimedia.org
-# Load definitions
-source ~/.tridactyl/sites/wp.tri
-wpbind c<C-h> showkeysurl wikimedia.org c
-wpbind ct<C-h> showkeysurl wikimedia.org ct
-
-" ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────╮
 " │ Woolworths.com.au │
 " ╰───────────────────╯
