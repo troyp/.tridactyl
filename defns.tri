@@ -1044,7 +1044,10 @@ bind: ,asc "Open Coles" topos https://shop.coles.com.au/a/casino/home
 bind: ,ase "open eBay" topos https://cart.ebay.com.au
 bind: ,asj "open Jackson's Art" topos https://www.jacksonsart.com/en-au/checkout/cart/
 bind: ,asl "Open liquor specials" jsb utils.tab.openMultiple(sites.LISTS.liquor_specials, {background:true});
+bind: ,aso "Open Amazon AU and eBay orders" jsb utils.tab.openMultiple(sites.LISTS.orders)
 bind: ,asp "Open Paypal" topos https://www.paypal.com/myaccount/home
+bind: ,ass "Open Amazon AU and eBay" jsb utils.tab.openMultiple(sites.LISTS.main)
+bind: ,asu "Open supermarkets" jsb utils.tab.openMultiple(sites.LISTS.supermarkets)
 bind: ,asw "Open Woolworths" topos https://www.woolworths.com.au/shop/mylists
 bind: ,asz "Open Amazon AU" topos https://www.amazon.com.au/gp/cart/view.html/ref=nav_cart
 

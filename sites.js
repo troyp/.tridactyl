@@ -317,12 +317,24 @@ var sites = {
 };
 
 sites.LISTS = {
+    main: [
+        "https://www.amazon.com.au/gp/cart/view.html/ref=nav_cart",
+        "https://cart.ebay.com.au",
+    ],
     liquor_specials: [
         "https://www.danmurphys.com.au/current-offers?filters=variety(spirits)",
         "https://www.liquorland.com.au/specials/spirit-specials",
         "https://www.vintagecellars.com.au/specialoffers/spirit-specials",
         "https://bws.com.au/productgroup/spirit-specials",
         "https://www.firstchoiceliquor.com.au/specials",
+    ],
+    orders: [
+        "https://www.ebay.com.au/mye/myebay/purchase",
+        "https://www.amazon.com.au/gp/css/order-history/ref=nav_nav_orders_first",
+    ],
+    supermarkets: [
+        "https://www.woolworths.com.au/shop/mylists",
+        "https://shop.coles.com.au/a/casino/home",
     ],
 };
 
