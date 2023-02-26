@@ -4,6 +4,19 @@
 // │  settings.js  │
 // │               │
 // ╰───────────────╯
+// ───────────────────────────────────────────────────────────────────────────────
+// ╭─────╮
+// │ CSP │
+// ╰─────╯
+
+browser.webRequest.onHeadersReceived.addListener(
+    tri.request.clobberCSP,
+    {
+        urls:["<all_urls>"],
+        types:["main_frame"]
+    },
+    ["blocking","responseHeaders"]
+);
 
 // ───────────────────────────────────────────────────────────────────────────────
 //  ╭───────────╮

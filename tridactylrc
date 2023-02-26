@@ -87,8 +87,7 @@ unbind a
 " │ sourced config files │
 " ╰──────────────────────╯
 command: defnsload "Load command and binding definitions from defns.tri" source /home/troy/.tridactyl/defns.tri
-
-source /home/troy/.tridactyl/sites.tri
+command: sitesload "Load command and binding defns from sites.tri" source /home/troy/.tridactyl/sites.tri
 command: modload "Load module" jsb -d¦ sites.load(JS_ARGS[1])¦
 
 " ───────────────────────────────────────────────────────────────────────────────
@@ -98,11 +97,6 @@ command: modload "Load module" jsb -d¦ sites.load(JS_ARGS[1])¦
 jsb -r settings.js
 
 command: loadsettings "Load settings from settings.tri" withjsb -r settings.js ; source ~/.tridactyl/settings.tri
-
-" Autocommands
-autocmd TabEnter .* unfocus
-
-jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{urls:["<all_urls>"],types:["main_frame"]},["blocking","responseHeaders"])
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮

@@ -45,3 +45,10 @@ setpref privacy.trackingprotection.enabled true
 setpref security.mixed_content.block_active_content false
 " use Alt- as the modifier for firefox keybindings
 setpref ui.key.accelKey 18
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────╮
+" │ autocommands │
+" ╰──────────────╯
+
+autocmd TabEnter .* unfocus
