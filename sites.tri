@@ -46,7 +46,7 @@ amazbind: csG "Search Google for item" sitejs_count! urlopen(`g ${csites.amaz.ti
 " | ct -- amazon/toggle |
 amazbind: ct<C-h> "(show bindings: amaz/toggle)" amazshowkeys ct
 amazbdoc cta "Toggle Australian site"
-amazbind cta jsb urls.mod.togglepage('smile.amazon.com/', 'www.amazon.com.au/', /(www|smile)\.amazon\.com\//)
+amazbind cta jsb urls.mod.togglepage('www.amazon.com/', 'www.amazon.com.au/', /(www|smile)\.amazon\.com\//)
 
 amazbind: cxt "Translate all reviews" cujs click("a",/translate review/i)
 
