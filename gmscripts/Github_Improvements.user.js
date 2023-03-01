@@ -1,13 +1,23 @@
 // ==UserScript==
 // @name        Github Improvements
 // @namespace   https://github.com/troyp
-// @include     https://*github.com/*
-// @version     1
+// @include     https://*github.com*
+// @version     1.1
 // @author      Troy Pracy
 // @grant       none
 // ==/UserScript==
 var url = document.location.href;
 
+// Header styling
+let root = document.documentElement;
+let header = document.querySelector("header");
+header.style.backgroundColor = "#f6f8fa";
+document.querySelector(".search-with-dialog").style.backgroundColor = "#dddddd";
+root.style.setProperty('--color-header-bg', "#00000000");
+root.style.setProperty('--color-header-text', "#000000");
+root.style.setProperty('--color-header-logo', "#000000");
+
+// Fix links
 if (url.match(/https:\/\/github\.com\/[^/]+\/[^/]+/)) {
     Array.from(document.links).forEach(
         l=>{
