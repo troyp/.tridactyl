@@ -1092,7 +1092,9 @@ utils.tri = {
           case "\"":
               for (let i=0; i<words.length; ++i) {
                   /* TODO: proper parsing with escapes (decide how to treat mid-word quotes) */
-                  if (words[i].startsWith("\"")) {
+                  if (words[i].startsWith("\"") && words[i].endsWith("\"")) {
+                      terms.push(words[i].slice(1, -1));
+                  } else if (words[i].startsWith("\"")) {
                       const termwords = [];
                       if (words[i] !== "\"")
                           termwords.push(words[i].slice(1));
@@ -1104,8 +1106,9 @@ utils.tri = {
                       if (words[i] !== "\"")
                           termwords.push(words[i].slice(0, -1));
                       terms.push(termwords.join(" "));
-                  } else
+                  } else {
                       terms.push(words[i]);
+                  }
               }
               break;
           case "/":
