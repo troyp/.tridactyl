@@ -29,7 +29,6 @@ set modeindicatorshowkeys true
 
 guiset_quiet statuspanel right
 guiset_quiet hoverlink right
-guiset_quiet tabs count
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────────╮
