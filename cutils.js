@@ -527,7 +527,7 @@ var cutils = {
         return tri.excmds.jsb(`sprintf(...${JSON.stringify(args)})`);
     },
 
-    toggleprop: async function(obj, prop, val1, val2) {
+    toggleprop: async function(obj, prop, val1, val2="") {
         const val = obj[prop];
         if (val == val1) obj[prop] = val2;
         else obj[prop] = val1;
