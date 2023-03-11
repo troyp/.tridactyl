@@ -148,7 +148,8 @@ command: _ "Run args as ex command" jsb -d¦ tri.controller.acceptExCmd(JS_ARGS.
 command: :exec "Eval JS string, sub for COUNT, run as ex cmd" jsb -d¦ utils.tri.exCount(JS_ARGS, null, true)¦
 command: :fill "Eval JS string, sub for COUNT, fill cmdline" jsb -d¦ utils.tri.exCount(JS_ARGS, null)¦
 command :: composite
-command hintpipe composite hint -pipe
+command: hintpipe "Hint items and pass attribute through pipe" composite hint -pipe
+command: hintpipeJ "Hint items (no JS hints) and pass attribute through pipe" composite hint -Jpipe
 commdoc pastef "Takes a format string and replaces ${S} with clipboard contents; used to pipe to another command"
 command pastef composite jsb -d¦ getclip().then(s=>parseArgs(JS_ARGS, "string").replace(/\$\{s\}/g, s))¦
 commdoc expaste "Execute commands in clipboard"
