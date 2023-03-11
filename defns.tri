@@ -431,9 +431,10 @@ bind: <AC-l> "Move tab one position to left"  tabmove +1
 " ╰─────────────────────╯
 unbind w
 
-commdoc copyuserchrome "Copy userChrome.js from .tridactyl/css to default profile"
-command copyuserchrome ! cp -v ~/.tridactyl/css/userChrome.css `echo ~/.mozilla/firefox/*.default`
-command: rmuserchrome "Remove userChrome.js from default profile" ! rm ~/.mozilla/firefox/*.default/userChrome.css
+commdoc copyuserchrome "Copy userChrome.js from .tridactyl/css to current profile"
+command copyuserchrome :: jsb tri.native.getProfileDir().then(dir=>`cp -v ~/.tridactyl/css/userChrome.css ${dir}/chrome`) | !
+commdoc rmuserchrome "Remove userChrome.js from current profile"
+command rmuserchrome :: jsb tri.native.getProfileDir().then(dir=>`${dir}/chrome/userChrome.css`) | ! rm
 commdoc bmrofi "[WHERE? BG? OPTS?] Open bookmark via rofi"
 command bmrofi jsb -d¦ places.bm.rofi(JS_ARGS)¦
 " note: The :history command can usually only take a count of about 5 (ie prev 5 days history)
