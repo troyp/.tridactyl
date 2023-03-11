@@ -580,6 +580,9 @@ commdoc searchreplace_adj "Open search based on current URL in new adjacent tab"
 command searchreplace_adj cUjs -d¦ urls.mod.setQuery("q", parseArgs(JS_ARGS, "s"), "related")¦
 
 " | tridactyl find command |
+bind: s/ "Search with :find command" fillcmdline find
+bind: s? "Enter visual mode, show :find result" :: findselect ; findnext --search-from-view
+bind: g/ "Tridactyl find: show current match in visual mode" findselect
 bind: n "Tridactyl find: next match" findnext --search-from-view
 bind: N "Tridactyl find: previous match" findnext --search-from-view --reverse
 bind: ? "Tridactyl find: search from bottom" fillcmdline find -?
@@ -610,8 +613,6 @@ bind: so "Open keyword search in current tab [Rofi]" ! echo -n "open "; kwsearch
 bind: st "Open keyword search in last tab [Rofi]" !  echo -n "tabopen_last "; kwsearch -Sw1
 bind: sr "Repeat current search with new search term" :fill `searchreplace${COUNT?"_adj":""}`
 bind: su "Open searchurl/bmark/URL in new tab" fillcmdline tabopen_searchurl
-bind: s/ "Search with :find command" fillcmdline find
-bind: s? "Enter visual mode, show :find result" :: findselect ; findnext --search-from-view
 bind: s;; "Search clipboard contents with engine" composite getclip | fillcmdline searchwithengine
 
 " | sh -- search/history |
