@@ -406,6 +406,14 @@ bind: bra "Reload all tabs except current" reloadallbut
 bind: brr "Reload COUNT tabs" reload
 bind: brR "Reload COUNT tabs and bypass cache" reloadhard
 
+" | bt -- tabs/title |
+command: tabsettitle "Set tab title" js -d¦ document.title = JS_ARGS.join(" ").trim()¦
+commdoc tabsettitleprefix "Set tab title prefix"
+command tabsettitleprefix js -d¦ document.title = `${JS_ARGS.join(" ").trim()}⍿${document.title}`¦
+
+bind: btt "Set tab title prefix" fillcmdline tabsettitleprefix
+bind: btT "Set tab title" :: js document.title | fillcmdline tabsettitle
+
 bind: C "Duplicate tab" tabduplicate
 bind: <C-k> "Close all tabs to the right inclusive" composite tabclosealltoright ; tabclose
 bind: <C-K> "Close all tabs to the left inclusive"  composite tabclosealltoleft  ; tabclose
