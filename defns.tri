@@ -1151,21 +1151,30 @@ bind: J "Evaluate javascript expression in commandline" fillcmdline jseq
 
 " | ,ii -- images/hints |
 command: imageresize "Resize image [HINTS]" cujs -d¦ cutils.img.hint.cssTransform(`scale(${JS_ARGS[1]})`)¦
+command: imagetransform "Transform image [HINTS]" cujs -d¦ cutils.img.hint.cssTransform(JS_ARGS)¦
 commdoc imagematrix "Transform image with matrix [HINTS]"
 command imagematrix cujs -d¦ cutils.img.hint.cssTransform(`matrix(${JS_ARGS.slice(1).join(',')})`)¦
+command: mogrify "Transform image with mogrify" cujs -d¦ cutils.img.mogrify(JS_ARGS.slice(1).join(" "))¦
 
 bind: ,i<C-h> "(show bindings: images)" showkeys ,i
 
 bind: ,ii<C-h> "(show bindings: images/hints)" showkeys ,ii
-bind: ,iif "Flip image horizontally [HINTS]" hint img -F e=>e.style.transform="scaleX(-1)"
-bind: ,iiF "Flip image vertically [HINTS]" hint img -F e=>e.style.transform="scaleY(-1)"
-bind: ,iig "Show image in greyscale [HINTS]" hint img -F e=>e.style.filter="grayscale(1)"
-bind: ,iii "Restore image (cancel transform) [HINTS]" hint img -F e=>e.style.transform=""
+bind: ,iif "Flip image horizontally [HINTS]" hint img -F e=>e.style.transform=e.style.transform+" scaleX(-1)"
+bind: ,iiF "Flip image vertically [HINTS]" hint img -F e=>e.style.transform=e.style.transform+" scaleY(-1)"
+bind: ,iig "Show image in greyscale [HINTS]" hint img -F e=>e.style.filter=e.style.filter+" grayscale(1)"
+bind: ,iih "+45° hue rotation [HINTS]" hint img -F e=>e.style.filter=e.style.filter+" hue-rotate(45deg)"
+bind: ,iii "Cancel image transforms [HINTS]" hint img -F e=>e.style.transform=""
+bind: ,iiI "Cancel image filters [HINTS]" hint img -F e=>e.style.filter=""
 bind: ,iim "Transform image using matrix [HINTS]" fillcmdline imagematrix
 bind: ,iir "Resize image [HINTS]" fillcmdline imageresize
+bind: ,iit "Transform image [HINTS]" hint img -F e=>fillcmdline("imagetransform "+e.style.transform)
+bind: ,iiT "Filter image [HINTS]" hint img -F e=>e.style.filter=prompt("filter: ", e.style.filter)
+bdoc ,ii? "Show image transforms [HINTS]"
+bind ,ii? hint img -F e=>alert(`transform: ${e.style.transform}\nfilter: ${e.style.filter}`)
 
 " | ,it -- images/transform |
 bind: ,it<C-h> "(show bindings: images/transform)" showkeys ,it
+bind: ,itm "Transform image with mogrify" :_ mogrify -
 bind: ,ite "Edit image with pinta" shellcmdonurlfile pinta
 
 " ───────────────────────────────────────────────────────────────────────────────

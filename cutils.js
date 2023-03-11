@@ -767,10 +767,24 @@ cutils.img = {
 
     hint: {
         cssTransform(transform) {
+            transform = cutils.tri.parseArgs(transform, "str");
             tri.controller.acceptExCmd(`hint img -F e=>e.style.transform = "${transform}"`);
         },
     },
 
+    mogrify: async function(ops) {
+        /* ops = array of arguments to mogrify, eg. 'flip' (V reflect), 'flop' (H reflect), 'rotate DEG' ; */
+        /*       or, a single argument string to be passed to mogrify, eg '-flip -rotate 30' */
+        if (typeof ops === "string") {
+            ops = ops.trim();
+        } else {
+            ops = ops.map(s=>s.trim()).filter(s=>s!="").map(s=>`-${s}`).join(" ");
+        }
+        var tempfile = (await tri.native.run("mktemp /tmp/mogrify.XXXXXX")).content.trim();
+        await tri.native.run(`curl "${window.location.href}" > ${tempfile}`);
+        await tri.native.run(`mogrify ${ops} '${tempfile}'`);
+        tri.excmds.open(`file://${tempfile}`);
+    },
 },
 
 // ───────────────────────────────────────────────────────────────────────────────
