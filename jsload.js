@@ -5,50 +5,27 @@
 // ╰─────────────╯
 
 /**
- * jsload("shortopts,longopt1,longopt2,...")
+ * jsload("opts...")
  * Load js files into content script. Takes a single string consisting of
  * zero or more single letter short-options, optionally followed by long
  * options separated by commas
- *   Short opts:
  *     a  -  capps
  *     l  -  links
  *     p  -  js/sprintf
- *     s  -  sites
+ *     s  -  shell
  *     S  -  S
  *     u  -  cutils
  *     U  -  urls
  */
-const jsload = async function (opts="") {
-    [single_letter_optstr, ...long_opts] = opts.split(",");
-    single_letter_optstr.split("").forEach(async c => {
-        switch(c) {
-          case "a":
-              await tri.controller.acceptExCmd("js -r capps.js");
-              break;
-          case "c":
-              await tri.controller.acceptExCmd("js -r csites.js");
-              break;
-          case "l":
-              await tri.controller.acceptExCmd("js -r links.js");
-              break;
-          case "p":
-              await tri.controller.acceptExCmd(`js -r js/sprintf.js`);
-              break;
-          case "s":
-              await tri.controller.acceptExCmd("js -r sites.js");
-              break;
-          case "S":
-              await tri.controller.acceptExCmd(`js -r S.js`);
-              break;
-          case "u":
-              await tri.controller.acceptExCmd("js -r cutils.js");
-              break;
-          case "U":
-              await tri.controller.acceptExCmd("js -r urls.js");
-              break;
-        }
-    });
-    long_opts.forEach(async rel => await tri.controller.acceptExCmd(`js -r ${rel}.js`));
+const jsload = async function (opstr="") {
+    if (opstr.includes("a")) await tri.excmds.js("-r", "capps.js");
+    if (opstr.includes("c")) await tri.excmds.js("-r", "csites.js");
+    if (opstr.includes("l")) await tri.excmds.js("-r", "links.js");
+    if (opstr.includes("p")) await tri.excmds.js("-r", "js/sprintf.js");
+    if (opstr.includes("s")) await tri.excmds.js("-r", "shell.js");
+    if (opstr.includes("S")) await tri.excmds.js("-r", "S.js");
+    if (opstr.includes("u")) await tri.excmds.js("-r", "cutils.js");
+    if (opstr.includes("U")) await tri.excmds.js("-r", "urls.js");
 };
 
 window.jsload = jsload;
