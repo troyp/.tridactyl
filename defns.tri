@@ -1078,16 +1078,13 @@ bind: ,avy "Goto Youtube" topos https://www.youtube.com/
 " │ ,aw -- web/weather │
 " ╰────────────────────╯
 bind ,aw<C-h> showkeys ,aw
-" Open Goonellabah Weather: 48 hour daily summary (weatherzone)
+bdoc ,awd "Goonellabah Weather: 48 hour daily summary (weatherzone)"
 bind ,awd topos https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah/next48hours#daily-summaries
-" Show Goonellabah Sunrise and Sunset Times
-bind ,aws suncalc cutils.yankf(`SUNRISE: %s\nSUNSET:  %s`, ...capps.sunriseSunset(...user.latlong));
-" Open Lismore Weather (BoM)
-bind ,aww topos http://www.bom.gov.au/nsw/forecasts/lismore.shtml
-" Open Goonellabah Weather (timeanddate.com)
-bind ,awt topos https://www.timeanddate.com/weather/@2164966
-" Open Goonellabah Weather (weatherzone)
-bind ,awz topos https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah
+bdoc ,aws "Goonellabah Sunrise and Sunset Times"
+bind ,aws suncalc sprintf(`SUNRISE: %s\t\nSUNSET: %s`, ...capps.sunriseSunset(...user.latlong)).then(s=>message(s, true))
+bind: ,aww "Lismore Weather (BoM)" topos http://www.bom.gov.au/nsw/forecasts/lismore.shtml
+bind: ,awt "Goonellabah Weather (timeanddate.com)" topos https://www.timeanddate.com/weather/@2164966
+bind: ,awz "Goonellabah Weather (weatherzone)" topos https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────────────╮
