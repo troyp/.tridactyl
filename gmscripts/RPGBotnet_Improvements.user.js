@@ -46,22 +46,37 @@ const style = document.createElement("style");
 style.classList.add("gmscript");
 document.head.appendChild(style);
 style.textContent = `
-    h4>sup>a[href="/dnd5/abbreviations/"] {
-        font-size:        8pt;
-        font-weight:      bold;
-        text-decoration:  none;
-        margin-left:      3px;
-        border:           solid 1px;
-        border-radius:    4px;
-        background-color: #E1EBFF;
+    h4>sup>a[href="/dnd5/abbreviations/"],h3>sup>a[href="/dnd5/abbreviations/"] {
+        font-size:                    8pt !important;
+        font-weight:                  bold !important;
+        text-decoration:              none !important;
+        margin-left:                  3px !important;
+        border:                       solid 1px !important;
+        border-radius:                4px !important;
+        background-color:             #E1EBFF !important;
     }
     p>span+sup>a[href="/dnd5/abbreviations/"],li>span+sup>a[href="/dnd5/abbreviations/"] {
-        font-size:        7pt;
-        font-weight:      bold;
-        text-decoration:  none;
-        margin-left:      2px;
-        border:           solid 1px;
-        border-radius:    4px;
-        background-color: #E1EBFF;
+        font-size:                    7pt !important;
+        font-weight:                  bold !important;
+        text-decoration:              none !important;
+        margin-left:                  2px !important;
+        border:                       solid 1px !important;
+        border-radius:                4px !important;
+        background-color:             #E1EBFF !important;
+    }
+    table>caption,thead,tbody {
+        border:                       2px solid black !important;
+    }
+    table>caption,thead {
+        background-color:             white !important;
+    }
+    table>caption {
+        font-weight:                  bold !important;
+        background-color:             white !important;
+        margin-bottom:                5px !important;
+        border-radius:                5px 5px 0 0 !important;
+    }
+    thead>tr>th {
+        padding:                      5px 15px !important;
     }
 `;
