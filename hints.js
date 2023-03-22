@@ -8,7 +8,7 @@
 const hints = {
 
     follow: async function(opts={}) {
-        opts = utils.tri.parseOpts(opts, {castArray: "extraSelectors"});
+        opts = utils.tri.parseOpts(opts, {castArray: "extraSelectors", castString: "switches", });
         const switches = opts.switches || "";
         const selectors = tri.config.get("hinttags.default").concat(opts.extraSelectors);
         hint(switches, "-c", selectors.join(","));
