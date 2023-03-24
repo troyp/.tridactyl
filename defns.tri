@@ -187,6 +187,7 @@ command: cjs "Load JS files into content script and run commands" composite jslo
 command: jscheme "Eval js as bookmarklet" js -d¦ tri.controller.acceptExCmd(`open javascript:${JS_ARGS.join(" ")}`)¦
 command: jsinject "Eval js as script tag" cujs -d¦ cutils.jsinject(JS_ARGS.join(" "))¦
 command: jsinject! "Eval js in file as script tag" cujs -d¦ cutils.jsinject(JS_ARGS[1], true)¦
+command: simjs "Load cutils.js, simulateHtmlMouseEvent.js, run js" cujs -r js/simulateHtmlMouseEvent.js ; js
 
 " | commands for running shell commands |
 command trish jsb -d¦ shell.cmdRoxterm(`. ~/.tridactyl/scripts/tri.sh && tri ${JS_ARGS.join(" ")}`)¦
