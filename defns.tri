@@ -1066,6 +1066,7 @@ bind: ,ass "Open Amazon AU and eBay" jsb utils.tab.openMultiple(sites.LISTS.main
 bind: ,asu "Open supermarkets" jsb utils.tab.openMultiple(sites.LISTS.supermarkets)
 bind: ,asw "Open Woolworths" topos https://www.woolworths.com.au/shop/mylists
 bind: ,asz "Open Amazon AU" topos https://www.amazon.com.au/gp/cart/view.html/ref=nav_cart
+bind: ,asZ "Open Amazon US" topos https://www.amazon.com/gp/cart/view.html/ref=nav_cart
 
 " ╭───────────────╮
 " │ ,av -- web/AV │
