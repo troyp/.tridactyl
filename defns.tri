@@ -676,7 +676,7 @@ commdoc searchnmaps! "Search user subconfig bindings"
 command searchnmaps! jsb -d¦ utils.tri.searchNmapsWrapper(JS_ARGS.slice(2).join(" "), {subconfig:JS_ARGS[1]})¦
 
 bind <C-h><C-h> showkeys <C-h>
-bind: <C-h>a "Open list of ui.key.accelKey values" topos https://searchcode.com/codesearch/view/26755902/
+bind: <C-h>a "Open list of ui.key.accelKey values" topos file:///home/troy/.tridactyl/data/nsIDOMKeyEvent.h.txt
 bind: <C-h>b "Search normal keybinding definitions" fillcmdline searchnmaps
 bind: <C-h>B "Search normal keybinding definitions (subconfigs)" fillcmdline searchnmaps!
 bind: <C-h>c "Show user-defined commands" showmycommands
