@@ -231,7 +231,9 @@ command tabopenorswitchc jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "related", "
 commdoc tabopenorswitchc! "Open an (exact) URL in current (with count: adjacent) tab, or switch to existing tab"
 command tabopenorswitchc! jsb -d¦ utils.tab.openorswitchWr(JS_ARGS, "related", "here", {exactMatch: true})¦
 command: opos "Alias for openorswitchc" openorswitchc
+command: opos! "Alias for openorswitchc" openorswitchc!
 command: topos "Alias for tabopenorswitchc" tabopenorswitchc
+command: topos! "Alias for tabopenorswitchc" tabopenorswitchc!
 " openorsummon...
 commdoc openorsummon "Open an URL in current tab, or switch to existing tab and move adjacent"
 command openorsummon jsb -p utils.tab.openOrSummon(JS_ARG, {where:"here"});
@@ -250,7 +252,9 @@ command tabopenorsummonc jsb -d¦ utils.tab.openorsummonWr(JS_ARGS, "related", "
 commdoc tabopenorsummonc! "Open an (exact) URL in a new final tab (count: current tab), or summon an existing tab"
 command tabopenorsummonc! jsb -d¦ utils.tab.openorsummonWr(JS_ARGS, "related", "here", {exactMatch: true})¦
 command: oposu "Alias for openorsummonc" openorsummonc
+command: oposu! "Alias for openorsummonc!" openorsummonc!
 command: toposu "Alias for tabopenorsummonc" tabopenorsummonc
+command: toposu! "Alias for tabopenorsummonc!" tabopenorsummonc!
 " url toggle/mod...
 command: urltoggle "Toggle s1<->s2 in current URL" cUjs -d¦ urls.mod.toggleWr(JS_ARGS)¦
 command: urltoggle! "Toggle s1<->s2 (global) in current URL" cUjs -d¦ urls.mod.toggleWr(JS_ARGS, { global:true })¦
