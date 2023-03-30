@@ -419,6 +419,7 @@ utils.tab = {
     openOrSummon: async function(url, opts={}) {
         if (!url) return null;
         opts = utils.tri.parseOpts(opts, {castString: "where", nullishDefaults:{where:"here"}});
+        if (opts.where == "tab") opts.where = "related";
         const currentTab = await tri.webext.activeTab();
         const testfn = opts.regex
               ? (t=> t.url.match(opts.regex))
