@@ -80,13 +80,14 @@ const xdo = {
 };
 
 xdo.coords = {
-    hamburger_menu:      [ 1896, 85  ],
-    tabhist_prev:        [ 260,  85  ],
-    tabhist_next:        [ 295,  85  ],
-    update_notification: [ 1740, 200 ],
-    downloads_menu:      [ 241,  85  ],
-    edit_bookmark:       [ 1461, 115 ],
-    extension_btn_R1:    [ 1822, 85  ],
+    hamburger_menu:      [ 1896, 85   ],
+    tabhist_prev:        [ 260,  85   ],
+    tabhist_next:        [ 295,  85   ],
+    update_notification: [ 1740, 200  ],
+    downloads_menu:      [ 241,  85   ],
+    edit_bookmark:       [ 1461, 115  ],
+    extension_btn_R1:    [ 1822, 85   ],
+    far_pt:              [ 1919, 1079 ],
 };
 
 xdo.keyVars = {
