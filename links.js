@@ -1,4 +1,4 @@
-links = {
+const links = {
     append: function() {
         return this.appendLines(
             document.links,
