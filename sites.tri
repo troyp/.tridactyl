@@ -1,7 +1,7 @@
 " ╭───────────╮
 " │ SITES.tri │
 " ╰───────────╯
-command definesearch jsb -d¦ utils.tri.definesearchWr(JS_ARGS)¦
+command definesearch jsb -d¦ utils.tri.definesearch(...parseArgs(JS_ARGS))¦
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮

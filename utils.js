@@ -835,17 +835,6 @@ utils.tri = {
         return command(cmdName, excmd);
     },
 
-    /* defineSearchWr([cmdName, urlTemplate, where="related", whereAlt="here"])
-     */
-    definesearchWr: function(args) {
-        args = utils.tri.parseArgs(args);
-        var [cmdName, urlTemplate, where, whereAlt] = args;
-        where ||= "related";
-        whereAlt ||= (where=="here" ? "related" : "here");
-        return this.defineSearch(cmdName, urlTemplate, null, [whereAlt, where]);
-    },
-
-
     docBindMode: function(args) {
         const argstr = args.join(" ").trim();
         const bindmodeRe = /^([a-z]+) ([^ ]+) "([^"]*)" (.*)/;
