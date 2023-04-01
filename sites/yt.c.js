@@ -141,18 +141,29 @@ var yt = {
         else
             this.openTranscript();
     },
-    copyTranscript: function(transcript=$1t("#header","Transcript")) {
-        cutils.yank(
-            transcript.nextElementSibling.textContent
-                .replace(/^      ([^ \n]+)$\n */mg, "$1\t")
-                .replace(/^ +/mg, "")
-                .replace(/\n+/g, "\n")
-        );
+    copyTranscript: function(opts={}) {
+        opts = cutils.tri.parseOpts(opts, {
+            castBoolean: "timestamps",
+            castNode: "transcript",
+            defaults: {
+                transcript: $1t("#header","Transcript"),
+            },
+        });
+        if (opts.timestamps) {
+            cutils.yank(
+                opts.transcript.nextElementSibling.textContent
+                    .replace(/^      ([^ \n]+)$\n */mg, "$1\t")
+                    .replace(/^ +/mg, "")
+                    .replace(/\n+/g, "\n")
+            );
+        } else {
+            yankby(".ytd-transcript-segment-renderer.segment-text");
+        }
     },
-    openAndCopyTranscript: function() {
+    openAndCopyTranscript: function(opts={}) {
         this.openTranscript();
         window.setTimeout(
-            ()=> this.copyTranscript(),
+            ()=> this.copyTranscript(opts),
             500
         );
     },

@@ -473,6 +473,7 @@ ytbind cy<C-h> ytshowkeys cy
 ytbind: cyl "Yank playlist items" yt cutils.yank(yt.playlistItems())
 ytbind: cyL "Yank playlist items with numbers" yt cutils.yank(yt.playlistItems(true));
 ytbind: cyt "Yank transcript" yt yt.openAndCopyTranscript()
+ytbind: cyT "Yank transcript with timestamps" yt yt.openAndCopyTranscript(true)
 
 ytbind: <Enter> "Play/Pause" yt yt.togglePause()
 ytbind: <PageUp> "Volume ↑" ytvolup
