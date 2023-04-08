@@ -133,7 +133,7 @@ bind g;s js_count cutils.get("input", {match: /search/i, textProperty: "placehol
 " │ general commands │
 " ╰──────────────────╯
 command clearconfig jsb browser.storage.local.clear()
-command yank! js -d¦ cutils.yank(cutils.tri.parseArgs(JS_ARGS, "str"))¦
+command yank! cujs -d¦ cutils.yank(cutils.tri.parseArgs(JS_ARGS, "str"))¦
 
 " | commands for entering text into commandline |
 command : fillcmdline
