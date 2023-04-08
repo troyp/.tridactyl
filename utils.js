@@ -1144,14 +1144,15 @@ utils.tri = {
                 return [`https://${url}`, "URL"];
             } else {
                 const se = url.split(" ")[0];
-                const surls = tri.config.get("searchurls");
                 const kwurl = await places.kw.get(url);
-                if (surls.hasOwnProperty(se)) {
-                    const surl = surls[se];
-                    return opts.force
-                        ? [this.searchurlResolve(url), "URL"]
-                        : [url, "searchurl"];
-                } else if (kwurl) {
+                // const surls = tri.config.get("searchurls");
+                // if (surls.hasOwnProperty(se)) {
+                //     const surl = surls[se];
+                //     return opts.force
+                //         ? [this.searchurlResolve(url), "URL"]
+                //         : [url, "searchurl"];
+                // } else
+                if (kwurl) {
                     return [kwurl, "URL"];
                 } else {
                     const defaultEngine = tri.config.get("defaultkw") || "g";
