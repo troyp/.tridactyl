@@ -285,8 +285,8 @@ utils.tab = {
      */
     open: async function(url, opts={}) {
         opts = utils.tri.parseOpts(opts, {castString: "where", castNumber: "where"});
-        if (opts.where === "tabopen") opts.where = tri.config.tabopenpos;
-        if (opts.where === "middleclick") opts.where = tri.config.relatedopenpos;
+        if (opts.where === "tabopen") opts.where = tri.config.USERCONFIG.tabopenpos;
+        if (opts.where === "middleclick") opts.where = tri.config.USERCONFIG.relatedopenpos;
         var addr_type;
         [url, addr_type] = await utils.tri.parseUrl(url, opts.where!=="here");
         const isURL = addr_type === "URL";
