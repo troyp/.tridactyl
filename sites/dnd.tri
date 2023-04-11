@@ -203,7 +203,9 @@ command ttbuildbind: bindurl: tabletopbuilds.com
 
 ttbuildbind c<C-h> showkeysurl tabletopbuilds.com c
 ttbuildbind: cb "Goto DnDBeyond.com" openorsummonc https://www.dndbeyond.com
-ttbuildbind: cc "Show final build levels" cujs cutils.message(getText1("h3,h3>span", {match: /^level 20:/i}), {cmdline: true})
+ttbuildbind: cc "Load ttbuild.auto.js" cujs -r sites/ttbuild.auto.js
+ttbuildbdoc cl "Show final build levels"
+ttbuildbind cl cujs cutils.message(getText1("h3,h3>span", {match: /^level 20:/i}), {cmdline: true})
 
 
 " | co -- ttbuild/goto |
