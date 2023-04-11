@@ -247,7 +247,6 @@ var cutils = {
         return searchFields?.[n];
     },
 
-
     getSelectionDOM: function() {
         var str = getSelectionHtml();
         var parser = new DOMParser();
@@ -401,19 +400,6 @@ var cutils = {
     },
 
     keep: (...selectors) => cutils.isolate(selectors),
-
-    /* Turn HEADING into a collapsible `details` element, containing CONTENT */
-    makeCollapsible: async function(content, heading) {
-        const det = document.createElement("details");
-        const summ = document.createElement("summary");
-        if (typeof heading == "string")
-            content.before(det);
-        else
-            heading.before(det);
-        det.appendChild(summ);
-        summ.append(heading);
-        det.appendChild(content);
-    },
 
     message: async function(s, opts={}) {
         opts = cutils.tri.parseOpts(opts, {castBoolean: "cmdline"});
@@ -786,6 +772,33 @@ cutils.img = {
         tri.excmds.open(`file://${tempfile}`);
     },
 },
+// ───────────────────────────────────────────────────────────────────────────────
+// ╭────────────────────────────────────────────────╮
+// │ cutils.mod -- utilities for modifying web pages │
+// ╰────────────────────────────────────────────────╯
+
+cutils.mod = {
+    /* Turn HEADING into a collapsible `details` element, containing CONTENT */
+    makeCollapsible: async function(content, heading) {
+        const det = document.createElement("details");
+        const summ = document.createElement("summary");
+        if (typeof heading == "string")
+            content.before(det);
+        else
+            heading.before(det);
+        det.appendChild(summ);
+        summ.append(heading);
+        det.appendChild(content);
+    },
+
+    /* Wrap element in a wrapper element */
+    wrapin: function(e, wrapper) {
+        const parent = e.parentNode;
+        const next = e.nextSibling; /* may be nullish */
+        wrapper.appendChild(e);
+        parent.insertBefore(wrapper, next);
+    },
+};
 
 // ───────────────────────────────────────────────────────────────────────────────
 // ╭──────────────────────────────────────────────────────────────────╮
@@ -997,6 +1010,10 @@ window.R = R;
     "datetime", "isInViewport", "isDisplayed", "sprintf",
     "asArr", "hexToRGB", "isArraylike", "isArrayConvertible", "isIterable",
 ].forEach(k => window[k]=cutils[k]);
+
+[
+    "makeCollapsible", "wrapin",
+].forEach(k => window[k]=cutils.mod[k]);
 
 [
     "parseArgs", "parseArgsAndCount", "parseOpts", "parseTerms", "parseTermsAndCount",
