@@ -11,7 +11,7 @@ var capps = {
 
     toggleCrosshair: function() {
         if ($1(".spry-crosshair"))
-            cutils.rmall(".spry-crosshair");
+            rmall(".spry-crosshair");
         else
             tri.excmds.js("-r", "js/sprymedia/crosshair-loader.js");
         document.dispatchEvent(new Event("input"));

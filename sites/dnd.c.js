@@ -23,7 +23,7 @@ dnd.dndb = {
         } else if ($1(".listing-card__callout")) {
             hint("-Jc", ".listing-card__callout", "-F e=>tabopen(e.closest('a'))");
         } else if ($1(".homebrew-comments")) {
-            cutils.rm(".homebrew-comments");
+            rm(".homebrew-comments");
         } else {
             $$("h2").find(h=>window.scrollY>h.offsetTop).scrollIntoView();
         }
