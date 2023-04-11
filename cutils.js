@@ -1,5 +1,5 @@
 // ╭───────────────────────────────────────────────────────────╮
-// │ cutils.js ── utility functions for content script context │
+// │ cutils.js -- utility functions for content script context │
 // ╰───────────────────────────────────────────────────────────╯
 
 var R = tri.R;
@@ -667,7 +667,7 @@ var cutils = {
 
 // ───────────────────────────────────────────────────────────────────────────────
 // ╭─────────────────────────────╮
-// │ cutils.css ── CSS utilities │
+// │ cutils.css -- CSS utilities │
 // ╰─────────────────────────────╯
 
 cutils.css = {
@@ -760,7 +760,7 @@ cutils.css = {
 
 // ───────────────────────────────────────────────────────────────────────────────
 // ╭───────────────────────────────╮
-// │ cutils.img ── image utilities │
+// │ cutils.img -- image utilities │
 // ╰───────────────────────────────╯
 
 cutils.img = {
@@ -789,7 +789,7 @@ cutils.img = {
 
 // ───────────────────────────────────────────────────────────────────────────────
 // ╭──────────────────────────────────────────────────────────────────╮
-// │ cutils.tri ── utilities related to tridactyl source and features │
+// │ cutils.tri -- utilities related to tridactyl source and features │
 // ╰──────────────────────────────────────────────────────────────────╯
 
 cutils.tri = {
