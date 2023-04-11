@@ -776,7 +776,7 @@ bdoc yxh "Yank a text span highlighted with cutils.css.highlight (.tri_hl) [HINT
 bind yxh  hint -JVc ._tri_hl -F e=>cutils.yank(e.innerText)
 bind: yxH "Yank all text highlighted with cutils.css.highlight (.tri_hl)" yankall ._tri_hl
 bind: yxp "Yank paragraph/heading" hint -p -c p,code,pre,h1,h2,h3,h4,h5,h6,output,table
-bind: yxs "Yank text span" jse SEL.yankspan.join(",") | yankhint
+bind: yxs "Yank text span" cujs SEL.yankspan.join(",") | yankhint
 bind: yxx "Yank page text" yankfirst body
 
 " ───────────────────────────────────────────────────────────────────────────────
