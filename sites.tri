@@ -236,7 +236,7 @@ ghbind: cyU "Yank user name"  :: jsb sites.gh.getUser() | yank!
 command: googlebind "Bind key for www.google.com" bindurl google.com
 command: googlebind: "Bind key with description for www.google.com" bindurl: google.com
 
-googlebind: f "Open link in current tab [HINT]" hint -J
+googlebind: f "Open link in current tab [HINT]" jsb hints.follow("-J")
 googlebind: F "Open link in new tab [HINT]" hint -Jb
 googlebind: gf "Open multiple tabs in background tabs [HINNTS]" hint -qJb
 googlebind: g;s "Focus search box" cujs $1("input[aria-label=Search]").focus()
