@@ -1340,6 +1340,8 @@ bind: ,xtc "Copy table columns [HINT]" fillcmdline copytablecols
 bind: ,xtC "Copy table columns (omit rows without enough columns) [HINT]" fillcmdline copytablecols_strict
 bind: ,xtd "Delete table row [HINT]" hint -Jk tr
 bind: ,xt;d "Delete multiple table rows [HINTS]" hint -Jqk tr
+bdoc ,xtn "Show number of rows in table body [HINTS]"
+bind ,xtn :: hint -Jc table -F t=>t.tBodies[0].getElementsByTagName("tr").length | sprintf "#rows: %s" | show5
 bind: ,xtt "Scroll table into view" scrolltableintoview
 
 " | ,xts -- misc/table/sort |
