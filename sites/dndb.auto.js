@@ -4,11 +4,11 @@
 
 $$(".spell-list-heading-icon.i-concentration").forEach(e=>{
     const heading = e.closest(".spell-list-heading").querySelector(".spell-list-heading-text");
-    heading.style.color = "#c53131";
+    if (heading) heading.style.color = "#c53131";
 });
 $$(".spell-list-heading-icon.i-ritual").forEach(e=>{
     const box = e.closest(".collapsible-header");
-    box.style.background = "#FFFCCB";
+    if (box) box.style.background = "#FFFCCB";
 });
 
 $$("span.spell-list-heading-text").forEach(e=>{
@@ -37,7 +37,8 @@ $$(".builder-sections a").forEach(l => {
 
 if (document.location.href.match(/https:\/\/www.dndbeyond.com\/characters\/[0-9]+/)) {
 
-    document.querySelector(".ct-character-sheet__inner").style.marginLeft="6em";
+    const csheet_inner = document.querySelector(".ct-character-sheet__inner");
+    if (csheet_inner) csheet_inner.style.marginLeft="6em";
 
     const typemap = {
         "fire": ["#f78c19", "#c52400", "rgba(247, 140, 25, 0.2)"],
