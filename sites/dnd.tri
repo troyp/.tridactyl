@@ -1,8 +1,9 @@
 " ╭────────────╮
 " │ DnD module │
 " ╰────────────╯
-command: dndjs "Load dnd.c.js and execute javascript" cujs -r sites/dnd.c.js ; js
 definesearch dndb_search https://www.dndbeyond.com/search?q=%s
+command: dndjs "Run javascript after loading dnd.c.js file (default COUNT=1)" cujs -r sites/dnd.c.js ; js_count
+command: dndjs! "Run javascript after loading dnd.c.js file (default COUNT=null)" cujs -r sites/dnd.c.js ; js_count!
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
@@ -11,8 +12,12 @@ definesearch dndb_search https://www.dndbeyond.com/search?q=%s
 autocmd DocLoad  https://www\.dndbeyond\.com/ cujs -r sites/dndb.auto.js
 autocmd TabEnter https://www\.dndbeyond\.com/ cujs -r sites/dndb.auto.js
 
-command dndbbind bindurl dndbeyond.com
-command dndbbind: bindurl: dndbeyond.com
+command: dndbbind "Bind key for dndbeyond.com" bindurl dndbeyond.com
+command: dndbbind: "Bind key with description for dndbeyond.com" bindurl: dndbeyond.com
+command: dndbbdoc "Provide a description on a separate line" js ;
+command: dndbshowkeys "(show bindings: dndb)" showkeysurl dndbeyond.com
+
+dndbbind: c<C-h> "(show bindings: dndb)" dndbshowkeys c
 
 dndbbind: <enter> "load dndb.auto.js" cujs -r sites/dndb.auto.js
 dndbbind: <S-enter> "Jump to heading" cujs jumpToHeading()
@@ -31,7 +36,7 @@ dndbbdoc cv "Toggle collapse Dice Notification"
 dndbbind cv hint -Jc .dice_notification_controls__collapse,.dice_notification_controls__uncollapse
 
 " | cl -- dndb/library |
-dndbbind cl<C-h> showkeysurl dndbeyond.com cl
+dndbbind: cl<C-h> "(show bindings: dndb/lib)" dndbshowkeys cl
 dndbbind: clb "Library/Basic Rules" toposu! https://www.dndbeyond.com/sources/basic-rules
 dndbbind: cld "Library/DMG" toposu! https://www.dndbeyond.com/sources/dmg
 dndbbind: cll "Library" toposu! https://www.dndbeyond.com/sources#Sourcebooks
@@ -45,19 +50,19 @@ dndbbind: clw "Library/Explorer's Guide to Wildemount" toposu! https://www.dndbe
 dndbbind: clx "Library/Xanathar's" toposu! https://www.dndbeyond.com/sources/xgte
 
 " | cm -- dndb/my |
-dndbbind cm<C-h> showkeysurl dndbeyond.com cm
+dndbbind: cm<C-h> "(show bindings: dndb/my)" dndbshowkeys cm
 dndbbind: cmc "Goto my characters" toposu! https://www.dndbeyond.com/characters
 dndbbind: cmh "Goto my homebrew" toposu! https://www.dndbeyond.com/my-creations
 
 " | co -- dndb/goto |
-dndbbind co<C-h> showkeysurl dndbeyond.com co
+dndbbind: co<C-h> "(show bindings: dndb/goto)" dndbshowkeys co
 dndbbind: coc "Goto cart" toposu! https://www.dndbeyond.com/marketplace/cart
 dndbbind: com "Goto marketplace" toposu! https://www.dndbeyond.com/marketplace/sourcebooks
 dndbbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
 dndbbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
 
 " | cr -- dndb/rules |
-dndbbind cr<C-h> showkeysurl dndbeyond.com cr
+dndbbind: cr<C-h> "(show bindings: dndb/rules)" dndbshowkeys cr
 dndbbind: crb "Goto Backgrounds" toposu! https://www.dndbeyond.com/backgrounds
 dndbbind: cre "Goto Equipment" toposu! https://www.dndbeyond.com/equipment
 dndbbind: crf "Goto Feats" toposu! https://www.dndbeyond.com/feats
@@ -67,7 +72,7 @@ dndbbind: crr "Goto Races" toposu! https://www.dndbeyond.com/races
 dndbbind: crv "Goto Vehices" toposu! https://www.dndbeyond.com/vehicles
 
 " | crc -- dndb/rules/classes |
-dndbbind crc<C-h> showkeysurl dndbeyond.com crc
+dndbbind: crc<C-h> "(show bindings: dndb/rules/class)" dndbshowkeys crc
 dndbbind: crc. "Goto Classes" toposu! https://www.dndbeyond.com/classes
 dndbbind: crca "Goto Artificer" toposu! https://www.dndbeyond.com/classes/artificer
 dndbbind: crcB "Goto Barbarian" toposu! https://www.dndbeyond.com/classes/barbarian
@@ -85,7 +90,7 @@ dndbbind: crcw "Goto Wizard" toposu! https://www.dndbeyond.com/classes/wizard
 dndbbind: crcW "Goto Warlock" toposu! https://www.dndbeyond.com/classes/warlock
 
 " | crs -- dndb/rules/spells |
-dndbbind crs<C-h> showkeysurl dndbeyond.com crs
+dndbbind: crs<C-h> "(show bindings: dndb/rules/spells)" dndbshowkeys crs
 dndbbind: crss "Goto Spells" toposu! https://www.dndbeyond.com/spells
 dndbbind: crsc "Goto Spells: conjuration" toposu! https://www.dndbeyond.com/spells/school/conjuration
 dndbbind: crsd "Goto Spells: divination" toposu! https://www.dndbeyond.com/spells/school/divination
@@ -110,10 +115,13 @@ dndbbind: crs<Space> "Open spell description" fillcmdline_notrail tabopen https:
 definesearch dndbspell https://www.dndbeyond.com/spells/%s -
 definesearch dndbsearch_spell https://www.dndbeyond.com/spells?filter-class=0&filter-search=%s
 
-dndbbind: css "Search" fillcmdline dndb_search
-dndbbind: cs;s "Goto spell description" fillcmdline dndbspell
+dndbbind: cs<C-h> "(show bindings: dndb/search)" dndbshowkeys cs
+dndbbind: css "Search" fillcmdline dndb_search tab
+dndbbind: csS "Search dndb spells" fillcmdline dndbsearch_spell tab
+dndbbind: cs;s "Goto spell description" fillcmdline dndbspell tab
 
 " | ct -- dndb/toggle |
+dndbbind: ct<C-h> "(show bindings: dndb/toggle)" dndbshowkeys ct
 dndbbind: ctn "Toggle all off" dndjs dnd.dndb.toggleOff()
 dndbbind: ctt "Toggle all" dndjs dnd.dndb.toggle()
 dndbbind: cty "Toggle all on" dndjs dnd.dndb.toggleOn()
