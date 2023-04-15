@@ -75,7 +75,8 @@ colesbind cc sitejs csites.coles.go()
 
 " | co -- coles/goto |
 colesbind: co<C-h> "(show bindings: coles/goto)" colesshowkeys co
-colesbind: cor "Goto Buy Again" opos https://shop.coles.com.au/a/ballina/bought-before/browse
+colesbind: coo "Goto orders" opos https://www.coles.com.au/account/orders
+colesbind: cor "Goto Buy Again" opos https://www.coles.com.au/bought-before
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮
