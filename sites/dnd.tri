@@ -32,78 +32,78 @@ dndbbind cv hint -Jc .dice_notification_controls__collapse,.dice_notification_co
 
 " | cl -- dndb/library |
 dndbbind cl<C-h> showkeysurl dndbeyond.com cl
-dndbbind: clb "Library/Basic Rules" openorsummonc! https://www.dndbeyond.com/sources/basic-rules
-dndbbind: cld "Library/DMG" openorsummonc! https://www.dndbeyond.com/sources/dmg
-dndbbind: cll "Library" openorsummonc! https://www.dndbeyond.com/sources#Sourcebooks
-dndbbind: clm "Library/Monster Manual" openorsummonc! https://www.dndbeyond.com/sources/mm
-dndbbind: clM "Library/Monsters of the Multiverse" openorsummonc! https://www.dndbeyond.com/sources/motm
-dndbbind: clp "Library/PHB" openorsummonc! https://www.dndbeyond.com/sources/phb
-dndbbind: cls "Library/Sage Advice" openorsummonc! https://www.dndbeyond.com/sources/sac
-dndbbind: clS "Library/Sword Coast Adventurer's Guide" openorsummonc! https://www.dndbeyond.com/sources/scag
-dndbbind: clt "Library/Tasha's Cauldron of Everything" openorsummonc! https://www.dndbeyond.com/sources/tcoe
-dndbbind: clw "Library/Explorer's Guide to Wildemount" openorsummonc! https://www.dndbeyond.com/sources/egtw
-dndbbind: clx "Library/Xanathar's" openorsummonc! https://www.dndbeyond.com/sources/xgte
+dndbbind: clb "Library/Basic Rules" toposu! https://www.dndbeyond.com/sources/basic-rules
+dndbbind: cld "Library/DMG" toposu! https://www.dndbeyond.com/sources/dmg
+dndbbind: cll "Library" toposu! https://www.dndbeyond.com/sources#Sourcebooks
+dndbbind: clm "Library/Monster Manual" toposu! https://www.dndbeyond.com/sources/mm
+dndbbind: clM "Library/Monsters of the Multiverse" toposu! https://www.dndbeyond.com/sources/motm
+dndbbind: clp "Library/PHB" toposu! https://www.dndbeyond.com/sources/phb
+dndbbind: cls "Library/Sage Advice" toposu! https://www.dndbeyond.com/sources/sac
+dndbbind: clS "Library/Sword Coast Adventurer's Guide" toposu! https://www.dndbeyond.com/sources/scag
+dndbbind: clt "Library/Tasha's Cauldron of Everything" toposu! https://www.dndbeyond.com/sources/tcoe
+dndbbind: clw "Library/Explorer's Guide to Wildemount" toposu! https://www.dndbeyond.com/sources/egtw
+dndbbind: clx "Library/Xanathar's" toposu! https://www.dndbeyond.com/sources/xgte
 
 " | cm -- dndb/my |
 dndbbind cm<C-h> showkeysurl dndbeyond.com cm
-dndbbind: cmc "Goto my characters" openorsummonc! https://www.dndbeyond.com/characters
-dndbbind: cmh "Goto my homebrew" openorsummonc! https://www.dndbeyond.com/my-creations
+dndbbind: cmc "Goto my characters" toposu! https://www.dndbeyond.com/characters
+dndbbind: cmh "Goto my homebrew" toposu! https://www.dndbeyond.com/my-creations
 
 " | co -- dndb/goto |
 dndbbind co<C-h> showkeysurl dndbeyond.com co
-dndbbind: coc "Goto cart" openorsummonc! https://www.dndbeyond.com/marketplace/cart
-dndbbind: com "Goto marketplace" openorsummonc! https://www.dndbeyond.com/marketplace/sourcebooks
-dndbbind: cos "Goto dnd-spells.com" openorsummonc! https://www.dnd-spells.com/spells
-dndbbind: cot "Goto tabletopbuilds.com" openorsummonc! https://tabletopbuilds.com
+dndbbind: coc "Goto cart" toposu! https://www.dndbeyond.com/marketplace/cart
+dndbbind: com "Goto marketplace" toposu! https://www.dndbeyond.com/marketplace/sourcebooks
+dndbbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
+dndbbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
 
 " | cr -- dndb/rules |
 dndbbind cr<C-h> showkeysurl dndbeyond.com cr
-dndbbind: crb "Goto Backgrounds" openorsummonc! https://www.dndbeyond.com/backgrounds
-dndbbind: cre "Goto Equipment" openorsummonc! https://www.dndbeyond.com/equipment
-dndbbind: crf "Goto Feats" openorsummonc! https://www.dndbeyond.com/feats
-dndbbind: cri "Goto Magic Items" openorsummonc! https://www.dndbeyond.com/magic-items
-dndbbind: crm "Goto Monsters" openorsummonc! https://www.dndbeyond.com/monsters
-dndbbind: crr "Goto Races" openorsummonc! https://www.dndbeyond.com/races
-dndbbind: crv "Goto Vehices" openorsummonc! https://www.dndbeyond.com/vehicles
+dndbbind: crb "Goto Backgrounds" toposu! https://www.dndbeyond.com/backgrounds
+dndbbind: cre "Goto Equipment" toposu! https://www.dndbeyond.com/equipment
+dndbbind: crf "Goto Feats" toposu! https://www.dndbeyond.com/feats
+dndbbind: cri "Goto Magic Items" toposu! https://www.dndbeyond.com/magic-items
+dndbbind: crm "Goto Monsters" toposu! https://www.dndbeyond.com/monsters
+dndbbind: crr "Goto Races" toposu! https://www.dndbeyond.com/races
+dndbbind: crv "Goto Vehices" toposu! https://www.dndbeyond.com/vehicles
 
 " | crc -- dndb/rules/classes |
 dndbbind crc<C-h> showkeysurl dndbeyond.com crc
-dndbbind: crc. "Goto Classes" openorsummonc! https://www.dndbeyond.com/classes
-dndbbind: crca "Goto Artificer" openorsummonc! https://www.dndbeyond.com/classes/artificer
-dndbbind: crcB "Goto Barbarian" openorsummonc! https://www.dndbeyond.com/classes/barbarian
-dndbbind: crcb "Goto Bard" openorsummonc! https://www.dndbeyond.com/classes/bard
-dndbbind: crcc "Goto Cleric" openorsummonc! https://www.dndbeyond.com/classes/cleric
-dndbbind: crcd "Goto Druid" openorsummonc! https://www.dndbeyond.com/classes/druid
-dndbbind: crcf "Goto Fighter" openorsummonc! https://www.dndbeyond.com/classes/fighter
-dndbbind: crck "Goto Warlock" openorsummonc! https://www.dndbeyond.com/classes/warlock
-dndbbind: crcm "Goto Monk" openorsummonc! https://www.dndbeyond.com/classes/monk
-dndbbind: crcp "Goto Paladin" openorsummonc! https://www.dndbeyond.com/classes/paladin
-dndbbind: crcR "Goto Ranger" openorsummonc! https://www.dndbeyond.com/classes/ranger
-dndbbind: crcr "Goto Rogue" openorsummonc! https://www.dndbeyond.com/classes/rogue
-dndbbind: crcs "Goto Sorcerer" openorsummonc! https://www.dndbeyond.com/classes/sorcerer
-dndbbind: crcW "Goto Warlock" openorsummonc! https://www.dndbeyond.com/classes/warlock
-dndbbind: crcw "Goto Wizard" openorsummonc! https://www.dndbeyond.com/classes/wizard
+dndbbind: crc. "Goto Classes" toposu! https://www.dndbeyond.com/classes
+dndbbind: crca "Goto Artificer" toposu! https://www.dndbeyond.com/classes/artificer
+dndbbind: crcB "Goto Barbarian" toposu! https://www.dndbeyond.com/classes/barbarian
+dndbbind: crcb "Goto Bard" toposu! https://www.dndbeyond.com/classes/bard
+dndbbind: crcc "Goto Cleric" toposu! https://www.dndbeyond.com/classes/cleric
+dndbbind: crcd "Goto Druid" toposu! https://www.dndbeyond.com/classes/druid
+dndbbind: crcf "Goto Fighter" toposu! https://www.dndbeyond.com/classes/fighter
+dndbbind: crck "Goto Warlock" toposu! https://www.dndbeyond.com/classes/warlock
+dndbbind: crcm "Goto Monk" toposu! https://www.dndbeyond.com/classes/monk
+dndbbind: crcp "Goto Paladin" toposu! https://www.dndbeyond.com/classes/paladin
+dndbbind: crcR "Goto Ranger" toposu! https://www.dndbeyond.com/classes/ranger
+dndbbind: crcr "Goto Rogue" toposu! https://www.dndbeyond.com/classes/rogue
+dndbbind: crcs "Goto Sorcerer" toposu! https://www.dndbeyond.com/classes/sorcerer
+dndbbind: crcw "Goto Wizard" toposu! https://www.dndbeyond.com/classes/wizard
+dndbbind: crcW "Goto Warlock" toposu! https://www.dndbeyond.com/classes/warlock
 
 " | crs -- dndb/rules/spells |
 dndbbind crs<C-h> showkeysurl dndbeyond.com crs
-dndbbind: crss "Goto Spells" openorsummonc! https://www.dndbeyond.com/spells
-dndbbind: crsc "Goto Spells: conjuration" openorsummonc! https://www.dndbeyond.com/spells/school/conjuration
-dndbbind: crsd "Goto Spells: divination" openorsummonc! https://www.dndbeyond.com/spells/school/divination
-dndbbind: crse "Goto Spells: enchantment" openorsummonc! https://www.dndbeyond.com/spells/school/enchantment
-dndbbind: crsi "Goto Spells: illusion" openorsummonc! https://www.dndbeyond.com/spells/school/illusion
-dndbbind: crsn "Goto Spells: necromancy" openorsummonc! https://www.dndbeyond.com/spells/school/necromancy
-dndbbind: crst "Goto Spells: transmutation" openorsummonc! https://www.dndbeyond.com/spells/school/transmutation
-dndbbind: crsv "Goto Spells: evocation" openorsummonc! https://www.dndbeyond.com/spells/school/evocation
-dndbbind: crs.a "Goto Spells: class=Artificer" openorsummonc! https://www.dndbeyond.com/spells?filter-class=252717
-dndbbind: crs.b "Goto Spells: class=Bard" openorsummonc! https://www.dndbeyond.com/spells?filter-class=1
-dndbbind: crs.c "Goto Spells: class=Cleric" openorsummonc! https://www.dndbeyond.com/spells?filter-class=2
-dndbbind: crs.d "Goto Spells: class=Druid" openorsummonc! https://www.dndbeyond.com/spells?filter-class=3
-dndbbind: crs.k "Goto Spells: class=Warlock" openorsummonc! https://www.dndbeyond.com/spells?filter-class=7
-dndbbind: crs.p "Goto Spells: class=Paladin" openorsummonc! https://www.dndbeyond.com/spells?filter-class=4
-dndbbind: crs.r "Goto Spells: class=Ranger" openorsummonc! https://www.dndbeyond.com/spells?filter-class=5
-dndbbind: crs.s "Goto Spells: class=Sorcerer" openorsummonc! https://www.dndbeyond.com/spells?filter-class=6
-dndbbind: crs.w "Goto Spells: class=Wizard" openorsummonc! https://www.dndbeyond.com/spells?filter-class=8
-dndbbind: crs.W "Goto Spells: class=Warlock" openorsummonc! https://www.dndbeyond.com/spells?filter-class=7
+dndbbind: crss "Goto Spells" toposu! https://www.dndbeyond.com/spells
+dndbbind: crsc "Goto Spells: conjuration" toposu! https://www.dndbeyond.com/spells/school/conjuration
+dndbbind: crsd "Goto Spells: divination" toposu! https://www.dndbeyond.com/spells/school/divination
+dndbbind: crse "Goto Spells: enchantment" toposu! https://www.dndbeyond.com/spells/school/enchantment
+dndbbind: crsi "Goto Spells: illusion" toposu! https://www.dndbeyond.com/spells/school/illusion
+dndbbind: crsn "Goto Spells: necromancy" toposu! https://www.dndbeyond.com/spells/school/necromancy
+dndbbind: crst "Goto Spells: transmutation" toposu! https://www.dndbeyond.com/spells/school/transmutation
+dndbbind: crsv "Goto Spells: evocation" toposu! https://www.dndbeyond.com/spells/school/evocation
+dndbbind: crs.a "Goto Spells: class=Artificer" toposu! https://www.dndbeyond.com/spells?filter-class=252717
+dndbbind: crs.b "Goto Spells: class=Bard" toposu! https://www.dndbeyond.com/spells?filter-class=1
+dndbbind: crs.c "Goto Spells: class=Cleric" toposu! https://www.dndbeyond.com/spells?filter-class=2
+dndbbind: crs.d "Goto Spells: class=Druid" toposu! https://www.dndbeyond.com/spells?filter-class=3
+dndbbind: crs.k "Goto Spells: class=Warlock" toposu! https://www.dndbeyond.com/spells?filter-class=7
+dndbbind: crs.p "Goto Spells: class=Paladin" toposu! https://www.dndbeyond.com/spells?filter-class=4
+dndbbind: crs.r "Goto Spells: class=Ranger" toposu! https://www.dndbeyond.com/spells?filter-class=5
+dndbbind: crs.s "Goto Spells: class=Sorcerer" toposu! https://www.dndbeyond.com/spells?filter-class=6
+dndbbind: crs.w "Goto Spells: class=Wizard" toposu! https://www.dndbeyond.com/spells?filter-class=8
+dndbbind: crs.W "Goto Spells: class=Warlock" toposu! https://www.dndbeyond.com/spells?filter-class=7
 dndbbind: crs<Space> "Open spell description" fillcmdline_notrail tabopen https://www.dndbeyond.com/spells/
 
 " | cs -- dndb/search |
@@ -114,9 +114,9 @@ dndbbind: css "Search" fillcmdline dndb_search
 dndbbind: cs;s "Goto spell description" fillcmdline dndbspell
 
 " | ct -- dndb/toggle |
+dndbbind: ctn "Toggle all off" dndjs dnd.dndb.toggleOff()
 dndbbind: ctt "Toggle all" dndjs dnd.dndb.toggle()
 dndbbind: cty "Toggle all on" dndjs dnd.dndb.toggleOn()
-dndbbind: ctn "Toggle all on" dndjs dnd.dndb.toggleOff()
 
 " | cx -- dndb/misc |
 " | cxt -- dndb/misc/table |
@@ -153,24 +153,24 @@ command rpgbotbind: bindurl: rpgbot.net
 
 rpgbotbind c<C-h> showkeysurl rpgbot.net c
 rpgbotbind: cb "Goto DnDBeyond.com" openorsummonc https://www.dndbeyond.com
-rpgbotbind: cba "Artificer Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/artificer/subclasses
-rpgbotbind: cbB "Barbarian Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/barbarian/subclasses
-rpgbotbind: cca "Goto Artificer Guide" openorsummonc! https://rpgbot.net/dnd5/characters/classes/artificer
-rpgbotbind: ccB "Goto Barbarian Guide" openorsummonc! https://rpgbot.net/dnd5/characters/classes/barbarian
-rpgbotbind: ccb "Goto Bard Guide" openorsummonc! https://rpgbot.net/dnd5/characters/classes/bard
-rpgbotbind: ccc "Goto Cleric Guide" openorsummonc! https://rpgbot.net/dnd5/characters/classes/cleric
-rpgbotbind: ccd "Goto Druid Guide" openorsummonc! https://rpgbot.net/dnd5/characters/classes/druid
-rpgbotbind: ccf "Goto Fighter Guide" openorsummonc! https://rpgbot.net/dnd5/characters/classes/fighter
-rpgbotbind: cck "Goto Warlock Guide" openorsummonc! https://rpgbot.net/dnd5/characters/classes/warlock
-rpgbotbind: ccm "Goto Monk Guide" openorsummonc! https://rpgbot.net/dnd5/characters/classes/monk
-rpgbotbind: ccp "Goto Paladin Guide" openorsummonc! https://rpgbot.net/dnd5/characters/classes/paladin
-rpgbotbind: ccR "Goto Ranger Guide" openorsummonc! https://rpgbot.net/dnd5/characters/classes/ranger
-rpgbotbind: ccr "Goto Rogue Guide" openorsummonc! https://rpgbot.net/dnd5/characters/classes/rogue
-rpgbotbind: ccs "Goto Sorcerer Guide" openorsummonc! https://rpgbot.net/dnd5/characters/classes/sorcerer
-rpgbotbind: ccW "Goto Warlock Guide" openorsummonc! https://rpgbot.net/dnd5/characters/classes/warlock
-rpgbotbind: ccw "Goto Wizard Guide" openorsummonc! https://rpgbot.net/dnd5/characters/classes/wizard
 definesearch rpgbot_search https://rpgbot.net/?s=%s
 
+rpgbotbind: cba "Artificer Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/artificer/subclasses
+rpgbotbind: cbB "Barbarian Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/barbarian/subclasses
+rpgbotbind: cca "Goto Artificer Guide" toposu! https://rpgbot.net/dnd5/characters/classes/artificer
+rpgbotbind: ccB "Goto Barbarian Guide" toposu! https://rpgbot.net/dnd5/characters/classes/barbarian
+rpgbotbind: ccb "Goto Bard Guide" toposu! https://rpgbot.net/dnd5/characters/classes/bard
+rpgbotbind: ccc "Goto Cleric Guide" toposu! https://rpgbot.net/dnd5/characters/classes/cleric
+rpgbotbind: ccd "Goto Druid Guide" toposu! https://rpgbot.net/dnd5/characters/classes/druid
+rpgbotbind: ccf "Goto Fighter Guide" toposu! https://rpgbot.net/dnd5/characters/classes/fighter
+rpgbotbind: cck "Goto Warlock Guide" toposu! https://rpgbot.net/dnd5/characters/classes/warlock
+rpgbotbind: ccm "Goto Monk Guide" toposu! https://rpgbot.net/dnd5/characters/classes/monk
+rpgbotbind: ccp "Goto Paladin Guide" toposu! https://rpgbot.net/dnd5/characters/classes/paladin
+rpgbotbind: ccR "Goto Ranger Guide" toposu! https://rpgbot.net/dnd5/characters/classes/ranger
+rpgbotbind: ccr "Goto Rogue Guide" toposu! https://rpgbot.net/dnd5/characters/classes/rogue
+rpgbotbind: ccs "Goto Sorcerer Guide" toposu! https://rpgbot.net/dnd5/characters/classes/sorcerer
+rpgbotbind: ccW "Goto Warlock Guide" toposu! https://rpgbot.net/dnd5/characters/classes/warlock
+rpgbotbind: ccw "Goto Wizard Guide" toposu! https://rpgbot.net/dnd5/characters/classes/wizard
 
 " | co -- rpgbot/goto |
 rpgbotbind co<C-h> showkeysurl rpgbot.net co
@@ -182,17 +182,17 @@ rpgbotbind: csb "Search DnDBeyond.com" fillcmdline dndb_search
 rpgbotbind: css "Search RPGBot.net" fillcmdline rpgbot_search
 rpgbotbind: cs;s "Goto spell description" fillcmdline dndbspell
 
-rpgbotbind: c/b "Bard Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/bard/subclasses
-rpgbotbind: c/c "Cleric Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/cleric/subclasses
-rpgbotbind: c/d "Druid Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/druid/subclasses
-rpgbotbind: c/f "Fighter Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/fighter/subclasses
-rpgbotbind: c/m "Monk Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/monk/subclasses
-rpgbotbind: c/p "Paladin Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/paladin/subclasses
-rpgbotbind: c/R "Ranger Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/ranger/subclasses
-rpgbotbind: c/r "Rogue Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/rogue/subclasses
-rpgbotbind: c/s "Sorcerer Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/sorcerer/subclasses
-rpgbotbind: c/W "Warlock Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/warlock/subclasses
-rpgbotbind: c/w "Wizard Subclasses" openorsummonc! https://rpgbot.net/dnd5/characters/classes/wizard/subclasses
+rpgbotbind: c/b "Bard Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/bard/subclasses
+rpgbotbind: c/c "Cleric Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/cleric/subclasses
+rpgbotbind: c/d "Druid Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/druid/subclasses
+rpgbotbind: c/f "Fighter Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/fighter/subclasses
+rpgbotbind: c/m "Monk Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/monk/subclasses
+rpgbotbind: c/p "Paladin Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/paladin/subclasses
+rpgbotbind: c/R "Ranger Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/ranger/subclasses
+rpgbotbind: c/r "Rogue Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/rogue/subclasses
+rpgbotbind: c/s "Sorcerer Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/sorcerer/subclasses
+rpgbotbind: c/W "Warlock Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/warlock/subclasses
+rpgbotbind: c/w "Wizard Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/wizard/subclasses
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────────────╮
@@ -210,12 +210,12 @@ ttbuildbind cl cujs cutils.message(getText1("h3,h3>span", {match: /^level 20:/i}
 
 " | co -- ttbuild/goto |
 ttbuildbind co<C-h> showkeysurl tabletopbuilds.com co
-ttbuildbind: cob "Goto DnDBeyond.com" openorsummonc https://www.dndbeyond.com
+ttbuildbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
 ttbuildbind: coc "Goto comments" cujs $id("comments").scrollIntoView()
 ttbuildbind: coe "Goto last level" cujs $$("h3,h3>span,h4").find(e=>e.id.match(/^level[-_]20[-_]/i)).scrollIntoView()
-ttbuildbind: cor "Goto rpgbot.net" openorsummonc https://rpgbot.net/dnd5/
-ttbuildbind: cos "Goto dnd-spells.com" openorsummonc! https://www.dnd-spells.com/spells
-ttbuildbind: cot "Goto TabletopBuilds.com" openorsummonc! https://tabletopbuilds.com
+ttbuildbind: cor "Goto rpgbot.net" toposu https://rpgbot.net/dnd5/
+ttbuildbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
+ttbuildbind: cot "Goto top level" toposu! https://tabletopbuilds.com
 
 " | cs -- ttbuild/search |
 definesearch ttbuild_search https://tabletopbuild.com/?s=%s
