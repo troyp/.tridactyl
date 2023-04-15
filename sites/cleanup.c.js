@@ -13,6 +13,11 @@ function cleanup() {
         /* onepiece-online-manga.com */
         keep("article");
         rmall(".simplesocialbuttons");
+    } else if (url.match(/https:\/\/www\.amikosimonetti\.com\//)) {
+        rmall(
+            "header", "footer", "iframe",
+            "nav.BlogItem-pagination", "section[id*=comments]", "div.BlogItem-share",
+        );
     } else if (url.match(/https:\/\/bartoszmilewski.com/))  {
         /* bartoszmilewski.com */
         keep("#main");
@@ -31,7 +36,7 @@ function cleanup() {
         /* dndbeyond.com */
         // keep(".p-article-content");
         keep("header.page-header", "div.container", "ul.quick-menu");
-        rmall("aside.tasha-notes");
+        rmall("aside.tasha-notes", ".homebrew-comments", ".page-header__extra--content2");
         $$("aside").forEach(e => {
             e.style.border = "1px solid black";
             e.style.borderRadius = "15px";
@@ -159,6 +164,7 @@ function cleanupGeneric() {
         "#sidebar", ".sidebar",
         "#comments", "#feed-link", "#respond"
     );
+    cutils.message("Default method used", true);
 }
 
 cleanup();
