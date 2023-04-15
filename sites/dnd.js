@@ -2,12 +2,13 @@ const dndb = {
 
         _site: "dndbeyond.com",
 
-        follow: async function() {
+        follow: async function(switches="-J") {
             return hints.follow({
-                switches: "-J",
+                switches: switches,
                 extraSelectors: [
                     ".collapsible-header",
                     ".ddbc-tab-list__nav-item",
+                    ".ddbc-collapsible",
                     "#open-indicator",
                     ".list-row-indicator",
                     ".class-spell-list-header",
@@ -15,6 +16,7 @@ const dndb = {
                     ".ddb-search-filter-item-wrapper",
                     ".dice_notification_control",
                     ".dice-toolbar--hover dice-toolbar__dropdown-die",
+                    "span.ct-sidebar__control",
                 ]
             });
         },
