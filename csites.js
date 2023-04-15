@@ -2,6 +2,20 @@ var csites = {
     amaz: {
         _site: "amazon.com",
 
+        buy: function() {
+            return cutils.click("input#turbo-checkout-pyo-button") ||
+                cutils.click("#submitOrderButtonId>span>input") ||
+                cutils.click("#buy-now-button");
+        },
+
+        fixRightCol: function() {
+            cutils.css.addSheet("fixrightcol");
+            cutils.css.addRules(
+                "fixrightcol",
+                [".rightCol", { float: "right", width: "244px", marginLeft: "20px", }]
+            );
+        },
+
         go: function() {
             return cutils.click("#add-to-cart-button") || cutils.click("input[name=proceedToRetailCheckout]");
         },

@@ -22,10 +22,13 @@ amazbind: ]] "Next page"  sitejs csites.amaz.next()
 
 amazbind: c<C-h> "(show bindings: amaz)" amazshowkeys c
 amazbind: cc "Add to cart/goto checkout" sitejs csites.amaz.go()
+amazbind: cf "Fix right column CSS" sitejs csites.amaz.fixRightCol()
+amazbind: cn "Buy now" sitejs csites.amaz.buy()
 
 " | co -- amazon/goto |
 amazbind: co<C-h> "(show bindings: amaz/goto)" amazshowkeys co
 amazbind: coc "Goto cart" urlmodorsummon_g /gp/cart/view.html/ref=nav_cart
+amazbind: cod "Goto deals" opos urlmodorsummon_g https://www.amazon.com.au/deals
 amazbind: coh "Goto history" urlmodorsummon_g /gp/history
 amazbind: coi "Scroll to Product Information" cujs $1("#prodDetails").scrollIntoView();
 amazbind: cok "Scroll to Related Products" cujs $1t(".a-carousel-heading", "Custom.*also viewed").scrollIntoView();
