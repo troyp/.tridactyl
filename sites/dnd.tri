@@ -23,6 +23,7 @@ dndbbind: <enter> "load dndb.auto.js" cujs -r sites/dndb.auto.js
 dndbbind: <S-enter> "Jump to heading" cujs jumpToHeading()
 dndbbind: <A-enter> "Jump to table" cujs jumpToHeading(".Table-Styles_Table-Title")
 dndbbind f jsb sites.dndb.follow()
+dndbbind F jsb sites.dndb.follow("-Jb")
 dndbbind: <A-Escape> "Close modal" click .fullscreen-modal-close-btn
 dndbbind: [[ "Previous page" click .top-prev-page>a
 dndbbind: ]] "Next page" click .top-next-page>a
@@ -57,7 +58,9 @@ dndbbind: cmh "Goto my homebrew" toposu! https://www.dndbeyond.com/my-creations
 " | co -- dndb/goto |
 dndbbind: co<C-h> "(show bindings: dndb/goto)" dndbshowkeys co
 dndbbind: coc "Goto cart" toposu! https://www.dndbeyond.com/marketplace/cart
+dndbbind: cod "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
 dndbbind: com "Goto marketplace" toposu! https://www.dndbeyond.com/marketplace/sourcebooks
+dndbbind: cor "Goto rpgbot.net" toposu! https://rpgbot.net/dnd5/
 dndbbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
 dndbbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
 
@@ -124,13 +127,28 @@ dndbbind: cs;s "Goto spell description" fillcmdline dndbspell tab
 dndbbind: ct<C-h> "(show bindings: dndb/toggle)" dndbshowkeys ct
 dndbbind: ctn "Toggle all off" dndjs dnd.dndb.toggleOff()
 dndbbind: ctt "Toggle all" dndjs dnd.dndb.toggle()
+dndbbind: ctw "Toggle sidebar width" cujs toggleprop($1("div.ct-sidebar").style, "minWidth", "600px")
 dndbbind: cty "Toggle all on" dndjs dnd.dndb.toggleOn()
 
+" | cts -- dndb/toggle/sort-by |
+dndbbind: cts<C-h> "(show bindings: dndb/toggle/sort-by)" dndbshowkeys cts
+dndbbind: ctsc "Toggle sort-by cast time" simjs simulateHtmlMouseEvent($1("[data-sort-by=casting-time]"), "click")
+dndbbind: ctsd "Toggle sort-by duration" simjs simulateHtmlMouseEvent($1("[data-sort-by=duration]"), "click")
+dndbbind: ctsn "Toggle sort-by name" simjs simulateHtmlMouseEvent($1("[data-sort-by=name]"), "click")
+dndbbind: ctsl "Toggle sort-by level" simjs simulateHtmlMouseEvent($1("[data-sort-by=level]"), "click")
+dndbbind: ctsr "Toggle sort-by range" simjs simulateHtmlMouseEvent($1("[data-sort-by=range]"), "click")
+
 " | cx -- dndb/misc |
+dndbbind: cx<C-h> "(show bindings: dndb/misc)" dndbshowkeys cx
+" | cxl -- dndb/misc/list |
+dndbbind: cxl<C-h> "(show bindings: dndb/misc/list)" dndbshowkeys cxl
+dndbbind: cxlc "Count list entries" cujs $1("ul.listing").children.length | show5
 " | cxt -- dndb/misc/table |
+dndbbind: cxt<C-h> "(show bindings: dndb/misc/table)" dndbshowkeys cxt
 dndbbind: cxtd "Split Damage column of table" dndjs ; hint -Jc table -F t=>dnd.dndb.tableSplitDamageCol(t)
 
 " | cy -- dndb/yank |
+dndbbind: cy<C-h> "(show bindings: dndb/yank)" dndbshowkeys cy
 dndbbind: cya "Copy all entries" yankall .info a
 dndbbind: cyy "Copy entry" cujs yankhint(".info a")
 
@@ -143,14 +161,34 @@ autocmd TabEnter https://www\.dndbeyond\.com/characters/ cujs -r sites/dndb.auto
 command dndbcsheetbind bindurl https://www.dndbeyond.com/characters/[0-9]+
 command dndbcsheetbind: bindurl: https://www.dndbeyond.com/characters/[0-9]+
 
+dndbcsheetbind: c<C-h> "(show bindings: dndbcsheet)" dndbcsheetshowkeys c
 dndbcsheetbind: <enter> "load dndb.csheet.auto.js" cujs -r sites/dndb.auto.js
 
+dndbcsheetbind: cy<C-h> "(show bindings: dndbcsheet/yank)" dndbcsheetshowkeys cy
 dndbcsheetbind: cyy "Yank Content Group" dndbcsheetyankcontentgroup
 command dndbcsheetyankcontentgroup dndjs ; hint -Jc .ct-content-group -F e=>dnd.dndb.yankContentGroup()
 
+" | cm -- dndb/my |
+dndbcsheetbind: cm<C-h> "(show bindings: dndbcsheet/my)" dndbcsheetshowkeys cm
 " | cm -- dndb/my/sheet |
-dndbcsheetbind cms<C-h> showkeysurl dndbeyond.com cms
+dndbcsheetbind: cms<C-h> "(show bindings: dndbcsheet/my/sheet)" dndbcsheetshowkeys cms
 dndbcsheetbind: cmsc "Goto character builder: class" jsb sites.dndb.gotoBuilder("/class/manage")
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────╮
+" │ D&D-Spells │
+" ╰────────────╯
+command: dndspbind "Bind key for D&D-Spells" bindurl dnd-spells
+command: dndspbind: "Bind key with description for D&D-Spells" bindurl: dnd-spells
+command: dndspbdoc "Provide a description on a separate line" js ;
+command: dndspshowkeys "(show bindings: dndsp)" showkeysurl dnd-spells
+
+dndspbind: c<C-h> "(show bindings: dndsp)" dndspshowkeys c
+
+dndspbind: co<C-h> "(show bindings: dndsp/goto)" dndspshowkeys co
+dndspbind: cob "Goto DnDBeyond.com" tabopenorsummonc https://www.dndbeyond.com
+dndspbind: cor "Goto rpgbot.net" tabopenorsummonc https://rpgbot.net/dnd5/
+dndspbind: cot "Goto TabletopBuilds.com" tabopenorsummonc! https://tabletopbuilds.com
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────╮
@@ -186,9 +224,13 @@ rpgbotbind: cot "Goto tabletopbuilds.com" openorsummonc! https://tabletopbuilds.
 
 " | co -- rpgbot/search |
 rpgbotbind cs<C-h> showkeysurl rpgbot.net cs
-rpgbotbind: csb "Search DnDBeyond.com" fillcmdline dndb_search
-rpgbotbind: css "Search RPGBot.net" fillcmdline rpgbot_search
-rpgbotbind: cs;s "Goto spell description" fillcmdline dndbspell
+rpgbotbind: csb "Search DnDBeyond.com" fillcmdline dndb_search tab
+rpgbotbind: css "Search RPGBot.net" fillcmdline rpgbot_search tab
+rpgbotbind: cs;s "Goto spell description" fillcmdline dndbspell tab
+
+" | ct -- rpgbot/toggle |
+rpgbotbind: ct<C-h> "(show bindings: rpgbot/toggle)" rpgbotshowkeys ct
+rpgbotbind: ctw "Toggle width" cujs toggleprop($1("article.article").style, "maxWidth", "1000px")
 
 rpgbotbind: c/b "Bard Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/bard/subclasses
 rpgbotbind: c/c "Cleric Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/cleric/subclasses
@@ -213,14 +255,14 @@ ttbuildbind c<C-h> showkeysurl tabletopbuilds.com c
 ttbuildbind: cb "Goto DnDBeyond.com" openorsummonc https://www.dndbeyond.com
 ttbuildbind: cc "Load ttbuild.auto.js" cujs -r sites/ttbuild.auto.js
 ttbuildbdoc cl "Show final build levels"
-ttbuildbind cl cujs cutils.message(getText1("h3,h3>span", {match: /^level 20:/i}), {cmdline: true})
+ttbuildbind cl cujs cutils.message(getText1("h3,h3>span", {match: /^level 20[: ]/i}), {cmdline: true})
 
 
 " | co -- ttbuild/goto |
 ttbuildbind co<C-h> showkeysurl tabletopbuilds.com co
 ttbuildbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
 ttbuildbind: coc "Goto comments" cujs $id("comments").scrollIntoView()
-ttbuildbind: coe "Goto last level" cujs $$("h3,h3>span,h4").find(e=>e.id.match(/^level[-_]20[-_]/i)).scrollIntoView()
+ttbuildbind: col "Goto last level" cujs $$("h3,h3>span,h4").find(e=>e.id.match(/^level[-_]20[-_]/i)).scrollIntoView()
 ttbuildbind: cor "Goto rpgbot.net" toposu https://rpgbot.net/dnd5/
 ttbuildbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
 ttbuildbind: cot "Goto top level" toposu! https://tabletopbuilds.com
@@ -229,9 +271,9 @@ ttbuildbind: cot "Goto top level" toposu! https://tabletopbuilds.com
 definesearch ttbuild_search https://tabletopbuild.com/?s=%s
 
 dndbbind cs<C-h> showkeysurl rpgbot.net cs
-ttbuildbind: csb "Search DnDBeyond.com" fillcmdline dndb_search
-ttbuildbind: css "Search TableTopBuilds.com" fillcmdline ttbuild_search
-ttbuildbind: cs;s "Goto spell description" fillcmdline dndbspell
+ttbuildbind: csb "Search DnDBeyond.com" fillcmdline dndb_search tab
+ttbuildbind: css "Search TableTopBuilds.com" fillcmdline ttbuild_search tab
+ttbuildbind: cs;s "Goto spell description" fillcmdline dndbspell tab
 
 " ───────────────────────────────────────────────────────────────────────────────
 
