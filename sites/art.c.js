@@ -24,11 +24,11 @@ art.cult = {
         cutils.message(s, true);
  },
 
-    title: () => $1("div.product-name>h1").firstChild.textContent.trim(),
+    title: () => $1("h1.product-title").textContent.trim(),
 
     totalCost: function() {
-        if (tri.contentLocation.href.match("https://www.cultpens.com/basket")) {
-            return $1("div.grand-total>span[ge-data-converted-price]").getAttribute("ge-data-converted-price");
+        if (tri.contentLocation.href.match("https://cultpens.com/en-au/cart")) {
+            return $1("div.cart-subtotal>span.theme-money").textContent;
         } else {
             return sum($$("td.basket-item-price>i").map(e=>e.getAttribute("ge-data-converted-price"))).toFixed(2);
         }
