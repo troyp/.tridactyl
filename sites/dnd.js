@@ -52,9 +52,13 @@ const dndb = {
 
     gotoSpellLvlCls: async function(lvl, cls="") {
         lvl ??= "";
-        const clsNum = this.getClsNum(cls);
-        const clsFilter = `filter-class=${clsNum}`;
-        const lvlFilter = `filter-level=${lvl}`;
+        const lvls = lvl.split("-");
+        const lvlFilter = lvls.map(l=>`filter-level=${l}`).join("&");
+        const clss = cls.split("-");
+        const clsFilter = clss.map(c=>{
+            const clsNum = this.getClsNum(c);
+            return `filter-class=${clsNum}`;
+        }).join("&");
         const url = `https://www.dndbeyond.com/spells?${clsFilter}&${lvlFilter}`;
         return tri.controller.acceptExCmd(`toposu! ${url}`);
     },
