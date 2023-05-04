@@ -95,6 +95,7 @@ dndbbind: crcW "Goto Warlock" toposu! https://www.dndbeyond.com/classes/warlock
 " | crs -- dndb/rules/spells |
 dndbbind: crs<C-h> "(show bindings: dndb/rules/spells)" dndbshowkeys crs
 dndbbind: crss "Goto Spells" toposu! https://www.dndbeyond.com/spells
+dndbbind: crso "Goto Spells for level and class" : dndbspell_lvl_cls
 dndbbind: crsc "Goto Spells: conjuration" toposu! https://www.dndbeyond.com/spells/school/conjuration
 dndbbind: crsd "Goto Spells: divination" toposu! https://www.dndbeyond.com/spells/school/divination
 dndbbind: crse "Goto Spells: enchantment" toposu! https://www.dndbeyond.com/spells/school/enchantment
@@ -116,7 +117,11 @@ dndbbind: crs<Space> "Open spell description" fillcmdline_notrail tabopen https:
 
 " | cs -- dndb/search |
 definesearch dndbspell https://www.dndbeyond.com/spells/%s -
+definesearch_lc_noapos dndbspell! https://www.dndbeyond.com/spells/%s -
 definesearch dndbsearch_spell https://www.dndbeyond.com/spells?filter-class=0&filter-search=%s
+command: dndbspell! "Open spell in new tab" jsb_cmd "tabopen dndbspell ARGS.join(`-`).toLowerCase().replace(`'`, ``)"
+commdoc dndbspell_lvl_cls "Goto Spells of class M, level N"
+command dndbspell_lvl_cls jsb -d¦ sites.dndb.gotoSpellLvlCls(...utils.tri.parseArgs(JS_ARGS))¦
 
 dndbbind: cs<C-h> "(show bindings: dndb/search)" dndbshowkeys cs
 dndbbind: css "Search" fillcmdline dndb_search tab
