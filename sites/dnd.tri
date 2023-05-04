@@ -191,6 +191,23 @@ dndspbind: cor "Goto rpgbot.net" tabopenorsummonc https://rpgbot.net/dnd5/
 dndspbind: cot "Goto TabletopBuilds.com" tabopenorsummonc! https://tabletopbuilds.com
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────╮
+" │ D&D Wiki │
+" ╰──────────╯
+command: dandwbind "Bind key for D&D Wiki" bindurl dandwiki.com
+command: dandwreset "Reset key for D&D Wiki" reseturl dandwiki.com
+command: dandwbind: "Bind key with description for D&D Wiki" bindurl: dandwiki.com
+command: dandwbdoc "Provide a description on a separate line" js ;
+command: dandwshowkeys "(show bindings: dandw)" showkeysurl dandwiki.com
+
+command dandw_js "Run javascript after loading dnd.js file (default COUNT=1)" cujs -r dnd.js ; js_count
+command dandw_js! "Run javascript after loading dnd.js file (default COUNT=null)" cujs -r dnd.js ; js_count!
+
+dandwbind: c<C-h> "(show bindings: dandw)" showkeysurl dandwiki.com
+
+dandwbind: cc "Filter Optimized builds: 5e only" dndjs dnd.dandw.filter5e()
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────╮
 " │ RPGBot.net - DnD5 │
 " ╰───────────────────╯

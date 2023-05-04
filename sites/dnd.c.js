@@ -5,6 +5,13 @@
 
 var dnd = {};
 
+dnd.dandw = {
+    filter5e: async function() {
+        rm("#mw-pages li", { filter: e=>!e.textContent.match(/\(5e Optimized Character Build\)/) });
+        rm("#mw-pages .mw-category-group", { filter: e=>e.querySelector("ul").childElementCount==0 });
+    },
+};
+
 dnd.dndb = {
     go: async function() {
         const url = tri.contentLocation.href;
