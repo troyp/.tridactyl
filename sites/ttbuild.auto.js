@@ -15,3 +15,12 @@ $$(".has-text-color").forEach(e => {
     link.href = `https://www.dndbeyond.com/search?q=${s}`;
     wrapin(e, link);
 });
+
+const h3s = $$(".entry-content>h3")
+      .filter(s => s.textContent.match(/ \([★☆]+\)/) || s?.firstChild.hasAttribute?.("id"));
+h3s.forEach(e => {
+    const link = document.createElement("a");
+    const s = e.textContent.replace(/ \([★☆]+\)/, "");
+    link.href = `https://www.dndbeyond.com/search?q=${s}`;
+    wrapin(e, link);
+});
