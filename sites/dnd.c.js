@@ -13,6 +13,13 @@ dnd.dandw = {
 };
 
 dnd.dndb = {
+    getContentGroup: async function(elt) {
+        const section = elt.firstChild.firstChild.firstChild.getAttribute("data-testid");
+        const itemElts = [...elt.children[1].getElementsByClassName("ct-inventory-item")];
+        const items = itemElts.map(e=>e.getAttribute("data-testid"));
+        return [section, items];
+    },
+
     go: async function() {
         const url = tri.contentLocation.href;
         if (url.match(/https:\/\/www\.dndbeyond\.com\/characters\/\d*\/builder\//)) {
@@ -83,6 +90,11 @@ dnd.dndb = {
         } else {
             hint("-!JVc", ".listing-body>.collapsible-header .list-row-indicator.open");
         }
+    },
+
+    yankContentGroup: async function(elt) {
+        const [section, items] = await this.getContentGroup(elt);
+        cutils.yank(`${section}:\n${items.join("\n")}`);
     },
 };
 

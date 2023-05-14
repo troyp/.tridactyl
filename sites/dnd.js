@@ -26,13 +26,6 @@ const dndb = {
         });
     },
 
-    getContentGroup: async function(elt) {
-        const section = elt.firstChild.firstChild.firstChild.getAttribute("data-testid");
-        const itemElts = [...elt.children[1].getElementsByClassName("ct-inventory-item")];
-        const items = itemElts.map(e=>e.getAttribute("data-testid"));
-        return [section, items];
-    },
-
     getClsNum: function(cls="") {
         const table = {
             "": "",
@@ -68,11 +61,6 @@ const dndb = {
         const firstLetter = name[0];
         const id = S.toTitleCase(name).replace(/ +/g, "");
         return `https://www.dndbeyond.com/sources/phb/spell-descriptions-c#${id}`;
-    },
-
-    yankContentGroup: async function(elt) {
-        const [section, items] = await this.getContentGroup();
-        cutils.yank(`${section}:\n${items.join("\n")}`);
     },
 
 };

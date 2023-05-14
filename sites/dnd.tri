@@ -14,6 +14,7 @@ autocmd TabEnter https://www\.dndbeyond\.com/ cujs -r sites/dndb.auto.js
 
 command: dndbbind "Bind key for dndbeyond.com" bindurl dndbeyond.com
 command: dndbbind: "Bind key with description for dndbeyond.com" bindurl: dndbeyond.com
+command: dndbreset "Reset key for D&D Beyond" reseturl dndbeyond.com
 command: dndbbdoc "Provide a description on a separate line" js ;
 command: dndbshowkeys "(show bindings: dndb)" showkeysurl dndbeyond.com
 
@@ -30,7 +31,6 @@ dndbbind: ]] "Next page" click .top-next-page>a
 dndbbind: <C-PageDown> "Load More" cujs $1t("button", /load more/i).click()
 
 dndbbind c<C-h> showkeysurl dndbeyond.com c
-dndbbind: cb "Goto rpgbot.net" openorsummonc https://rpgbot.net/dnd5/
 dndbbind: cc "Lists: open/close row" dndjs dnd.dndb.go()
 dndbbind: cf "Click category icon" hint .ddb-search-filter-item-wrapper>.icon
 dndbbdoc cv "Toggle collapse Dice Notification"
@@ -66,13 +66,22 @@ dndbbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
 
 " | cr -- dndb/rules |
 dndbbind: cr<C-h> "(show bindings: dndb/rules)" dndbshowkeys cr
-dndbbind: crb "Goto Backgrounds" toposu! https://www.dndbeyond.com/backgrounds
 dndbbind: cre "Goto Equipment" toposu! https://www.dndbeyond.com/equipment
 dndbbind: crf "Goto Feats" toposu! https://www.dndbeyond.com/feats
 dndbbind: cri "Goto Magic Items" toposu! https://www.dndbeyond.com/magic-items
 dndbbind: crm "Goto Monsters" toposu! https://www.dndbeyond.com/monsters
 dndbbind: crr "Goto Races" toposu! https://www.dndbeyond.com/races
 dndbbind: crv "Goto Vehices" toposu! https://www.dndbeyond.com/vehicles
+
+" | crb -- dndb/rules/backgrounds |
+dndbbind: crbb "Goto Backgrounds" toposu! https://www.dndbeyond.com/backgrounds
+dndbbind: crb<C-h> "(show bindings: dndb/rules/backgrounds)" dndbshowkeys crb
+dndbbdoc crbc "Goto Backgrounds: core rules"
+dndbbind crbc toposu! https://www.dndbeyond.com/backgrounds?filter-name=&filter-source=1&filter-source=2
+dndbbdoc crbr "Goto Backgrounds: Ravnica"
+dndbbind crbr toposu! https://www.dndbeyond.com/backgrounds?filter-name=&filter-source=38
+dndbbdoc crbs "Goto Backgrounds: Strixhaven"
+dndbbind crbs toposu! https://www.dndbeyond.com/backgrounds?filter-name=&filter-source=80
 
 " | crc -- dndb/rules/classes |
 dndbbind: crc<C-h> "(show bindings: dndb/rules/class)" dndbshowkeys crc
@@ -165,19 +174,25 @@ autocmd TabEnter https://www\.dndbeyond\.com/characters/ cujs -r sites/dndb.auto
 
 command dndbcsheetbind bindurl https://www.dndbeyond.com/characters/[0-9]+
 command dndbcsheetbind: bindurl: https://www.dndbeyond.com/characters/[0-9]+
+command dndbcsheetreset reseturl https://www.dndbeyond.com/characters/[0-9]+
+command dndbcsheetshowkeys showkeysurl https://www.dndbeyond.com/characters/[0-9]+
+
+command dndbcsheetyankcontentgroup dndjs ; hint -Jc .ct-content-group -F e=>dnd.dndb.yankContentGroup(e)
 
 dndbcsheetbind: c<C-h> "(show bindings: dndbcsheet)" dndbcsheetshowkeys c
 dndbcsheetbind: <enter> "load dndb.csheet.auto.js" cujs -r sites/dndb.auto.js
+dndbcsheetbind: c<C-l> "Move to start of character sheet" cujs $1(".ct-quick-info").scrollIntoView()
+dndbcsheetbind: cb "Toggle sidebar" click .ct-sidebar__control
 
-dndbcsheetbind: cy<C-h> "(show bindings: dndbcsheet/yank)" dndbcsheetshowkeys cy
-dndbcsheetbind: cyy "Yank Content Group" dndbcsheetyankcontentgroup
-command dndbcsheetyankcontentgroup dndjs ; hint -Jc .ct-content-group -F e=>dnd.dndb.yankContentGroup()
-
-" | cm -- dndb/my |
+" | cm -- dndbcsheet/my |
 dndbcsheetbind: cm<C-h> "(show bindings: dndbcsheet/my)" dndbcsheetshowkeys cm
-" | cm -- dndb/my/sheet |
+" | cm -- dndbcsheet/my/sheet |
 dndbcsheetbind: cms<C-h> "(show bindings: dndbcsheet/my/sheet)" dndbcsheetshowkeys cms
 dndbcsheetbind: cmsc "Goto character builder: class" jsb sites.dndb.gotoBuilder("/class/manage")
+
+" | cy -- dndbcsheet/yank |
+dndbcsheetbind: cy<C-h> "(show bindings: dndbcsheet/yank)" dndbcsheetshowkeys cy
+dndbcsheetbind: cyy "Yank Content Group" dndbcsheetyankcontentgroup
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
@@ -219,16 +234,18 @@ dandwbind: cc "Filter Optimized builds: 5e only" dndjs dnd.dandw.filter5e()
 command rpgbotbind bindurl rpgbot.net
 command rpgbotbind: bindurl: rpgbot.net
 
+rpgbotbind: <Enter> "Remove ads" rm span[id^=ezoic]
+
 rpgbotbind c<C-h> showkeysurl rpgbot.net c
 rpgbotbind: cb "Goto DnDBeyond.com" openorsummonc https://www.dndbeyond.com
 definesearch rpgbot_search https://rpgbot.net/?s=%s
+rpgbotbind: <Enter> "Load greasemonkey script manually" js -r gmscripts/RPGBotnet_Improvements.user.js
 
 rpgbotbind: cba "Artificer Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/artificer/subclasses
 rpgbotbind: cbB "Barbarian Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/barbarian/subclasses
 rpgbotbind: cca "Goto Artificer Guide" toposu! https://rpgbot.net/dnd5/characters/classes/artificer
 rpgbotbind: ccB "Goto Barbarian Guide" toposu! https://rpgbot.net/dnd5/characters/classes/barbarian
-rpgbotbind: ccb "Goto Bard Guide" toposu! https://rpgbot.net/dnd5/characters/classes/bard
-rpgbotbind: ccc "Goto Cleric Guide" toposu! https://rpgbot.net/dnd5/characters/classes/cleric
+rpgbotbind: ccb "Goto Bard Guide" toposu! https://rpgbot.net/dnd5/characters/classes/barleric
 rpgbotbind: ccd "Goto Druid Guide" toposu! https://rpgbot.net/dnd5/characters/classes/druid
 rpgbotbind: ccf "Goto Fighter Guide" toposu! https://rpgbot.net/dnd5/characters/classes/fighter
 rpgbotbind: cck "Goto Warlock Guide" toposu! https://rpgbot.net/dnd5/characters/classes/warlock
@@ -243,6 +260,22 @@ rpgbotbind: ccw "Goto Wizard Guide" toposu! https://rpgbot.net/dnd5/characters/c
 " | co -- rpgbot/goto |
 rpgbotbind co<C-h> showkeysurl rpgbot.net co
 rpgbotbind: cot "Goto tabletopbuilds.com" openorsummonc! https://tabletopbuilds.com
+
+" | rpgbotbind -- goto/spells |
+rpgbotbind: cos<C-h> "(show bindings: rpgbot/goto/spells)" rpgbotshowkeys cos
+rpgbotbind: coss "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
+rpgbotbind: cosa "Artificer Spells" toposu! https://rpgbot.net/dnd5/characters/classes/artificer/spells/
+rpgbotbind: cosb "Bard Spells" toposu! https://rpgbot.net/dnd5/characters/classes/bard/spells/
+rpgbotbind: cosc "Cleric Spells" toposu! https://rpgbot.net/dnd5/characters/classes/cleric/spells/
+rpgbotbind: cosd "Druid Spells" toposu! https://rpgbot.net/dnd5/characters/classes/druid/spells/
+rpgbotbind: cosf "Fighter Spells" toposu! https://rpgbot.net/dnd5/characters/classes/fighter/spells/
+rpgbotbind: cosk "Warlock Spells" toposu! https://rpgbot.net/dnd5/characters/classes/warlock/spells/
+rpgbotbind: cosp "Paladin Spells" toposu! https://rpgbot.net/dnd5/characters/classes/paladin/spells/
+rpgbotbind: cosR "Ranger Spells" toposu! https://rpgbot.net/dnd5/characters/classes/ranger/spells/
+rpgbotbind: cosr "Rogue Spells" toposu! https://rpgbot.net/dnd5/characters/classes/rogue/spells/
+rpgbotbind: coss "Sorcerer Spells" toposu! https://rpgbot.net/dnd5/characters/classes/sorcerer/spells/
+rpgbotbind: cosW "Warlock Spells" toposu! https://rpgbot.net/dnd5/characters/classes/warlock/spells/
+rpgbotbind: cosw "Wizard Spells" toposu! https://rpgbot.net/dnd5/characters/classes/wizard/spells/
 
 " | co -- rpgbot/search |
 rpgbotbind cs<C-h> showkeysurl rpgbot.net cs
@@ -294,6 +327,9 @@ definesearch ttbuild_search https://tabletopbuild.com/?s=%s
 
 dndbbind cs<C-h> showkeysurl rpgbot.net cs
 ttbuildbind: csb "Search DnDBeyond.com" fillcmdline dndb_search tab
+ttbuildbind: cspb "Search DnDBeyond.com with clipboard contents"
+ttbuildbind: cspp "Search TabletopBuilds.com with clipboard contents"
+ttbuildbind: csp;s "Goto spell description for spell in clipboard"
 ttbuildbind: css "Search TableTopBuilds.com" fillcmdline ttbuild_search tab
 ttbuildbind: cs;s "Goto spell description" fillcmdline dndbspell tab
 
