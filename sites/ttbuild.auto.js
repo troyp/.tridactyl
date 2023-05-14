@@ -24,3 +24,15 @@ h3s.forEach(e => {
     link.href = `https://www.dndbeyond.com/search?q=${s}`;
     wrapin(e, link);
 });
+
+// Add rating colors in sidebar TOC lists
+$$(".toc_widget_list li>a").forEach(a=>{
+    const match = a.textContent.trim().match(/\(([★☆]+)\)/);
+    switch (match?.[1]) {
+        case "★☆☆☆☆": a.style.color = "#cc0000"; break;
+        case "★★☆☆☆": a.style.color = "#ff7700"; break;
+        case "★★★☆☆": a.style.color = "#e6ad00"; break;
+        case "★★★★☆": a.style.color = "green"; break;
+        case "★★★★★": a.style.color = "blue"; break;
+    }
+});
