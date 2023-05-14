@@ -638,8 +638,7 @@ var cutils = {
             && (x.length-1 in x || x.length===0)
     ),
     isArrayConvertible: x => cutils.isIterable(x) || cutils.isArraylike(x),
-
-
+    ownprops: function(x) { return Object.getOwnPropertyNames(x); },
 
     // ╭──────────────────────╮
     // │ conversion functions │
@@ -1008,7 +1007,7 @@ window.R = R;
     "urlopen",
     "SEL", "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankjs", "yankjsWr", "yankf",
     "datetime", "isInViewport", "isDisplayed", "sprintf",
-    "asArr", "hexToRGB", "isArraylike", "isArrayConvertible", "isIterable",
+    "asArr", "hexToRGB", "isArraylike", "isArrayConvertible", "isIterable", "ownprops",
 ].forEach(k => window[k]=cutils[k]);
 
 [
@@ -1018,5 +1017,7 @@ window.R = R;
 [
     "parseArgs", "parseArgsAndCount", "parseOpts", "parseTerms", "parseTermsAndCount",
 ].forEach(k => window[k]=cutils.tri[k]);
+
+ownprops(Math).forEach(k => window[k] = Math[k]);
 
 window.cutils = cutils;
