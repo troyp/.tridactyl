@@ -101,17 +101,30 @@ const dndb = {
     },
 
     gotoSpellLvlCls: async function(lvl, cls="", other="") {
+        /* level */
         lvl ??= "";
         if (lvl=="-") lvl = "";
-        const lvls = lvl.split(",");
+        let lvls = [];
+        lvl.split(",").forEach(s=>{
+            let match = s.match(/(\d+)-(\d+)/);
+            if (match) {
+                let beg = match[1];
+                let end = match[2];
+                lvls = lvls.concat(tri.R.range(parseInt(beg), parseInt(end)+1));
+            } else
+                lvls.push(s);
+        });
         const lvlFilter = lvls.map(l=>`filter-level=${l}`).join("&");
+        /* class */
         const clss = cls.split(",");
         const clsFilter = clss.map(c=>{
             const clsNum = this.getClsNum(c);
             return `filter-class=${clsNum}`;
         }).join("&");
+        /* other filters */
         const others = other.split(",");
         const otherFilter = others.map(x=>`&filter-${this.getSpellFilter(x)}`).join("");
+        /* assemble URL */
         const sort = "sort=level";
         const url = `https://www.dndbeyond.com/spells?${clsFilter}&${lvlFilter}${otherFilter}&${sort}`;
         return tri.controller.acceptExCmd(`toposu! ${url}`);
