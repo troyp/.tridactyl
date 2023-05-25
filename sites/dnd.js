@@ -7,6 +7,14 @@ const dndb = {
 
     _site: "dndbeyond.com",
 
+    OWNED: [
+        1, 2, 3, 4, 5, 13, 27, 28, 38, 44, 49, 54, 57, 59, 60, 61, 66, 67, 69, 80, 81, 85, 89, 90, 91, 93,
+        101, 104, 111
+    ],
+    ownedFilter: function() {
+        return this.OWNED.map(k=>`filter-source=69&filter-source=${k}`).join("&");
+    },
+
     follow: async function(switches="-J") {
         return hints.follow({
             switches: switches,
@@ -72,9 +80,18 @@ const dndb = {
             "necromancy": "school=9",
             "transmutation": "school=10",
             "melee": "attack-type=1", "ranged": "attack-type=2",
+            "str": "save-required=1",
+            "dex": "save-required=2",
+            "con": "save-required=3",
+            "int": "save-required=4",
+            "wis": "save-required=5",
+            "cha": "save-required=6",
+            "save": "save-required=1&filter-save-required=2&filter-save-required=3&filter-save-required=4"
+                + "&filter-save-required=5&filter-save-required=6",
             "creation": "tags=1",
             "heal": "tags=2", "healing": "tags=2",
             "teleport": "tags=4", "teleportation": "tags=4",
+            "damage": "tags=5", "dmg": "tags=5",
             "control": "tags=6",
             "communication": "tags=10",
             "social": "tags=12",
