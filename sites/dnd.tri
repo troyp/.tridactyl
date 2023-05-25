@@ -69,7 +69,6 @@ dndbbind: cr<C-h> "(show bindings: dndb/rules)" dndbshowkeys cr
 dndbbind: cre "Goto Equipment" toposu! https://www.dndbeyond.com/equipment
 dndbbind: crf "Goto Feats" toposu! https://www.dndbeyond.com/feats
 dndbbind: cri "Goto Magic Items" toposu! https://www.dndbeyond.com/magic-items
-dndbbind: crm "Goto Monsters" toposu! https://www.dndbeyond.com/monsters
 dndbbind: crr "Goto Races" toposu! https://www.dndbeyond.com/races
 dndbbind: crv "Goto Vehices" toposu! https://www.dndbeyond.com/vehicles
 
@@ -101,6 +100,11 @@ dndbbind: crcs "Goto Sorcerer" toposu! https://www.dndbeyond.com/classes/sorcere
 dndbbind: crcw "Goto Wizard" toposu! https://www.dndbeyond.com/classes/wizard
 dndbbind: crcW "Goto Warlock" toposu! https://www.dndbeyond.com/classes/warlock
 
+" | crm -- dndb/rules/monsters |
+dndbbind: crma "Goto Monsters (all)" toposu! https://www.dndbeyond.com/monsters
+dndbbdoc crmm "Goto Monsters (owned)"
+dndbbind crmm :exec `toposu! https://www.dndbeyond.com/monsters?${sites.dndb.ownedFilter()}`
+
 " | crs -- dndb/rules/spells |
 dndbbind: crs<C-h> "(show bindings: dndb/rules/spells)" dndbshowkeys crs
 dndbbind: crss "Goto Spells" toposu! https://www.dndbeyond.com/spells
@@ -128,7 +132,7 @@ dndbbind: crs<Space> "Open spell description" fillcmdline_notrail tabopen https:
 definesearch dndbspell https://www.dndbeyond.com/spells/%s -
 definesearch_lc_noapos dndbspell! https://www.dndbeyond.com/spells/%s -
 definesearch dndbsearch_spell https://www.dndbeyond.com/spells?filter-class=0&filter-search=%s
-command: dndbspell! "Open spell in new tab" jsb_cmd "tabopen dndbspell ARGS.join(`-`).toLowerCase().replace(`'`, ``)"
+command: dndbspell! "Open spell (new tab)" jsb_cmd "tabopen dndbspell ARGS.join(`-`).toLowerCase().replace(`'`, ``)"
 commdoc dndbspell_lvl_cls "Goto Spells of class M, level N"
 command dndbspell_lvl_cls jsb -d¦ sites.dndb.gotoSpellLvlCls(...utils.tri.parseArgs(JS_ARGS))¦
 
@@ -312,6 +316,7 @@ ttbuildbind: cc "Load ttbuild.auto.js" cujs -r sites/ttbuild.auto.js
 ttbuildbdoc cl "Show final build levels"
 ttbuildbind cl cujs cutils.message(getText1("h3,h3>span", {match: /^level 20[: ]/i}), {cmdline: true})
 
+ttbuildbind <Enter> js document.getElementById("toc-widget-3").scrollIntoView()
 
 " | co -- ttbuild/goto |
 ttbuildbind co<C-h> showkeysurl tabletopbuilds.com co
