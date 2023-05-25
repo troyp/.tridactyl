@@ -21,6 +21,12 @@ $$("span.spell-list-heading-text").forEach(e=>{
     e.appendChild(a);
 });
 
+/* add school title text to magic school symbols */
+$$(".info>.spell-school>.school").forEach(e=>{
+    const school = [...e.classList].find(s=>s!="school");
+    e.title = school;
+});
+
 // ───────────────────────────────────────────────────────────────────────────────
 // ╭───────────────────╮
 // │ Character Builder │
@@ -37,20 +43,24 @@ $$(".builder-sections a").forEach(l => {
 
 if (document.location.href.match(/https:\/\/www.dndbeyond.com\/characters\/[0-9]+/)) {
 
+    zoom("104%");
+    scrollto("100");
+    rm("footer");
+
     const csheet_inner = document.querySelector(".ct-character-sheet__inner");
     if (csheet_inner) csheet_inner.style.marginLeft="6em";
 
     const typemap = {
         "fire": ["#f78c19", "#c52400", "rgba(247, 140, 25, 0.2)"],
         "cold": ["lightSkyBlue", "black", "rgba(135, 206, 250, 0.2)"],
-        "lightning": ["yellow", "#665700", "rgba(255, 255, 0, 0.2)"],
+        "lightning": ["yellow", "rgb(215, 215, 0)", "rgba(255, 255, 0, 0.2)"],
         "thunder": ["lightSeaGreen", "black", "rgba(32, 178, 170, 0.2)"],
         "necrotic": ["#fde4be", "#402503", "rgba(253, 228, 190, 0.2)"],
         "acid": ["chartreuse", "black", "rgba(255, 87, 51, 0.2)"],
         "poison": ["yellowGreen", "black", "rgba(154, 205, 50, 0.2)"],
         "psychic": ["pink", "deepPink", "rgba(255, 192, 203, 0.2)"],
-        "force": ["#ff00dd", "#730064", "rgba(255, 0, 221, 0.2)"],
-        "radiant": ["#76f9ff", "#112425", "rgba(255, 0, 221, 0.2)"],
+        "force": ["#ff00dd", "#9E4693", "rgb(251, 230, 248, 0.2)"],
+        "radiant": ["#76f9ff", "#55B3B8", "rgba(255, 0, 221, 0.2)"],
         "Bludgeoning": ["#bdd8ff", "#0055ff", ""],
         "Piercing": ["gray", "red", ""],
         "Slashing": ["gray", "blue", ""],
@@ -66,7 +76,7 @@ if (document.location.href.match(/https:\/\/www.dndbeyond.com\/characters\/[0-9]
             if (button) {
                 button.style.backgroundColor = bgcolor;
                 button.style.borderColor = strokecolor;
-                button.style.borderWidth = "1px";
+                button.style.borderWidth = "2px";
             }
             if (type && ["force", "necrotic"].includes(type)) {
                 [...e.children].forEach(c=>{
