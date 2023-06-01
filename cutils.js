@@ -290,6 +290,13 @@ var cutils = {
     /** Hides elements matching any of the SELECTORS. For more options, see rm() */
     hideall: (...selectors) => cutils.hide(selectors),
 
+    hover: async function(elt) {
+        await tri.controller.acceptExCmd(`js -r js/pseudostyler.js`);
+        let styler = new PseudoStyler();
+        await styler.loadDocumentStyles();
+        styler.toggleStyle(elt, ':hover');
+    },
+
     /**   isolate(selector, opts)
      *    isolate(selector, context:Node)
      *    isolate(selector, ["firstMatch"]:[string])
