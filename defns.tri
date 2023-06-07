@@ -1088,7 +1088,7 @@ bind ,aw<C-h> showkeys ,aw
 bdoc ,awd "Goonellabah Weather: 48 hour daily summary (weatherzone)"
 bind ,awd topos https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah/next48hours#daily-summaries
 bdoc ,aws "Goonellabah Sunrise and Sunset Times"
-bind ,aws suncalc sprintf(`SUNRISE: %s\t\nSUNSET: %s`, ...capps.sunriseSunset(...user.latlong)).then(s=>message(s, true))
+bind ,aws suncalc sprintf(`SUNRISE: %s\t\nSUNSET: %s`, ...capps.sunriseSunset(...user.latlong)).then(s=>cutils.message(s, true))
 bind: ,aww "Lismore Weather (BoM)" topos http://www.bom.gov.au/nsw/forecasts/lismore.shtml
 bind: ,awt "Goonellabah Weather (timeanddate.com)" topos https://www.timeanddate.com/weather/@2164966
 bind: ,awz "Goonellabah Weather (weatherzone)" topos https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah
