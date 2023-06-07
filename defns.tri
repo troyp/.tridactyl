@@ -1347,6 +1347,8 @@ bind: ,xt;d "Delete multiple table rows [HINTS]" hint -Jqk tr
 bdoc ,xtn "Show number of rows in table body [HINTS]"
 bind ,xtn :: hint -Jc table -F t=>t.tBodies[0].getElementsByTagName("tr").length | sprintf "#rows: %s" | show5
 bind: ,xtt "Scroll table into view" scrolltableintoview
+bdoc ,xtw "Widen table"
+bind ,xtw cujs $$("table").forEach(e=>{(e.style.maxWidth="1400px")&&(e.parentElement.style.maxWidth="1400px")})
 
 " | ,xts -- misc/table/sort |
 bind: ,xtss "Sort table [HINT]" cujs -r js/sorttables.js ; hint -Jc table -F t=>sorttable.makeSortable(t)
