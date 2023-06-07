@@ -562,6 +562,10 @@ utils.tab = {
         return "TODO";
     },
 
+    removeHighlighted: async function() {
+        return this.getHighlighted().then(tt=>tt.map(t=>browser.tabs.remove(t.id)));
+    },
+
     removeWr: async function(args) {
         const expr = utils.tri.parseExpr(args);
         const pred = eval(`(t, t0, i, i0)=>${expr}`);

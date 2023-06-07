@@ -331,6 +331,7 @@ bind: <C-a> "Switch to first tab, then first nonpinned and back to first" tabfir
 bind: <C-e> "Switch to last tab" tablast
 bind: <AC-a> "Move tab to start" tabmove! 1
 bind: <AC-e> "Move tab to end" tabmove! 0
+bind: <Delete> "Remove highlighted tabs" jsb utils.tab.removeHighlighted()
 
 bind: o "Open URL/search in the current tab" fillcmdline open
 bind: t "Open URL/search in a new tab" fillcmdline tabopen
