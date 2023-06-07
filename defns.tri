@@ -1137,16 +1137,15 @@ command jseq! composite js -r cutils.js ; js -d¦ fillcmdline("jseq! "+eval(JS_A
 
 bind ,e<C-h> showkeys ,e
 bind: ,ec "Evaluate javascript expression iteratively in commandline" fillcmdline jseq!
-bind: ,ee "Evaluate javascript expression" fillcmdline jse
+bind: ,ee "Evaluate javascript expression [COUNT: don't display]" :fill COUNT?"cujs":"jse"
 bind: ,eE "Evaluate javascript expression (load cutils, S, urls.js)" fillcmdline jsE
 bind: ,ej "Load cutils and evaluate javascript expression" fillcmdline cujs
 bind: ,ep "Display properties of expression" fillcmdline getproperties
 bind: ,es "Show elements matching SELECTOR" fillcmdline getselector
 
-
 " | ,eb -- jsb eval |
 bind ,eb<C-h> showkeys ,eb
-bind: ,ebb "Eval expression and display in message box" fillcmdline jsbm
+bind: ,ebb "Eval expression and display in message box [COUNT: don't display]" :fill COUNT?"jsb":"jsbm"
 bind: ,ebp "Display properties of expression in message box" fillcmdline jsb_getproperties
 
 bind: J "Evaluate javascript expression in commandline" fillcmdline jseq
