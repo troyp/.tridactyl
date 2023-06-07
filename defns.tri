@@ -1244,10 +1244,15 @@ bind: ,nhh "Highlight selected text" cujs cutils.css.highlight()
 bind: <A-F3> "Highlight selected text" cujs cutils.css.highlight()
 
 bind: ,nc "Cleanup page (remove clutter)" cujs -r sites/cleanup.c.js
+bind: ,nf "Remove footer" rm footer,.footer
+bind: ,nh "Remove header" rm header,.header
 bind: ,ni "Remove images" rm figure,img
 bind: ,nI "Remove first image" rmfirst figure,img
 bind: ,nn "Remove elements matching selectors" fillcmdline rm
-bind: ,no "Remove elements except those matching selectors" fillcmdline keep
+" | ,no -- edit/isolate |
+bind: ,no<C-h> "(show bindings: edit/isolate)" showkeys ,no
+bind: ,nom "Remove elements except main" keep main
+bind: ,noo "Remove elements except those matching selectors" fillcmdline keep
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────╮
