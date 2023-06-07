@@ -3,6 +3,12 @@
 // │ MODULE dnd │
 // ╰────────────╯
 
+const dnd = {
+    gdrive: "https://drive.google.com/drive/folders/118Rgv-J4jW5boTab-wX14cwFsVGGeSrH",
+    dprcalc: "https://docs.google.com/spreadsheets/d/1eefKbOvpiDq5wjs92WSw5B7IBZhH6vxmFaO7XMAi_3I/edit#gid=0",
+};
+sites.dnd = dnd;
+
 const dndb = {
 
     _site: "dndbeyond.com",

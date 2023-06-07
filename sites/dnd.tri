@@ -4,6 +4,8 @@
 definesearch dndb_search https://www.dndbeyond.com/search?q=%s
 command: dndjs "Run javascript after loading dnd.c.js file (default COUNT=1)" cujs -r sites/dnd.c.js ; js_count
 command: dndjs! "Run javascript after loading dnd.c.js file (default COUNT=null)" cujs -r sites/dnd.c.js ; js_count!
+command: dndcalc "Goto DPR calculator" :: jsb sites.dnd.dprcalc | toposu
+command: dndcalc! "Goto DPR calculator (private window)" :: jsb sites.dnd.dprcalc | winopen!
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
@@ -63,6 +65,7 @@ dndbbind: com "Goto marketplace" toposu! https://www.dndbeyond.com/marketplace/s
 dndbbind: cor "Goto rpgbot.net" toposu! https://rpgbot.net/dnd5/
 dndbbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
 dndbbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
+dndbbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
 " | cr -- dndb/rules |
 dndbbind: cr<C-h> "(show bindings: dndb/rules)" dndbshowkeys cr
@@ -91,8 +94,10 @@ dndbbind: crcb "Goto Bard" toposu! https://www.dndbeyond.com/classes/bard
 dndbbind: crcc "Goto Cleric" toposu! https://www.dndbeyond.com/classes/cleric
 dndbbind: crcd "Goto Druid" toposu! https://www.dndbeyond.com/classes/druid
 dndbbind: crcf "Goto Fighter" toposu! https://www.dndbeyond.com/classes/fighter
+dndbbind: crcg "Goto Ranger" toposu! https://www.dndbeyond.com/classes/ranger
 dndbbind: crck "Goto Warlock" toposu! https://www.dndbeyond.com/classes/warlock
 dndbbind: crcm "Goto Monk" toposu! https://www.dndbeyond.com/classes/monk
+dndbbind: crcn "Goto Barbarian" toposu! https://www.dndbeyond.com/classes/barbarian
 dndbbind: crcp "Goto Paladin" toposu! https://www.dndbeyond.com/classes/paladin
 dndbbind: crcR "Goto Ranger" toposu! https://www.dndbeyond.com/classes/ranger
 dndbbind: crcr "Goto Rogue" toposu! https://www.dndbeyond.com/classes/rogue
@@ -120,6 +125,7 @@ dndbbind: crs.a "Goto Spells: class=Artificer" toposu! https://www.dndbeyond.com
 dndbbind: crs.b "Goto Spells: class=Bard" toposu! https://www.dndbeyond.com/spells?filter-class=1
 dndbbind: crs.c "Goto Spells: class=Cleric" toposu! https://www.dndbeyond.com/spells?filter-class=2
 dndbbind: crs.d "Goto Spells: class=Druid" toposu! https://www.dndbeyond.com/spells?filter-class=3
+dndbbind: crs.g "Goto Spells: class=Ranger" toposu! https://www.dndbeyond.com/spells?filter-class=5
 dndbbind: crs.k "Goto Spells: class=Warlock" toposu! https://www.dndbeyond.com/spells?filter-class=7
 dndbbind: crs.p "Goto Spells: class=Paladin" toposu! https://www.dndbeyond.com/spells?filter-class=4
 dndbbind: crs.r "Goto Spells: class=Ranger" toposu! https://www.dndbeyond.com/spells?filter-class=5
@@ -211,8 +217,10 @@ dndspbind: c<C-h> "(show bindings: dndsp)" dndspshowkeys c
 
 dndspbind: co<C-h> "(show bindings: dndsp/goto)" dndspshowkeys co
 dndspbind: cob "Goto DnDBeyond.com" tabopenorsummonc https://www.dndbeyond.com
+dndspbind: cod "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
 dndspbind: cor "Goto rpgbot.net" tabopenorsummonc https://rpgbot.net/dnd5/
 dndspbind: cot "Goto TabletopBuilds.com" tabopenorsummonc! https://tabletopbuilds.com
+dndspbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────╮
@@ -224,19 +232,28 @@ command: dandwbind: "Bind key with description for D&D Wiki" bindurl: dandwiki.c
 command: dandwbdoc "Provide a description on a separate line" js ;
 command: dandwshowkeys "(show bindings: dandw)" showkeysurl dandwiki.com
 
-command dandw_js "Run javascript after loading dnd.js file (default COUNT=1)" cujs -r dnd.js ; js_count
-command dandw_js! "Run javascript after loading dnd.js file (default COUNT=null)" cujs -r dnd.js ; js_count!
-
 dandwbind: c<C-h> "(show bindings: dandw)" showkeysurl dandwiki.com
 
 dandwbind: cc "Filter Optimized builds: 5e only" dndjs dnd.dandw.filter5e()
+
+" | co -- dndw/goto |
+dandwbind: co<C-h> "(show bindings: dandw/)" dandwshowkeys co
+dandwbind: cor "Goto rpgbot.net" toposu! https://rpgbot.net/dnd5/
+dandwbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
+dandwbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
+dandwbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────╮
 " │ RPGBot.net - DnD5 │
 " ╰───────────────────╯
-command rpgbotbind bindurl rpgbot.net
-command rpgbotbind: bindurl: rpgbot.net
+command: rpgbotbind "Bind key for RPGBot.net" bindurl rpgbot.net
+command: rpgbotbind: "Bind key with description for RPGBot.net" bindurl: rpgbot.net
+command: rpgbotreset "Reset key for RPGBot.net" reseturl rpgbot.net
+command: rpgbotbdoc "Provide a description on a separate line" js ;
+command: rpgbotshowkeys "(show bindings: rpgbot)" showkeysurl rpgbot.net
+
+rpgbotbind: c<C-h> "(show bindings: rpgbot)" rpgbotshowkeys c
 
 rpgbotbind: <Enter> "Remove ads" rm span[id^=ezoic]
 
@@ -249,11 +266,14 @@ rpgbotbind: cba "Artificer Subclasses" toposu! https://rpgbot.net/dnd5/character
 rpgbotbind: cbB "Barbarian Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/barbarian/subclasses
 rpgbotbind: cca "Goto Artificer Guide" toposu! https://rpgbot.net/dnd5/characters/classes/artificer
 rpgbotbind: ccB "Goto Barbarian Guide" toposu! https://rpgbot.net/dnd5/characters/classes/barbarian
-rpgbotbind: ccb "Goto Bard Guide" toposu! https://rpgbot.net/dnd5/characters/classes/barleric
+rpgbotbind: ccb "Goto Bard Guide" toposu! https://rpgbot.net/dnd5/characters/classes/bard
+rpgbotbind: ccc "Goto Bard Guide" toposu! https://rpgbot.net/dnd5/characters/classes/cleric
 rpgbotbind: ccd "Goto Druid Guide" toposu! https://rpgbot.net/dnd5/characters/classes/druid
 rpgbotbind: ccf "Goto Fighter Guide" toposu! https://rpgbot.net/dnd5/characters/classes/fighter
+rpgbotbind: ccg "Goto Ranger Guide" toposu! https://rpgbot.net/dnd5/characters/classes/ranger
 rpgbotbind: cck "Goto Warlock Guide" toposu! https://rpgbot.net/dnd5/characters/classes/warlock
 rpgbotbind: ccm "Goto Monk Guide" toposu! https://rpgbot.net/dnd5/characters/classes/monk
+rpgbotbind: ccn "Goto Barbarian Guide" toposu! https://rpgbot.net/dnd5/characters/classes/barbarian
 rpgbotbind: ccp "Goto Paladin Guide" toposu! https://rpgbot.net/dnd5/characters/classes/paladin
 rpgbotbind: ccR "Goto Ranger Guide" toposu! https://rpgbot.net/dnd5/characters/classes/ranger
 rpgbotbind: ccr "Goto Rogue Guide" toposu! https://rpgbot.net/dnd5/characters/classes/rogue
@@ -263,7 +283,9 @@ rpgbotbind: ccw "Goto Wizard Guide" toposu! https://rpgbot.net/dnd5/characters/c
 
 " | co -- rpgbot/goto |
 rpgbotbind co<C-h> showkeysurl rpgbot.net co
+rpgbotbind: cod "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
 rpgbotbind: cot "Goto tabletopbuilds.com" openorsummonc! https://tabletopbuilds.com
+rpgbotbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
 " | rpgbotbind -- goto/spells |
 rpgbotbind: cos<C-h> "(show bindings: rpgbot/goto/spells)" rpgbotshowkeys cos
@@ -273,6 +295,7 @@ rpgbotbind: cosb "Bard Spells" toposu! https://rpgbot.net/dnd5/characters/classe
 rpgbotbind: cosc "Cleric Spells" toposu! https://rpgbot.net/dnd5/characters/classes/cleric/spells/
 rpgbotbind: cosd "Druid Spells" toposu! https://rpgbot.net/dnd5/characters/classes/druid/spells/
 rpgbotbind: cosf "Fighter Spells" toposu! https://rpgbot.net/dnd5/characters/classes/fighter/spells/
+rpgbotbind: cosg "Ranger Spells" toposu! https://rpgbot.net/dnd5/characters/classes/ranger/spells/
 rpgbotbind: cosk "Warlock Spells" toposu! https://rpgbot.net/dnd5/characters/classes/warlock/spells/
 rpgbotbind: cosp "Paladin Spells" toposu! https://rpgbot.net/dnd5/characters/classes/paladin/spells/
 rpgbotbind: cosR "Ranger Spells" toposu! https://rpgbot.net/dnd5/characters/classes/ranger/spells/
@@ -292,10 +315,13 @@ rpgbotbind: ct<C-h> "(show bindings: rpgbot/toggle)" rpgbotshowkeys ct
 rpgbotbind: ctw "Toggle width" cujs toggleprop($1("article.article").style, "maxWidth", "1000px")
 
 rpgbotbind: c/b "Bard Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/bard/subclasses
+rpgbotbind: c/B "Barbarian Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/barbarian/subclasses/
 rpgbotbind: c/c "Cleric Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/cleric/subclasses
 rpgbotbind: c/d "Druid Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/druid/subclasses
 rpgbotbind: c/f "Fighter Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/fighter/subclasses
+rpgbotbind: c/g "Ranger Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/ranger/subclasses
 rpgbotbind: c/m "Monk Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/monk/subclasses
+rpgbotbind: c/n "Barbarian Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/barbarian/subclasses/
 rpgbotbind: c/p "Paladin Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/paladin/subclasses
 rpgbotbind: c/R "Ranger Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/ranger/subclasses
 rpgbotbind: c/r "Rogue Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/rogue/subclasses
@@ -322,10 +348,13 @@ ttbuildbind <Enter> js document.getElementById("toc-widget-3").scrollIntoView()
 ttbuildbind co<C-h> showkeysurl tabletopbuilds.com co
 ttbuildbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
 ttbuildbind: coc "Goto comments" cujs $id("comments").scrollIntoView()
-ttbuildbind: col "Goto last level" cujs $$("h3,h3>span,h4").find(e=>e.id.match(/^level[-_]20[-_]/i)).scrollIntoView()
+ttbuildbind: cod "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
+ttbuildbdoc col "Goto last level"
+ttbuildbind col cujs $$("h3,h3>span,h4").find(e=>e.id.match(/^level[-_]20[-_]/i)).scrollIntoView()
 ttbuildbind: cor "Goto rpgbot.net" toposu https://rpgbot.net/dnd5/
 ttbuildbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
 ttbuildbind: cot "Goto top level" toposu! https://tabletopbuilds.com
+ttbuildbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
 " | cs -- ttbuild/search |
 definesearch ttbuild_search https://tabletopbuild.com/?s=%s
