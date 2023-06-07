@@ -684,7 +684,6 @@ command searchnmaps! jsb -d¦ utils.tri.searchNmapsWrapper(JS_ARGS.slice(2).join
 bind <C-h><C-h> showkeys <C-h>
 bind: <C-h>a "Open list of ui.key.accelKey values" topos file:///home/troy/.tridactyl/data/nsIDOMKeyEvent.h.txt
 bind: <C-h>b "Search normal keybinding definitions" fillcmdline searchnmaps
-bind: <C-h>B "Search normal keybinding definitions (subconfigs)" fillcmdline searchnmaps!
 bind: <C-h>c "Show user-defined commands" showmycommands
 bdoc <C-h>d "Open devtools toolbox"
 bind <C-h>d tabopen about:devtools-toolbox?id=tridactyl.vim.betas%40cmcaine.co.uk&type=extension
@@ -694,8 +693,9 @@ bind: <C-h>h "Tridactyl help" fillcmdline help
 bind <C-h>i tabopen moz-extension://926899c1-24a3-4569-9789-2f53b837f92e/static/docs/globals.html
 bind: <C-h>k "View keybindings" fillcmdline bind
 bind <C-h>K tabopenorswitchc https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
-bdoc <C-h>s "Goto tridactyl options"
-bind <C-h>s tabopenorswitchc moz-extension://13341d1e-1f1e-485d-88cc-4d8e57599a91/static/docs/classes/_src_lib_config_.default_config.html
+bdoc <C-h>o "Goto tridactyl options"
+bind <C-h>o tabopenorswitchc moz-extension://13341d1e-1f1e-485d-88cc-4d8e57599a91/static/docs/classes/_src_lib_config_.default_config.html
+bind: <C-h>s "Search normal keybinding definitions (subconfigs)" fillcmdline searchnmaps!
 bind: <C-h>u "View URL-specific keybindings" fillcmdline bindurl
 bdoc <C-h>x "Open xdotool keycodes list"
 bind <C-h>x tabopenorswitchc https://gitlab.com/cunidev/gestures/-/wikis/xdotool-list-of-key-codes
