@@ -493,6 +493,9 @@ bind: wd<C-h> "(show bindings: browser/dl)" showkeys wd
 bind: wdd "Select links to download" linkjs links.dlChooseLinks(document.links)
 
 " | wk -- browser/bookmarks |
+bind: gA "Save bookmark as" :fill `bmark ${tri.contentLocation}`
+bind: g;A "Save bookmark in toolbar" :fill_ `bmark ${tri.contentLocation} /Bookmarks Toolbar/`
+
 bind wk<C-h> showkeys wk
 bind: wkb "Open bookmark in background adjacent tab [Rofi]" bmrofi related t
 bind: wkk "Open bookmark in adjacent tab [Rofi]" bmrofi related
