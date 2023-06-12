@@ -145,8 +145,9 @@ command fillcmdline_withcount jsb -d¦ fillcmdline(JS_ARGS.length>2 ? JS_ARGS.jo
 
 " | commands for running commands |
 command: _ "Run args as ex command" jsb -d¦ tri.controller.acceptExCmd(JS_ARGS.slice(1).join(" "))¦
-command: :exec "Eval JS string, sub for COUNT, run as ex cmd" jsb -d¦ utils.tri.exCount(JS_ARGS, null, true)¦
-command: :fill "Eval JS string, sub for COUNT, fill cmdline" jsb -d¦ utils.tri.exCount(JS_ARGS, null)¦
+command: :exec "Eval JS string, sub for COUNT, run as ex cmd" jsb -d¦ utils.tri.exCount(JS_ARGS, true)¦
+command: :fill "Eval JS string, sub for COUNT, fill cmdline" jsb -d¦ utils.tri.exCount(JS_ARGS)¦
+command: :fill_ "Eval JS string, sub for COUNT, fill cmdline" jsb -d¦ utils.tri.exCount(JS_ARGS, {notrail:true})¦
 command :: composite
 command: hintpipe "Hint items and pass attribute through pipe" composite hint -pipe
 command: hintpipeJ "Hint items (no JS hints) and pass attribute through pipe" composite hint -Jpipe

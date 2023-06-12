@@ -883,12 +883,18 @@ utils.tri = {
             tri.controller.acceptExCmd(`${defCmd} ${key} ${rest}`);
     },
 
-    exCount: async function(rawargs, defaultCount=1, run=false) {
+    exCount: async function(rawargs, opts={}) {
+        opts = utils.tri.parseOpts(opts, {
+            castBoolean: "run",
+            defaults: {"defaultCount": 1},
+        });
         const [args, rawcount] = utils.tri.parseArgsAndCount(rawargs);
-        const count = rawcount || defaultCount;
+        const count = rawcount || opts.defaultCount;
         const expr = eval(args.join(" ").replace(/COUNT/g, count));
-        if (run)
+        if (opts.run)
             return tri.controller.acceptExCmd(expr);
+        else if (opts.notrail)
+            return fillcmdline_notrail(expr);
         else
             return fillcmdline(expr);
     },
