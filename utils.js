@@ -886,10 +886,8 @@ utils.tri = {
     exCount: async function(rawargs, opts={}) {
         opts = utils.tri.parseOpts(opts, {
             castBoolean: "run",
-            defaults: {"defaultCount": 1},
         });
-        const [args, rawcount] = utils.tri.parseArgsAndCount(rawargs);
-        const count = rawcount || opts.defaultCount;
+        const [args, count] = utils.tri.parseArgsAndCount(rawargs, {defaultCount: opts.defaultCount});
         const expr = eval(args.join(" ").replace(/COUNT/g, count));
         if (opts.run)
             return tri.controller.acceptExCmd(expr);
