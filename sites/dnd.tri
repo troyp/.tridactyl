@@ -28,8 +28,8 @@ dndbbind: <A-enter> "Jump to table" cujs jumpToHeading(".Table-Styles_Table-Titl
 dndbbind f jsb sites.dndb.follow()
 dndbbind F jsb sites.dndb.follow("-Jb")
 dndbbind: <A-Escape> "Close modal" click .fullscreen-modal-close-btn
-dndbbind: [[ "Previous page" click .top-prev-page>a
-dndbbind: ]] "Next page" click .top-next-page>a
+dndbbind: [[ "Previous page" click .top-prev-page>a,a[rel=prev]
+dndbbind: ]] "Next page" click .top-next-page>a,a[rel=next]
 dndbbind: <C-PageDown> "Load More" cujs $1t("button", /load more/i).click()
 
 dndbbind c<C-h> showkeysurl dndbeyond.com c
