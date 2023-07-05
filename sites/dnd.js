@@ -5,7 +5,7 @@
 
 const dnd = {
     gdrive: "https://drive.google.com/drive/folders/118Rgv-J4jW5boTab-wX14cwFsVGGeSrH",
-    dprcalc: "https://docs.google.com/spreadsheets/d/1eefKbOvpiDq5wjs92WSw5B7IBZhH6vxmFaO7XMAi_3I/edit#gid=0",
+    dprcalc: "https://docs.google.com/spreadsheets/d/10clHkMM3Y7NxsZh9o3UMqnB9AdeSlzxNqF0sxx0NL-I/edit#gid=0",
 };
 sites.dnd = dnd;
 
@@ -86,6 +86,19 @@ const dndb = {
             "necromancy": "school=9",
             "transmutation": "school=10",
             "melee": "attack-type=1", "ranged": "attack-type=2",
+            "acid": "damage-type=48",
+            "bludgeoning": "damage-type=49",
+            "cold": "damage-type=50",
+            "fire": "damage-type=51",
+            "force": "damage-type=52",
+            "lightning": "damage-type=53",
+            "necrotic": "damage-type=54",
+            "piercing": "damage-type=55",
+            "poison": "damage-type=56",
+            "psychic": "damage-type=57",
+            "radiant": "damage-type=58",
+            "slashing": "damage-type=59",
+            "thunder": "damage-type=60",
             "str": "save-required=1",
             "dex": "save-required=2",
             "con": "save-required=3",
