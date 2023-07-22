@@ -58,12 +58,30 @@ $$(".toc_widget_list li>a").forEach(a=>{
     a.style.color = color;
 });
 
+// ───────────────────────────────────────────────────────────────────────────────
+// ╭──────────────────────╮
+// │ Optimized Feat Guide │
+// ╰──────────────────────╯
+
 if (url.match(/https:\/\/tabletopbuilds.com\/optimized-feat-guide-for-dd-5e/)) {
+    /* link Feats heading to dndbeyond feats list */
+    const hd = document.querySelector("h3.table_title");
+    const hdLink = document.createElement("a");
+    hdLink.textContent = hd.textContent;
+    hd.textContent = "";
+    hdLink.href = "https://www.dndbeyond.com/feats";
+    hd.appendChild(hdLink);
+
+    /* create summary table */
     let table = document.getElementsByTagName("table")[0];
     let rows = [...table.rows].slice(2);
     const summary = document.createElement("table");
     summary.id = "summary-table";
-    table.parentElement.appendChild(summary);
+    // table.parentElement.appendChild(summary);
+    summary.classList.add("widget");
+    const searchbar = document.getElementById("search-3");
+    searchbar.after(summary);
+
     const thead = document.createElement("thead");
     summary.appendChild(thead);
     let tr = document.createElement("tr");
