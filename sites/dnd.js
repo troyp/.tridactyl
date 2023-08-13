@@ -70,14 +70,27 @@ const dndb = {
 
     getSpellFilter(tag) {
         const table = {
+            /* components */
             "verbal": "verbal=t", "noverbal": "verbal=f",
             "somatic": "somatic=t", "nosomatic": "somatic=f",
             "material": "material=t", "nomaterial": "material=f",
             "v": "verbal=t", "no-v": "verbal=f",
             "s": "somatic=t", "no-s": "somatic=f",
             "m": "material=t", "no-m": "material=f",
+            /* concentration */
             "conc": "concentration=1", "noconc": "concentration=2",
+            /* ritual */
             "ritual": "ritual=t", "noritual": "ritual=f",
+            /* casting time */
+            "action": "casting-time=1",
+            "ba": "casting-time=2",
+            "reaction": "casting-time=3",
+            "min": "casting-time=4", "1min": "casting-time=4",
+            "10min": "casting-time=5",
+            "hr": "casting-time=6", "1hr": "casting-time=6",
+            "8hr": "casting-time=7",
+            "12hr": "casting-time=8",
+            /* school */
             "abjuration": "school=3",
             "conjuration": "school=4",
             "divination": "school=5",
@@ -86,7 +99,9 @@ const dndb = {
             "illusion": "school=8",
             "necromancy": "school=9",
             "transmutation": "school=10",
+            /* attack type */
             "melee": "attack-type=1", "ranged": "attack-type=2",
+            /* damage type */
             "acid": "damage-type=48",
             "bludgeoning": "damage-type=49",
             "cold": "damage-type=50",
@@ -100,6 +115,7 @@ const dndb = {
             "radiant": "damage-type=58",
             "slashing": "damage-type=59",
             "thunder": "damage-type=60",
+            /* save */
             "str": "save-required=1",
             "dex": "save-required=2",
             "con": "save-required=3",
@@ -108,6 +124,12 @@ const dndb = {
             "cha": "save-required=6",
             "save": "save-required=1&filter-save-required=2&filter-save-required=3&filter-save-required=4"
                 + "&filter-save-required=5&filter-save-required=6",
+            /* sort */
+            "sort=cast": "sort=casting-time",
+            "sort=-cast": "sort=-casting-time",
+            "sort=duration": "sort=spell-duration",
+            "sort=-duration": "sort=-spell-duration",
+            /* tags */
             "creation": "tags=1",
             "heal": "tags=2", "healing": "tags=2",
             "teleport": "tags=4", "teleportation": "tags=4",
@@ -134,7 +156,7 @@ const dndb = {
             "psi": "tags=301", "psionic": "tags=301",
             "dunamancy": "tags=326",
         };
-        return table[tag];
+        return table[tag] || tag;
     },
 
     gotoSpellLvlCls: async function(lvl, cls="", other="") {
@@ -160,10 +182,11 @@ const dndb = {
         }).join("&");
         /* other filters */
         const others = other.split(",");
-        const otherFilter = others.map(x=>`&filter-${this.getSpellFilter(x)}`).join("");
+        const [sorts, filters] = tri.R.partition(s=>s.match("sort="), others);
+        const filterstr = filters.map(x=>`&filter-${this.getSpellFilter(x)}`).join("");
+        const sortstr = sorts.length>0 ? sorts.map(this.getSpellFilter).join("") : "sort=level";
         /* assemble URL */
-        const sort = "sort=level";
-        const url = `https://www.dndbeyond.com/spells?${clsFilter}&${lvlFilter}${otherFilter}&${sort}`;
+        const url = `https://www.dndbeyond.com/spells?${clsFilter}&${lvlFilter}${filterstr}&${sortstr}`;
         return tri.controller.acceptExCmd(`toposu! ${url}`);
     },
 
