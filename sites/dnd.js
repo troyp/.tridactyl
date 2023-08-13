@@ -36,6 +36,7 @@ const dndb = {
                 ".dice_notification_control",
                 ".dice-toolbar--hover dice-toolbar__dropdown-die",
                 "span.ct-sidebar__control",
+                "div.special-select-item",
             ]
         });
     },
