@@ -1261,6 +1261,11 @@ bind: ,no<C-h> "(show bindings: edit/isolate)" showkeys ,no
 bind: ,nom "Remove elements except main" keep main
 bind: ,noo "Remove elements except those matching selectors" fillcmdline keep
 
+" ╭───────────────────╮
+" │ ,,n -- hints/edit │
+" ╰───────────────────╯
+bind: ,,ni "Remove image [HINTS]" hint -k figure,img
+
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────╮
 " │ ,r -- reference │
@@ -1407,6 +1412,10 @@ bind: ,,lu "Follow unvisited link [HINTS]" hint -c :link
 bind: ,,lv "Follow visited link [HINTS]" hint -c :visited
 bind: ,,lU "Follow unvisited link in new tab [HINTS]" hint -c :link
 bind: ,,lV "Follow visited link in new tab [HINTS]" hint -c :visited
+
+" ╭───────────────────╮
+" │ ,,n -- hints/edit │ see ,n above
+" ╰───────────────────╯
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────╮
