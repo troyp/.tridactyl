@@ -771,7 +771,7 @@ bind: yugU "Yank nth from root URL" jsb_count utils.yank(urls.fromRoot(COUNT))
 
 " | yud -- yank/URL/domain |
 bind: yud<C-h> "(show bindings: yank/URL/domain)" showkeys yud
-bind: yudd "Yank page hostname" cujs cutils.yank(document.location.hostname)
+bind: yudd "Yank page hostname" cujs cutils.yank(document.location.hostname.replace(/^www\./, ""))
 bind: yudD "Yank page hostname+protocol" cUjs cutils.yank(urls.fromRoot(0))
 bind: yudr "Yank page hostname+protocol as regex literal" cUjs cutils.yank(S.escRegex(urls.fromRoot(0), true))
 bind: yudR "Yank page hostname+protocol as regex source" cUjs cutils.yank(S.escRegex(urls.fromRoot(0)))
