@@ -1,0 +1,10 @@
+#! /bin/bash
+# uses BookBrowser: https://github.com/pgaskin/BookBrowser
+
+if ps aux | grep BookBrowser | grep -E -- '-b /home/troy/.readinglist' | grep -v grep >/dev/null; then
+    pid=$(ps aux | grep BookBrowser | grep -E -- '-b /home/troy/.readinglist' | grep -v grep | cuts 1);
+    lsof -p $pid | grep IPv6 | grep -oE ':[0-9]+'
+else
+    BookBrowser -b ~/.readinglist 2>/dev/null &
+    echo :8090;
+fi;

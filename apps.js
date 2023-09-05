@@ -3,6 +3,15 @@
 // ╰────────────────────────────────────────────╯
 
 var apps = {
+    bookbrowser: async function() {
+        /* open BookBrowser app
+         * https://github.com/pgaskin/BookBrowser
+         */
+        const res = await tri.native.run("~/.tridactyl/scripts/tri_readinglist");
+        const port = res.content.trim();
+        utils.tab.openOrSwitch(`http://localhost${port}`);
+    },
+
     /** :convertunits UNIT
      *  :convertunits UNIT1 UNIT2
      *  :convertunits N UNIT1 [UNIT2]

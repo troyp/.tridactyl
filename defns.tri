@@ -897,6 +897,13 @@ bind: a;c "Open link in Google Chrome" hintpipe a href | ! /usr/local/bin/google
 bind: a;f "Open link in Waterfox" hintpipe a href | ! /opt/waterfox/waterfox
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭──────────────────╮
+" │ ab -- apps/books │
+" ╰──────────────────╯
+bind: ab<C-h> "(show bindings: apps/books)" showkeys ab
+bind: abb "Open readinglist in BookBrowser" jsb apps.bookbrowser()
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────╮
 " │ ad -- apps/downloads │
 " ╰──────────────────────╯
