@@ -50,7 +50,7 @@ var apps = {
     /** A version of exclaim that uses fillcmdline_nofocus
      */
     exclaim_: async function(args) {
-        const res = await tri.native.run(args.join(" "));
+        const res = await tri.native.run(shell.singQEscape(args.join(" ")));
         fillcmdline_nofocus(res.content.replace(/\n/g, "   "));
         return res.content;
     },
