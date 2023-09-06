@@ -991,14 +991,17 @@ utils.tri = {
     parseArgs: function(args, opts={}) {
         if (!Array.isArray(args)) args = [args];
         /* opts */
-        opts = utils.tri.parseOpts(opts, {castString: "type"});
+        opts = utils.tri.parseOpts(opts, {
+            castString: "type",
+            defaults: { sep: " ", },
+        });
         var result = null, callerOpts = {};
         const finalArg = args.at(-1);
         if (opts.allowOpts && typeof finalArg == "object" && !Array.isArray(finalArg)) {
             [args, [callerOpts]] = tri.R.splitAt(-1, args);
         }
         /* args */
-        const argstr = args.join(" ").trim();
+        const argstr = args.join(opts.sep).trim();
         switch (opts.type) {
           case "string":
           case "str":
@@ -1228,7 +1231,7 @@ utils.tri = {
             const keyLines = [`${k}:  `, ...urlLines.slice(1).map(_ => "    ")];
             return tri.R.zipWith((kl,ul)=>kl+ul, keyLines, urlLines).join("\n");
         });
-        utils.msg(lines);
+        return utils.msg(lines);
     },
 
     qmarkset: async function(c) {
