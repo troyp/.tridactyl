@@ -154,6 +154,7 @@ command: hintpipeJ "Hint items (no JS hints) and pass attribute through pipe" ::
 command: sprintf "Format with sprintf" jsb -d¦ sprintf(...parseTerms(JS_ARGS))¦
 commdoc pastef "Takes a format string and replaces ${S} with clipboard contents; used to pipe to another command"
 command pastef :: jsb -d¦ getclip().then(s=>parseArgs(JS_ARGS, "string").replace(/\$\{s\}/g, s))¦
+command: cb "Get clipboard contents" :: jsb -d¦ getclip()¦
 commdoc expaste "Execute commands in clipboard"
 command expaste jsb utils.cbread().then(s=>s.split("\n").forEach(c=>tri.controller.acceptExCmd(c)));
 command: quot "Quote arguments; used in pipe" js_cmd `"${ARGS.join("\x20")}"`
@@ -217,6 +218,7 @@ command tabopen_bg jsb -d¦ utils.tab.open(JS_ARGS, {where: "related", backgroun
 commdoc tabopen_bg! "Open URL/search in background final tab"
 command tabopen_bg! jsb -d¦ utils.tab.open(JS_ARGS, {where: "last", background: true})¦
 command tabopenmultiple jsb -d¦ utils.tab.openMultiple(JS_ARGS.join(" ").split(" "))¦
+command: winopen! "Open in private window" ! firefox --private-window
 " openorswitch...
 commdoc openorswitch "Open an URL in current tab, or switch to existing tab"
 command openorswitch jsb -p utils.tab.openOrSwitch(JS_ARG, {where:"here"});
