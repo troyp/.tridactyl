@@ -26,7 +26,7 @@ const xdo = {
 
     /* click item in xdo.coords */
     clickItem: async function(item, button=1, opts={}) {
-        return this.click(...this.coords[item],  button, opts);
+        return this.click(...this.item(item),  button, opts);
     },
 
     /* adapted from tridactyl source for ;x in lib/config.ts */
@@ -58,6 +58,19 @@ const xdo = {
         return this.elem(selector, xdocmd, opts);
     },
 
+    item: function(str) {
+        function getItem(obj, str) {
+            const [prop, rest] = str.split(".");
+            const child = obj[prop];
+            if (rest) {
+                return getItem(child, rest);
+            } else {
+                return child;
+            }
+        }
+        return getItem(xdo.coords, str);
+    },
+
     key: async function(k) { return tri.native.run(`xdotool key ${this.resolveKey(k)}`); },
 
     keyseq: async function(args) {
@@ -87,6 +100,9 @@ xdo.coords = {
     downloads_menu:      [ 241,  85   ],
     edit_bookmark:       [ 1461, 115  ],
     extension_btn_R1:    [ 1822, 85   ],
+    ext_btns: {
+        webdev: [1681, 91],
+    },
     far_pt:              [ 1919, 1079 ],
 };
 
