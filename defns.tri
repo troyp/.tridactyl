@@ -179,7 +179,8 @@ command :prev_ch_cmd :prev_beg ; text.kill_word ; js " " | text.insert_text
 command withjs composite js
 command withjsb composite jsb
 command: ujs "Load urls.js, S.js and run js" composite js -r urls.js ; js -r S.js ; js
-command: cUjs "Load cutils.js, urls.js, shell.js, S.js, run js" cujs -r urls.js ; js -r S.js ; js -r shell.js ; js
+commdoc cUjs "Load cutils.js, urls.js, shell.js, S.js, run js"
+command cUjs cujs -r urls.js ; js -r S.js ; js -r shell.js ; js -r js/sprintf.js; js
 command: cujs "Load cutils.js and run js" composite js -r cutils.js ; js
 command: sitejs "Load S.js, cutils.js, csites.js, run js" cUjs -r csites.js ; js
 command: linkjs "Load cutils & links.js, run" cujs -r links.js ; js
