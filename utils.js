@@ -285,7 +285,7 @@ utils.tab = {
      */
     open: async function(url, opts={}) {
         opts = utils.tri.parseOpts(opts, {castString: "where", castNumber: "where"});
-        if (opts.where === "tabopen") opts.where = tri.config.USERCONFIG.tabopenpos;
+        if (opts.where === "tabopen" || opts.where === "tab") opts.where = tri.config.USERCONFIG.tabopenpos;
         if (opts.where === "middleclick") opts.where = tri.config.USERCONFIG.relatedopenpos;
         var addr_type;
         [url, addr_type] = await utils.tri.parseUrl(url, opts.where!=="here");
@@ -447,6 +447,7 @@ utils.tab = {
         args = utils.tri.parseArgs(args);
         var where = "here";
         if (["here", "tab", "related", "next", "last"].indexOf(args[0]) > -1) { [where, ...args] = args; }
+        if (where == "adj") where = "related";
         const url = args.join(" ");
         if (where === "tab") where = "related";
         return this.openOrSummon(url, where);
