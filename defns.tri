@@ -888,6 +888,11 @@ bind aw urltoggle https://web.archive.org/web/https: https: https?://web.archive
 bdoc a;w "Open link in wayback machine [HINT]"
 bind a;w hintpipe a href | js -p tri.controller.acceptExCmd(`tabopen https://web.archive.org/web/${JS_ARG}`)
 
+" | as -- apps/screenshot |
+bind: as<C-h> "(show bindings: apps/screenshot)" showkeys as
+bind: asa "Screenshot: fullscreen, save in ~/screenshots" ! scrot -e 'mv $f ~/screenshots'
+bind: ass "Screenshot: select area, save in ~/screenshots" ! scrot -s -e 'mv $f ~/screenshots'
+
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────╮
 " │ a; -- apps/hints │
