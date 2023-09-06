@@ -1235,6 +1235,16 @@ utils.tri = {
         tri.config.USERCONFIG.qmarks[c] = await tri.excmds.js("window.location.href");
     },
 
+    tabmarks: async function() {
+        const tabmarks = Object.entries(tri.config.USERCONFIG.tabmarks);
+        return utils.msg(tabmarks.join("\n"));
+    },
+
+    tabmarkset: async function(c) {
+        tri.config.USERCONFIG.tabmarks ||= {};
+        tri.config.USERCONFIG.tabmarks[c] = await utils.tab.currentOrd();
+    },
+
     unbindMode: function(args) {
         const argstr = args.join(" ").trim();
         const bindmodeRe = /^([a-z]+) ([^ ]+)/;

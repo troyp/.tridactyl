@@ -1165,6 +1165,17 @@ bind: ,ebp "Display properties of expression in message box" fillcmdline jsb_get
 bind: J "Evaluate javascript expression in commandline" fillcmdline jseq
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────────╮
+" │ ,g -- tabmarks │
+" ╰────────────────╯
+command: tabmarks "Show tabmarks" jsb utils.tri.tabmarks()
+command: settabmark "Set tabmark" jsb -p utils.tri.tabmarkset(JS_ARG)
+command: gototabmark "Open tabmark in current tab" jsb -p utils.tab.switch(tri.config.USERCONFIG.tabmarks[JS_ARG])
+
+bind: ,gg "Set tabmark" gobble 1 settabmark
+bind: ,gt "Open tabmark here" gobble 1 gototabmark
+bind: <C-h>t "Show tabmarks" tabmarks
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────╮
 " │ ,i -- images │
 " ╰──────────────╯
@@ -1458,6 +1469,8 @@ bind: M "Set qmark" gobble 1 setqmark
 bind: go "Open qmark here" gobble 1 openqmark
 bind: gn "Goto qmark" gobble 1 tabopenorswitchqmark
 bind: <C-h>q "Show qmarks" qmarks
+
+" | tabmarks: see ,g prefix above |
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────────────────╮
