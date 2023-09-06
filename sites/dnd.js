@@ -156,7 +156,10 @@ const dndb = {
             "psi": "tags=301", "psionic": "tags=301",
             "dunamancy": "tags=326",
         };
-        return table[tag] || tag;
+        if (tag.startsWith("q="))
+            return tag.replace(/^q=/, "search=");
+        else
+            return table[tag] || tag;
     },
 
     gotoSpellLvlCls: async function(lvl, cls="", other="") {
