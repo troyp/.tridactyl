@@ -3,13 +3,17 @@
 // ╰────────────────────────────────────────────╯
 
 var apps = {
-    bookbrowser: async function(where="1") {
+    bookbrowser: async function(opts={}) {
         /* open BookBrowser app
          * https://github.com/pgaskin/BookBrowser
          */
-        const res = await tri.native.run("~/.tridactyl/scripts/tri_readinglist");
+        opts.where ||= "1";
+        const script = opts.restart
+              ? "~/.tridactyl/scripts/tri_readinglist_restart"
+              : "~/.tridactyl/scripts/tri_readinglist";
+        const res = await tri.native.run(script);
         const port = res.content.trim();
-        return utils.tab.openOrSwitch(`http://localhost${port}`, where);
+        return utils.tab.openOrSwitch(`http://localhost${port}`, opts.where);
     },
 
     /** :convertunits UNIT

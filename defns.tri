@@ -910,6 +910,7 @@ bind: a;f "Open link in Waterfox" hintpipe a href | ! /opt/waterfox/waterfox
 " ╰──────────────────╯
 bind: ab<C-h> "(show bindings: apps/books)" showkeys ab
 bind: abb "Open readinglist in BookBrowser" jsb apps.bookbrowser()
+bind: abr "Restart BookBrowser; show readinglist in BookBrowser" jsb apps.bookbrowser({restart:true})
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────╮
