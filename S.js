@@ -1,4 +1,11 @@
 var S = {
+    maybeAppend: function(s, suffix) {
+        return s.endsWith(suffix) ? s : s+suffix;
+    },
+    maybePrepend: function(s, prefix) {
+        return s.startsWith(prefix) ? s : prefix+s;
+    },
+
     // padEnd, padStart: adapted from github.com/uxitten/polyfill
     padEnd: function (s, targetLength, padString) {
         targetLength = targetLength >> 0; //floor if number or convert non-number to 0;
