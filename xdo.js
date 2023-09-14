@@ -58,6 +58,21 @@ const xdo = {
         return this.elem(selector, xdocmd, opts);
     },
 
+    getMousePos: async function(opts={}) {
+        opts = utils.tri.parseOpts(opts, { castBoolean: "yank", });
+        opts.type ??= (opts.yank) ? "str" : "array";
+        const xyres = await tri.native.run(
+            `xdotool getmouselocation | perl -pe 's/x:(\\d+) y:(\\d+) .*/$1 $2/';`
+        );
+        const xy =  xyres.content.trim();
+        const res = (opts.type == "str") ? xy : xy.split(" ");
+        if (opts.yank)
+            utils.yank(res, { msg: opts.msg });
+        else if (opts.msg)
+            utils.message(res);
+        return res;
+    },
+
     item: function(str) {
         function getItem(obj, str) {
             const [prop, rest] = str.split(".");
