@@ -98,7 +98,7 @@ xdo.coords = {
     tabhist_next:        [ 295,  85   ],
     update_notification: [ 1740, 200  ],
     downloads_menu:      [ 241,  85   ],
-    edit_bookmark:       [ 1461, 115  ],
+    edit_bookmark:       [ 1186, 91   ],
     extension_btn_R1:    [ 1822, 85   ],
     ext_btns: {
         webdev: [1681, 91],
