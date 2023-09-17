@@ -508,6 +508,14 @@ bind: wko "Open bookmark in current tab" fillcmdline bmarks
 bind: wkt "Open bookmark in new tab" fillcmdline bmarks -t
 bind: wkv "View bookmarks JSON file in browser" winopen file:///home/troy/bookmarks/bookmarks.json
 
+" | wks -- browser/bookmarks/save |
+bind: wks<C-h> "(show bindings: browser/bookmarks/save)" showkeys wks
+bind: wkss "Save bookmark as" :fill `bmark ${tri.contentLocation}`
+bind: wksm "Save bookmark in Bookmarks Menu" :fill_ `bmark ${tri.contentLocation} /Bookmarks Menu/
+bind: wkso "Save bookmark in Other Bookmarks" :exec `bmark ${tri.contentLocation} /Bookmarks Menu/Other bookmarks/
+bind: wkst "Save bookmark in Bookmarks Toolbar" :fill_ `bmark ${tri.contentLocation} /Bookmarks Toolbar/`
+bind: wksy "Save bookmark in My/" :fill_ `bmark ${tri.contentLocation} /Bookmarks Toolbar/My/`
+
 " | wh -- browser/history |
 bind: whh "Open history item in last tab [rofi]" history last false
 bind: wha "Open history item in adjacent tab [rofi]" history related false
