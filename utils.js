@@ -574,9 +574,9 @@ utils.tab = {
     },
 
     removeRange: async function(start, end, opts={}) {
-        start = await this.parseTabnum(start);
-        end = await this.parseTabnum(end);
-        return this.remove((_,__,i) => i>=start && i<=end, opts);
+        const startIdx = await this.parseTabnum(start);
+        const endIdx = await this.parseTabnum(end);
+        return this.remove((_,__,i) => i>=startIdx+1 && i<=endIdx+1, opts);
     },
 
     removeRangeWr: async function(args, opts={}) {
