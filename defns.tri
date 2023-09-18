@@ -755,7 +755,7 @@ bind ydd jsb utils.yank((new Date).toISOString().replace("T", "-").replace(/:[0-
 
 " | ye -- yank/element |
 bind: ye<C-h> "(show bindings: yank/element)" showkeys ye
-bind: yei "Yank element id [HINTS]" :: cujs ; hint -c [id] -F e=>cutils.yank(e.id)
+bind: yei "Yank element id [HINTS]" :: hint -pipe [id] id | clipboard yank
 
 " | yi -- yank/input |
 bind: yii "Yank input field [HINT]" yankinput
