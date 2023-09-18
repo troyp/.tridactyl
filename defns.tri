@@ -647,6 +647,10 @@ bind: sho "Search history, open item in current tab [rofi]" historysearch here f
 bdoc shud "Search history for current domain"
 bind shud jsb_count places.hist.openWr(["related", false], {text:urls.fromRoot(0), daysAgo:(COUNT||1)*30})
 
+" | si -- search/in |
+bind: si<C-h> "(show bindings: search/in)" showkeys si
+bind: sit "Search in terminal" fillcmdline ! roxterm -e s -b "w3m -o confirm_qq=false"
+
 " | sk -- search/bookmark keyword |
 bind: sk<C-h> "(show bindings: search/kw)" showkeys sk
 bind: skb "Bmark keyword search: background adjacent tab" fillcmdline kwsearch_bg
