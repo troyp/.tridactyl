@@ -1,9 +1,9 @@
 var S = {
     maybeAppend: function(s, suffix) {
-        return s.endsWith(suffix) ? s : s+suffix;
+        return String(s).endsWith(suffix) ? s : s+suffix;
     },
     maybePrepend: function(s, prefix) {
-        return s.startsWith(prefix) ? s : prefix+s;
+        return String(s).startsWith(prefix) ? s : prefix+s;
     },
 
     // padEnd, padStart: adapted from github.com/uxitten/polyfill
@@ -11,20 +11,21 @@ var S = {
         targetLength = targetLength >> 0; //floor if number or convert non-number to 0;
         padString = String((typeof padString !== 'undefined' ? padString : ' '));
         if (s.length > targetLength) {
-            return String(s);
+            return s;
         } else {
             targetLength = targetLength - s.length;
             if (targetLength > padString.length) {
                 padString += padString.repeat(targetLength / padString.length);
             }
-            return String(s) + padString.slice(0, targetLength);
+            return s + padString.slice(0, targetLength);
         }
     },
     padStart: function (s, targetLength, padString) {
+        s = String(s);
         targetLength = targetLength >> 0; //floor if number or convert non-number to 0;
         padString = String((typeof padString !== 'undefined' ? padString : ' '));
         if (s.length > targetLength) {
-            return String(s);
+            return s;
         }
         else {
             targetLength = targetLength - s.length;
@@ -32,7 +33,7 @@ var S = {
                 padString += padString.repeat(targetLength / padString.length);
                 //append to original to ensure we are longer than needed
             }
-            return padString.slice(0, targetLength) + String(s);
+            return padString.slice(0, targetLength) + s;
         }
     },
     repeat: function (s, n) { return Array(n).fill(s).join(""); },
