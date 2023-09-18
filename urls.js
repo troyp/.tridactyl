@@ -205,6 +205,13 @@ var urls = {
         }
     },
 
+    fragmentURL: function(elt) {
+        const u = tri.contentLocation.href;
+        const frag = elt.id || elt.name;
+        if (frag) return u+"#"+frag;
+        else return null;
+    },
+
     toFilename: async function(url, opts={}) {
         url ||= tri.contentLocation.href;
         opts = utils.tri.parseOpts(opts, {castBoolean: "allowSpaces"});

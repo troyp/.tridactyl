@@ -752,6 +752,11 @@ bind: yd<C-h> "(show bindings: yank/datetime)" showkeys yd
 bdoc ydd "Yank current datetime (yyyy-mm-dd-HH-MM-SS)"
 bind ydd jsb utils.yank((new Date).toISOString().replace("T", "-").replace(/:[0-9.]+Z/, ""))
 
+
+" | ye -- yank/element |
+bind: ye<C-h> "(show bindings: yank/element)" showkeys ye
+bind: yei "Yank element id [HINTS]" :: cujs ; hint -c [id] -F e=>cutils.yank(e.id)
+
 " | yi -- yank/input |
 bind: yii "Yank input field [HINT]" yankinput
 
@@ -777,6 +782,7 @@ bind: <A-y> "Yank selected links" linkjs links.yankSelected()
 bind: yu<C-h> "(show bindings: yank/URL)" showkeys yu
 bind: yugu "Yank nth parent URL" jsb_count utils.yank(urls.getNthParent(COUNT))
 bind: yugU "Yank nth from root URL" jsb_count utils.yank(urls.fromRoot(COUNT))
+bind: yu3 "Yank URL with fragment [HINTS]" :: cUjs ; hint -c [id],[name] -F e=>cutils.yank(urls.fragmentURL(e))
 
 " | yud -- yank/URL/domain |
 bind: yud<C-h> "(show bindings: yank/URL/domain)" showkeys yud
