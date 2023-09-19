@@ -207,6 +207,7 @@ places.hist = {
      *                     specify "N-M" for results from N hours to M hours ago
      *  opts.daysAgo:      alternative to startTime/endTime/hoursAgo
      *  opts.maxResults:   maximum results to send to rofi (default 100)
+     *  opts.matching:     matching method (normal, regex, glob, fuzzy, prefix)
      *  opts.prompt:       rofi prompt
      *  opts.format:       rofi results format option
      *  opts.multi:        run rofi in multi-select mode
@@ -216,6 +217,7 @@ places.hist = {
             defaults: {
                 text: "",
                 format: "i",
+                matching: "normal",
                 maxResults: Number.MAX_SAFE_INTEGER,
                 multi: true,
             },
@@ -264,7 +266,7 @@ places.hist = {
         const rofithemestr='#window {width: 80%;} #listview {lines: 25;}';
         const cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | ` +
               `${tri.config.get("rofi")} -dmenu -theme-str "${rofithemestr}" -format ${opts.format}` +
-              `                          -p "${opts.prompt}" ${dmenuOpts}`;
+              `                          -matching ${opts.matching} -p "${opts.prompt}" ${dmenuOpts}`;
         return tri.native.run(cmd).then(
             res => res.content ? res.content.trim().split("\n").map(i=>items[Number(i)]) : null
         );
