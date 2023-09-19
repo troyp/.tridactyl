@@ -780,7 +780,10 @@ bind: ykS "Yank keyword bookmark URL with rofi from bookmarks.json file" fillcmd
 
 " | yl -- yank/links |
 bind: yl<C-h> "(show bindings: yank/links)" showkeys yl
+bdoc yli "Yank links as markdown items [HINTS]: NAME ( <HREF> )"
+bind yli :: hint -F l=>`${l.textContent} ( <${decodeURIComponent(l.href)}> )`|yank!
 bind: yll "Yank links" linkjs links.yankAll()
+bind: ylm "Yank links as markdown [HINTS]" :: hint -F l=>`[${l.textContent}](${decodeURIComponent(l.href)})`|yank!
 bind: yls "Yank selected links" linkjs links.yankSelected()
 bind: <A-y> "Yank selected links" linkjs links.yankSelected()
 
