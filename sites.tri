@@ -360,10 +360,18 @@ command se_js! "Run javascript after loading csites.js file (default COUNT=null)
 command: seshowkeys "(show bindings: se)" showkeysurl stackexchange.com
 jsb sites.se.bindShowKey()
 
+command: seexpandcomments "Expand all comments" cujs cutils.click("a.js-show-link", {all:true});
+
 sebind: cc "Expand all comments" seexpandcomments
 sebind: cC "Cleanup (remove clutter)" se_js se.cleanup()
+sebind: c<C-h> "(show bindings: se)" seshowkeys c
+
+" | cs -- SE/save |
+sebind: cs<C-h> "(show bindings: se/save)" seshowkeys cs
+sebind: csd "Save draft answer" sitejs csites.se.saveDraft()
 
 " | ct -- SE/toggle |
+sebind: ct<C-h> "(show bindings: se/toggle)" seshowkeys ct
 sebind: ctw "Toggle widen content" se_js se.widen()
 
 " ───────────────────────────────────────────────────────────────────────────────
