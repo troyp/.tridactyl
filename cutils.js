@@ -440,6 +440,26 @@ var cutils = {
     /** Remove elements matching any of the SELECTORS. For more options, see rm() */
     rmall: (...selectors) => cutils.rm(selectors),
 
+    saveText: async function(eltOrSel, file, opts={}) {
+        opts = cutils.tri.parseOpts(opts, {
+            castString: "property",
+            defaults: { "property": "innerText", },
+        });
+        let elements = [],
+            filename = "";
+        if (!file) {
+            filename = await cutils.timestampFilename(document.title);
+            file = `~/Downloads/${filename}`;
+        }
+        if (typeof eltOrSel == "string") {
+            elements = $$(eltOrSel);
+        } else if (eltOrSel instanceof Node) {
+            elements = [eltOrSel];
+        } else throw new Error("eltOrSel not a string or Node");
+        const text = elements.map(e=>e[opts.property]).join("\n");
+        return tri.native.write(file, text);
+    },
+
     saveURL: function(url, name) {
         url ||= document.location.href;
         name ||= "download-"+cutils.datetime();
@@ -518,6 +538,21 @@ var cutils = {
 
     sprintf: async function(...args) {
         return tri.excmds.jsb(`sprintf(...${JSON.stringify(args)})`);
+    },
+
+    timestampFilename: async function(title, opts={}) {
+        opts = cutils.tri.parseOpts(opts, {
+            castString: "extension",
+            defaults: {
+                "extension": "txt",
+            },
+        });
+        await tri.excmds.js("-r", "js/sanitize-filename.js");
+        if (sanitize) title = sanitize(title);
+        else title = title.replace(/[\/:\|]/g, "-").replace(/[\*<>\?\\"]/g, "").replace("\n", " ");
+        let filename = [title, cutils.datetime()].join("-");
+        if (opts.extension) filename += `.${opts.extension}`;
+        return filename;
     },
 
     toggleprop: async function(obj, prop, val1, val2="") {
@@ -1015,6 +1050,7 @@ window.R = R;
     "SEL", "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankjs", "yankjsWr", "yankf",
     "datetime", "isInViewport", "isDisplayed", "sprintf",
     "asArr", "hexToRGB", "isArraylike", "isArrayConvertible", "isIterable", "ownprops",
+    "saveText", "timestampFilename",
 ].forEach(k => window[k]=cutils[k]);
 
 [
