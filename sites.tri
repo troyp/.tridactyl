@@ -349,12 +349,15 @@ redditbind: cto "Toggle old reddit" urltoggle https://www.reddit.com https://old
 " ╭───────────────────╮
 " │ StackExchange.com │
 " ╰───────────────────╯
-command se_js composite cujs -r sites/se.c.js ; js
-commdoc sebind "Bind key for stackexchange sites"
-command sebind jsb -d¦ sites.se.bind("--mode=normal", ...JS_ARGS)¦
-commdoc sebind: "Bind key with description for stackexchange sites"
-command sebind: jsb -d¦ sites.se.bind_("--mode=normal", ...JS_ARGS)¦
-command: seexpandcomments "Expand all comments" cujs cutils.click("a.js-show-link", {all:true});
+command: sebind "Bind key for StackExchange.com" bindurl stackexchange.com
+command: sebind: "Bind key with description for StackExchange.com" bindurl: stackexchange.com
+command: sereset "Reset key for StackExchange.com" reseturl stackexchange.com
+command: sebdoc "Provide a description on a separate line" js ;
+
+command se_js "Run javascript after loading csites.js file (default COUNT=1)" cujs -r csites.js ; js_count
+command se_js! "Run javascript after loading csites.js file (default COUNT=null)" cujs -r csites.js ; js_count!
+
+command: seshowkeys "(show bindings: se)" showkeysurl stackexchange.com
 jsb sites.se.bindShowKey()
 
 sebind: cc "Expand all comments" seexpandcomments
