@@ -412,11 +412,14 @@ var cutils = {
         opts = cutils.tri.parseOpts(opts, {castBoolean: "cmdline"});
         if (s instanceof Promise) s = await s;
         const s_ = (opts.prefix || "") + s;
-        if (opts.temp) {
-            const t = opts.duration || 3000;
-            fillcmdline_tmp(s_, t);
-        } else if (opts.cmdline) {
+        /* alert("MESSAGE() OPTS: " + JSON.stringify(opts)); */
+        if (opts.temp || opts.duration) {
+            const t = opts?.duration || 3000;
+            fillcmdline_tmp(t, s_);
+        } else if (opts.nofocus) {
             fillcmdline_nofocus(s_);
+        } else if (opts.cmdline) {
+            fillcmdline(s_);
         } else {
             alert(s_);
         }
@@ -442,23 +445,32 @@ var cutils = {
     /** Remove elements matching any of the SELECTORS. For more options, see rm() */
     rmall: (...selectors) => cutils.rm(selectors),
 
-    saveText: async function(eltOrSel, file, opts={}) {
+    saveText: async function(eltOrSel, opts={}) {
         opts = cutils.tri.parseOpts(opts, {
-            castString: "property",
-            defaults: { "property": "innerText", },
+            castString: "prop",
+            defaults: {
+                "prop": "innerText",
+                "msg":  true,
+                "dir":  "~/Downloads/tri",
+            },
         });
-        let elements = [],
-            filename = "";
-        if (!file) {
-            filename = await cutils.timestampFilename(document.title);
-            file = `~/Downloads/${filename}`;
+        if (!opts?.name) {
+            opts.name = await cutils.timestampFilename(document.title);
         }
+        const file = `${opts.dir}/${opts.name}`;
+        let elements;
         if (typeof eltOrSel == "string") {
             elements = $$(eltOrSel);
         } else if (eltOrSel instanceof Node) {
             elements = [eltOrSel];
         } else throw new Error("eltOrSel not a string or Node");
-        const text = elements.map(e=>e[opts.property]).join("\n");
+        const text = elements.map(e=>e[opts.prop]).join("\n");
+        if (opts.alert) {
+            cutils.message(text);
+        } else if (opts.msg) {
+            cutils.message(text, {cmdline:true});
+        }
+        /* alert("SAVETEXT() OPTS: " + JSON.stringify(opts)); */
         return tri.native.write(file, text);
     },
 
@@ -816,9 +828,9 @@ cutils.img = {
     },
 },
 // ───────────────────────────────────────────────────────────────────────────────
-// ╭────────────────────────────────────────────────╮
+// ╭─────────────────────────────────────────────────╮
 // │ cutils.mod -- utilities for modifying web pages │
-// ╰────────────────────────────────────────────────╯
+// ╰─────────────────────────────────────────────────╯
 
 cutils.mod = {
     /* Turn HEADING into a collapsible `details` element, containing CONTENT */
