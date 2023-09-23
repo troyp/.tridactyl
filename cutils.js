@@ -425,7 +425,9 @@ var cutils = {
 
     /*  OBJ, PROP1.PROP2...PROPN -> [OBJ.PROP1...PROPN-1, PROPN] */
     resolveComplexProperty: function(obj, propchain) {
-        var props = propchain.split(".").reverse();
+        let props = typeof propchain == "string"
+            ? propchain.split(".").reverse()
+            : propchain;
         while (props.length > 1) obj = obj[props.pop()];
         return [obj, props[0]];
     },
