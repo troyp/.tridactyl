@@ -172,14 +172,6 @@ var csites = {
             ];
             cutils.css.toggleOrCreate("_tri_widen", ...cssrules);
         },
-
-        saveDraft: async function() {
-            const draft = $1(".wmd-input")?.value;
-            let title = document.title;
-            await tri.excmds.js("-r", "js/sanitize-filename.js");
-            if (sanitize) { title = sanitize(title); }
-            return tri.native.write(`~/Documents/drafts/${title}.txt`, draft);
-        },
     },
 
     tvtropes: {

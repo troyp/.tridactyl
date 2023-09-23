@@ -368,7 +368,7 @@ sebind: c<C-h> "(show bindings: se)" seshowkeys c
 
 " | cs -- SE/save |
 sebind: cs<C-h> "(show bindings: se/save)" seshowkeys cs
-sebind: csd "Save draft answer" sitejs csites.se.saveDraft()
+sebind: csd "Save draft answer" cujs saveText('.wmd-input',{prop:'value',dir:'~/Documents/drafts'})
 
 " | ct -- SE/toggle |
 sebind: ct<C-h> "(show bindings: se/toggle)" seshowkeys ct
