@@ -1312,6 +1312,8 @@ bind: ,noo "Remove elements except those matching selectors" fillcmdline keep
 " ╭───────────────────╮
 " │ ,,n -- hints/edit │
 " ╰───────────────────╯
+command hintparts hint div,p,header,footer,section,article,table,ul,ol,code,pre,h1,h2,h3,h4,h5,h6
+bind: ,,ne "Toggle content editable" hintparts -F e=>e.contentEditable=e.contentEditable=="true"?"false":"true"
 bind: ,,ni "Remove image [HINTS]" hint -k figure,img
 
 " ───────────────────────────────────────────────────────────────────────────────
