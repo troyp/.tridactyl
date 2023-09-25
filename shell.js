@@ -1,11 +1,28 @@
 
 const shell = {
-    cmdRoxterm: async function(cmd, roxtermOpts=null) {
-        roxtermOpts ??= "";
-        if (!roxtermOpts.includes("--geometry")) roxtermOpts = `--geometry=80x40+182-90 ${roxtermOpts}`;
+    cmd: async function(cmd, opts={}) {
+        const res = tri.native.run(cmd);
+        return res;
+    },
+
+    cmdRoxterm: async function(cmd, opts={}) {
+        opts = utils.tri.parseOpts(opts, {
+            defaults: { termopts: "", },
+            castBoolean: "exit",
+            castString: "termopts",
+        });
+        if (!opts.termopts.includes("--geometry"))
+            opts.termopts = `--geometry=80x40+182-90 ${opts.termopts}`;
         const cmdq = shell.dblQEscape(cmd, 2);
-        var fullcmd = `roxterm ${roxtermOpts} -e "bash -c \\"${cmdq}; bash\\""`;
-        return tri.excmds.exclaim(fullcmd);
+        var fullcmd;
+        if (opts.exit)
+            fullcmd = `roxterm ${opts.termopts} -e "bash -c \\"${cmdq}\\""`;
+        else
+            fullcmd = `roxterm ${opts.termopts} -e "bash -c \\"${cmdq}; bash\\""`;
+        if (opts.noexec)
+            return fullcmd;
+        else
+            return tri.excmds.exclaim(fullcmd);
     },
 
     dblQEscape: function(s, levels=1) {
