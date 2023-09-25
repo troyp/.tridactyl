@@ -178,6 +178,17 @@ apps.pw = {
     },
 };
 
+apps.ref = {
+    thes: {
+        power: async function(word) {
+            const ua = `"Mozilla/5.0 (X11; Linux i686; rv:64.0) Gecko/20100101 Firefox/64.0"`;
+            const cmd = `curl -sA ${ua} "https://www.powerthesaurus.org/${word}/synonyms"`
+                  + `| pup "#content-list #primary-area a text{}" | less`;
+            shell.cmdRoxterm(cmd, true);
+        },
+    },
+};
+
 apps.trans = {
     page: {
         google: function(url, from="auto", to="en", opts={}) {

@@ -1321,6 +1321,16 @@ bind: ,,ni "Remove image [HINTS]" hint -k figure,img
 " │ ,r -- reference │
 " ╰─────────────────╯
 bind ,r<C-h> showkeys ,r
+bind: ,r<C-h> "(show bindings: ref)" showkeys ,r
+
+" | ,rd -- reference/dict |
+bind: ,rd<C-h> "(show bindings: ref/dict)" showkeys ,rd
+
+" | ,rdt -- reference/dict/thesaurus |
+command: thesaurus_power "Show results from Power Thesaurus" jsb -p apps.ref.thes.power(JS_ARG)
+
+bind: ,rdt<C-h> "(show bindings: ref/dict/thesaurus)" showkeys ,rdt
+bind: ,rdtp "Show Power Thesaurus synonyms" : thesaurus_power
 
 " | ,ru -- reference/unicode |
 command: unicodehexcodes "Unicode hex code of characters" jsb -d¦ apps.unicodeHexcodes(JS_ARGS.join(""))¦
