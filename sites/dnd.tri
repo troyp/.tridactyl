@@ -20,6 +20,8 @@ command: dndbreset "Reset key for D&D Beyond" reseturl dndbeyond.com
 command: dndbbdoc "Provide a description on a separate line" js ;
 command: dndbshowkeys "(show bindings: dndb)" showkeysurl dndbeyond.com
 
+definesearch dndbchar https://character-service.dndbeyond.com/character/v5/character/%s
+
 dndbbind: c<C-h> "(show bindings: dndb)" dndbshowkeys c
 
 dndbbind: <enter> "load dndb.auto.js" cujs -r sites/dndb.auto.js
@@ -61,6 +63,7 @@ dndbbind: cmh "Goto my homebrew" toposu! https://www.dndbeyond.com/my-creations
 dndbbind: co<C-h> "(show bindings: dndb/goto)" dndbshowkeys co
 dndbbind: coc "Goto cart" toposu! https://www.dndbeyond.com/marketplace/cart
 dndbbind: cod "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
+dndbbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
 dndbbind: com "Goto marketplace" toposu! https://www.dndbeyond.com/marketplace/sourcebooks
 dndbbind: cor "Goto rpgbot.net" toposu! https://rpgbot.net/dnd5/
 dndbbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
@@ -69,7 +72,6 @@ dndbbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
 " | cr -- dndb/rules |
 dndbbind: cr<C-h> "(show bindings: dndb/rules)" dndbshowkeys cr
-dndbbind: cre "Goto Equipment" toposu! https://www.dndbeyond.com/equipment
 dndbbind: crf "Goto Feats" toposu! https://www.dndbeyond.com/feats
 dndbbind: cri "Goto Magic Items" toposu! https://www.dndbeyond.com/magic-items
 dndbbind: crr "Goto Races" toposu! https://www.dndbeyond.com/races
@@ -105,6 +107,15 @@ dndbbind: crcs "Goto Sorcerer" toposu! https://www.dndbeyond.com/classes/sorcere
 dndbbind: crcw "Goto Wizard" toposu! https://www.dndbeyond.com/classes/wizard
 dndbbind: crcW "Goto Warlock" toposu! https://www.dndbeyond.com/classes/warlock
 
+" | cre -- dndb/rules/equipment |
+dndbbind: cre<C-h> "(show bindings: dndb/rules/equipment)" dndbshowkeys cre
+dndbbind: crea "Adventuring Gear table" https://www.dndbeyond.com/sources/phb/equipment#OtherAdventuringGear
+dndbbind: cree "Goto Equipment" toposu! https://www.dndbeyond.com/equipment
+" | crew -- dndb/rules/equipment/weapons |
+dndbbind: crewa "Armor table" toposu! https://www.dndbeyond.com/sources/phb/equipment#Armor
+dndbbind: crewm "Martial Weapons table" toposu! https://www.dndbeyond.com/sources/phb/equipment#MartialWeaponsTable
+dndbbind: crews "Simple Weapons table" toposu! https://www.dndbeyond.com/sources/phb/equipment#SimpleWeaponsTable
+
 " | crm -- dndb/rules/monsters |
 dndbbind: crma "Goto Monsters (all)" toposu! https://www.dndbeyond.com/monsters
 dndbbdoc crmm "Goto Monsters (owned)"
@@ -134,18 +145,24 @@ dndbbind: crs.w "Goto Spells: class=Wizard" toposu! https://www.dndbeyond.com/sp
 dndbbind: crs.W "Goto Spells: class=Warlock" toposu! https://www.dndbeyond.com/spells?filter-class=7
 dndbbind: crs<Space> "Open spell description" fillcmdline_notrail tabopen https://www.dndbeyond.com/spells/
 
+" | cr. -- dndb/rules/misc |
+dndbbind: cr.dm "Goto Dragonmarks" toposu! https://www.dndbeyond.com/sources/wgte/dragonmarks
+dndbbind: cr.c "Goto Conditions" toposu! https://www.dndbeyond.com/sources/phb/appendix-a-conditions
+
 " | cs -- dndb/search |
 definesearch dndbspell https://www.dndbeyond.com/spells/%s -
 definesearch_lc_noapos dndbspell! https://www.dndbeyond.com/spells/%s -
 definesearch dndbsearch_spell https://www.dndbeyond.com/spells?filter-class=0&filter-search=%s
+definesearch dndbsearch_item https://www.dndbeyond.com/magic-items?filter-search=%s
 command: dndbspell! "Open spell (new tab)" jsb_cmd "tabopen dndbspell ARGS.join(`-`).toLowerCase().replace(`'`, ``)"
 commdoc dndbspell_lvl_cls "Goto Spells of class M, level N"
 command dndbspell_lvl_cls jsb -d¦ sites.dndb.gotoSpellLvlCls(...utils.tri.parseArgs(JS_ARGS))¦
 
 dndbbind: cs<C-h> "(show bindings: dndb/search)" dndbshowkeys cs
-dndbbind: css "Search" fillcmdline dndb_search tab
-dndbbind: csS "Search dndb spells" fillcmdline dndbsearch_spell tab
-dndbbind: cs;s "Goto spell description" fillcmdline dndbspell tab
+dndbbind: csi "Search dndb magic items" :fill `dndbsearch_item ${COUNT?"here":"tab"}`
+dndbbind: css "Search" :fill `dndb_search ${COUNT?"here":"tab"}`
+dndbbind: csS "Search dndb spells" :fill `dndbsearch_spell ${COUNT?"here":"tab"}`
+dndbbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"here":"tab"}`
 
 " | ct -- dndb/toggle |
 dndbbind: ct<C-h> "(show bindings: dndb/toggle)" dndbshowkeys ct
@@ -176,10 +193,15 @@ dndbbind: cy<C-h> "(show bindings: dndb/yank)" dndbshowkeys cy
 dndbbind: cya "Copy all entries" yankall .info a
 dndbbind: cyy "Copy entry" cujs yankhint(".info a")
 
+" | c; -- dndb/hint |
+dndbbind: c;<C-h> "(show bindings: dndb/hint)" dndbshowkeys c;
+dndbbdoc c;f "Follow link to dnd5e.wikidot search"
+dndbbind c;f :: hint | tabopen https://www.google.com.au/search?q=site:http://dnd5e.wikidot.com/
+
 "    ╭────────────────────────────╮
 "    │ D&D Beyond Character Sheet │
 "    ╰────────────────────────────╯
-autocmd DocLoad  https://www\.dndbeyond\.com/characters/ cujs -r sites/dndb.auto.js
+autocmd DocLoad  https://www\.dndbeyond\.com/characters/ cujs -r sites/dndb.auto.js ; js scrollto(100)
 autocmd TabEnter https://www\.dndbeyond\.com/characters/ cujs -r sites/dndb.auto.js
 
 command dndbcsheetbind bindurl https://www.dndbeyond.com/characters/[0-9]+
