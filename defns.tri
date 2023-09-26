@@ -288,9 +288,6 @@ command: omni! "Enter string in omniboox with xdotool" jsb -d¦ xdo.omniboxEnter
 command omni xdo key alt+d key ctrl+u sleep 0.5 type
 command omni_focus xdokeyseq 0.2 alt+d ctrl+u
 
-" | application-specific commands |
-command: suncalc "Load suncalc.js and run js" appjs -r js/suncalc.js ; js
-
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────╮
 " │ b -- tabs │
@@ -1128,11 +1125,13 @@ bind: ,avy "Goto Youtube" topos https://www.youtube.com/
 " ╭────────────────────╮
 " │ ,aw -- web/weather │
 " ╰────────────────────╯
+command: suncalc "Load suncalc.js and run js" appjs -r js/suncalc.js ; js
+
 bind ,aw<C-h> showkeys ,aw
 bdoc ,awd "Goonellabah Weather: 48 hour daily summary (weatherzone)"
 bind ,awd topos https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah/next48hours#daily-summaries
 bdoc ,aws "Goonellabah Sunrise and Sunset Times"
-bind ,aws suncalc cutils.message(sprintf(`SUNRISE: %s\t\nSUNSET: %s`, ...capps.sunriseSunset(...user.latlong)))
+bind ,aws suncalc ((s,t)=>`SUNRISE: ${s}\t\nSUNSET: ${t}`)(...capps.sunriseSunset(...user.latlong)) | :
 bind: ,aww "Lismore Weather (BoM)" topos http://www.bom.gov.au/nsw/forecasts/lismore.shtml
 bind: ,awt "Goonellabah Weather (timeanddate.com)" topos https://www.timeanddate.com/weather/@2164966
 bind: ,awz "Goonellabah Weather (weatherzone)" topos https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah
