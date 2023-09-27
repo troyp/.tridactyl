@@ -273,9 +273,12 @@ utils.tab = {
         return browser.tabs.move(thisTab.id, {index: i});
     },
 
+    /* Move current tab to position after alternate tab
+     */
     moveToAlternate: async function(n=1) {
         const alt = await this.getAlternate(n);
-        return this.move(alt.index+1);
+        const altnum = alt.index + 1;
+        return this.move(altnum + 1);
     },
 
     /**   open(URL, { OPTIONS... })
