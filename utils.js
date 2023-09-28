@@ -589,17 +589,23 @@ utils.tab = {
     },
 
     removeWithRofi: async function(opts={}) {
+        opts = utils.tri.parseOpts(opts, {
+            castBoolean: "invert",
+        });
         const indexes = await this.rofiChoose(opts);
         const N = await this.getN();
         const nPinned = (await this.getPinned()).length;
-        const rmindexes = opts.invert ?
-              tri.R.difference(tri.R.range(nPinned, N), indexes)
-              : indexes.slice(nPinned);
+        const pinnedIndexes = tri.R.range(0, nPinned);
+        if (opts.invert && indexes.length==0) return;
+        const rmindexes = opts.invert
+              ? tri.R.difference(tri.R.range(nPinned, N), indexes)
+              : indexes.filter(i=>i>=nPinned);
         const ns = rmindexes.map(i=>i+1);
-        if (opts.review)
+        if (opts.review) {
             fillcmdline(`tabclose ${ns.join(" ")}`);
-        else
+        } else {
             tri.controller.acceptExCmd(`tabclose ${ns.join(" ")}`);
+        }
     },
 
     /**  rofiChoose({ OPTIONS... })    Return the 0-based index of tab(s) chosen
@@ -613,7 +619,7 @@ utils.tab = {
         const dmenuInput = alltabsitems.join("\n");
         const cmd = `dmenuin="$(cat <<'EOF'\n${dmenuInput}\nEOF\n)"; echo "$dmenuin" | ` +
               `${tri.config.get("rofi")} -dmenu -width 80 -format ${opts.format}` +
-              ` -p "${opts.prompt}" -multi-select -i`;
+              ` -p "${opts.prompt}" -multi-select -i 2>/dev/null`;
         return tri.native.run(cmd).then(
             res => res.content.trim().split("\n").map(Number)
         );
