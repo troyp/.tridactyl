@@ -1,19 +1,13 @@
 /*  ╭─────────╮
+
  *  │ cleanup │
  *  ╰─────────╯
  */
 function cleanup() {
     const url = document.location.href;
     if (false) {
-    } else if (url.match(/https:\/\/www.codeproject\.com/)) {
-        /* codeproject.com */
-        keep(".header", "#contentdiv");
-        rmall("img.avatar");
-    } else if (url.match(/https:\/\/onepiece-online-manga\.com/)) {
-        /* onepiece-online-manga.com */
-        keep("article");
-        rmall(".simplesocialbuttons");
     } else if (url.match(/https:\/\/www\.amikosimonetti\.com\//)) {
+        /* amikosimonetti.com */
         rmall(
             "header", "footer", "iframe",
             "nav.BlogItem-pagination", "section[id*=comments]", "div.BlogItem-share",
@@ -22,10 +16,10 @@ function cleanup() {
         /* bartoszmilewski.com */
         keep("#main");
         rmall(".comment-author.vcard>img");
-    } else if (url.match(/https:\/\/patternsinfp.wordpress.com/))  {
-        /* patternsinfp.wordpress.com */
-        keep("#site-title,#content");
-        rmall("#nav-above,#nav-below,#jp-post-flair,.reply,.post.pingback,#respond,#eu-cookie-law");
+    } else if (url.match(/https:\/\/www.codeproject\.com/)) {
+        /* codeproject.com */
+        keep(".header", "#contentdiv");
+        rmall("img.avatar");
     } else if (url.match(/https:\/\/collider\.com/)) {
         /* collider.com */
         /* fix image height */
@@ -104,9 +98,11 @@ function cleanup() {
         keep("#content");
         rmall("#catlinks");
     } else if (url.match(/https:\/\/www.instructables\.com/)) {
+        /* instructables */
         keep("article#article");
         rmall("section.recommendations", "section#imadeits", "div.contest-entries");
     } else if (url.match(/https:\/\/imsdb\.com\/scripts\//)) {
+        /* imsdb */
         const table = $1(".scrtext").closest("table");
         keep(table);
         table.style.margin = "4em";
@@ -128,13 +124,22 @@ function cleanup() {
     } else if (url.match(/https:\/\/martinfowler\.com/)) {
         /* martinfowler.com */
         rmall("#banner", "#page-footer", ".author-photo");
+    } else if (url.match(/https:\/\/onepiece-online-manga\.com/)) {
+        /* onepiece-online-manga.com */
+        keep("article");
+        rmall(".simplesocialbuttons");
     } else if (url.match(/https:\/\/opensource\.com/)) {
         /* opensource.com */
         keep("#article-template");
         rmall(".os-article__image", ".os-article__left", ".os-article__bottom",
               ".authorbio__thumbnail", ".user-picture-badges");
     } else if (url.match(/https:\/\/www\.netflix\.com\//)) {
+        /* netflix.com */
         rmall(".static-image.image-layer", ".billboard-row", ".spotlight");
+    } else if (url.match(/https:\/\/patternsinfp.wordpress.com/))  {
+        /* patternsinfp.wordpress.com */
+        keep("#site-title,#content");
+        rmall("#nav-above,#nav-below,#jp-post-flair,.reply,.post.pingback,#respond,#eu-cookie-law");
     } else if (url.match(/https:\/\/poets\.org\/poem\//)) {
         /* poets.org */
         keep(".card-header", ".card-body");
@@ -143,13 +148,32 @@ function cleanup() {
         /* rpgbot.net */
         keep("article");
         $1("div>span[itemprop='name']").parentElement.remove();
-        rmall(".topad", ".shareit");
+        rmall(".topad", ".shareit", "span[id^=ezoic]");
     } else if (url.match(/https:\/\/blog\.sigplan\.org/)) {
         /* sigplan.org */
         if (cleanupDisqus()) return;
         keep("article");
         rmall(".et_post_meta_wrapper>img");
         $1("body").style.margin = "3em";
+    } else if (url.match(/https:\/\/tabletopbuilds\.com\//)) {
+        /* tabletopbuilds.com */
+        rmall(
+            "#respond", "#search-3", "#recent-posts-2", ".custom-logo-link",
+            ".post-navigation", ".ssba-classic-2", "footer",
+        );
+        /* left panel */
+        const darkSwitch = $1(".wpnm-button");
+        const leftPanel = $1(".resp-sidebar-wrapper");
+        const newSection = document.createElement("section");
+        newSection.appendChild(darkSwitch);
+        leftPanel.insertBefore(newSection, leftPanel.firstChild);
+        rm("#custom_html-5");
+        darkSwitch.style.backgroundColor = "white";
+        darkSwitch.style.padding = "1em";
+        darkSwitch.style.borderRadius = "8px";
+        darkSwitch.style.borderWidth = "5px";
+        darkSwitch.style.borderImage = "radial-gradient(#dbdbe0, transparent) 1";
+        darkSwitch.style.margin = "0 0 2em";
     } else {
         cleanupGeneric();
     }
