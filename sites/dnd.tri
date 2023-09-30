@@ -6,6 +6,8 @@ command: dndjs "Run javascript after loading dnd.c.js file (default COUNT=1)" cu
 command: dndjs! "Run javascript after loading dnd.c.js file (default COUNT=null)" cujs -r sites/dnd.c.js ; js_count!
 command: dndcalc "Goto DPR calculator" :: jsb sites.dnd.dprcalc | toposu
 command: dndcalc! "Goto DPR calculator (private window)" :: jsb sites.dnd.dprcalc | winopen!
+command: dndjs "Run javascript after loading dnd.c.js file (default COUNT=1)" cujs -r sites/dnd.c.js ; js_count
+command: hintdndjs "Hint after loading dnd.c.js etc" :: cujs  -r sites/dnd.c.js ; hint
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
@@ -281,6 +283,7 @@ rpgbotbind: <Enter> "Remove ads" rm span[id^=ezoic]
 
 rpgbotbind c<C-h> showkeysurl rpgbot.net c
 rpgbotbind: cb "Goto DnDBeyond.com" openorsummonc https://www.dndbeyond.com
+rpgbotbind: cl "Change UL list links to spell links" hintdndjs ul -F e=>dnd.rpgbot.setSpellLinks(e)
 definesearch rpgbot_search https://rpgbot.net/?s=%s
 rpgbotbind: <Enter> "Load greasemonkey script manually" js -r gmscripts/RPGBotnet_Improvements.user.js
 

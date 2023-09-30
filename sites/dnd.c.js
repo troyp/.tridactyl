@@ -98,4 +98,14 @@ dnd.dndb = {
     },
 };
 
+dnd.rpgbot = {
+    setSpellLinks: function(ul) {
+        $$("li>span>a").forEach(a=>{
+            const name = a.textContent.trim();
+            const name_hyph = name.replace(/ /g, "-");
+            a.href = `https://www.dndbeyond.com/spells/${name_hyph}`;
+        });
+    },
+};
+
 window.dnd = dnd;
