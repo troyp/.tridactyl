@@ -149,6 +149,8 @@ command: :exec "Eval JS string, sub for COUNT, run as ex cmd" jsb -d¦ utils.tri
 command: :fill "Eval JS string, sub for COUNT, fill cmdline" jsb -d¦ utils.tri.exCount(JS_ARGS)¦
 command: :fill_ "Eval JS string, sub for COUNT, fill cmdline" jsb -d¦ utils.tri.exCount(JS_ARGS, {notrail:true})¦
 command :: composite
+command: hintcujs "Hint and run javascript on element after loading cutils etc" :: cujs ; hint
+command: hintcUjs "Hint and run javascript on element after loading cutils etc" :: cUjs ; hint
 command: hintpipe "Hint items and pass attribute through pipe" :: hint -pipe
 command: hintpipeJ "Hint items (no JS hints) and pass attribute through pipe" :: hint -Jpipe
 command: sprintf "Format with sprintf" jsb -d¦ sprintf(...parseTerms(JS_ARGS))¦
