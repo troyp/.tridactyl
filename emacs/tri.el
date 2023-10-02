@@ -92,9 +92,13 @@
   (unless (string-empty-p cmd)
     (let ((start-pos (point)))
       (beginning-of-buffer)
-      (if (re-search-forward (concat "^command:? " cmd) nil t)
-          (progn (recenter 4) (beginning-of-line))
-        (goto-char start-pos)))))
+      (let ((pattern (concat "^command:? " cmd)))
+        (if (re-search-forward pattern nil t)
+            (progn
+              (recenter 4)
+              (beginning-of-line)
+              (setq evil-ex-search-pattern (list pattern t t)))
+          (goto-char start-pos))))))
 
 (defun my/tri-goto-binding (b)
   "Jump to specified binding"
@@ -102,21 +106,27 @@
   (unless (string-empty-p b)
     (let ((start-pos (point)))
       (beginning-of-buffer)
-      (if (let ((case-fold-search nil))
-            (re-search-forward (concat "^a?bind:? +\\(--mode=\\(normal\\|browser\\) +\\)?<?" b ">?") nil t))
-          (progn (recenter 4) (beginning-of-line))
-        (goto-char start-pos)))))
+      (let ((pattern (concat "^a?bind:? +\\(--mode=\\(normal\\|browser\\) +\\)?<?" b ">?")))
+        (if (let ((case-fold-search nil))
+             (re-search-forward pattern nil t))
+            (progn
+              (recenter 4)
+              (beginning-of-line)
+              (setq evil-ex-search-pattern (list pattern t t)))
+          (goto-char start-pos))))))
 
 (defun my/tri-goto-heading (h)
   "Jump to specified boxed heading"
   (interactive "sHeading: ")
   (let ((start-pos (point)))
     (unless (string-empty-p h) (beginning-of-buffer))
-    (if (re-search-forward (pcre-to-elisp (concat "^ *\" *[|│] +(.*-- )?" h ".* [|│]") "i") nil t)
-        (progn
-          (recenter 4)
-          (beginning-of-line))
-      (goto-char start-pos))))
+    (let ((pattern (pcre-to-elisp (concat "^ *\" *[|│] +(.*-- )?" h ".* [|│]") "i")))
+      (if (re-search-forward pattern nil t)
+         (progn
+           (recenter 4)
+           (beginning-of-line)
+           (setq evil-ex-search-pattern (list pattern t t)))
+       (goto-char start-pos)))))
 
 ;; ╭───────────────╮
 ;; │ my/tri-occur- │
