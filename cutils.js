@@ -104,6 +104,18 @@ var cutils = {
         return elems.filter(e=>e[opts.textProperty].match(text));
     },
 
+    /* eg. blink($1("#btn1"), "style.backgroundColor", "red", 2000) */
+    blink: function(elt, prop, val, t=500) {
+        elt = $1(elt);
+        const [o, p] = cutils.resolveComplexProperty(elt, prop);
+        const origval = o[p];
+        o[p] = val;
+        window.setTimeout(
+            ()=>{ o[p] = origval; },
+            t
+        );
+    },
+
     /** Clicks matching element(s). If successful, returns an array of clicked items.
      *  If unsuccessful, returns null.
      */
@@ -426,7 +438,9 @@ var cutils = {
         return s;
     },
 
-    /*  OBJ, PROP1.PROP2...PROPN -> [OBJ.PROP1...PROPN-1, PROPN] */
+    /*  OBJ, PROP1.PROP2...PROPN -> [OBJ.PROP1...PROPN-1, PROPN]
+        Take string and return list of properties
+     */
     resolveComplexProperty: function(obj, propchain) {
         let props = typeof propchain == "string"
             ? propchain.split(".").reverse()
@@ -1061,7 +1075,7 @@ window.R = R;
 
 [
     "$$", "$1", "$$cls", "$1cls", "$id", "$$tag", "$1tag", "$$t", "$1t", "$$match",
-    "click", "clickall", "click1", "scrollelt", "scrollNthIntoView",
+    "blink", "click", "clickall", "click1", "scrollelt", "scrollNthIntoView",
     "get1", "getText", "getText1",
     "getSelectionDOM", "getSelectionHtml",
     "isolate", "jumpToHeading", "keep", "rm", "rmall", "setInput", "toggleprop", "togglepropWr",
