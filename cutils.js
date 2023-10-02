@@ -485,6 +485,11 @@ var cutils = {
         return name;
     },
 
+    scrollelt: function(selector) {
+        const coords = $1(selector)?.getBoundingClientRect();
+        return window.scrollTo(coords);
+    },
+
     scrollNthIntoView: function(selector, n=1) {
         n = parseInt(n);
         return $$(selector)[n-1].scrollIntoView();
@@ -1056,7 +1061,7 @@ window.R = R;
 
 [
     "$$", "$1", "$$cls", "$1cls", "$id", "$$tag", "$1tag", "$$t", "$1t", "$$match",
-    "click", "clickall", "click1",
+    "click", "clickall", "click1", "scrollelt", "scrollNthIntoView",
     "get1", "getText", "getText1",
     "getSelectionDOM", "getSelectionHtml",
     "isolate", "jumpToHeading", "keep", "rm", "rmall", "setInput", "toggleprop", "togglepropWr",

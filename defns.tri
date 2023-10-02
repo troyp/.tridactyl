@@ -1388,8 +1388,10 @@ bind ,vv fillcmdline convertunits
 " │ ,x -- miscellaneous │
 " ╰─────────────────────╯
 command scrollnthintoview cujs -d¦ cutils.scrollNthIntoView(JS_ARGS[1], JS_ARGS?.[2])¦
+command: scrollelt "Scroll element to top of screen" cujs -d¦ cutils.scrollelt(JS_ARGS[1])¦
 
 bind ,x<C-h> showkeys ,x
+bind: ,xs "Scroll element to top of screen" : scrollelt
 
 " | ,xd -- misc/draw |
 bind: ,xd<C-h> "(show bindings: drawing)" showkeys ,xd
