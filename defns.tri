@@ -959,8 +959,14 @@ command yankdlfilename jsb -d¦ places.dl.yank(JS_ARGS[1]||1, dl=>dl.filename.re
 commdoc yankdldir "Yank directory of nth last download"
 command yankdldir jsb -d¦ places.dl.getDir(JS_ARGS[1]||1).then(dl=>utils.yank(dl))¦
 
+" | ad -- apps/downloads |
 bind ad<C-h> showkeys ad
 bind: ads "Show all downloads" jsb places.dl.show()
+
+" | adc -- apps/downloads/choose |
+bdoc adcc "Choose download to open"
+bind adcc jsb places.dl.select().then(a=>tri.native.run(`mimeopen -n '${a[0].filename}'`))
+bind: adcx "Choose download to open" jsb places.dl.select(true).then(a=>fillcmdline(`opendln ${a}`))
 
 " | add -- apps/downloads/dir |
 bind add<C-h> showkeys add

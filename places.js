@@ -179,6 +179,19 @@ places.dl = {
         return tri.native.run(cmd);
     },
 
+    select: async function(opts={}) {
+        opts = utils.tri.parseOpts(opts, {
+            castBoolean: "dlIndicies",
+            defaults: {format: "d",},
+        });
+        const dls = await browser.downloads.search({limit: 0, orderBy: ["-startTime"]});
+        const indices = await utils.select(dls.map(dl=>dl.filename), opts);
+        if (opts.dlIndicies)
+            return indices.join(" ");
+        else
+            return indices.map(n => dls[n-1]);
+    },
+
     show: async function(opts={}) {
         const dls = await browser.downloads.search({limit: 0, orderBy: ["-startTime"]});
         return utils.msg(dls.map((dl, i) => `【${i}】… ${dl.filename}`));
