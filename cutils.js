@@ -514,7 +514,7 @@ var cutils = {
      *     items: a string or iterable specifying a list of items
      *     opts.separator: if ITEMS is a string, specifies the string separating items
      *     opts.infile: a file to be used as input. The items are the lines of the file
-     *     opts.multiSelect: boolean; if true, allows multiple items to be selected
+     *     opts.multi: boolean; if true, allows multiple items to be selected
      *     opts.prompt: prompt shown to user
      *     opts.format: output format
      *       s  -  selected string
@@ -541,10 +541,10 @@ var cutils = {
         }
         const rofithemestr = '#window {width: 80%;} #listview {lines: 25;}';
         const rofithemeopt = `-theme-str '${rofithemestr}'`;
-        const dmenuOpts = opts.multiSelect ? "-multi-select -i" : "-i";
+        const dmenuOpts = opts.multi ? "-multi-select -i" : "-i";
         const prompt = [
             opts.prompt,
-            opts.multiSelect ? "[Shift+ENTER:select, ENTER:return]" : "[ENTER:select]"
+            opts.multi ? "[Shift+ENTER:select, ENTER:return]" : "[ENTER:select]"
         ].join(" ");
         const inputcmd = opts.infile
               ? `cat ${opts.infile} | `

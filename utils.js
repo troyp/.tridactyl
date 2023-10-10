@@ -141,10 +141,10 @@ var utils = {
         opts = this.tri.parseOpts(opts, {defaults:{prompt:"", format:"s"}});
         const rofithemestr = '#window {width: 80%;} #listview {lines: 25;}';
         const rofithemeopt = `-theme-str '${rofithemestr}'`;
-        const dmenuOpts = opts.multiSelect ? "-multi-select -i" : "-i";
+        const dmenuOpts = opts.multi ? "-multi-select -i" : "-i";
         const prompt = [
             opts.prompt,
-            opts.multiSelect ? "[Shift+ENTER:select, ENTER:return]" : "[ENTER:select]"
+            opts.multi ? "[Shift+ENTER:select, ENTER:return]" : "[ENTER:select]"
         ].join(" ");
         const inputcmd = opts.tempfile
               ? `cat ${opts.tempfile} | `

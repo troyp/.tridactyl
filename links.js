@@ -67,7 +67,7 @@ const links = {
         await tri.native.run(`mkdir -p "${newdir}"`);
         const rofiRes = await cutils.select(
             links, {
-                multiSelect: true,
+                multi: true,
                 format: "i",
                 prompt: "Links to download",
             }

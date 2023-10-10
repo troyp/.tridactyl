@@ -97,7 +97,7 @@ art.ja = {
             const items = this.getItems();
             const selectedIdxs = await cutils.select(
                 items.map(r=>$1("h2.product-name>a", r)?.textContent.trim()).filter(r=>r.match(rx||/./)),
-                { format: "i", multiSelect: opts.multi, }
+                { format: "i", multi: opts.multi, }
             );
             for (const i in selectedIdxs) {
                 if (i=>!isNaN(i)) $1(".js-basket-remove", items[i]).click();
