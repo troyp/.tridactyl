@@ -36,6 +36,15 @@ const stars = [
     ["★★★★★", "blue"],
 ];
 
+const darkcolors = [
+    ["", ""],
+    ["★☆☆☆☆", "#330000"],
+    ["★★☆☆☆", "#B35300"],
+    ["★★★☆☆", "#806000"],
+    ["★★★★☆", "#004000"],
+    ["★★★★★", "#000080"],
+];
+
 function ratingIndex(rating) {
     const match = rating.match(/[★☆]+/)?.[0];
     switch (match) {
@@ -44,7 +53,7 @@ function ratingIndex(rating) {
         case "★★★☆☆": return 3; break;
         case "★★★★☆": return 4; break;
         case "★★★★★": return 5; break;
-        default: return 0;
+        default: return rating;
     }
 }
 function ratingColor(rating) {
@@ -72,43 +81,122 @@ if (url.match(/https:\/\/tabletopbuilds.com\/optimized-feat-guide-for-dd-5e/)) {
     hdLink.href = "https://www.dndbeyond.com/feats";
     hd.appendChild(hdLink);
 
-    /* create summary table */
     let table = document.getElementsByTagName("table")[0];
     let rows = [...table.rows].slice(2);
-    const summary = document.createElement("table");
-    summary.id = "summary-table";
-    // table.parentElement.appendChild(summary);
-    summary.classList.add("widget");
+    const summarydiv = document.createElement("div");
     const searchbar = document.getElementById("search-3");
-    searchbar.after(summary);
+    searchbar.after(summarydiv);
 
-    const thead = document.createElement("thead");
-    summary.appendChild(thead);
-    let tr = document.createElement("tr");
-    const RatingCell = document.createElement("th");
-    RatingCell.textContent = "Rating";
-    const FeatCell = document.createElement("th");
-    FeatCell.textContent = "Feats";
-    tr.appendChild(RatingCell);
-    tr.appendChild(FeatCell);
-    thead.appendChild(tr);
-    const tbody = document.createElement("tbody");
-    summary.appendChild(tbody);
-    let i;
-    for (i of [5,4,3,2,1]) {
+    /* give each row an id attribute */
+    rows.forEach(r => { r.id = r.cells[0].textContent.toLowerCase().replace(/ /g, "-"); });
+
+    /* create summary table by rating */
+    function tblByRating() {
+        const summary = document.createElement("table");
+        summarydiv.appendChild(summary);
+        summary.id = "summary-table";
+        summary.classList.add("by-rating");
+        summary.classList.add("widget");
+
+        const thead = document.createElement("thead");
+        summary.appendChild(thead);
         let tr = document.createElement("tr");
-        tr.style.color = stars[i][1];
-        tbody.appendChild(tr);
-        let th = document.createElement("th");
-        th.textContent = stars[i][0];
-        tbody.rows[5-i].appendChild(th);
-        let feats = document.createElement("th");
-        tbody.rows[5-i].appendChild(feats);
+        const rating_cell = document.createElement("th");
+        rating_cell.textContent = "Rating";
+        const feat_cell = document.createElement("th");
+        feat_cell.textContent = "Feats";
+        tr.appendChild(rating_cell);
+        tr.appendChild(feat_cell);
+        thead.appendChild(tr);
+        const tbody = document.createElement("tbody");
+        summary.appendChild(tbody);
+        let i;
+        for (i of [5,4,3,2,1]) {
+            let tr = document.createElement("tr");
+            tr.style.color = stars[i][1];
+            tbody.appendChild(tr);
+            let th = document.createElement("th");
+            th.textContent = stars[i][0];
+            tbody.rows[5-i].appendChild(th);
+            let feats = document.createElement("th");
+            tbody.rows[5-i].appendChild(feats);
+        }
+
+        rows.forEach(r=>{
+            const name = r.cells[0].textContent;
+            const rating = ratingIndex(r.cells[1].textContent);
+            const color = darkcolors[rating][1];
+            const feat_cell = tbody.rows[5-rating].children[1];
+            const a = document.createElement("a");
+            a.href = "#" + r.id;
+            a.style.color = color;
+            a.textContent = r.children[0].textContent.replace(/, $/, "");
+            feat_cell.appendChild(a);
+            const comma = document.createTextNode(", ");
+            feat_cell.appendChild(comma);
+        });
+        [...tbody.rows].forEach(r => {
+            const feat_cell = r.children[1];
+            const last_node = feat_cell.lastChild;
+            if (last_node.nodeType == 3) last_node.remove();
+        });
+
     }
-    rows.forEach(r=>{
-        let name = r.cells[0].textContent;
-        let rating = ratingIndex(r.cells[1].textContent);
-        tbody.rows[5-rating].children[1].textContent += `${name}, `;
-    });
-    [...tbody.rows].forEach(r => r.children[1].textContent = r.children[1].textContent.replace(/, $/, ""));
+
+    /* create summary table by name */
+    function tblByName() {
+        const summary = document.createElement("table");
+        summarydiv.appendChild(summary);
+        summary.id = "summary-table";
+        summary.classList.add("by-name");
+        summary.classList.add("widget");
+        // summary.style.lineHeight = "10px";
+
+        const thead = document.createElement("thead");
+        summary.appendChild(thead);
+        let tr = document.createElement("tr");
+        const feat_cell = document.createElement("th");
+        feat_cell.textContent = "Feat";
+        const rating_cell = document.createElement("th");
+        rating_cell.textContent = "Rating";
+        tr.appendChild(feat_cell);
+        tr.appendChild(rating_cell);
+        thead.appendChild(tr);
+        const tbody = document.createElement("tbody");
+        tbody.style.lineHeight = "10px";
+        summary.appendChild(tbody);
+
+        rows.forEach(r=>{
+            let name = r.cells[0].textContent;
+            let rating = r.cells[1].textContent;
+            let rating_idx = ratingIndex(rating);
+            let tr = document.createElement("tr");
+            tr.style.color = stars[rating_idx][1];
+            tr.setAttribute("onclick", `window.location = '#${r.id}'`);
+            let feat_cell = document.createElement("th");
+            feat_cell.style.color = darkcolors[rating_idx][1];
+            feat_cell.textContent = name;
+            let rating_cell = document.createElement("th");
+            rating_cell.textContent = rating;
+            tr.appendChild(feat_cell);
+            tr.appendChild(rating_cell);
+            tbody.appendChild(tr);
+        });
+    }
+
+    function tblToggle() {
+        const orig = document.getElementById("summary-table");
+        if (orig) {
+            const is_by_name = orig.classList.contains("by-name");
+            orig.remove();
+            if (is_by_name) tblByRating();
+            else tblByName();
+        } else tblByRating();
+    }
+
+    window.tblByRating = tblByRating;
+    window.tblByName = tblByName;
+    window.tblToggle = tblToggle;
+
+    tblToggle();
 }
