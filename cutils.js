@@ -853,24 +853,44 @@ cutils.img = {
 
 cutils.mod = {
     /* Turn HEADING into a collapsible `details` element, containing CONTENT */
-    makeCollapsible: async function(content, heading) {
-        const det = document.createElement("details");
-        const summ = document.createElement("summary");
-        if (typeof heading == "string")
-            content.before(det);
-        else
-            heading.before(det);
-        det.appendChild(summ);
-        summ.append(heading);
-        det.appendChild(content);
+    makeCollapsible: async function(content, heading, opts={}) {
+        opts = cutils.tri.parseOpts(opts, {
+            castBoolean: "adjustStyle",
+        });
+        const details = document.createElement("details");
+        const summary = document.createElement("summary");
+        if (typeof heading == "string" || content.contains(heading)) {
+            content.before(details);
+        } else {
+            heading.before(details);
+        }
+        details.appendChild(summary);
+        summary.append(heading);
+        details.appendChild(content);
+        if (opts.adjustStyle) { heading.style.display = "inline-block"; }
+        if (opts.border) {
+            if (typeof opts.border == "boolean") {
+                content.style.border = "inset 5px black";
+                content.style.borderRadius = "10px";
+            } else {
+                const [b, br] = opts.border.split(",");
+                content.style.border = b;
+                if (br) content.style.borderRadius = br;
+            }
+        }
+        if (opts.bg) { content.style.backgroundColor = opts.bg; }
     },
 
     /* Wrap element in a wrapper element */
     wrapin: function(e, wrapper) {
+        if (typeof wrapper == "string") {
+            wrapper = document.createElement(wrapper);
+        }
         const parent = e.parentNode;
         const next = e.nextSibling; /* may be nullish */
         wrapper.appendChild(e);
         parent.insertBefore(wrapper, next);
+        return wrapper;
     },
 };
 
