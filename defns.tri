@@ -356,6 +356,7 @@ bind: bda "Close alternate tab" jsb utils.tab.getAlternate().then(t=>browser.tab
 bind: bdd "Close tabs from START to END ord" fillcmdline tabrmrange
 bind: bdD "Close tabs from START to END ord (including pinned)" fillcmdline tabrmrange!
 bind: bde "Close tabs matching expression" fillcmdline tabrm
+bind: bdh "Close all tabs with the same hostname as current tab" tabrm t.location.hostname == t0.location.hostname
 bind: bdm "Close tabs matching string" fillcmdline tabrmstr
 bind: bds "Select tabs to close with rofi" jsb utils.tab.removeWithRofi();
 " | bd; -- tabs/delete/filter |
