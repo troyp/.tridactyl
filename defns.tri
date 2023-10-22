@@ -1336,7 +1336,7 @@ bind: ,r<C-h> "(show bindings: ref)" showkeys ,r
 bind: ,rd<C-h> "(show bindings: ref/dict)" showkeys ,rd
 
 " | ,rdt -- reference/dict/thesaurus |
-command: thesaurus_power "Show results from Power Thesaurus" jsb -p apps.ref.thes.power(JS_ARG)
+command: thesaurus_power "Show results from Power Thesaurus" jsb -d¦ apps.ref.thes.power(JS_ARGS)¦
 
 bind: ,rdt<C-h> "(show bindings: ref/dict/thesaurus)" showkeys ,rdt
 bind: ,rdtp "Show Power Thesaurus synonyms" : thesaurus_power
