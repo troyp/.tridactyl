@@ -1,10 +1,16 @@
 
 const url = document.location.href;
 
-// Remove clutter
+// ───────────────────────────────────────────────────────────────────────────────
+// ╭────────────────╮
+// │ Remove clutter │
+// ╰────────────────╯
 rmall(".widget_text.widget_custom_html");
 
-// Turn item headings into search links on DnDBeyond.com
+// ───────────────────────────────────────────────────────────────────────────────
+// ╭───────────────────────────────────────────────────────╮
+// │ Turn item headings into search links on DnDBeyond.com │
+// ╰───────────────────────────────────────────────────────╯
 $$("td:first-child>h4").forEach(e => {
     const link = document.createElement("a");
     link.href = `https://www.dndbeyond.com/search?q=${e.textContent}`;
@@ -27,6 +33,10 @@ h3s.forEach(e => {
     wrapin(e, link);
 });
 
+// ───────────────────────────────────────────────────────────────────────────────
+// ╭─────────────╮
+// │ Star colors │
+// ╰─────────────╯
 const stars = [
     ["", ""],
     ["★☆☆☆☆", "#cc0000"],
@@ -53,15 +63,15 @@ function ratingIndex(rating) {
         case "★★★☆☆": return 3; break;
         case "★★★★☆": return 4; break;
         case "★★★★★": return 5; break;
-        default: return rating;
+        default: return null;
     }
 }
-function ratingColor(rating) {
-    const n = ratingIndex(rating);
-    return stars[n][1];
-}
+function ratingColor(rating, colors=stars) { return colors[ratingIndex(rating)]?.[1]; }
 
-// Add rating colors in sidebar TOC lists
+// ───────────────────────────────────────────────────────────────────────────────
+// ╭───────────────────╮
+// │ Sidebar TOC lists │
+// ╰───────────────────╯
 $$(".toc_widget_list li>a").forEach(a=>{
     const color = ratingColor(a.textContent);
     a.style.color = color;
