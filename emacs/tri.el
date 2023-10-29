@@ -106,7 +106,7 @@
   (unless (string-empty-p b)
     (let ((start-pos (point)))
       (beginning-of-buffer)
-      (let ((pattern (concat "^a?bind:? +\\(--mode=\\(normal\\|browser\\) +\\)?<?" b ">?")))
+      (let ((pattern (concat "^[a-z]*bind:? +\\(--mode=\\(normal\\|browser\\) +\\)?<?" b ">?")))
         (if (let ((case-fold-search nil))
              (re-search-forward pattern nil t))
             (progn
