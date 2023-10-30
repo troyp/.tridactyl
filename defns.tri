@@ -1431,7 +1431,7 @@ bind: ,xt;d "Delete multiple table rows [HINTS]" hint -Jqk tr
 bdoc ,xth "Show column headings"
 bind ,xth :: hint table -F e=>([...e.querySelectorAll("tr:first-child>th")].map(c=>c.textContent).join("¦")) | fillcmdline_tmp 5000
 bdoc ,xtm "Copy table as markdown"
-bind ,xtm :: js -r js/table2md.js ; hint table -F e=>cutils.yank(convertToMarkdown(convertToMatrix(e)))
+bind ,xtm :: cujs -r js/table2md.js ; hint table -F e=>cutils.yank(convertToMarkdown(convertToMatrix(e)))
 bdoc ,xtn "Show number of rows in table body [HINTS]"
 bind ,xtn :: hint -Jc table -F t=>t.tBodies[0].getElementsByTagName("tr").length | sprintf "#rows: %s" | show5
 bind: ,xtt "Scroll table into view" scrolltableintoview
