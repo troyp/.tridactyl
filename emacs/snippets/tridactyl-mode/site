@@ -6,13 +6,14 @@
 " ╭─────────╮
 " │ $2 │
 " ╰─────────╯
-command: $1bind "Bind key for $2" bindurl $2
-command: $1bind: "Bind key with description for $2" bindurl: $2
+command: $1bind "Bind key for $2" bindurl ${3:$2}
+command: $1bind: "Bind key with description for $2" bindurl: $3
+command: $1reset "Reset key for $2" reseturl $3
 command: $1bdoc "Provide a description on a separate line" js ;
-command: $1showkeys "(show bindings: $1)" showkeysurl $2
+command: $1showkeys "(show bindings: $1)" showkeysurl $3
 
-command ${3:$1_js} "Run javascript after loading $4 file (default COUNT=1)" cujs -r $4 ; js_count
-command $3! "Run javascript after loading $4 file (default COUNT=null)" cujs -r $4 ; js_count!
+command ${4:$1_js} "Run javascript after loading $5 file (default COUNT=1)" cujs -r $5 ; js_count
+command $4! "Run javascript after loading $5 file (default COUNT=null)" cujs -r $5 ; js_count!
 
-$1bind: c<C-h> "(show bindings: $1)" showkeysurl $2 c
+$1bind: c<C-h> "(show bindings: $1)" $1showkeys c
 $0
