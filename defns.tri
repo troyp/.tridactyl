@@ -1027,8 +1027,10 @@ bind: atpb "Bing translate page" bingtranslatepage
 " TODO: use mimeopen --database to use custom list of programs
 bind: axa "Open file/URL with mimeopen (ask app)" shellcmdonurlfile! mimeopen -a
 bind: axd "Open file/URL with mimeopen (default)" shellcmdonurlfile mimeopen -n
-bind: ax= "Open file/URL and set default with mimeopen" shellcmdonurlfile mimeopen -d
+bdoc axp "Open PDF link as HTML"
+bind axp jsb tri.excmds.hint("-y").then(url=>shell.cmdOnURLFile('pdf2htmlEX %f && firefox *.html', url))
 bind: axx "Open file/URL (enter program)" fillcmdline shellcmdonurlfile
+bind: ax= "Open file/URL and set default with mimeopen" shellcmdonurlfile mimeopen -d
 bdoc ax;x "Open file/URL (enter program in prompt)"
 bind ax;x jsb utils.prompt("cmd: ").then(s=>shell.cmdOnURLFile(s, null, true))
 bind: "Yank filename & open terminal in directory" ax. jsb shell.cmdOnURLFile("echo -n '%f' | xclip -i", null, true)
