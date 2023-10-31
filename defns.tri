@@ -1460,6 +1460,7 @@ bind: ;<C-h> "(show bindings: hints)" showkeys ;
 bind: ;gu "Open nth parent of link URL [HINT]" js_count hint("-F","e=>tabopen(urls.getNthParent(COUNT,e.href))")
 bind: ;gU "Open nth from root URL of link [HINT]" js_count hint("-F","e=>tabopen(urls.fromRoot(COUNT,e.href))")
 
+bind: ;y "Yank link text" cuhint -JF e=>cutils.yank(e.href)
 bind: ;Y "Yank link text" cuhint -JF e=>cutils.yankelt(e)
 
 bind ,,<C-h> showkeys ,,
