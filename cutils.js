@@ -637,9 +637,13 @@ var cutils = {
 
     yankelt: function(elts, opts={}) {
         /* options */
-        opts = cutils.tri.parseOpts(opts, {castString: "textProperty"});
+        opts = cutils.tri.parseOpts(opts, {
+            castString: "textProperty",
+            defaults: { "msg": true, },
+        });
         opts.textProperty ??= "innerText";
-        if (elts instanceof Node) elts = [elts];
+        if (!elts?.length) elts = [elts];
+        else if (elts instanceof Node) elts = [elts];
         /* yank */
         function getText(e) {
             switch (e.tagName.toLowerCase()) {
