@@ -89,6 +89,13 @@ function cleanup() {
         keep("div#show_issue");
         rmall("img.avatar", "div.sidebar-notifications", ".gh-header-actions",
               "#issue-comment-box", ".discussion-timeline-actions");
+    } else if (url.match(/https:\/\/www\.gokugoku\.app\//)) {
+        /* gokugoku */
+        rmall(
+            "div.sticky.top-0", "div.hidden>div:nth-child(2).sticky",
+            "h1+div>div>div>div>a>img[alt^=Author]",
+            "div#newsletter", "article+div+div", "footer",
+        );
     } else if (url.match(/https:\/\/www\.grammarly\.com/)) {
         /* grammarly */
         rmall("._1X8pZ-overlay", "header", "._3fq8S-container", "._2Szu7-avatar", "._3uFk6-banner",
