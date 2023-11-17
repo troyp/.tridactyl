@@ -10,6 +10,40 @@ command: dndjs "Run javascript after loading dnd.c.js file (default COUNT=1)" cu
 command: hintdndjs "Hint after loading dnd.c.js etc" :: cujs  -r sites/dnd.c.js ; hint
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭────────╮
+" │ Donjon │
+" ╰────────╯
+command: donjonbind "Bind key for Donjon" bindurl donjon.bin.sh
+command: donjonbind: "Bind key with description for Donjon" bindurl: donjon.bin.sh
+command: donjonreset "Reset key for Donjon" reseturl donjon.bin.sh
+command: donjonbdoc "Provide a description on a separate line" js ;
+command: donjonshowkeys "(show bindings: donjon)" showkeysurl donjon.bin.sh
+
+command donjon_js "Run javascript after loading dnd.c.js file (default COUNT=1)" cujs -r dnd.c.js ; js_count
+command donjon_js! "Run javascript after loading dnd.c.js file (default COUNT=null)" cujs -r dnd.c.js ; js_count!
+
+donjonbind: c<C-h> "(show bindings: donjon)" donjonshowkeys c
+donjonbind: cc "Click spell" hint -x -c tbody#spell_sheet>tr>td:first-child
+donjonbind: <A-Escape> "Cancel popup" xdoclick 780 1060
+
+" | co -- donjon/goto |
+donjonbind: co<C-h> "(show bindings: dndb/goto)" donjonshowkeys co
+donjonbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
+donjonbind: coc "Goto cart" toposu! https://www.dndbeyond.com/marketplace/cart
+donjonbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
+donjonbind: com "Goto marketplace" toposu! https://www.dndbeyond.com/marketplace/sourcebooks
+donjonbind: cor "Goto rpgbot.net" toposu! https://rpgbot.net/dnd5/
+donjonbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
+donjonbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
+donjonbind: cow "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
+donjonbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
+
+" | cs -- donjon/search |
+donjonbind: cs<C-h> "(show bindings: dndb/search)" donjonshowkeys cs
+donjonbind: csS "Search dndb spells" :fill `dndbsearch_spell ${COUNT?"here":"tab"}`
+donjonbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"here":"tab"}`
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
 " │ D&D Beyond │
 " ╰────────────╯
@@ -64,12 +98,13 @@ dndbbind: cmh "Goto my homebrew" toposu! https://www.dndbeyond.com/my-creations
 " | co -- dndb/goto |
 dndbbind: co<C-h> "(show bindings: dndb/goto)" dndbshowkeys co
 dndbbind: coc "Goto cart" toposu! https://www.dndbeyond.com/marketplace/cart
-dndbbind: cod "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
+dndbbind: cod "Goto donjon 5e spells" toposu! https://donjon.bin.sh/5e/spells/
 dndbbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
 dndbbind: com "Goto marketplace" toposu! https://www.dndbeyond.com/marketplace/sourcebooks
 dndbbind: cor "Goto rpgbot.net" toposu! https://rpgbot.net/dnd5/
 dndbbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
 dndbbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
+dndbbind: cow "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
 dndbbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
 " | cr -- dndb/rules |
@@ -224,6 +259,9 @@ dndbcsheetbind: cm<C-h> "(show bindings: dndbcsheet/my)" dndbcsheetshowkeys cm
 dndbcsheetbind: cms<C-h> "(show bindings: dndbcsheet/my/sheet)" dndbcsheetshowkeys cms
 dndbcsheetbind: cmsc "Goto character builder: class" jsb sites.dndb.gotoBuilder("/class/manage")
 
+dndbcsheetbind: coj "Goto character JSON" cujs document.location.href.replace("https://www.dndbeyond.com/characters/", "https://character-service.dndbeyond.com/character/v5/character/") | topos
+dndbcsheetbind: coj "Goto character JSON" cujs document.location.href.replace(/.*\//, "") | dndbchar tab
+
 " | cy -- dndbcsheet/yank |
 dndbcsheetbind: cy<C-h> "(show bindings: dndbcsheet/yank)" dndbcsheetshowkeys cy
 dndbcsheetbind: cyy "Yank Content Group" dndbcsheetyankcontentgroup
@@ -240,10 +278,12 @@ command: dndspshowkeys "(show bindings: dndsp)" showkeysurl dnd-spells
 dndspbind: c<C-h> "(show bindings: dndsp)" dndspshowkeys c
 
 dndspbind: co<C-h> "(show bindings: dndsp/goto)" dndspshowkeys co
-dndspbind: cob "Goto DnDBeyond.com" tabopenorsummonc https://www.dndbeyond.com
-dndspbind: cod "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
-dndspbind: cor "Goto rpgbot.net" tabopenorsummonc https://rpgbot.net/dnd5/
-dndspbind: cot "Goto TabletopBuilds.com" tabopenorsummonc! https://tabletopbuilds.com
+dndspbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
+dndspbind: cod "Goto donjon 5e spells" toposu! https://donjon.bin.sh/5e/spells/
+dndspbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
+dndspbind: cor "Goto rpgbot.net" toposu https://rpgbot.net/dnd5/
+dndspbind: cot "Goto TabletopBuilds.com" toposu! https://tabletopbuilds.com
+dndspbind: cow "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
 dndspbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
 " ───────────────────────────────────────────────────────────────────────────────
@@ -262,10 +302,42 @@ dandwbind: cc "Filter Optimized builds: 5e only" dndjs dnd.dandw.filter5e()
 
 " | co -- dndw/goto |
 dandwbind: co<C-h> "(show bindings: dandw/)" dandwshowkeys co
+dandwbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
+dandwbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
 dandwbind: cor "Goto rpgbot.net" toposu! https://rpgbot.net/dnd5/
 dandwbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
 dandwbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
 dandwbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────╮
+" │ d20 SRD │
+" ╰─────────╯
+command: d20srdbind "Bind key for d20 SRD" bindurl d20srd.org
+command: d20srdbind: "Bind key with description for d20 SRD" bindurl: d20srd.org
+command: d20srdreset "Reset key for d20 SRD" reseturl d20srd.org
+command: d20srdbdoc "Provide a description on a separate line" js ;
+command: d20srdshowkeys "(show bindings: d20srd)" showkeysurl d20srd.org
+
+command d20srd_js "Run javascript after loading dnd.c.js file (default COUNT=1)" cujs -r dnd.c.js ; js_count
+command d20srd_js! "Run javascript after loading dnd.c.js file (default COUNT=null)" cujs -r dnd.c.js ; js_count!
+definesearch d20srd_search http://www.d20srd.org/search.htm?q=%s
+
+d20srdbind: c<C-h> "(show bindings: d20srd)" d20srdshowkeys c
+
+" | co -- d20srd/goto |
+d20srdbind co<C-h> showkeysurl d20srd.org co
+d20srdbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
+d20srdbind: cod "Goto donjon 5e spells" toposu! https://donjon.bin.sh/5e/spells/
+d20srdbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
+d20srdbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
+d20srdbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
+d20srdbind: cow "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
+d20srdbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
+
+" | cs -- d20srd/search |
+d20srdbind: csb "Search DnDBeyond.com" :fill `dndb_search ${COUNT?"here":"tab"}`
+d20srdbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"here":"tab"}`
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────╮
@@ -279,16 +351,14 @@ command: rpgbotshowkeys "(show bindings: rpgbot)" showkeysurl rpgbot.net
 
 rpgbotbind: c<C-h> "(show bindings: rpgbot)" rpgbotshowkeys c
 
-rpgbotbind: <Enter> "Remove ads" rm span[id^=ezoic]
-
 rpgbotbind c<C-h> showkeysurl rpgbot.net c
 rpgbotbind: cb "Goto DnDBeyond.com" openorsummonc https://www.dndbeyond.com
 rpgbotbind: cl "Change UL list links to spell links" hintdndjs ul -F e=>dnd.rpgbot.setSpellLinks(e)
 definesearch rpgbot_search https://rpgbot.net/?s=%s
 rpgbotbind: <Enter> "Load greasemonkey script manually" js -r gmscripts/RPGBotnet_Improvements.user.js
 
-rpgbotbind: cba "Artificer Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/artificer/subclasses
-rpgbotbind: cbB "Barbarian Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/barbarian/subclasses
+" | cc -- rpgbot/class |
+rpgbotbind: cc<C-h> "(show bindings: rpgbot/class)" rpgbotshowkeys cc
 rpgbotbind: cca "Goto Artificer Guide" toposu! https://rpgbot.net/dnd5/characters/classes/artificer
 rpgbotbind: ccB "Goto Barbarian Guide" toposu! https://rpgbot.net/dnd5/characters/classes/barbarian
 rpgbotbind: ccb "Goto Bard Guide" toposu! https://rpgbot.net/dnd5/characters/classes/bard
@@ -308,51 +378,58 @@ rpgbotbind: ccw "Goto Wizard Guide" toposu! https://rpgbot.net/dnd5/characters/c
 
 " | co -- rpgbot/goto |
 rpgbotbind co<C-h> showkeysurl rpgbot.net co
-rpgbotbind: cod "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
-rpgbotbind: cot "Goto tabletopbuilds.com" openorsummonc! https://tabletopbuilds.com
+rpgbotbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
+rpgbotbind: cod "Goto donjon 5e spells" toposu! https://donjon.bin.sh/5e/spells/
+rpgbotbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
+rpgbotbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
+rpgbotbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
+rpgbotbind: cow "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
 rpgbotbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
-" | rpgbotbind -- goto/spells |
-rpgbotbind: cos<C-h> "(show bindings: rpgbot/goto/spells)" rpgbotshowkeys cos
-rpgbotbind: coss "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
-rpgbotbind: cosa "Artificer Spells" toposu! https://rpgbot.net/dnd5/characters/classes/artificer/spells/
-rpgbotbind: cosb "Bard Spells" toposu! https://rpgbot.net/dnd5/characters/classes/bard/spells/
-rpgbotbind: cosc "Cleric Spells" toposu! https://rpgbot.net/dnd5/characters/classes/cleric/spells/
-rpgbotbind: cosd "Druid Spells" toposu! https://rpgbot.net/dnd5/characters/classes/druid/spells/
-rpgbotbind: cosf "Fighter Spells" toposu! https://rpgbot.net/dnd5/characters/classes/fighter/spells/
-rpgbotbind: cosg "Ranger Spells" toposu! https://rpgbot.net/dnd5/characters/classes/ranger/spells/
-rpgbotbind: cosk "Warlock Spells" toposu! https://rpgbot.net/dnd5/characters/classes/warlock/spells/
-rpgbotbind: cosp "Paladin Spells" toposu! https://rpgbot.net/dnd5/characters/classes/paladin/spells/
-rpgbotbind: cosR "Ranger Spells" toposu! https://rpgbot.net/dnd5/characters/classes/ranger/spells/
-rpgbotbind: cosr "Rogue Spells" toposu! https://rpgbot.net/dnd5/characters/classes/rogue/spells/
-rpgbotbind: coss "Sorcerer Spells" toposu! https://rpgbot.net/dnd5/characters/classes/sorcerer/spells/
-rpgbotbind: cosW "Warlock Spells" toposu! https://rpgbot.net/dnd5/characters/classes/warlock/spells/
-rpgbotbind: cosw "Wizard Spells" toposu! https://rpgbot.net/dnd5/characters/classes/wizard/spells/
+" | cc.s -- rpgbot/class/guide/spells |
+rpgbotbind: cc.s<C-h> "(show bindings: rpgbot/goto/spells)" rpgbotshowkeys cos
+rpgbotbind: cc.ss "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
+rpgbotbind: cc.sa "Artificer Spells" toposu! https://rpgbot.net/dnd5/characters/classes/artificer/spells/
+rpgbotbind: cc.sb "Bard Spells" toposu! https://rpgbot.net/dnd5/characters/classes/bard/spells/
+rpgbotbind: cc.sc "Cleric Spells" toposu! https://rpgbot.net/dnd5/characters/classes/cleric/spells/
+rpgbotbind: cc.sd "Druid Spells" toposu! https://rpgbot.net/dnd5/characters/classes/druid/spells/
+rpgbotbind: cc.sf "Fighter Spells" toposu! https://rpgbot.net/dnd5/characters/classes/fighter/spells/
+rpgbotbind: cc.sg "Ranger Spells" toposu! https://rpgbot.net/dnd5/characters/classes/ranger/spells/
+rpgbotbind: cc.sk "Warlock Spells" toposu! https://rpgbot.net/dnd5/characters/classes/warlock/spells/
+rpgbotbind: cc.sp "Paladin Spells" toposu! https://rpgbot.net/dnd5/characters/classes/paladin/spells/
+rpgbotbind: cc.sR "Ranger Spells" toposu! https://rpgbot.net/dnd5/characters/classes/ranger/spells/
+rpgbotbind: cc.sr "Rogue Spells" toposu! https://rpgbot.net/dnd5/characters/classes/rogue/spells/
+rpgbotbind: cc.ss "Sorcerer Spells" toposu! https://rpgbot.net/dnd5/characters/classes/sorcerer/spells/
+rpgbotbind: cc.sW "Warlock Spells" toposu! https://rpgbot.net/dnd5/characters/classes/warlock/spells/
+rpgbotbind: cc.sw "Wizard Spells" toposu! https://rpgbot.net/dnd5/characters/classes/wizard/spells/
 
 " | co -- rpgbot/search |
 rpgbotbind cs<C-h> showkeysurl rpgbot.net cs
-rpgbotbind: csb "Search DnDBeyond.com" fillcmdline dndb_search tab
-rpgbotbind: css "Search RPGBot.net" fillcmdline rpgbot_search tab
-rpgbotbind: cs;s "Goto spell description" fillcmdline dndbspell tab
+rpgbotbind: csb "Search DnDBeyond.com" :fill `dndb_search ${COUNT?"here":"tab"}`
+rpgbotbind: css "Search RPGBot.net" :fill `rpgbot_search ${COUNT?"here":"tab"}`
+rpgbotbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"here":"tab"}`
 
 " | ct -- rpgbot/toggle |
 rpgbotbind: ct<C-h> "(show bindings: rpgbot/toggle)" rpgbotshowkeys ct
 rpgbotbind: ctw "Toggle width" cujs toggleprop($1("article.article").style, "maxWidth", "1000px")
 
-rpgbotbind: c/b "Bard Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/bard/subclasses
-rpgbotbind: c/B "Barbarian Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/barbarian/subclasses/
-rpgbotbind: c/c "Cleric Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/cleric/subclasses
-rpgbotbind: c/d "Druid Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/druid/subclasses
-rpgbotbind: c/f "Fighter Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/fighter/subclasses
-rpgbotbind: c/g "Ranger Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/ranger/subclasses
-rpgbotbind: c/m "Monk Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/monk/subclasses
-rpgbotbind: c/n "Barbarian Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/barbarian/subclasses/
-rpgbotbind: c/p "Paladin Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/paladin/subclasses
-rpgbotbind: c/R "Ranger Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/ranger/subclasses
-rpgbotbind: c/r "Rogue Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/rogue/subclasses
-rpgbotbind: c/s "Sorcerer Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/sorcerer/subclasses
-rpgbotbind: c/W "Warlock Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/warlock/subclasses
-rpgbotbind: c/w "Wizard Subclasses" toposu https://rpgbot.net/dnd5/characters/classes/wizard/subclasses
+" | c/ -- rpgbot/subclass |
+rpgbotbind: c/<C-h> "(show bindings: rpgbot/subclasses)" rpgbotshowkeys c/
+rpgbotbind: c/a "Artificer Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/artificer/subclasses
+rpgbotbind: c/b "Bard Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/bard/subclasses
+rpgbotbind: c/B "Barbarian Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/barbarian/subclasses/
+rpgbotbind: c/c "Cleric Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/cleric/subclasses
+rpgbotbind: c/d "Druid Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/druid/subclasses
+rpgbotbind: c/f "Fighter Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/fighter/subclasses
+rpgbotbind: c/g "Ranger Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/ranger/subclasses
+rpgbotbind: c/m "Monk Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/monk/subclasses
+rpgbotbind: c/n "Barbarian Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/barbarian/subclasses/
+rpgbotbind: c/p "Paladin Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/paladin/subclasses
+rpgbotbind: c/R "Ranger Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/ranger/subclasses
+rpgbotbind: c/r "Rogue Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/rogue/subclasses
+rpgbotbind: c/s "Sorcerer Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/sorcerer/subclasses
+rpgbotbind: c/W "Warlock Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/warlock/subclasses
+rpgbotbind: c/w "Wizard Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/wizard/subclasses
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────────────╮
@@ -368,29 +445,33 @@ ttbuildbdoc cl "Show final build levels"
 ttbuildbind cl cujs cutils.message(getText1("h3,h3>span", {match: /^level 20[: ]/i}), {cmdline: true})
 
 ttbuildbind <Enter> js document.getElementById("toc-widget-3").scrollIntoView()
+ttbuildbind ,xth :: hint table -F e=>([...e.querySelectorAll("tr.footable-header>th")].map(c=>c.textContent).join("¦")) | fillcmdline_tmp 3000
 
 " | co -- ttbuild/goto |
 ttbuildbind co<C-h> showkeysurl tabletopbuilds.com co
 ttbuildbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
 ttbuildbind: coc "Goto comments" cujs $id("comments").scrollIntoView()
-ttbuildbind: cod "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
+ttbuildbind: cod "Goto donjon 5e spells" toposu! https://donjon.bin.sh/5e/spells/
+ttbuildbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
 ttbuildbdoc col "Goto last level"
 ttbuildbind col cujs $$("h3,h3>span,h4").find(e=>e.id.match(/^level[-_]20[-_]/i)).scrollIntoView()
 ttbuildbind: cor "Goto rpgbot.net" toposu https://rpgbot.net/dnd5/
 ttbuildbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
 ttbuildbind: cot "Goto top level" toposu! https://tabletopbuilds.com
+ttbuildbind: cow "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
 ttbuildbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
+ttbuildbind: co. "Goto summary table" goto #summary-table
 
 " | cs -- ttbuild/search |
 definesearch ttbuild_search https://tabletopbuild.com/?s=%s
 
 dndbbind cs<C-h> showkeysurl rpgbot.net cs
-ttbuildbind: csb "Search DnDBeyond.com" fillcmdline dndb_search tab
+ttbuildbind: csb "Search DnDBeyond.com" :fill `dndb_search ${COUNT?"here":"tab"}`
 ttbuildbind: cspb "Search DnDBeyond.com with clipboard contents"
 ttbuildbind: cspp "Search TabletopBuilds.com with clipboard contents"
 ttbuildbind: csp;s "Goto spell description for spell in clipboard"
-ttbuildbind: css "Search TableTopBuilds.com" fillcmdline ttbuild_search tab
-ttbuildbind: cs;s "Goto spell description" fillcmdline dndbspell tab
+ttbuildbind: css "Search TableTopBuilds.com" :fill `ttbuild_search ${COUNT?"here":"tab"}`
+ttbuildbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"here":"tab"}`
 
 " ───────────────────────────────────────────────────────────────────────────────
 
