@@ -12,6 +12,21 @@ dnd.dandw = {
     },
 };
 
+dnd.donjon = {
+
+    getRow: async function() {
+        const rows = $$("tbody#spell_sheet>tr");
+        const idx = await cutils.select(rows.map(e=>e.getAttribute("data-name")), "i");
+        return rows[idx];
+    },
+
+    show: async function() {
+        const r = this.getRow();
+        await r.scrollIntoView();
+        r.click();
+    },
+};
+
 dnd.dndb = {
     getContentGroup: async function(elt) {
         const section = elt.firstChild.firstChild.firstChild.getAttribute("data-testid");

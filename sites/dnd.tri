@@ -24,6 +24,7 @@ command donjon_js! "Run javascript after loading dnd.c.js file (default COUNT=nu
 
 donjonbind: c<C-h> "(show bindings: donjon)" donjonshowkeys c
 donjonbind: cc "Click spell" hint -x -c tbody#spell_sheet>tr>td:first-child
+donjonbind: cj "Jump to spell" dndjs dnd.donjon.getRow().then(r=>r.scrollIntoView())
 donjonbind: <A-Escape> "Cancel popup" xdoclick 780 1060
 
 " | co -- donjon/goto |
