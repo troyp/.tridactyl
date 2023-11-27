@@ -842,9 +842,16 @@ utils.tri = {
         return utils.yank(cmds.join("\n"));
     },
 
-    defineSearch: async function(cmdName, urlTemplate, wordSep) {
+    defineSearch: async function(cmdName, urlTemplate, wordSep, opts={}) {
         wordSep ||= "%20";
-        const urlExpr = urlTemplate.replace("%s", '${JS_ARGS.slice(2)?.join("' + wordSep + '").trim()}');
+        let extraOps = "";
+        // if (opts.dropApos) extraOps += ".replace('\\\'', '')";
+        if (opts.tolower) extraOps += ".toLowerCase()";
+        const urlExpr = urlTemplate.replace(
+            "%s",
+            '${JS_ARGS.slice(2)?.join("' + wordSep + '").trim()' + extraOps + '}'
+        );
+        // return utils.message(urlExpr);
         const excmd = "jsb -d¦ tri.controller.acceptExCmd(`openorsummon_ ${JS_ARGS[1]} "+urlExpr+"`)¦";
         return command(cmdName, excmd);
     },
