@@ -5,6 +5,20 @@
 command: videojs "Load video.c.js and execute javascript" cujs -r sites/video.c.js ; js
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────╮
+" │ Dropout.tv │
+" ╰────────────╯
+command: dropoutbind "Bind key for Dropout.tv" bindurl dropout.tv
+command: dropoutreset "Reset key for Dropout.tv" reseturl: dropout.tv
+command: dropoutbind: "Bind key with description for Dropout.tv" bindurl: dropout.tv
+command: dropoutbdoc "Provide a description on a separate line" js ;
+command: dropoutshowkeys "(show bindings: dropout)" showkeysurl dropout.tv
+
+dropoutbind: c<C-h> "(show bindings: dropout)" showkeysurl dropout.tv c
+
+dropoutbind: cc "Focus video" cujs $1("iframe#watch-embed").contentWindow.focus()
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
 " │ Netflix.com │
 " ╰─────────────╯
@@ -71,3 +85,7 @@ disneypbind: cow "Goto Star Wars" openorswitchc https://www.disneyplus.com/en-gb
 " | cs -- disneyp/search |
 disneypbind: cs<C-h> "(show bindings: disneyp/search)" disneypshowkeys cs
 disneypbind: css "Search disneyplus.com" fillcmdline disneyp_search
+
+" ───────────────────────────────────────────────────────────────────────────────
+
+fillcmdline video.tri LOADED
