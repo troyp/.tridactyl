@@ -2,6 +2,7 @@
 " │ DnD module │
 " ╰────────────╯
 definesearch dndb_search https://www.dndbeyond.com/search?q=%s
+definesearch dndb_googlesearch https://www.google.com.au/search?q=site%3Adndbeyond.com%20%s
 command: dndjs "Run javascript after loading dnd.c.js file (default COUNT=1)" cujs -r sites/dnd.c.js ; js_count
 command: dndjs! "Run javascript after loading dnd.c.js file (default COUNT=null)" cujs -r sites/dnd.c.js ; js_count!
 command: dndcalc "Goto DPR calculator" :: jsb sites.dnd.dprcalc | toposu
@@ -22,8 +23,10 @@ command: donjonshowkeys "(show bindings: donjon)" showkeysurl donjon.bin.sh
 command donjon_js "Run javascript after loading dnd.c.js file (default COUNT=1)" cujs -r dnd.c.js ; js_count
 command donjon_js! "Run javascript after loading dnd.c.js file (default COUNT=null)" cujs -r dnd.c.js ; js_count!
 
+donjonbind f hint -x -c a,tbody#spell_sheet>tr>td:first-child
+
 donjonbind: c<C-h> "(show bindings: donjon)" donjonshowkeys c
-donjonbind: cc "Click spell" hint -x -c tbody#spell_sheet>tr>td:first-child
+donjonbind: cc "Show spell" dndjs dnd.donjon.getRow().then(r=>r.click())
 donjonbind: cj "Jump to spell" dndjs dnd.donjon.getRow().then(r=>r.scrollIntoView())
 donjonbind: <A-Escape> "Cancel popup" xdoclick 780 1060
 
@@ -423,6 +426,7 @@ rpgbotbind: c/c "Cleric Subclasses" toposu! https://rpgbot.net/dnd5/characters/c
 rpgbotbind: c/d "Druid Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/druid/subclasses
 rpgbotbind: c/f "Fighter Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/fighter/subclasses
 rpgbotbind: c/g "Ranger Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/ranger/subclasses
+rpgbotbind: c/k "Warlock Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/warlock/subclasses
 rpgbotbind: c/m "Monk Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/monk/subclasses
 rpgbotbind: c/n "Barbarian Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/barbarian/subclasses/
 rpgbotbind: c/p "Paladin Subclasses" toposu! https://rpgbot.net/dnd5/characters/classes/paladin/subclasses
