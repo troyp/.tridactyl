@@ -20,9 +20,6 @@ command: donjonreset "Reset key for Donjon" reseturl donjon.bin.sh
 command: donjonbdoc "Provide a description on a separate line" js ;
 command: donjonshowkeys "(show bindings: donjon)" showkeysurl donjon.bin.sh
 
-command donjon_js "Run javascript after loading dnd.c.js file (default COUNT=1)" cujs -r dnd.c.js ; js_count
-command donjon_js! "Run javascript after loading dnd.c.js file (default COUNT=null)" cujs -r dnd.c.js ; js_count!
-
 donjonbind f hint -x -c a,tbody#spell_sheet>tr>td:first-child
 
 donjonbind: c<C-h> "(show bindings: donjon)" donjonshowkeys c
@@ -342,6 +339,33 @@ d20srdbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 " | cs -- d20srd/search |
 d20srdbind: csb "Search DnDBeyond.com" :fill `dndb_search ${COUNT?"here":"tab"}`
 d20srdbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"here":"tab"}`
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────────╮
+" │ Realmshelps.net │
+" ╰─────────────────╯
+command: realmshelpsbind "Bind key for Realmshelps.net" bindurl realmshelps.net
+command: realmshelpsbind: "Bind key with description for Realmshelps.net" bindurl: realmshelps.net
+command: realmshelpsreset "Reset key for Realmshelps.net" reseturl realmshelps.net
+command: realmshelpsbdoc "Provide a description on a separate line" js ;
+command: realmshelpsshowkeys "(show bindings: realmshelps)" showkeysurl realmshelps.net
+
+realmshelpsbind <A-Escape> cujs cutils.click("a", /Close/)
+
+realmshelpsbind: c<C-h> "(show bindings: realmshelps)" realmshelpsshowkeys c
+realmshelpsbind: cc "Show feat [ROFI]" dndjs dnd.realmshelps.show()
+
+" | co -- realmshelps/goto |
+realmshelpsbind: co<C-h> "(show bindings: dndb/goto)" donjonshowkeys co
+realmshelpsbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
+realmshelpsbind: coc "Goto cart" toposu! https://www.dndbeyond.com/marketplace/cart
+realmshelpsbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
+realmshelpsbind: com "Goto marketplace" toposu! https://www.dndbeyond.com/marketplace/sourcebooks
+realmshelpsbind: cor "Goto rpgbot.net" toposu! https://rpgbot.net/dnd5/
+realmshelpsbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
+realmshelpsbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
+realmshelpsbind: cow "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
+realmshelpsbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────╮

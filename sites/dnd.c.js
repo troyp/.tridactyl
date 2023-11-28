@@ -13,7 +13,6 @@ dnd.dandw = {
 };
 
 dnd.donjon = {
-
     getRow: async function() {
         const rows = $$("tbody#spell_sheet>tr");
         const idx = await cutils.select(rows.map(e=>e.getAttribute("data-name")), "i");
@@ -110,6 +109,20 @@ dnd.dndb = {
     yankContentGroup: async function(elt) {
         const [section, items] = await this.getContentGroup(elt);
         cutils.yank(`${section}:\n${items.join("\n")}`);
+    },
+};
+
+dnd.realmshelp = {
+    getRow: async function() {
+        const res = await tri.native.run("rofi -dmenu -i -format i < ~/.tridactyl/sites/realmshelp_feats_all.txt");
+        const rows = $$(".table>tbody>tr");
+        const feats = rows.map(r=>r.cells[0].textContent);
+        return rows[parseInt(res.content)];
+    },
+
+    show: async function() {
+        const r = await this.getRow();
+        r.cells[0].firstChild.click();
     },
 };
 
