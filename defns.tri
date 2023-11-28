@@ -1210,11 +1210,11 @@ bind: J "Evaluate javascript expression in commandline" fillcmdline jseq
 " │ ,g -- tabmarks │
 " ╰────────────────╯
 command: tabmarks "Show tabmarks" jsb utils.tri.tabmarks()
-command: settabmark "Set tabmark" jsb -p utils.tri.tabmarkset(JS_ARG)
-command: gototabmark "Open tabmark in current tab" jsb -p utils.tab.switch(tri.config.USERCONFIG.tabmarks[JS_ARG])
+command: tabmarkset "Set tabmark" jsb -p utils.tri.tabmarkset(JS_ARG)
+command: tabmarkgo "Switch to tabmark" jsb -p utils.tri.tabmarkgo(JS_ARG)
 
-bind: ,gg "Set tabmark" gobble 1 settabmark
-bind: ,gt "Open tabmark here" gobble 1 gototabmark
+bind: ,gs "Set tabmark" gobble 1 tabmarkset
+bind: ,gg "Switch to tabmark here" gobble 1 tabmarkgo
 bind: <C-h>t "Show tabmarks" tabmarks
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────╮

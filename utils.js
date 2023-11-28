@@ -1262,7 +1262,14 @@ utils.tri = {
 
     tabmarkset: async function(c) {
         tri.config.USERCONFIG.tabmarks ||= {};
-        tri.config.USERCONFIG.tabmarks[c] = await utils.tab.currentOrd();
+        const currentTab = await tri.webext.activeTab();
+        tri.config.USERCONFIG.tabmarks[c] = currentTab.id;
+    },
+
+    tabmarkgo: async function(c) {
+        const id = tri.config.USERCONFIG.tabmarks[c];
+        const t = await browser.tabs.get(id);
+        return browser.tabs.update(id, { active: true });
     },
 
     unbindMode: function(args) {
