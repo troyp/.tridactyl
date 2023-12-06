@@ -42,7 +42,7 @@ donjonbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 " | cs -- donjon/search |
 donjonbind: cs<C-h> "(show bindings: dndb/search)" donjonshowkeys cs
 donjonbind: csS "Search dndb spells" :fill `dndbsearch_spell ${COUNT?"here":"tab"}`
-donjonbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"here":"tab"}`
+donjonbind: cs;s "Goto spell description" :fill `dndbspell${COUNT?"":"!"}`
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
@@ -188,11 +188,10 @@ dndbbind: cr.dm "Goto Dragonmarks" toposu! https://www.dndbeyond.com/sources/wgt
 dndbbind: cr.c "Goto Conditions" toposu! https://www.dndbeyond.com/sources/phb/appendix-a-conditions
 
 " | cs -- dndb/search |
-definesearch dndbspell https://www.dndbeyond.com/spells/%s -
-definesearch_lc_noapos dndbspell! https://www.dndbeyond.com/spells/%s -
 definesearch dndbsearch_spell https://www.dndbeyond.com/spells?filter-class=0&filter-search=%s
 definesearch dndbsearch_item https://www.dndbeyond.com/magic-items?filter-search=%s
-command: dndbspell! "Open spell (new tab)" jsb_cmd "tabopen dndbspell ARGS.join(`-`).toLowerCase().replace(`'`, ``)"
+command: dndbspell "Open spell" jsb -d¦ sites.dndb.gotoSpell(JS_ARGS)¦
+command: dndbspell! "Open spell (new tab)" jsb -d¦ sites.dndb.gotoSpell(JS_ARGS, "tab")¦
 commdoc dndbspell_lvl_cls "Goto Spells of class M, level N"
 command dndbspell_lvl_cls jsb -d¦ sites.dndb.gotoSpellLvlCls(...utils.tri.parseArgs(JS_ARGS))¦
 
@@ -200,7 +199,7 @@ dndbbind: cs<C-h> "(show bindings: dndb/search)" dndbshowkeys cs
 dndbbind: csi "Search dndb magic items" :fill `dndbsearch_item ${COUNT?"here":"tab"}`
 dndbbind: css "Search" :fill `dndb_search ${COUNT?"here":"tab"}`
 dndbbind: csS "Search dndb spells" :fill `dndbsearch_spell ${COUNT?"here":"tab"}`
-dndbbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"here":"tab"}`
+dndbbind: cs;s "Goto spell description" :fill `dndbspell${COUNT?"":"!"}`
 
 " | ct -- dndb/toggle |
 dndbbind: ct<C-h> "(show bindings: dndb/toggle)" dndbshowkeys ct
@@ -338,7 +337,7 @@ d20srdbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
 " | cs -- d20srd/search |
 d20srdbind: csb "Search DnDBeyond.com" :fill `dndb_search ${COUNT?"here":"tab"}`
-d20srdbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"here":"tab"}`
+d20srdbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"":"!"}`
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────╮
@@ -435,7 +434,7 @@ rpgbotbind: cc.sw "Wizard Spells" toposu! https://rpgbot.net/dnd5/characters/cla
 rpgbotbind cs<C-h> showkeysurl rpgbot.net cs
 rpgbotbind: csb "Search DnDBeyond.com" :fill `dndb_search ${COUNT?"here":"tab"}`
 rpgbotbind: css "Search RPGBot.net" :fill `rpgbot_search ${COUNT?"here":"tab"}`
-rpgbotbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"here":"tab"}`
+rpgbotbind: cs;s "Goto spell description" :fill `dndbspell${COUNT?"":"!"}`
 
 " | ct -- rpgbot/toggle |
 rpgbotbind: ct<C-h> "(show bindings: rpgbot/toggle)" rpgbotshowkeys ct
@@ -500,7 +499,7 @@ ttbuildbind: cspb "Search DnDBeyond.com with clipboard contents"
 ttbuildbind: cspp "Search TabletopBuilds.com with clipboard contents"
 ttbuildbind: csp;s "Goto spell description for spell in clipboard"
 ttbuildbind: css "Search TableTopBuilds.com" :fill `ttbuild_search ${COUNT?"here":"tab"}`
-ttbuildbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"here":"tab"}`
+ttbuildbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"":"!"}`
 
 " ───────────────────────────────────────────────────────────────────────────────
 

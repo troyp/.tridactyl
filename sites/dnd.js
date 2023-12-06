@@ -178,6 +178,19 @@ const dndb = {
             return table[tag] || tag;
     },
 
+    gotoSpell: function(s, opts={}) {
+        s = utils.tri.parseArgs(s, "array");
+        opts = utils.tri.parseOpts(opts, {
+            defaults: { where: "tab"},
+            castString: "where",
+            castBoolean: "nogoto",
+        });
+        const spell = s.join(`-`).toLowerCase().replace(/'/g, ``).replace(/\//g, '-');
+        const url = `https://www.dndbeyond.com/spells/${spell}`;
+        if (!opts.nogoto) utils.tab.open(url, opts.where);
+        return url;
+    },
+
     gotoSpellLvlCls: async function(lvl, cls="", other="") {
         /* level */
         lvl ??= "";
