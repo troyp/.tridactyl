@@ -309,6 +309,14 @@ urls.mod = {
         }
     },
 
+    togglePrefix: function(prefix) {
+        const url = tri.contentLocation.href;
+        if (url.startsWith(prefix))
+            window.location.replace(url.replace(prefix, ""));
+        else
+            window.location.replace(prefix+url);
+    },
+
     toggleQuery: function(key, value1, value2) {
         const url = tri.contentLocation.href;
         var newurl;

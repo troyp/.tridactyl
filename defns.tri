@@ -266,6 +266,8 @@ command: toposu! "Alias for tabopenorsummonc!" tabopenorsummonc!
 " url toggle/mod...
 command: urltoggle "Toggle s1<->s2 in current URL" cUjs -d¦ urls.mod.toggleWr(JS_ARGS)¦
 command: urltoggle! "Toggle s1<->s2 (global) in current URL" cUjs -d¦ urls.mod.toggleWr(JS_ARGS, { global:true })¦
+commdoc urltoggleprefix "Toggle URL prefix"
+command urltoggleprefix cUjs -p urls.mod.togglePrefix(JS_ARG)
 commdoc urlremove "Remove string from current URL"
 command urlremove ujs -p tri.controller.acceptExCmd(`open ${urls.mod.toggle(JS_ARG, "")}`)
 commdoc urlmodorsummon_g "Open URL formed by grafting a path onto the domain, or summon existing tab"
@@ -906,25 +908,14 @@ command bingtranslatepage jsb -d¦ apps.trans.page.bing(...JS_ARGS)¦
 
 unbind a
 bind a<C-h> showkeys a
-bind: ac "Open URL in Google Chrome" withurl ! /usr/local/bin/google-chrome
-bind: af "Open URL in Waterfox" withurl ! /opt/waterfox/waterfox --new-tab
-bdoc aw "Toggle wayback machine"
-bind aw urltoggle https://web.archive.org/web/https: https: https?://web.archive.org/web/[^:]+/https?: https?:
-bdoc a;w "Open link in wayback machine [HINT]"
-bind a;w hintpipe a href | js -p tri.controller.acceptExCmd(`tabopen https://web.archive.org/web/${JS_ARG}`)
-
-" | as -- apps/screenshot |
-bind: as<C-h> "(show bindings: apps/screenshot)" showkeys as
-bind: asa "Screenshot: fullscreen, save in ~/screenshots" ! scrot -e 'mv $f ~/screenshots'
-bind: ass "Screenshot: select area, save in ~/screenshots" ! scrot -s -e 'mv $f ~/screenshots'
-
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────╮
 " │ a; -- apps/hints │
 " ╰──────────────────╯
 bind a;<C-h> showkeys a;
 bind: a;c "Open link in Google Chrome" hintpipe a href | ! /usr/local/bin/google-chrome
-bind: a;f "Open link in Waterfox" hintpipe a href | ! /opt/waterfox/waterfox
+bdoc a;w "Open link in wayback machine [HINT]"
+bind a;w hintpipe a href | js -p tri.controller.acceptExCmd(`tabopen https://web.archive.org/web/${JS_ARG}`)
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────╮
@@ -996,6 +987,17 @@ bind: adyf "Yank last download filename" yankdlfilename
 bind: adyy "Yank last download path" yankdlpath
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭─────────────────╮
+" │ ao -- apps/open │
+" ╰─────────────────╯
+
+bind: aoc "Open URL in Google Chrome" withurl ! /usr/local/bin/google-chrome
+bind: aof "Open URL in Waterfox" withurl ! /opt/waterfox/waterfox --new-tab
+bind: aog "Open URL in Google Cache" urltoggleprefix http://webcache.googleusercontent.com/search?q=cache:
+bdoc aow "Toggle wayback machine"
+bind aow urltoggle https://web.archive.org/web/https: https: https?://web.archive.org/web/[^:]+/https?: https?:
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────╮
 " │ ap -- apps/pw │
 " ╰───────────────╯
@@ -1005,6 +1007,14 @@ command pwhashsite jsb -d¦ apps.pw.hashSite(parseInt(JS_ARGS?.[1])||1)¦
 bind ap<C-h> showkeys ap
 bind: aps "Hash site domain with password-hasher" pwhashsite
 bind: app "Run password-hasher server and hash site domain" :: trish -S ; pwhashsite 3
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────────────────╮
+" │ as -- apps/screenshot │
+" ╰───────────────────────╯
+bind: as<C-h> "(show bindings: apps/screenshot)" showkeys as
+bind: asa "Screenshot: fullscreen, save in ~/screenshots" ! scrot -e 'mv $f ~/screenshots'
+bind: ass "Screenshot: select area, save in ~/screenshots" ! scrot -s -e 'mv $f ~/screenshots'
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭──────────────────────╮
