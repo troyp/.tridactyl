@@ -1179,6 +1179,7 @@ bind: ,cs "Show elements matching selector" fillcmdline getselector
 " │ ,d -- dev │
 " ╰───────────╯
 bind: ,dx "Toggle X-Ray view" appjs capps.toggleXray()
+bind: ,dd "MODI DOM Inspector" appjs capps.modi()
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────────────────────╮

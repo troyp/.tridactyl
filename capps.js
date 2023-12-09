@@ -18,6 +18,17 @@ var capps = {
         document.dispatchEvent(new Event("change"));
     },
 
+    /* http://slayeroffice.com/tools/modi/v2.0/modi_help.html */
+    modi: function() {
+        window.prefFile = "";
+        const script = document.createElement("script");
+        document.body.appendChild(script);
+        script.language = "javascript";
+        script.type = "text/javascript";
+        script.src = "http://slayeroffice.com/tools/modi/v2.0/modi_v2.0.js";
+        script.id = "modi";
+    },
+
     /* https://github.com/benscabbia/x-ray */
     toggleXray: function() {
         const ghostCSS = `
