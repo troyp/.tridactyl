@@ -337,7 +337,7 @@ d20srdbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
 " | cs -- d20srd/search |
 d20srdbind: csb "Search DnDBeyond.com" :fill `dndb_search ${COUNT?"here":"tab"}`
-d20srdbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"":"!"}`
+d20srdbind: cs;s "Goto spell description" :fill `dndbspell${COUNT?"":"!"}`
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────────╮
@@ -499,7 +499,7 @@ ttbuildbind: cspb "Search DnDBeyond.com with clipboard contents"
 ttbuildbind: cspp "Search TabletopBuilds.com with clipboard contents"
 ttbuildbind: csp;s "Goto spell description for spell in clipboard"
 ttbuildbind: css "Search TableTopBuilds.com" :fill `ttbuild_search ${COUNT?"here":"tab"}`
-ttbuildbind: cs;s "Goto spell description" :fill `dndbspell ${COUNT?"":"!"}`
+ttbuildbind: cs;s "Goto spell description" :fill `dndbspell${COUNT?"":"!"}`
 
 " ───────────────────────────────────────────────────────────────────────────────
 
