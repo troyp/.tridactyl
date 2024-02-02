@@ -1,9 +1,8 @@
 /*  ╭─────────╮
-
  *  │ cleanup │
  *  ╰─────────╯
  */
-function cleanup() {
+function cleanup(opts={}) {
     const url = document.location.href;
     if (false) {
     } else if (url.match(/https:\/\/www\.amikosimonetti\.com\//)) {
@@ -119,10 +118,18 @@ function cleanup() {
         rmall("iframe", "script", "#blog-pager");
     } else if (url.match(/https:\/\/www\.japanesewithanime\.com/)) {
         /* japanesewithanime */
-        keep("article");
-        $1("article").style.padding = "1em";
-        rmall(".social-buttons-strip", "aside#sub-fold-ad", ".categoryNavbox", ".comment-footer",
-              ".avatar-image-container", ".comment-reply", "#top-continue", ".article-end-footer");
+        keep("main");
+        // $1("article").style.padding = "1em";
+        rmall(".jwa-share-buttons", "aside.post-donation-cta", ".footer-social-btns-slot",
+              ".comment-footer", ".comment-reply", ".avatar-image-container",
+              ".ad_inArticle", ".article-end-footer", ".footer-adsense",
+             );
+        if (opts.removeImages) {
+            rmall(
+                "div.separator.picture-div", "div.picture-label",
+                "div.separator.picture-div+br", "div.picture-label+br",
+            );
+        }
     } else if (url.match("https://www.mapsofworld.com")) {
         /* mapsofworld.com */
         keep("main");
@@ -198,4 +205,8 @@ function cleanupGeneric() {
     cutils.message("Default method used", true);
 }
 
-cleanup();
+window.cleanup = cleanup;
+
+if (!window.suppressCleanup) {
+    cleanup();
+}
