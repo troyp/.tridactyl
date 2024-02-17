@@ -317,6 +317,8 @@ command tabfilterstr_other jsb -p utils.tab.filter((t, t0, i, i0)=>S.matchSC(JS_
 command: tabrmrange "Close tabs from START to END" jsb -d¦ utils.tab.removeRangeWr(JS_ARGS)¦
 commdoc tabrmrange "Close tabs from START to END (including pinned)"
 command tabrmrange! jsb -d¦ utils.tab.removeRangeWr(JS_ARGS, {force:true})¦
+command: tabreloadrange "Reload tabs from START to END" jsb -d¦ utils.tab.reloadRangeWr(JS_ARGS)¦
+command: tabreloadrange! "Reload from START to END (bypass cache)" jsb -d¦ utils.tab.reloadRangeWr(JS_ARGS, true)¦
 commdoc tabswitchprev "Switch to last accessed tab"
 command tabswitchprev jsb -d¦ utils.tab.switchAlternate(JS_ARGS[1]||1)¦
 commdoc tabswitchprev! "Switch to last accessed tab and close current tab" 
@@ -417,7 +419,9 @@ bind br<C-h> showkeys br
 bind: bra "Reload all tabs" reloadall
 bind: brd "Reload dead tabs" reloaddead
 bind: bra "Reload all tabs except current" reloadallbut
-bind: brr "Reload COUNT tabs" reload
+bind: brr "Reload from START to END" : tabreloadrange
+bind: brR "Reload from START to END (bypass cache)" : tabreloadrange!
+bind: brn "Reload COUNT tabs" reload
 bind: brR "Reload COUNT tabs and bypass cache" reloadhard
 
 " | bt -- tabs/title |

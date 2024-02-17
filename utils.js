@@ -521,8 +521,9 @@ utils.tab = {
         return [min(t1,t2), max(t1,t2)];
     },
 
-
-    parseTabnum: async function(n) {
+    /* returns index by default */
+    parseTabnum: async function(n, opts={}) {
+        opts = utils.tri.parseOpts(opts, { castBoolean: "returnOrd" });
         const N = await this.getN();
         switch(n) {
           case "$":
@@ -542,7 +543,8 @@ utils.tab = {
               n = thisTab.index+1;
               break;
         }
-        return (parseInt(n)-1) % N;
+        const idx = (parseInt(n)-1) % N;
+        return opts.returnOrd ? idx+1 : idx;
     },
 
     remove: async function(pred, opts={}) {
@@ -574,6 +576,23 @@ utils.tab = {
         const expr = utils.tri.parseExpr(args);
         const pred = eval(`(t, t0, i, i0)=>${expr}`);
         return this.remove(pred);
+    },
+
+    /* opts.bypassCache: bypass cache */
+    reloadRange: async function(start, end, opts={}) {
+        const startOrd = await this.parseTabnum(start, true);
+        const endOrd = await this.parseTabnum(end, true);
+        for (let i = startOrd; i <= endOrd; ++i) {
+            const id = await this.getid(i);
+            await browser.tabs.reload(id, opts);
+        }
+    },
+
+    reloadRangeWr: async function(args, opts={}) {
+        opts = utils.tri.parseOpts(opts, { castBoolean: "bypassCache" });
+        const [m1, m2] = utils.tri.parseArgs(args);
+        const [n1, n2] = await utils.tab.ordstrRangeToOrdRange(m1, m2);
+        return this.reloadRange(n1, n2, opts);
     },
 
     removeRange: async function(start, end, opts={}) {
