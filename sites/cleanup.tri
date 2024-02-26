@@ -1,0 +1,2 @@
+cujs -r sites/cleanup.c.js
+js cleanup();

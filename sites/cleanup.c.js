@@ -2,7 +2,7 @@
  *  │ cleanup │
  *  ╰─────────╯
  */
-function cleanup(opts={}) {
+function cleanup(args=[], opts={}) {
     const url = document.location.href;
     if (false) {
     } else if (url.match(/https:\/\/www\.amikosimonetti\.com\//)) {
@@ -45,6 +45,14 @@ function cleanup(opts={}) {
         /* dzone */
         rmall("iframe","script",".header",".announcementBar",".breadcrumb-padding",".signin-prompt",
               ".related","#adtoniq-msgr-bar");
+    } else if (url.match(/https:\/\/www\.e-cigarette-forum\.com\//)) {
+        /* e-cigarette forum (ECF) */
+        keep(".uix_contentWrapper");
+        rmall(".p-body-sidebar", ".block-outer", ".message-cell--user", ".block:has(.shareButtons)");
+        if (args?.includes("postonly")) {
+            rm("h3", /comments/i);
+            rm(".columnContainer:has(#comments)");
+        }
     } else if (url.match(/https:\/\/[^/]+\.fandom\.com\//) || url.match(/https:\/\/[^/]+\.wikia\.com\//)) {
         /* fandom.com */
         /* FIXME */
@@ -188,6 +196,10 @@ function cleanup(opts={}) {
         darkSwitch.style.borderWidth = "5px";
         darkSwitch.style.borderImage = "radial-gradient(#dbdbe0, transparent) 1";
         darkSwitch.style.margin = "0 0 2em";
+    } else if (url.match(/https:\/\/vapingunderground\.com\//)) {
+        clickall("a[role=button]");
+        keep(".p-body-header", ".p-body-content");
+        rmall(".block-outer--after", ".blockMessage:has(> .shareButtons)", "img[class^=avatar]");
     } else {
         cleanupGeneric();
     }
@@ -206,7 +218,3 @@ function cleanupGeneric() {
 }
 
 window.cleanup = cleanup;
-
-if (!window.suppressCleanup) {
-    cleanup();
-}
