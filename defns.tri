@@ -1125,6 +1125,7 @@ bind: ,amy "Open Yahoo Mail" tabopenorswitchc https://au.mail.yahoo.com/d/folder
 " ╰─────────────────────╯
 bind ,as<C-h> showkeys ,as
 bind: ,asa "Open Amazon AU" topos https://www.amazon.com.au/gp/cart/view.html/ref=nav_cart
+bind: ,asA "Open Aliexpress" topos https://www.aliexpress.com/p/order/index.html
 bind: ,asc "Open Coles" topos https://shop.coles.com.au/a/casino/home
 bind: ,ase "open eBay" topos https://cart.ebay.com.au
 bind: ,asj "open Jackson's Art" topos https://www.jacksonsart.com/en-au/checkout/cart/
@@ -1143,6 +1144,7 @@ bind: ,asZ "Open Amazon US" topos https://www.amazon.com/gp/cart/view.html/ref=n
 bind ,av<C-h> showkeys ,av
 bind: ,ava "AccuRadio Classical" topos https://www.accuradio.com/classical/
 bind: ,avd "Open Disney Plus" topos https://www.disneyplus.com/en-gb/home
+bind: ,avf "Open video apps (free to air)" jsb utils.tab.openMultiple(sites.LISTS.video_apps_freetoair)
 bind: ,avn "Open Netflix" topos https://www.netflix.com/
 bind: ,avp "Goto Amazon Prime Video" topos https://www.primevideo.com/storefront/home/ref=atv_nb_logo
 bind: ,avv "Open video apps" jsb utils.tab.openMultiple(sites.LISTS.video_apps)
