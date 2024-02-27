@@ -1437,8 +1437,10 @@ bind: ,xf<C-h> "(show bindings: misc/fix)" showkeys ,xf
 bind: ,xff "Fix font family" cujs $$("div,p,h1,h2,h3,h4,td,a").forEach(e=>e.style.fontFamily="notoSans")
 bind: ,xfw "What font (web app)" js const url = document.location.href; const s = document.createElement('script'); s.setAttribute('src', `http://chengyinliu.com/wf.js?o=${encodeURIComponent(url)}&t=${(new Date().getTime())}`); document.body.appendChild(s); 
 
+" | ,xj -- misc/js |
 bind: ,xjg "Grid bookmarklet" js -r js/sprymedia/grid-loader.js
 bind: ,xjx "Crosshair bookmarklet" appjs capps.toggleCrosshair()
+bind: ,xjx "XRay" cujs cutils.css.toggleOrCreate("xray", ["*", {background: "#000 !important", color: "#0f0 !important", outline: "solid #f00 1px !important",}])
 bind: ,xju "Unit bookmarklet" js -r js/sprymedia/unit-loader.js
 
 " | ,xt -- misc/table |
