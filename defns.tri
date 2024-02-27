@@ -1154,12 +1154,13 @@ bind: ,avy "Goto Youtube" topos https://www.youtube.com/
 " │ ,aw -- web/weather │
 " ╰────────────────────╯
 command: suncalc "Load suncalc.js and run js" appjs -r js/suncalc.js ; js
+command: suncalc! "Load suncalc.js and run js, show result" suncalc ; jse
 
 bind ,aw<C-h> showkeys ,aw
 bdoc ,awd "Goonellabah Weather: 48 hour daily summary (weatherzone)"
 bind ,awd topos https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah/next48hours#daily-summaries
 bdoc ,aws "Goonellabah Sunrise and Sunset Times"
-bind ,aws suncalc ((s,t)=>`SUNRISE: ${s}\t\nSUNSET: ${t}`)(...capps.sunriseSunset(...user.latlong)) | :
+bind ,aws suncalc! ((s,t)=>`SUNRISE: ${s}\t\nSUNSET: ${t}`)(...capps.sunriseSunset(...user.latlong))
 bind: ,aww "Lismore Weather (BoM)" topos http://www.bom.gov.au/nsw/forecasts/lismore.shtml
 bind: ,awt "Goonellabah Weather (timeanddate.com)" topos https://www.timeanddate.com/weather/@2164966
 bind: ,awz "Goonellabah Weather (weatherzone)" topos https://www.weatherzone.com.au/nsw/northern-rivers/goonellabah
