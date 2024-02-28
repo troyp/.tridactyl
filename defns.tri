@@ -1440,6 +1440,7 @@ bind: ,xfw "What font (web app)" js const url = document.location.href; const s 
 
 " | ,xj -- misc/js |
 bind: ,xjg "Grid bookmarklet" js -r js/sprymedia/grid-loader.js
+bind: ,xjt "TOC-it! add table of contents drop down" js -r js/toc_it.js
 bind: ,xjx "Crosshair bookmarklet" appjs capps.toggleCrosshair()
 bind: ,xjx "XRay" cujs cutils.css.toggleOrCreate("xray", ["*", {background: "#000 !important", color: "#0f0 !important", outline: "solid #f00 1px !important",}])
 bind: ,xju "Unit bookmarklet" js -r js/sprymedia/unit-loader.js
