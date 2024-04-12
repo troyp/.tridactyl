@@ -70,13 +70,12 @@ var yt = {
         });
     },
 
-    ytdl: function(dir="~/Downloads", video=true) {
-        dir = cutils.tri.parseArgs(dir, "string");
+    ytdl: function(dir, video=true) {
+        dir ||= "/home/troy/Downloads";
         const extraArgs = video ? "--all-subs" : "-f bestaudio";
         const cmd =
-              "! cd ${dir};"
-              + `youtube-dl -ci ${extraArgs} --xattrs -o "%(title)s-%(id)s.%(ext)s" "${buffer.URL}"`;
-        dactyl.execute(cmd);
+              `! youtube-dl -ci ${extraArgs} --xattrs -o "${dir}/%(title)s-%(id)s.%(ext)s" "${tri.contentLocation.href}"`;
+        return tri.controller.acceptExCmd(cmd);
     },
 
     closeAd: function() {

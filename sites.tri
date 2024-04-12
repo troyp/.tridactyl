@@ -444,7 +444,7 @@ command: ytdown "playrate ↓/Show subscriptions ↓" yt -d¦ yt.down(JS_ARGS[1]
 command: ytvolup "volume ↑" yt -d¦ yt.volumeAdjust(JS_ARGS[1])¦
 command: ytvoldown "volume ↓" yt -d¦ yt.volumeDown(JS_ARGS[1])¦
 command: ytdl "Download video/playlist with youtube-dl" yt -d¦ yt.ytdl(JS_ARGS)¦
-command: ytdlaudio "Download audio with youtube-dl" yt -d¦ yt.ytdl(JS_ARGS, false)¦
+command: ytdlaudio "Download audio with youtube-dl" yt -d¦ yt.ytdl(JS_ARGS[1], false)¦
 command: ytrate "set playback rate (normal rate = 10)" yt_cmd yt.setSpeed(NUMARG)
 
 ytbind c<C-h> ytshowkeys c
