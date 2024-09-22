@@ -40,6 +40,11 @@ var csites = {
             cutils.click("a.s-pagination-previous") || cutils.click("a", /previous/i);
         },
 
+        searchTerm: () => $1(".nav-search-field>input").value,
+
+        term: function() { return this.searchTerm() || this.title(); },
+
+        title: () => $1("#productTitle").textContent,
     },
 
     archive: {
