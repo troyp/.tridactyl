@@ -19,6 +19,20 @@ var utils = {
         return options.notrim ? s : s.trim();
     },
 
+    cbreadn: async function(start=0, n=1, opts={}) {
+        opts = utils.tri.parseOpts(opts, {
+            castString: "separator",
+            nullishDefaults: { "separator": "\n", },
+
+        });
+        let s = "";
+        for (let i=start; i<start+n; ++i) {
+            const s_i = await this.cbread(i);
+            s += s_i + opts.separator;
+        }
+        return s;
+    },
+
     decode: function(url, opts={}) {
         opts = utils.tri.parseOpts(opts, {castFunction: "decodeFn"});
         const decodeFn = opts.decodeFn || decodeURIComponent;
