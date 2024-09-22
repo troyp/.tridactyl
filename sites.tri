@@ -555,6 +555,7 @@ command: yt_count "Run JS after loading sites/yt.c.js (default COUNT:1)" cujs -r
 command: yt_count! "Run JS after loading sites/yt.c.js (default COUNT:null)" cujs -r sites/yt.c.js ; js_count!
 command: yt_cmd "Run javascript with ARGS after loading sites/yt.c.js" cujs -r sites/yt.c.js ; js_cmd
 
+command: ytseek "Seek to" yt -p yt.seek(JS_ARG)
 command: ytsetmark "Set mark" jsb -p tri.controller.acceptExCmd(`yt yt.setMark('${JS_ARG}')`)
 command: ytgotomark "Goto mark" jsb -p tri.controller.acceptExCmd(`yt yt.gotoMark('${JS_ARG}')`)
 command: ytup "playrate ↑/Show subscriptions ↑" yt -d¦ yt.up(JS_ARGS[1])¦
@@ -573,6 +574,7 @@ ytbind: cm "Youtube: set mark" gobble 1 ytsetmark
 ytbind: cr "Set rate" fillcmdline ytrate
 ytbind: cR "Show rate" yt cutils.message(`playback rate: ${yt.getSpeed()}`, true)
 ytbind: cgo "Youtube: goto mark" gobble 1 ytgotomark
+ytbind: cx "Youtube: seek to" fillcmdline ytseek
 jsb tri.excmds.bindurl("youtube.com", "c'", "gobble 1 gotomark")
 
 " | cd -- youtube/dl |
