@@ -27,17 +27,19 @@ itemClasses.forEach(cls => {
     elts.forEach(e => {
         const nodes = [...e.childNodes];
         const textNode = nodes.filter(n=>n.nodeType==3)?.[0];
-        const s = textNode.textContent;
-        const q = s.replace(" ", "%20");
+        const s = textNode?.textContent;
+        const q = s?.replace(" ", "%20");
         // create new link
-        const a = document.createElement("a");
-        a.href = `https://www.dndbeyond.com/search?q=${q}`;
-        a.innerText = s;
-        a.style.color = ratings[cls];
-        a.style.textDecoration = "none";
-        // replace text with link
-        e.insertBefore(a, textNode);
-        textNode.remove();
+        if (q) {
+            const a = document.createElement("a");
+            a.href = `https://www.dndbeyond.com/search?q=${q}`;
+            a.innerText = s;
+            a.style.color = ratings[cls];
+            a.style.textDecoration = "none";
+            // replace text with link
+            e.insertBefore(a, textNode);
+            textNode.remove();
+        }
     });
 });
 
