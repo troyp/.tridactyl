@@ -5,8 +5,18 @@ command definesearch jsb -d¦ utils.tri.defineSearch(...parseArgs(JS_ARGS))¦
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
+" │ Containers │
+" ╰────────────╯
+set auconcreatecontainer true
+autocontain -s commbank.com.au Banking
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────────╮
 " │ Amazon.com │
 " ╰────────────╯
+autocontain -s amazon.com Shopping
+autocontain -s amazon.com.au Shopping
+
 command: amazbind "Bind key for amazon.com" bindurl amazon.com
 command: amazbind: "Bind key with description for amazon.com" bindurl: amazon.com
 command: amazbdoc "Provide a description on a separate line" js ;
@@ -63,6 +73,8 @@ bindurl archive.org ctt sitejs -r urls.js ; js csites.archive.toggleToolbarURL()
 " ╭──────────────╮
 " │ Coles.com.au │
 " ╰──────────────╯
+autocontain -s coles.com.au Shopping
+
 command: colesbind "Bind key for coles.com.au" bindurl coles.com.au
 command: colesbind: "Bind key with description for coles.com.au" bindurl: coles.com.au
 command: colesbdoc "Provide a description on a separate line" js ;
@@ -82,6 +94,8 @@ colesbind: cor "Goto Buy Again" opos https://www.coles.com.au/bought-before
 " ╭──────────╮
 " │ Ebay.com │
 " ╰──────────╯
+autocontain -s ebay.com Shopping
+
 command: ebaybind "Bind key for ebay.com" bindurl ebay.com
 command: ebaybind: "Bind key with description for ebay.com" bindurl: ebay.com
 command: ebaybdoc "Provide a description on a separate line" js ;
@@ -384,6 +398,8 @@ bindurl: tvtropes.org cc "Toggle spoilers" sitejs csites.tvtropes.spoilers()
 " ╭───────────────────╮
 " │ Woolworths.com.au │
 " ╰───────────────────╯
+autocontain -s woolworths.com.au Shopping
+
 command: woolbind "Bind key for woolworths.com.au" bindurl https://www.woolworths.com.au/
 command: woolbind: "Bind key with description for woolworths.com.au" bindurl: https://www.woolworths.com.au/
 command: woolbdoc "Provide a description on a separate line" js ;
