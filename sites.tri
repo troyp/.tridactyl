@@ -12,6 +12,22 @@ autocontain -s commbank.com.au Banking
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────────╮
+" │ Aliexpress.com │
+" ╰────────────────╯
+autocontain -s aliexpress.com Shopping
+
+command: alibind "Bind key for Aliexpress.com" bindurl aliexpress.com
+command: alibind: "Bind key with description for Aliexpress.com" bindurl: aliexpress.com
+command: alireset "Reset key for Aliexpress.com" reseturl aliexpress.com
+command: alibdoc "Provide a description on a separate line" js ;
+command: alishowkeys "(show bindings: ali)" showkeysurl aliexpress.com
+
+alibind: c<C-h> "(show bindings: ali)" alishowkeys c
+alibind: cc "ali: go" sitejs csites.ali.go()
+alibind: coo "ali: goto orders" openorsummonc https://www.aliexpress.com/p/order/index.html
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────╮
 " │ Amazon.com │
 " ╰────────────╯
 autocontain -s amazon.com Shopping
@@ -64,6 +80,23 @@ amazbdoc cta "Toggle Australian site"
 amazbind cta jsb urls.mod.togglepage('www.amazon.com/', 'www.amazon.com.au/', /(www|smile)\.amazon\.com\//)
 
 amazbind: cxt "Translate all reviews" cujs click("a",/translate review/i)
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────────────╮
+" │ AnimatedKnots.com │
+" ╰───────────────────╯
+command: aniknotbind "Bind key for AnimatedKnots.com" bindurl animatedknots.com
+command: aniknotreset "Reset key for AnimatedKnots.com" reseturl: animatedknots.com
+command: aniknotbind: "Bind key with description for AnimatedKnots.com" bindurl: animatedknots.com
+command: aniknotbdoc "Provide a description on a separate line" js ;
+command: aniknotshowkeys "(show bindings: aniknot)" showkeysurl animatedknots.com
+
+aniknotbind: c<C-h> "(show bindings: aniknot)" showkeysurl animatedknots.com c
+
+aniknotbind: <Enter> "Next frame" jsinject nextFrame()
+aniknotbind: <S-Enter> "Previous frame" jsinject prevFrame()
+aniknotbind: <Space> "Pause/Play" jsinject stopGo()
+
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
@@ -151,6 +184,25 @@ fbind: c<C-h> "(show bindings: file:)" showkeysurl file:// c
 fbind: cc "Copy filename" hint -p -c a.file,a.dir
 fbind: ch "Toggle hidden files" cujs $1("#UI_showHidden>label>input").click()
 fbind: cw "Toggle body width" js document.body.style.maxWidth = document.body.style.maxWidth ? "" : "130em"
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────────╮
+" │ getcomics.org │
+" ╰───────────────╯
+command: gcbind "Bind key for getcomics.org" bindurl getcomics.org
+command: gcbind: "Bind key with description for getcomics.org" bindurl: getcomics.org
+command: gcreset "Reset key for getcomics.org" reseturl getcomics.org
+command: gcbdoc "Provide a description on a separate line" js ;
+command: gcshowkeys "(show bindings: gc)" showkeysurl getcomics.org
+
+command gc_js "Run javascript after loading csites.jsfile (default COUNT=1)" cujs -r csites.js ; js_count
+command gc_js! "Run javascript after loading csites.js file (default COUNT=null)" cujs -r csites.js ; js_count!
+
+definesearch gc_search https://getcomics.org/?s=%s +
+
+gcbind: c<C-h> "(show bindings: gc)" gcshowkeys c
+gcbind: css "GetComics Search (new tab)" : gc_search tab
+gcbind: csS "GetComics Search (here)" : gc_search here
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
@@ -335,7 +387,40 @@ jishobind: cye "Yank entry" yankhint div.concept_light-representation>span.text,
 " ╭────────────╮
 " │ Medium.com │
 " ╰────────────╯
-autocmd DocStart ^https?://medium\.com(/|$) urlmodify -r https?://medium\.com/? https://scribe.rip/
+command: mediumbind "Bind key for Medium.com" bindurl medium.com|scribe.rip
+command: mediumbind: "Bind key with description for Medium.com" bindurl: medium.com|scribe.rip
+command: mediumreset "Reset key for Medium.com" reseturl medium.com|scribe.rip
+command: mediumbdoc "Provide a description on a separate line" js ;
+command: mediumshowkeys "(show bindings: medium)" showkeysurl medium.com|scribe.rip
+
+mediumbind: c<C-h> "(show bindings: medium)" mediumshowkeys c
+mediumbind: ctt "Toggle scribe.rip" urltoggle medium.com scribe.rip
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────────╮
+" │ Nonograms.org │
+" ╰───────────────╯
+command: nonobind "Bind key for Nonograms.org" bindurl nonograms.org
+command: nonobind: "Bind key with description for Nonograms.org" bindurl: nonograms.org
+command: nonoreset "Reset key for Nonograms.org" reseturl nonograms.org
+command: nonobdoc "Provide a description on a separate line" js ;
+command: nonoshowkeys "(show bindings: nono)" showkeysurl nonograms.org
+
+command nono_js "Run javascript after loading csites.js file (default COUNT=1)" cujs -r csites.js ; js_count
+command nono_js! "Run javascript after loading csites.js file (default COUNT=null)" cujs -r csites.js ; js_count!
+
+nonobind: c<C-h> "(show bindings: nono)" nonoshowkeys c
+
+nonobind: <C-l> "Scroll to puzzle" cujs scrollelt("#nonogram_table")
+nonobind: cl "Load puzzle" :: click #inpl
+nonobind: cs "Save puzzle" :: click #inps ; cujs blink("#nonogram_table","style.backgroundColor", "yellow")
+nonobind: cx "Check for errors" :: click #innc ; cujs blink("#nonogram_table","style.backgroundColor", "orange")
+
+" Beta format "
+nonobind: cl "Load puzzle" :: click input[value='Load']
+nonobind: cs "Save puzzle" :: click input[value='Save'] ; cujs blink("body","style.backgroundColor", "yellow")
+nonobind: cx "Check for errors" :: click input[value^=Check] ; cujs blink("body","style.backgroundColor", "orange")
+nonobind: <C-l> "Scroll to puzzle" cujs scrollelt("#nonogram_canvas")
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭─────────────╮
@@ -346,6 +431,21 @@ command ramdafiltercat sitejs -r S.js ; js -p csites.ramda.filterCategory(S.capi
 
 bindurl ramdajs.com/ c<C-h> showkeysurl ramdajs.com/ c
 bindurl: ramdajs.com/ cc "Filter methods by category" fillcmdline ramdafiltercat
+
+" ───────────────────────────────────────────────────────────────────────────────
+" ╭────────────────────╮
+" │ ReadComicOnline.li │
+" ╰────────────────────╯
+command: rcobind "Bind key for ReadComicOnline.li" bindurl readcomiconline.li
+command: rcobind: "Bind key with description for ReadComicOnline.li" bindurl: readcomiconline.li
+command: rcoreset "Reset key for ReadComicOnline.li" reseturl readcomiconline.li
+command: rcobdoc "Provide a description on a separate line" js ;
+command: rcoshowkeys "(show bindings: rco)" showkeysurl readcomiconline.li
+
+rcobind: c<C-h> "(show bindings: rco)" rcoshowkeys c
+rcobind: [[ "Previous page" click #btnPrevious
+rcobind: ]] "Next page" click #btnNext
+rcobind: cc "Download current image" hint -S! #imgCurrent
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮

@@ -1,4 +1,17 @@
 var csites = {
+    ali: {
+        _site: "aliexpress.com",
+        go: function() {
+            const url = location.href;
+            if (url.startsWith("https://www.aliexpress.com/account")) {
+                hint("[class$=menu-item]");
+            } else if (url.startsWith("https://www.aliexpress.com/item")) {
+                /* FIXME:  */
+                cutils.click("button", "Add to Cart");
+            }
+        },
+    },
+
     amaz: {
         _site: "amazon.com",
 
