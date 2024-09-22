@@ -13,6 +13,10 @@ const removeClasses = ["topad", "shareit", "widget-header"];
 removeClasses.forEach(cls => {
     [...document.getElementsByClassName(cls)].forEach(e => e.remove());
 });
+const removeSelectors = ["span[id^=ezoic]", "span[class^=ezoic]"];
+removeSelectors.forEach(s => {
+    [...document.querySelectorAll(s)].forEach(e => e.remove());
+});
 
 // Turn item headings into search links on DnDBeyond.com
 const ratings = {
