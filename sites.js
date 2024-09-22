@@ -281,7 +281,7 @@ var sites = {
     },
 
     wp: {
-        _site: "github.com",
+        _site: "wikipedia.org",
 
         episodeList: async function (s, opts={}) {
             opts = utils.tri.parseOpts(opts, {castString:"where", defaults:{where: "last"}});
@@ -333,8 +333,8 @@ sites.LISTS = {
         "https://www.amazon.com.au/gp/css/order-history/ref=nav_nav_orders_first",
     ],
     supermarkets: [
-        "https://www.woolworths.com.au/shop/mylists",
-        "https://shop.coles.com.au/a/casino/home",
+        "https://www.woolworths.com.au/shop/mylists/reorder",
+        "https://www.coles.com.au/bought-before",
     ],
 };
 
