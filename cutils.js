@@ -182,6 +182,16 @@ var cutils = {
     },
 
     datetime: () => (new Date).toISOString().replace("T", "-").replace(/:[0-9.]+Z/, ""),
+    datetime: function(opts={}) {
+        opts = cutils.tri.parseOpts(opts, {
+            castBoolean: "exact",
+        });
+        const time = (new Date).toISOString();
+        if (opts.exact)
+            return time;
+        else
+            return time.replace("T", "-").replace(/:[0-9.]+Z/, "");
+    },
 
     ex: function(cmd) { return tri.controller.acceptExCmd(cmd); },
 
@@ -658,25 +668,31 @@ var cutils = {
         cutils.yank(elts.map(e=>getText(e)).join("\n"), opts);
     },
 
-    yank: function(s, opts={}) {
+    yank: async function(s, opts={}) {
         /* options */
-        opts = cutils.tri.parseOpts(opts, {castBoolean: "cmdline"});
-        opts.msg ??= true;
-        opts.cmdline ??= true;
+        opts = cutils.tri.parseOpts(opts, {
+            castBoolean: "temp",
+            nullishDefaults: {
+                "msg": true,
+                "temp": true,
+            },
+        });
         /* yank */
-        yank(s);
+        await yank(s);
         /* message? */
         if (opts.msg) {
             opts.prefix ??= "Copied" + (opts.cmdline ? ": " : "...\n");
             cutils.message(s, opts);
         }
+        const f = cutils.datetime(true);
+        tri.native.write(`~/.tridactyl/log/${f}.txt`, s+"\n");
         return s;
     },
 
     SEL: {
         yankspan: [
             "span", "em", "strong", "u", "sub", "sup", "ruby",
-            "a", "tr", "td", "cite", "data", "dd", "dt",
+            "a", "td", "cite", "data", "dd", "dt",
             "code", "pre", "output",
         ],
     },
@@ -685,9 +701,10 @@ var cutils = {
         opts.switches ??= "-J";
         opts.property ||= "textContent";
         opts.trim ??= true;
+        opts.temp ??= true;
         const callback = opts.trim
-              ? `e => cutils.yank(e["${opts.property}"].trim())`
-              : `e => cutils.yank(e["${opts.property}"])`;
+              ? `e => cutils.yank(e["${opts.property}"].trim(), opts.temp)`
+              : `e => cutils.yank(e["${opts.property}"], opts.temp)`;
         return tri.controller.acceptExCmd(
             `hint -c ${selectors} ${opts.switches} -F ${callback}`);
     },
@@ -721,6 +738,7 @@ var cutils = {
             && (x.length-1 in x || x.length===0)
     ),
     isArrayConvertible: x => cutils.isIterable(x) || cutils.isArraylike(x),
+    isElement: x => x instanceof Node && x.nodeType == Node.ELEMENT_NODE,
     ownprops: function(x) { return Object.getOwnPropertyNames(x); },
 
     // ╭──────────────────────╮
@@ -1104,13 +1122,13 @@ window.R = R;
 [
     "$$", "$1", "$$cls", "$1cls", "$id", "$$tag", "$1tag", "$$t", "$1t", "$$match",
     "blink", "click", "clickall", "click1", "scrollelt", "scrollNthIntoView",
-    "get1", "getText", "getText1",
+    "get1", "getText", "getText1","txtcontent",
     "getSelectionDOM", "getSelectionHtml",
     "isolate", "jumpToHeading", "keep", "rm", "rmall", "setInput", "toggleprop", "togglepropWr",
     "urlopen",
     "SEL", "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankjs", "yankjsWr", "yankf",
     "datetime", "isInViewport", "isDisplayed", "sprintf",
-    "asArr", "hexToRGB", "isArraylike", "isArrayConvertible", "isIterable", "ownprops",
+    "asArr", "hexToRGB", "isArraylike", "isArrayConvertible", "isElement", "isIterable", "ownprops",
     "saveText", "timestampFilename",
 ].forEach(k => window[k]=cutils[k]);
 
