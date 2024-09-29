@@ -691,6 +691,9 @@ bind: ssu "Search supermarkets" fillcmdline multienginesearch! "shopwoo shopcol"
 bind: ssU "Search supermarkets: last tab" fillcmdline multienginesearch_last! "shopwoo shopcol"
 bind: ssz "Search amazon and ebay" fillcmdline multienginesearch! "e amazau"
 bind: ssZ "Search amazon and ebay: last tab" fillcmdline multienginesearch_last! "e amazau"
+
+" | ssa -- search/shopping/art |
+bind: ssa<C-h> "(show bindings: search/shopping/art)" showkeys ssa
 bind: ssaj "Search amazon, ebay and jacksonsart" fillcmdline multienginesearch! "e amazau shopja"
 bind: ssaJ "Search amazon, ebay and jacksonsart: last tab" fillcmdline multienginesearch_last! "e amazau shopja"
 bind: ssac "Search amazon, ebay, jacksonsart and cultpens" fillcmdline multienginesearch! "e amazau shopja shopcult"
