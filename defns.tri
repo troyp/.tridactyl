@@ -826,6 +826,7 @@ bind: yxx "Yank page text" yankfirst body
 bind e<C-h> showkeys e
 bind ea tabopen about:addons
 bind ec tabopenorswitchc about:config
+bind: eC "view tridactyl config" viewconfig
 bind ed tabopenorswitchc about:downloads
 bind eD tabopenorswitchc about:debugging
 bdoc en "Open tridactyl newtab page"
@@ -890,6 +891,7 @@ bind: ewk "Open bookmarks manager" xdokeyseq 0.2 menuacc+b ↵
 " | ey -- goto/dactyl |
 bind ey<C-h> showkeys ey
 bind: eyy "Goto tridactyl config folder" tabopenorswitchc file:///home/troy/.tridactyl
+bind: eybb "Goto tridactyl normal bindings" viewconfig nmaps
 
 " | eyr -- goto/dactyl/repo |
 bind eyr<C-h> showkeys ey
