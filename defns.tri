@@ -799,7 +799,9 @@ bind: <A-y> "Yank selected links" linkjs links.yankSelected()
 
 " | yL -- yank/list |
 bdoc yLL "Yank list [HINTS]"
-bind yLL :: cuhint -Jc ul,ol -F l=>cutils.yank([...l.children].map(e=>e.textContent).join("\n"))
+bind yLL :: cuhint -Jc ul,ol -F l=>cutils.yank([...l.children].map(e=>e.textContent.trim()).filter(s=>s).join("\n"))
+bdoc yLM "Yank list: multiline items [HINTS]"
+bind yLM :: cuhint -Jc ul,ol -F l=>cutils.yank([...l.children].map(e=>e.textContent.split("\n").map(s=>s.trim()).filter(s=>s).join("\t")).join("\n"))
 
 " | yT -- yank/table |
 command: hinttable "Execute hint -Jc table -F" hint -Jc table -F
