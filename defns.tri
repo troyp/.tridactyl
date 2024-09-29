@@ -1507,6 +1507,9 @@ bind: ,xtsa "Sort all tables" cujs -r js/sorttables.js ; js $$("table").forEach(
 command: cuhint "Load cutils.js and execute hint" cujs ; hint
 command: cshint "Load cutils.js and sitejs and execute hint" sitejs ; hint
 
+" middle and right click using xdotool
+command xhintclick xdoelem a,img,th,button,input,select,details,[onclick],[contenteditable=true],[tabindex] -e click
+
 bind: ;<C-h> "(show bindings: hints)" showkeys ;
 
 bind: ;gu "Open nth parent of link URL [HINT]" js_count hint("-F","e=>tabopen(urls.getNthParent(COUNT,e.href))")
@@ -1518,19 +1521,15 @@ bind: ;Y "Yank link text" cuhint -JF e=>cutils.yankelt(e)
 bind ,,<C-h> showkeys ,,
 bind: ,,b "Hint buttons" hint button
 bind ,,c hint -c [class*="expand"],[class="togg"]
+bind: ,,m "Right click element (context menu)" xhintclick 3
+" TODO: handle a list as a cell element
+bind: ,,x "Middle click element" xhintclick 2
 
 " | ,,i -- hints/image |
 bind ,,i<C-h> showkeys ,,i
 bind: ,,is "Yank image source" hintpipe img src | clipboard yank
 
-" middle and right click using xdotool
-command xhintclick xdoelem a,img,th,button,input,select,details,[onclick],[contenteditable=true],[tabindex] -e click
-bind: ,,x "Middle click element" xhintclick 2
-bind: ,,m "Right click element (context menu)" xhintclick 3
-
-" ╭──────────────────────────────────────────────────╮
 " │ ,,f -- numeric hints: allow alphabetic filtering │
-" ╰──────────────────────────────────────────────────╯
 bind ,,f<C-h> showkeys ,,f
 bind ,,fb  composite set hintchars 0123456789 ; hint -b ; unset hintchars
 bind ,,ff  composite set hintchars 0123456789 ; hint ; unset hintchars
@@ -1541,9 +1540,7 @@ bind: ,,lv "Follow visited link [HINTS]" hint -c :visited
 bind: ,,lU "Follow unvisited link in new tab [HINTS]" hint -c :link
 bind: ,,lV "Follow visited link in new tab [HINTS]" hint -c :visited
 
-" ╭───────────────────╮
 " │ ,,n -- hints/edit │ see ,n above
-" ╰───────────────────╯
 
 " ───────────────────────────────────────────────────────────────────────────────
 " ╭───────╮
