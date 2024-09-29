@@ -120,11 +120,7 @@ var yt = {
     },
 
     openTranscript: function() {
-        $1("button#button[aria-label*='More actions']").click();
-        window.setTimeout(
-            ()=> $1t("tp-yt-paper-item", "transcript").click(),
-            500
-        );
+        cutils.click("button", /transcript/i);
     },
     closeTranscript: function() {
         const btn = $1("button[aria-label='Close transcript']");
