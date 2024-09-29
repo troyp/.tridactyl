@@ -1328,6 +1328,8 @@ bind ,m<C-h> showkeys ,m
 command: click "Click first element matching selectors" cujs -d¦ cutils.click(JS_ARGS.slice(1).join(" "))¦
 commdoc clickall "Click first element matching selectors"
 command clickall cujs -d¦ cutils.click(JS_ARGS.slice(1).join(" "), {all: true})¦
+commdoc clickbytext "Click first element matching text"
+command clickbytext cujs -d¦ cutils.click(tri.config.get("hinttags.default").join(","), JS_ARGS.slice(1).join(" "))¦
 
 " | ,mx -- manipulate/checkboxes |
 bind ,mx<C-h> showkeys ,mx
