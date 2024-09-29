@@ -605,6 +605,10 @@ var cutils = {
         return this.toggleprop(obj, prop, val1, val2||"");
     },
 
+    txtcontent: function(e) {
+        return e.textContent.trim();
+    },
+
     /** Unhides elements matching SELECTOR. See get() for arguments and options */
     unhide: function(selector, opts={}) {
         const elts = cutils.get(selector, opts);

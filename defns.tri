@@ -797,10 +797,30 @@ bind: ylm "Yank links as markdown [HINTS]" :: hint -F l=>`[${l.textContent}](${d
 bind: yls "Yank selected links" linkjs links.yankSelected()
 bind: <A-y> "Yank selected links" linkjs links.yankSelected()
 
+" | yL -- yank/list |
+bdoc yLL "Yank list [HINTS]"
+bind yLL :: cuhint -Jc ul,ol -F l=>cutils.yank([...l.children].map(e=>e.textContent).join("\n"))
+
+" | yT -- yank/table |
+command: hinttable "Execute hint -Jc table -F" hint -Jc table -F
+command: cuhinttable "Load cutils.js and execute hint -Jc table -F" cujs ; hint -Jc table -F
+
+bind: yT<C-h> "(show bindings: yank/table)" showkeys yT
+bind: yTC<C-h> "(show bindings: yank/table/columns)" showkeys yTC
+bind: yTCC "Copy table columns [HINT]" fillcmdline copytablecols
+bind: yTCS "Copy table columns (strict: omit rows without enough columns) [HINT]" fillcmdline copytablecols_strict
+bdoc yTT "Yank table contents [HINT]"
+bind yTT cuhinttable e=>cutils.yank([...e.rows].slice(1).map(r=>[...r.cells].map(txtcontent).join("\t")).join("\n"))
+bdoc yTH "Yank table column headings"
+bind yTH cuhinttable e=>cutils.yank([...e.querySelectorAll("tr:first-child>th")].map(c=>c.textContent).join("\n"))
+bdoc yTM "Yank table as markdown"
+bind yTM :: cujs -r js/table2md.js ; hinttable e=>cutils.yank(convertToMarkdown(convertToMatrix(e)))
+
 " | yu -- yank/URL |
 bind: yu<C-h> "(show bindings: yank/URL)" showkeys yu
 bind: yugu "Yank nth parent URL" jsb_count utils.yank(urls.getNthParent(COUNT))
 bind: yugU "Yank nth from root URL" jsb_count utils.yank(urls.fromRoot(COUNT))
+bind: yuu "Yank all tab URLs" jsb utils.tab.getUrlList(true).then(p=>yank(p))
 bind: yu3 "Yank URL with fragment [HINTS]" :: cUjs ; hint -c [id],[name] -F e=>cutils.yank(urls.fragmentURL(e))
 
 " | yud -- yank/URL/domain |
@@ -1460,12 +1480,12 @@ command scrolltableintoview cujs -d¦ cutils.scrollNthIntoView("table", JS_ARGS?
 bind ,xt<C-h> showkeys ,xt
 bind: ,xtc "Copy table columns [HINT]" fillcmdline copytablecols
 bind: ,xtC "Copy table columns (omit rows without enough columns) [HINT]" fillcmdline copytablecols_strict
+bind: ,xt;c "Yank table contents [HINT]" cuhinttable e=>cutils.yank([...e.rows].slice(1).map(r=>[...r.cells].map(txtcontent).join("\t")).join("\n"))
 bind: ,xtd "Delete table row [HINT]" hint -Jk tr
 bind: ,xt;d "Delete multiple table rows [HINTS]" hint -Jqk tr
-bdoc ,xth "Show column headings"
-bind ,xth :: hint table -F e=>([...e.querySelectorAll("tr:first-child>th")].map(c=>c.textContent).join("¦")) | fillcmdline_tmp 5000
+bind: ,xth "Show column headings" :: cuhinttable e=>([...e.querySelectorAll("tr:first-child>th")].map(c=>c.textContent).join("¦")) | fillcmdline_tmp 5000
 bdoc ,xtm "Copy table as markdown"
-bind ,xtm :: cujs -r js/table2md.js ; hint table -F e=>cutils.yank(convertToMarkdown(convertToMatrix(e)))
+bind ,xtm :: cujs -r js/table2md.js ; hinttable -F e=>cutils.yank(convertToMarkdown(convertToMatrix(e)))
 bdoc ,xtn "Show number of rows in table body [HINTS]"
 bind ,xtn :: hint -Jc table -F t=>t.tBodies[0].getElementsByTagName("tr").length | sprintf "#rows: %s" | show5
 bind: ,xtt "Scroll table into view" scrolltableintoview
