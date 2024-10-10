@@ -710,18 +710,28 @@ utils.tab = {
      *  opts.closeCurrent: whether to close current tab
      */
     select: async function (url="", opts={}) {
-        if (url || opts.regex) {
-            const currentTab = await tri.webext.activeTab();
-            const alltabs = await this.getAll();
-            const existingTab = alltabs.find(t=>t.url==url) || alltabs.find(t=>opts.regex?.test?.(t));
-            return existingTab &&
-                this.switch(existingTab.index+1).then(
-                    async ()=>{
-                        if (opts.closeCurrent) await browser.tabs.remove(currentTab.id);
-                        if (opts.reload) await browser.tabs.reload(existingTab.id);
-                        return existingTab;
-                    });
-        } else return null;
+        opts = utils.tri.parseOpts(opts, {
+            castRegExp: "regex",
+            castFunction: "func",
+        });
+        const currentTab = await tri.webext.activeTab();
+        const alltabs = await this.getAll();
+        let existingTab = null;
+        if (url)
+            existingTab = alltabs.find(t=>t.url==url);
+        else if (opts.func && opts.regex)
+            existingTab = alltabs.find((t=>opts.regex.test(t.url) && opts.func(t)));
+        else if (opts.func)
+            existingTab = alltabs.find(opts.func);
+        else if (opts.regex)
+            existingTab = alltabs.find(t=>opts.regex.test(t.url));
+        return existingTab &&
+            this.switch(existingTab.index+1).then(
+                async ()=>{
+                    if (opts.closeCurrent) await browser.tabs.remove(currentTab.id);
+                    if (opts.reload) await browser.tabs.reload(existingTab.id);
+                    return existingTab;
+                });
     },
 
     showN: async function(opts={}) {
