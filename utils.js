@@ -843,7 +843,7 @@ utils.tri = {
         const argstr = args.join(" ").trim();
         const bindmodeRe = /^([a-z]+) ([^ ]+) (.*)/;
         const match = argstr.match(bindmodeRe);
-        [mode, key, rest] = match.slice(1);
+        let [mode, key, rest] = match.slice(1);
         switch(mode) {
           case "all":
               tri.controller.acceptExCmd(`bind --mode=normal ${key} ${rest}`);
@@ -903,7 +903,7 @@ utils.tri = {
         const argstr = args.join(" ").trim();
         const bindmodeRe = /^([a-z]+) ([^ ]+) "([^"]*)" (.*)/;
         const match = argstr.match(bindmodeRe);
-        [mode, key, desc, rest] = match.slice(1);
+        let [mode, key, desc, rest] = match.slice(1);
         /* TODO: implement documentation system */
         /* for now, extract descriptions statically from file */
         switch(mode) {
