@@ -225,6 +225,11 @@ utils.tab = {
     },
 
 
+    active: async function() {
+        const activeArr = await browser.tabs.query({active: true});
+        return activeArr[0];
+    },
+
     get: async function(tabnum, opts={}) {
         const res = await browser.tabs.query({index: tabnum-1});
         return res[0];
