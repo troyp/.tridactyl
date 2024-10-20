@@ -379,7 +379,11 @@ utils.tab = {
     },
 
     openIllegal: async function(url, opts={}) {
-        opts = utils.tri.parseOpts(opts, {castString: "where", castNumber: "where"});
+        opts = utils.tri.parseOpts(opts, {
+            castString: "where",
+            castNumber: "where",
+            defaults: { useNative: true },
+        });
         const startTab = await this.active();
         if (opts.where === "here") {
             if (opts.useOmnibox) {
@@ -392,7 +396,11 @@ utils.tab = {
                 return this.openIllegal(url, opts);
             }
         } else { /* new tab */
-            const t = await tabopen(...url.split(" "));
+            if (opts.useNative) {
+                await tri.native.run(`firefox --new-tab ${url}`);
+            } else {
+                const t = await tabopen(...url.split(" "));
+            }
             const i = startTab.index;
             var pos;
             switch (opts.where) {
