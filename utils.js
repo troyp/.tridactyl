@@ -540,22 +540,22 @@ utils.tab = {
         opts = utils.tri.parseOpts(opts, { castBoolean: "returnOrd" });
         const N = await this.getN();
         switch(n) {
-          case "$":
-          case "0":
-              n = N;
-              break;
-          case "^":
-              n = 1;
-              break;
-          case "#":
-              const alt = await this.getAlternate();
-              n = alt.index+1;
-              break;
-          case "%":
-          case ".":
               const thisTab = await tri.webext.activeTab();
-              n = thisTab.index+1;
-              break;
+            case "$":
+            case "0":
+                n = N;
+                break;
+            case "^":
+                n = 1;
+                break;
+            case "#":
+                const alt = await this.getAlternate();
+                n = alt.index+1;
+                break;
+            case "%":
+            case ".":
+                n = thisTab.index+1;
+                break;
         }
         const idx = (parseInt(n)-1) % N;
         return opts.returnOrd ? idx+1 : idx;
