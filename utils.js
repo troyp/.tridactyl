@@ -280,7 +280,7 @@ utils.tab = {
     /* Move current tab to TABNUM. If TABNUM is a pinned tab, move to first nonpinned position
      */
     move: async function(tabnum=0) {
-        const thisTab = await tri.webext.activeTab();
+        const thisTab = await this.active();
         const targetIdx = await this.parseTabnum(tabnum);
         const nPinned = (await this.getPinned()).length;
         const i = thisTab.pinned ? Math.min(targetIdx, nPinned-1) : Math.max(targetIdx, nPinned);
@@ -308,7 +308,7 @@ utils.tab = {
         [url, addr_type] = await utils.tri.parseUrl(url, opts.where!=="here");
         const isURL = addr_type === "URL";
         const isIllegal = /^file:|^about:/.test(url) && !this.aboutURIWhitelist.includes(url);
-        const thisTab = await tri.webext.activeTab();
+        const thisTab = await this.active();
         if (isURL && isIllegal) {
             /* illegal file:|about: URL */
             return this.openIllegal(url, opts);
@@ -380,7 +380,7 @@ utils.tab = {
 
     openIllegal: async function(url, opts={}) {
         opts = utils.tri.parseOpts(opts, {castString: "where", castNumber: "where"});
-        const startTab = await tri.webext.activeTab();
+        const startTab = await this.active();
         if (opts.where === "here") {
             if (opts.useOmnibox) {
                 await tri.native.run(
@@ -437,7 +437,7 @@ utils.tab = {
         if (!url) return null;
         opts = utils.tri.parseOpts(opts, {castString: "where", nullishDefaults:{where:"here"}});
         if (opts.where == "tab") opts.where = "related";
-        const currentTab = await tri.webext.activeTab();
+        const currentTab = await this.active();
         const testfn = opts.regex
               ? (t=> t.url.match(opts.regex))
               : opts.exactMatch ? (t=> t.url == url) : (t=> t.url.indexOf(url)>=0);
@@ -481,7 +481,7 @@ utils.tab = {
         if (!url) return null;
         opts = utils.tri.parseOpts(opts, {castString: "where", nullishDefaults:{where:"here"}});
         opts.closeCurrent ??= (opts.where=="here");
-        const currentTab = await tri.webext.activeTab();
+        const currentTab = await browser.tabs.query({active: true});
         const testfn = opts.regex
               ? (t=> t.url.match(opts.regex))
               : opts.exactMatch ? (t=> t.url == url) : (t=> t.url.indexOf(url)>=0);
@@ -540,7 +540,6 @@ utils.tab = {
         opts = utils.tri.parseOpts(opts, { castBoolean: "returnOrd" });
         const N = await this.getN();
         switch(n) {
-              const thisTab = await tri.webext.activeTab();
             case "$":
             case "0":
                 n = N;
@@ -554,6 +553,7 @@ utils.tab = {
                 break;
             case "%":
             case ".":
+                const thisTab = await browser.tabs.query({active: true});
                 n = thisTab.index+1;
                 break;
         }
@@ -672,7 +672,7 @@ utils.tab = {
     },
 
     rofiHighlight: async function(opts={}) {
-        const currentTab = await tri.webext.activeTab();
+        const currentTab = await this.active();
         const alltabs = await this.getAll();
         const idxs = await this.rofiChoose();
         const selected = alltabs.filter(t=>idxs.includes(t.index));
@@ -692,7 +692,7 @@ utils.tab = {
     },
 
     summonAlternate: async function(n=1, opts={}) {
-        const thisTab = await tri.webext.activeTab();
+        const thisTab = await this.active();
         const alt = await this.getAlternate(n);
         const d = opts.delta || 1;
         var d_adj;
@@ -714,7 +714,7 @@ utils.tab = {
             castRegExp: "regex",
             castFunction: "func",
         });
-        const currentTab = await tri.webext.activeTab();
+        const currentTab = await this.active();
         const alltabs = await this.getAll();
         let existingTab = null;
         if (url)
@@ -748,7 +748,7 @@ utils.tab = {
         if (tabnum=="$") tabnum = 0; else tabnum = Number(tabnum);
         const N = await this.getN();
         const n = (tabnum-1).mod(N) + 1;
-        const thisTab = await tri.webext.activeTab();
+        const thisTab = await this.active();
         const d = opts.delta || 1;
         var d_adj;
         if (d > 0)
@@ -767,7 +767,7 @@ utils.tab = {
      */
     switch: async function(tabnum, opts={}) {
           opts = utils.tri.parseOpts(opts, {castBoolean: "removeCurrent"});
-          const thisTab = await tri.webext.activeTab();
+          const thisTab = await this.active();
           var otherTab;
           if (tabnum == null && opts.id) {
               otherTab = await browser.tabs.get(opts.id);
@@ -782,7 +782,7 @@ utils.tab = {
     },
 
     switchAlternate: async function(n=1, opts={}) {
-        const thisTab = await tri.webext.activeTab();
+        const thisTab = await this.active();
         const alt = await this.getAlternate(n);
         if (opts.removeCurrent) browser.tabs.remove(thisTab.id);
         return browser.tabs.update(alt.id, {active: true});
@@ -1305,7 +1305,7 @@ utils.tri = {
 
     tabmarkset: async function(c) {
         tri.config.USERCONFIG.tabmarks ||= {};
-        const currentTab = await tri.webext.activeTab();
+        const currentTab = await this.active();
         tri.config.USERCONFIG.tabmarks[c] = currentTab.id;
     },
 
