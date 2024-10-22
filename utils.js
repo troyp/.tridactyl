@@ -496,8 +496,8 @@ utils.tab = {
         opts.closeCurrent ??= (opts.where=="here");
         const currentTab = await browser.tabs.query({active: true});
         const testfn = opts.regex
-              ? (t=> t.url.match(opts.regex))
-              : opts.exactMatch ? (t=> t.url == url) : (t=> t.url.indexOf(url)>=0);
+              ? (t=> t.url?.match(opts.regex))
+              : opts.exactMatch ? (t=> t.url == url) : (t=> t.url?.indexOf(url)>=0);
         if (testfn(currentTab)) return currentTab;
         else {
             const alltabs = await this.getAll();
