@@ -306,6 +306,8 @@ utils.tab = {
      *  opts.background: don't switch to new tab
      */
     open: async function(url, opts={}) {
+        if (url instanceof Promise) { url = await url; }
+        url = String(url);
         opts = utils.tri.parseOpts(opts, {castString: "where", castNumber: "where"});
         if (opts.where === "tabopen" || opts.where === "tab") opts.where = tri.config.USERCONFIG.tabopenpos;
         if (opts.where === "middleclick") opts.where = tri.config.USERCONFIG.relatedopenpos;
