@@ -40,7 +40,8 @@ var urls = {
     // ╰──────────────╯
     /** opts.countSubdomains:   treat subdomains as levels
      */
-    getNthFromRootPath: function(n=1, url=tri.contentLocation.href, opts={}) {
+    getNthFromRootPath: async function(n=1, url, opts={}) {
+        url ||= await tri.controller.acceptExCmd(`js window.location.href`);
         const u = new URL(url);
         const hostnameRe = /(([^.]+\.)*)([^.]+)\.(com|org|net|int|edu|gov|mil)(\.[a-z][a-z])?/i;
         const domainMatch = u.hostname.match(hostnameRe);
@@ -76,8 +77,9 @@ var urls = {
     },
     fromRoot: (...args)=>urls.getNthFromRootPath(...args),
 
-    matchToNthLevel: function(n=1, url1, url2=tri.contentLocation.href, opts={}) {
-        return getNthFromRootPath(n, url1, opts) == getNthFromRootPath(n, url2, opts);
+    matchToNthLevel: async function(n=1, url1, url2, opts={}) {
+        url2 ||= await tri.controller.acceptExCmd(`js window.location.href`);
+        return this.getNthFromRootPath(n, url1, opts) == this.getNthFromRootPath(n, url2, opts);
     },
 
     /** opts.countSubdomains:   treat subdomains as levels
@@ -85,39 +87,42 @@ var urls = {
      *  opts.countFragment      treat fragment as a level
      *  opts.countIndexhtml:    don't treat path/index.html as equivalent to path/
      */
-    getNthParent: function(n=1, url=tri.contentLocation.href, opts={}) {
+    getNthParent: async function(n=1, url, opts={}) {
         if (n == 0) return url;
+        url ||= await tri.controller.acceptExCmd(`js window.location.href`);
         opts.countFragment ??= true;
         opts.countQuery ??= true;
         opts.countSubdomains ??= true;
         const u = new URL(url);
         for (let i=n; i>0; --i) {
-            /* first try removing fragment */
-            if (opts.countFragment && u.hash)
+            if (opts.countFragment && u.hash) {
+                /* first try removing fragment */
                 u.hash = "";
-            /* next try removing query */
-            else if (opts.countQuery && u.search)
+            } else if (opts.countQuery && u.search) {
+                /* next try removing query */
                 u.search = "";
-            /* next try removing the last path component */
-            else if (/\/[^/]+\/*$/.test(u.pathname)) {
-                if (!opts.countIndexhtml && /index.html?$/.test(u))
+            } else if (/\/[^/]+\/*$/.test(u.pathname)) {
+                /* next try removing the last path component */
+                if (!opts.countIndexhtml && /index.html?$/.test(u)) {
                     u.pathname = u.pathname.replace(/index.html?$/, "");
+                }
                 u.pathname = u.pathname.replace(/\/[^/]+\/*$/, "");
-            }
-            /* otherwise, try removing a subdomain */
-            else if (opts.countSubdomains) {
+            } else if (opts.countSubdomains) {
+                /* otherwise, try removing a subdomain */
                 const labels = u.hostname.split(".");
                 const hostnameRe = /([^.]+\.)+([^.]+)\.(com|org|net|int|edu|gov|mil)(\.[a-z][a-z])?/i;
-                if (labels.length > 3)
+                if (labels.length > 3) {
                     u.hostname = labels.slice(1).join(".");
-                else if (hostnameRe.test(u.hostname))
+                } else if (hostnameRe.test(u.hostname)) {
                     u.hostname = u.hostname.replace(/[^.]+\./, "");
+                }
             } else break;
         }
         /* if query and/or fragment weren't counted as levels, remove them anyway */
         u.hash = "";
-        if (!opts.countFragment || !/\#/.test(url) || n > 1)
+        if (!opts.countFragment || !/\#/.test(url) || n > 1) {
             u.search = "";
+        }
         return u.href;
     },
 
@@ -125,7 +130,8 @@ var urls = {
      *  For n>=0, keep n path components after hostnameRe
      *  For n<0, -1 keeps whole path, -2 removes 1 level, etc
      */
-    getPathPrefix: function(n=0, initurl=tri.contentLocation.href) {
+    getPathPrefix: async function(n=0, initurl) {
+        initurl ||= await tri.controller.acceptExCmd(`js window.location.href`);
         n = Number(n);
         const url = new URL(initurl);
         /* remove initial / from pathname - we don't need to replace it when setting pathname */
@@ -141,8 +147,8 @@ var urls = {
     // ╭─────────╮
     // │ queries │
     // ╰─────────╯
-    delQuery: function(url, key) {
-        url ||=tri.contentLocation.href;
+    delQuery: async function(url, key) {
+        url ||= await tri.controller.acceptExCmd(`js window.location.href`);
         const u = new URL(url);
         const queries = u.search.slice(1).split("&");
         const queries_filtered = queries.filter(q => { const [k, v] = q.split("="); return (k!=key); });
@@ -150,8 +156,8 @@ var urls = {
         return u.href;
     },
 
-    getQuery: function(url, qPattern) {
-        url ||=tri.contentLocation.href;
+    getQuery: async function(url, qPattern) {
+        url ||= await tri.controller.acceptExCmd(`js window.location.href`);
         const u = new URL(url);
         const queries = u.search.slice(1).split("&");
         for (const q of queries) {
@@ -163,8 +169,8 @@ var urls = {
 
     /** Return URL resulting from setting the query KEY to VALUE in the input URL.
      */
-    setQuery: function(url, key, value) {
-        url ||=tri.contentLocation.href;
+    setQuery: async function(url, key, value) {
+        url ||= await tri.controller.acceptExCmd(`js window.location.href`);
         const u = new URL(url);
         const queries = u.search.slice(1).split("&");
         const q = queries.find(q => { const [k, v] = q.split("="); return (k==key); });
@@ -178,8 +184,8 @@ var urls = {
         return u.href;
     },
 
-    toggleQuery: function(url, key, value1, value2="") {
-        url ||=tri.contentLocation.href;
+    toggleQuery: async function(url, key, value1, value2="") {
+        url ||= await tri.controller.acceptExCmd(`js window.location.href`);
         const currentKey = urls.getQuery(url, key);
         var newurl;
         if (currentKey != value1)
@@ -195,25 +201,26 @@ var urls = {
     // │ other │
     // ╰───────╯
 
-    contentType: async function(url=tri.contentLocation.href) {
-        if (url==tri.contentLocation.href)
+    contentType: async function(url) {
+        url = await tri.controller.acceptExCmd(`js window.location.href`);
+        if (url) {
             return tri.excmds.js("document.contentType");
-        else {
+        } else {
             const cmd = `curl -sI ${url} |grep -Pio '(?<=content-type: )[a-zA-Z0-9]+/[a-zA-Z0-9]+'`;
             const res = await tri.native.run(cmd);
             return (res.code==0) && res.content;
         }
     },
 
-    fragmentURL: function(elt) {
-        const u = tri.contentLocation.href;
+    fragmentURL: async function(elt) {
+        const u = await tri.controller.acceptExCmd(`js window.location.href`);
         const frag = elt.id || elt.name;
         if (frag) return u+"#"+frag;
         else return null;
     },
 
     toFilename: async function(url, opts={}) {
-        url ||= tri.contentLocation.href;
+        url ||= await tri.controller.acceptExCmd(`js window.location.href`);
         opts = utils.tri.parseOpts(opts, {castBoolean: "allowSpaces"});
         var name = (new URL(url))
             .pathname
@@ -223,7 +230,7 @@ var urls = {
         name = decodeURIComponent(name);
         const extRe = /\.[a-zA-Z0-9]+$/;
         const m = url.match(extRe);
-        content_type = await this.contentType(url);
+        const content_type = await this.contentType(url);
         const ext = m?.[0] || content_type?.split('/').pop();
         if (ext) name = `${name}.${ext}`;
         if (!opts.allowSpaces) name = name.replace(' ', '_');
@@ -233,7 +240,8 @@ var urls = {
 };
 
 urls.mod = {
-    graft: function(splicetext, n=0, initurl=tri.contentLocation) {
+    graft: async function(splicetext, n=0, initurl) {
+        initurl ||= await tri.controller.acceptExCmd(`js window.location.href`);
         return [urls.getPathPrefix(n, initurl), splicetext].join("/").replace(/(?<!:)\/\/+/g, "/");
     },
 
@@ -249,22 +257,22 @@ urls.mod = {
             tri.controller.acceptExCmd(`openorsummon ${url}`);
     },
 
-    delComponent: function(...components) {
-        const url = new URL(tri.contentLocation);
+    delComponent: async function(...components) {
+        const url = await tri.controller.acceptExCmd(`js window.location.href`);
         for (const c of components)
             url[c] = "";
         tri.controller.acceptExCmd(`open ${url}`);
     },
 
-    setQuery: function(key, value, opts={}) {
-        opts = cutils.tri.parseOpts(opts, {
+    setQuery: async function(key, value, opts={}) {
+        opts = parseOpts(opts, {
             defaults: {
                 where: "here",
                 bg: false,
             },
             castString: "where",
         });
-        const url = tri.contentLocation.href;
+        const url = await tri.controller.acceptExCmd(`js window.location.href`);
         const newurl = urls.setQuery(url, key, value);
         var opencmd;
         if (opts.where=="related" && opts.bg == false)      opencmd = "tabopen_adj";
@@ -278,7 +286,8 @@ urls.mod = {
     /** urltoggle(s1, s2, url)                Replace s1 with s2, or else s2 with s1
      *  urltoggle(s1, s2, url, {re1, re2})    Replace regex1 with s2, or else regex2 with s1
      */
-    toggle: function(s1, s2, url=tri.contentLocation, opts={}) {
+    toggle: async function(s1, s2, url, opts={}) {
+        url ||= await tri.controller.acceptExCmd(`js window.location.href`);
         url = String(url);
         const patt1 = opts.re1 || s1;
         const patt2 = opts.re2 || s2;
@@ -309,16 +318,16 @@ urls.mod = {
         }
     },
 
-    togglePrefix: function(prefix) {
-        const url = tri.contentLocation.href;
+    togglePrefix: async function(prefix) {
+        const url = await tri.controller.acceptExCmd(`js window.location.href`);
         if (url.startsWith(prefix))
             window.location.replace(url.replace(prefix, ""));
         else
             window.location.replace(prefix+url);
     },
 
-    toggleQuery: function(key, value1, value2) {
-        const url = tri.contentLocation.href;
+    toggleQuery: async function(key, value1, value2) {
+        const url = await tri.controller.acceptExCmd(`js window.location.href`);
         var newurl;
         if (urls.getQuery(url, key) != value1)
             newurl = urls.setQuery(url, key, value1);
