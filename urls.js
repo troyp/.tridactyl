@@ -298,7 +298,7 @@ urls.mod = {
         return newurl;
     },
 
-    togglepage: function(s1, s2, ...rest) {
+    togglepage: async function(s1, s2, ...rest) {
         var re1, re2, flags1="", flags2="";
         if (rest.length==4)
             [re1, flags1, re2, flags2] = rest;
@@ -308,8 +308,8 @@ urls.mod = {
             re1 = flags1 ? RegExp(re1|"", flags1||"") : RegExp(re1||"");
         if (re2)
             re2 = flags2 ? RegExp(re2|"", flags2||"") : RegExp(re2||"");
-        const url = tri.contentLocation.href;
-        const newUrl = this.toggle(s1, s2, url, {re1: re1, re2: re2});
+        const url = await tri.contentLocation.href;
+        const newUrl = await this.toggle(s1, s2, url, {re1: re1, re2: re2});
         if (newUrl && newUrl!==url) {
             if (window.location.protocol == "moz-extension:")
                 tri.controller.acceptExCmd(`open ${newUrl}`);
@@ -330,13 +330,13 @@ urls.mod = {
         const url = await tri.controller.acceptExCmd(`js window.location.href`);
         var newurl;
         if (urls.getQuery(url, key) != value1)
-            newurl = urls.setQuery(url, key, value1);
+            newurl = await urls.setQuery(url, key, value1);
         else
-            newurl = urls.setQuery(url, key, value2);
+            newurl = await urls.setQuery(url, key, value2);
         tri.controller.acceptExCmd(`js window.location = "${newurl}"`);
     },
 
-    toggleWr: function(argstr, opts={}) {
+    toggleWr: async function(argstr, opts={}) {
         const args = cutils.tri.parseArgs(argstr, "array");
         if (opts.global) {
             const [s1, s2] = args;
