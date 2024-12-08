@@ -326,13 +326,25 @@ urls.mod = {
             window.location.replace(prefix+url);
     },
 
-    toggleQuery: async function(key, value1, value2) {
+    toggleQuery: async function(key, value1, value2=null) {
         const url = await tri.controller.acceptExCmd(`js window.location.href`);
         var newurl;
-        if (urls.getQuery(url, key) != value1)
-            newurl = await urls.setQuery(url, key, value1);
-        else
-            newurl = await urls.setQuery(url, key, value2);
+        const val = await urls.getQuery(url, key);
+        if (value2 !== null) {
+            // toggle between value1 and value2
+            if (val == value1) {
+                newurl = await urls.setQuery(url, key, value2);
+            } else {
+                newurl = await urls.setQuery(url, key, value1);
+            }
+        } else {
+            // toggle between value1 and no query
+            if (val == value1) {
+                newurl = await urls.delQuery(url, key);
+            } else {
+                newurl = await urls.setQuery(url, key, value1);
+            }
+        }
         tri.controller.acceptExCmd(`js window.location = "${newurl}"`);
     },
 
