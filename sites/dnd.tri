@@ -35,7 +35,7 @@ donjonbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
 donjonbind: com "Goto marketplace" toposu! https://www.dndbeyond.com/marketplace/sourcebooks
 donjonbind: cor "Goto rpgbot.net" toposu! https://rpgbot.net/dnd5/
 donjonbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
-donjonbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
+donjonbind: cot "Goto tabletopbuilds.com" toposu https://tabletopbuilds.com
 donjonbind: cow "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
 donjonbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
@@ -79,17 +79,17 @@ dndbbind cv hint -Jc .dice_notification_controls__collapse,.dice_notification_co
 
 " | cl -- dndb/library |
 dndbbind: cl<C-h> "(show bindings: dndb/lib)" dndbshowkeys cl
-dndbbind: clb "Library/Basic Rules" toposu! https://www.dndbeyond.com/sources/basic-rules
-dndbbind: cld "Library/DMG" toposu! https://www.dndbeyond.com/sources/dmg
-dndbbind: cll "Library" toposu! https://www.dndbeyond.com/sources#Sourcebooks
-dndbbind: clm "Library/Monster Manual" toposu! https://www.dndbeyond.com/sources/mm
-dndbbind: clM "Library/Monsters of the Multiverse" toposu! https://www.dndbeyond.com/sources/motm
+dndbbind: clb "Library/Basic Rules" toposu https://www.dndbeyond.com/sources/basic-rules
+dndbbind: cld "Library/DMG" toposu https://www.dndbeyond.com/sources/dmg
+dndbbind: cll "Library" toposu https://www.dndbeyond.com/sources#Sourcebooks
+dndbbind: clm "Library/Monster Manual" toposu https://www.dndbeyond.com/sources/mm
+dndbbind: clM "Library/Monsters of the Multiverse" toposu https://www.dndbeyond.com/sources/motm
 dndbbind: clp "Library/PHB" toposu! https://www.dndbeyond.com/sources/phb
-dndbbind: cls "Library/Sage Advice" toposu! https://www.dndbeyond.com/sources/sac
-dndbbind: clS "Library/Sword Coast Adventurer's Guide" toposu! https://www.dndbeyond.com/sources/scag
-dndbbind: clt "Library/Tasha's Cauldron of Everything" toposu! https://www.dndbeyond.com/sources/tcoe
-dndbbind: clw "Library/Explorer's Guide to Wildemount" toposu! https://www.dndbeyond.com/sources/egtw
-dndbbind: clx "Library/Xanathar's" toposu! https://www.dndbeyond.com/sources/xgte
+dndbbind: cls "Library/Sage Advice" toposu https://www.dndbeyond.com/sources/sac
+dndbbind: clS "Library/Sword Coast Adventurer's Guide" toposu https://www.dndbeyond.com/sources/scag
+dndbbind: clt "Library/Tasha's Cauldron of Everything" toposu https://www.dndbeyond.com/sources/tcoe
+dndbbind: clw "Library/Explorer's Guide to Wildemount" toposu https://www.dndbeyond.com/sources/egtw
+dndbbind: clx "Library/Xanathar's" toposu https://www.dndbeyond.com/sources/xgte
 
 " | cm -- dndb/my |
 dndbbind: cm<C-h> "(show bindings: dndb/my)" dndbshowkeys cm
@@ -104,7 +104,7 @@ dndbbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
 dndbbind: com "Goto marketplace" toposu! https://www.dndbeyond.com/marketplace/sourcebooks
 dndbbind: cor "Goto rpgbot.net" toposu! https://rpgbot.net/dnd5/
 dndbbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
-dndbbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
+dndbbind: cot "Goto tabletopbuilds.com" toposu https://tabletopbuilds.com
 dndbbind: cow "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
 dndbbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
@@ -282,7 +282,7 @@ dndspbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
 dndspbind: cod "Goto donjon 5e spells" toposu! https://donjon.bin.sh/5e/spells/
 dndspbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
 dndspbind: cor "Goto rpgbot.net" toposu https://rpgbot.net/dnd5/
-dndspbind: cot "Goto TabletopBuilds.com" toposu! https://tabletopbuilds.com
+dndspbind: cot "Goto TabletopBuilds.com" toposu https:..tabletopbuilds.com
 dndspbind: cow "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
 dndspbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
@@ -306,7 +306,7 @@ dandwbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
 dandwbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
 dandwbind: cor "Goto rpgbot.net" toposu! https://rpgbot.net/dnd5/
 dandwbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
-dandwbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
+dandwbind: cot "Goto tabletopbuilds.com" toposu https://tabletopbuilds.com
 dandwbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
 " ───────────────────────────────────────────────────────────────────────────────
@@ -331,7 +331,7 @@ d20srdbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
 d20srdbind: cod "Goto donjon 5e spells" toposu! https://donjon.bin.sh/5e/spells/
 d20srdbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
 d20srdbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
-d20srdbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
+d20srdbind: cot "Goto tabletopbuilds.com" toposu https://tabletopbuilds.com
 d20srdbind: cow "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
 d20srdbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
@@ -362,7 +362,7 @@ realmshelpsbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
 realmshelpsbind: com "Goto marketplace" toposu! https://www.dndbeyond.com/marketplace/sourcebooks
 realmshelpsbind: cor "Goto rpgbot.net" toposu! https://rpgbot.net/dnd5/
 realmshelpsbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
-realmshelpsbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
+realmshelpsbind: cot "Goto tabletopbuilds.com" toposu https:..tabletopbuilds.com
 realmshelpsbind: cow "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
 realmshelpsbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
@@ -409,7 +409,7 @@ rpgbotbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
 rpgbotbind: cod "Goto donjon 5e spells" toposu! https://donjon.bin.sh/5e/spells/
 rpgbotbind: cog "Goto google drive/dnd" :: jsb sites.dnd.gdrive | winopen
 rpgbotbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
-rpgbotbind: cot "Goto tabletopbuilds.com" toposu! https://tabletopbuilds.com
+rpgbotbind: cot "Goto tabletopbuilds.com" toposu https:..tabletopbuilds.com
 rpgbotbind: cow "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
 rpgbotbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 
@@ -485,7 +485,7 @@ ttbuildbdoc col "Goto last level"
 ttbuildbind col cujs $$("h3,h3>span,h4").find(e=>e.id.match(/^level[-_]20[-_]/i)).scrollIntoView()
 ttbuildbind: cor "Goto rpgbot.net" toposu https://rpgbot.net/dnd5/
 ttbuildbind: cos "Goto dnd-spells.com" toposu! https://www.dnd-spells.com/spells
-ttbuildbind: cot "Goto top level" toposu! https://tabletopbuilds.com
+ttbuildbind: cot "Goto top level" toposu https:..tabletopbuilds.com
 ttbuildbind: cow "Goto dnd5e.wikidot.com" toposu! http://dnd5e.wikidot.com/
 ttbuildbind: co= "Goto DPR calculator" :exec `dndcalc${COUNT?"!":""}`
 ttbuildbind: co. "Goto summary table" goto #summary-table
