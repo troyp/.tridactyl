@@ -90,6 +90,10 @@ dndbbind: clS "Library/Sword Coast Adventurer's Guide" toposu https://www.dndbey
 dndbbind: clt "Library/Tasha's Cauldron of Everything" toposu https://www.dndbeyond.com/sources/tcoe
 dndbbind: clw "Library/Explorer's Guide to Wildemount" toposu https://www.dndbeyond.com/sources/egtw
 dndbbind: clx "Library/Xanathar's" toposu https://www.dndbeyond.com/sources/xgte
+" | cl; -- dndb/library/2024 |
+dndbbind: cl;<C-h> "(show bindings: dndb/library/2024)" dndbshowkeys cl;
+dndbbind: cl;b "Library/Free Rules 2024" toposu https://www.dndbeyond.com/sources/dnd/free-rules
+dndbbind: cl;p "Library/PHB2024" toposu https://www.dndbeyond.com/sources/dnd/phb-2024
 
 " | cm -- dndb/my |
 dndbbind: cm<C-h> "(show bindings: dndb/my)" dndbshowkeys cm
@@ -184,8 +188,95 @@ dndbbind: crs.W "Goto Spells: class=Warlock" toposu! https://www.dndbeyond.com/s
 dndbbind: crs<Space> "Open spell description" fillcmdline_notrail tabopen https://www.dndbeyond.com/spells/
 
 " | cr. -- dndb/rules/misc |
+dndbbind: cr.<C-h> "(show bindings: dndb/rules/misc)" dndbshowkeys cr.
 dndbbind: cr.dm "Goto Dragonmarks" toposu! https://www.dndbeyond.com/sources/wgte/dragonmarks
 dndbbind: cr.c "Goto Conditions" toposu! https://www.dndbeyond.com/sources/phb/appendix-a-conditions
+
+" | cr; -- dndb/rules/2024 |
+dndbbind: cr;<C-h> "(show bindings: dndb/rules/2024)" dndbshowkeys cr;
+dndbbind: cr;f "Goto feats (PH2024)" toposu https://www.dndbeyond.com/sources/dnd/phb-2024/feats#FeatList
+
+" | cr;c -- dndb/rules/2024/classes |
+dndbbind: cr;c<C-h> "(show bindings: dndb/rules/class)" dndbshowkeys cr;c
+dndbbind: cr;c. "Goto Classes" toposu! https://www.dndbeyond.com/classes
+dndbbind: cr;cB "Goto Barbarian" toposu! https://www.dndbeyond.com/classes/2190875-barbarian
+dndbbind: cr;cb "Goto Bard" toposu! https://www.dndbeyond.com/classes/2190876-bard
+dndbbind: cr;cc "Goto Cleric" toposu! https://www.dndbeyond.com/classes/2190877-cleric
+dndbbind: cr;cd "Goto Druid" toposu! https://www.dndbeyond.com/classes/2190878-druid
+dndbbind: cr;cf "Goto Fighter" toposu! https://www.dndbeyond.com/classes/2190879-fighter
+dndbbind: cr;cg "Goto Ranger" toposu! https://www.dndbeyond.com/classes/2190882-ranger
+dndbbind: cr;ck "Goto Warlock" toposu! https://www.dndbeyond.com/classes/2190885-warlock
+dndbbind: cr;cm "Goto Monk" toposu! https://www.dndbeyond.com/classes/2190880-monk
+dndbbind: cr;cn "Goto Barbarian" toposu! https://www.dndbeyond.com/classes/2190875-barbarian
+dndbbind: cr;cp "Goto Paladin" toposu! https://www.dndbeyond.com/classes/2190881-paladin
+dndbbind: cr;cR "Goto Ranger" toposu! https://www.dndbeyond.com/classes/2190882-ranger
+dndbbind: cr;cr "Goto Rogue" toposu! https://www.dndbeyond.com/classes/2190883-rogue
+dndbbind: cr;cs "Goto Sorcerer" toposu! https://www.dndbeyond.com/classes/2190884-sorcerer
+dndbbind: cr;cw "Goto Wizard" toposu! https://www.dndbeyond.com/classes/2190886-wizard
+dndbbind: cr;cW "Goto Warlock" toposu! https://www.dndbeyond.com/classes/2190885-warlock
+
+" | cr;c; -- dndb/rules/2024/classes-ph |
+dndbbind: cr;c;<C-h> "(show bindings: dndb/rules/class)" dndbshowkeys cr;c
+dndbbdoc cr;c;B "Goto Barbarian (PHB2024)"
+dndbbind cr;c;B toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes#BarbarianFeatures
+dndbbdoc cr;c;b "Goto Bard (PHB2024)"
+dndbbind cr;c;b toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes#BardFeatures
+dndbbdoc cr;c;c "Goto Cleric (PHB2024)"
+dndbbind cr;c;c toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes#ClericFeatures
+dndbbdoc cr;c;d "Goto Druid (PHB2024)"
+dndbbind cr;c;d toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes#DruidFeatures
+dndbbdoc cr;c;f "Goto Fighter (PHB2024)"
+dndbbind cr;c;f toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes#FighterFeatures
+dndbbdoc cr;c;g "Goto Ranger (PHB2024)"
+dndbbind cr;c;g toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes-continued#RangerFeatures
+dndbbdoc cr;c;k "Goto Warlock (PHB2024)"
+dndbbind cr;c;k toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes-continued#WarlockFeatures
+dndbbdoc cr;c;m "Goto Monk (PHB2024)"
+dndbbind cr;c;m toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes#MonkFeatures
+dndbbdoc cr;c;n "Goto Barbarian (PHB2024)"
+dndbbind cr;c;n toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes#BarbarianFeatures
+dndbbdoc cr;c;p "Goto Paladin (PHB2024)"
+dndbbind cr;c;p toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes-continued#PaladinFeatures
+dndbbdoc cr;c;R "Goto Ranger (PHB2024)"
+dndbbind cr;c;R toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes-continued#RangerFeatures
+dndbbdoc cr;c;r "Goto Rogue (PHB2024)"
+dndbbind cr;c;r toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes-continued#RogueFeatures
+dndbbdoc cr;c;s "Goto Sorcerer (PHB2024)"
+dndbbind cr;c;s toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes-continued#SorcererFeatures
+dndbbdoc cr;c;w "Goto Wizard (PHB2024)"
+dndbbind cr;c;w toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes-continued#WizardFeatures
+dndbbdoc cr;c;W "Goto Warlock (PHB2024)"
+dndbbind cr;c;W toposu https://www.dndbeyond.com/sources/dnd/phb-2024/character-classes-continued#WarlockFeatures
+
+" | cr;s -- dndb/rules/2024/spells |
+dndbbind: cr;s<C-h> "(show bindings: dndb/rules/2024/spells)" dndbshowkeys cr;s
+dndbbind: cr;s.<C-h> "(show bindings: dndb/rules/2024/spells/by-class)" dndbshowkeys cr;s.
+dndbbdoc cr;s.b "Goto Spells: class=Bard (2024)"
+dndbbind cr;s.b toposu! https://www.dndbeyond.com/spells?filter-class=1&filter-source=148&filter-source=145
+dndbbdoc cr;s.c "Goto Spells: class=Cleric (2024)"
+dndbbind cr;s.c toposu! https://www.dndbeyond.com/spells?filter-class=2&filter-source=148&filter-source=145
+dndbbdoc cr;s.d "Goto Spells: class=Druid (2024)"
+dndbbind cr;s.d toposu! https://www.dndbeyond.com/spells?filter-class=3&filter-source=148&filter-source=145
+dndbbdoc cr;s.g "Goto Spells: class=Ranger (2024)"
+dndbbind cr;s.g toposu! https://www.dndbeyond.com/spells?filter-class=5&filter-source=148&filter-source=145
+dndbbdoc cr;s.k "Goto Spells: class=Warlock (2024)"
+dndbbind cr;s.k toposu! https://www.dndbeyond.com/spells?filter-class=7&filter-source=148&filter-source=145
+dndbbdoc cr;s.p "Goto Spells: class=Paladin (2024)"
+dndbbind cr;s.p toposu! https://www.dndbeyond.com/spells?filter-class=4&filter-source=148&filter-source=145
+dndbbdoc cr;s.r "Goto Spells: class=Ranger (2024)"
+dndbbind cr;s.r toposu! https://www.dndbeyond.com/spells?filter-class=5&filter-source=148&filter-source=145
+dndbbdoc cr;s.s "Goto Spells: class=Sorcerer (2024)"
+dndbbind cr;s.s toposu! https://www.dndbeyond.com/spells?filter-class=6&filter-source=148&filter-source=145
+dndbbdoc cr;s.w "Goto Spells: class=Wizard (2024)"
+dndbbind cr;s.w toposu! https://www.dndbeyond.com/spells?filter-class=8&filter-source=148&filter-source=145
+dndbbdoc cr;s.W "Goto Spells: class=Warlock (2024)"
+dndbbind cr;s.W toposu! https://www.dndbeyond.com/spells?filter-class=7&filter-source=148&filter-source=145
+
+" | cr;. -- dndb/rules/2024/misc |
+dndbbind: cr;.<C-h> "(show bindings: dndb/rules/2024/misc)" dndbshowkeys cr;.
+dndbbdoc cr;.c "Goto Conditions (2024)"
+dndbbind cr;.c toposu! https://www.dndbeyond.com/sources/dnd/phb-2024/rules-glossary#Condition
+dndbbind: cr;.g "Goto Glossary (2024)" toposu! https://www.dndbeyond.com/sources/dnd/phb-2024/rules-glossary
 
 " | cs -- dndb/search |
 definesearch dndbsearch_spell https://www.dndbeyond.com/spells?filter-class=0&filter-search=%s
