@@ -585,6 +585,16 @@ ttbuildbind cl cujs cutils.message(getText1("h3,h3>span", {match: /^level 20[: ]
 ttbuildbind <Enter> js document.getElementById("toc-widget-3").scrollIntoView()
 ttbuildbind ,xth :: hint table -F e=>([...e.querySelectorAll("tr.footable-header>th")].map(c=>c.textContent).join("¦")) | fillcmdline_tmp 3000
 
+" | cg -- ttbuild/guide |
+ttbuildbind: cg<C-h> "(show bindings: ttbuild/guide)" ttbuildshowkeys cg
+ttbuildbind: cgf "Guide: Feats" toposu! https://tabletopbuilds.com/optimized-feat-guide-for-dd-5e/
+ttbuildbind: cgs "Guide: Skills" toposu! https://tabletopbuilds.com/optimized-skill-guide/
+ttbuildbind: cgi "Guide: Items" toposu! https://tabletopbuilds.com/non-magical-items/
+ttbuildbind: cgI "Guide: Magical Items" toposu! https://tabletopbuilds.com/best-magical-items/
+ttbuildbind: cgt "Guide: Tools" toposu! https://tabletopbuilds.com/complete-guide-to-tools-in-dnd-5e/
+ttbuildbind: cgm "Guide: Multiclassing" toposu! https://tabletopbuilds.com/optimized-multiclassing/
+ttbuildbind: cgr "Guide: Race" toposu! https://tabletopbuilds.com/optimized-race-and-lineage-guide/
+
 " | co -- ttbuild/goto |
 ttbuildbind co<C-h> showkeysurl tabletopbuilds.com co
 ttbuildbind: cob "Goto DnDBeyond.com" toposu https://www.dndbeyond.com
