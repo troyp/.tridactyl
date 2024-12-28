@@ -167,6 +167,7 @@ dndbbind crmm :exec `toposu! https://www.dndbeyond.com/monsters?${sites.dndb.own
 dndbbind: crs<C-h> "(show bindings: dndb/rules/spells)" dndbshowkeys crs
 dndbbind: crss "Goto Spells" toposu! https://www.dndbeyond.com/spells
 dndbbind: crso "Goto Spells for level and class" : dndbspell_lvl_cls
+dndbbind: crs?o "Help for :dndbspell_lvl_cls (Spells by level, class, etc)" cujs -r sites/dndb_spell_lvl_help.c.js
 dndbbind: crsc "Goto Spells: conjuration" toposu! https://www.dndbeyond.com/spells/school/conjuration
 dndbbind: crsd "Goto Spells: divination" toposu! https://www.dndbeyond.com/spells/school/divination
 dndbbind: crse "Goto Spells: enchantment" toposu! https://www.dndbeyond.com/spells/school/enchantment
