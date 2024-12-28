@@ -267,6 +267,23 @@ dndbcsheetbind: cy<C-h> "(show bindings: dndbcsheet/yank)" dndbcsheetshowkeys cy
 dndbcsheetbind: cyy "Yank Content Group" dndbcsheetyankcontentgroup
 
 " ───────────────────────────────────────────────────────────────────────────────
+" ╭───────────────╮
+" │ DnD5e.wikidot │
+" ╰───────────────╯
+command: dnddotbind "Bind key for DnD5e.wikidot" bindurl dnd5e.wikidot.com
+command: dnddotbind: "Bind key with description for DnD5e.wikidot" bindurl: dnd5e.wikidot.com
+command: dnddotreset "Reset key for DnD5e.wikidot" reseturl dnd5e.wikidot.com
+command: dnddotbdoc "Provide a description on a separate line" js ;
+command: dnddotshowkeys "(show bindings: dnddot)" showkeysurl dnd5e.wikidot.com
+
+command dnddot_js "Run javascript after loading dnd.c.js file (default COUNT=1)" cujs -r dnd.c.js ; js_count
+command dnddot_js! "Run javascript after loading dnd.c.js file (default COUNT=null)" cujs -r dnd.c.js ; js_count!
+
+dnddotbind: c<C-h> "(show bindings: dnddot)" dnddotshowkeys c
+
+dnddotbind: cc "Yank content" yankfirst .main-content
+
+" ───────────────────────────────────────────────────────────────────────────────
 " ╭────────────╮
 " │ D&D-Spells │
 " ╰────────────╯
