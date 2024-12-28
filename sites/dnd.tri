@@ -290,7 +290,8 @@ dndbbind: cs<C-h> "(show bindings: dndb/search)" dndbshowkeys cs
 dndbbind: csi "Search dndb magic items" :fill `dndbsearch_item ${COUNT?"here":"tab"}`
 dndbbind: css "Search" :fill `dndb_search ${COUNT?"here":"tab"}`
 dndbbind: csS "Search dndb spells" :fill `dndbsearch_spell ${COUNT?"here":"tab"}`
-dndbbind: cs;s "Goto spell description" :fill `dndbspell${COUNT?"":"!"}`
+dndbbind: cs;d "Goto spell description" :fill `dndbspell${COUNT?"":"!"}`
+dndbbind: cs;s "Show matching spell entries" :fill `dndbsearch_spell ${COUNT?"here":"tab"}`
 
 " | ct -- dndb/toggle |
 dndbbind: ct<C-h> "(show bindings: dndb/toggle)" dndbshowkeys ct
@@ -306,6 +307,7 @@ dndbbind: ctsd "Toggle sort-by duration" simjs simulateHtmlMouseEvent($1("[data-
 dndbbind: ctsn "Toggle sort-by name" simjs simulateHtmlMouseEvent($1("[data-sort-by=name]"), "click")
 dndbbind: ctsl "Toggle sort-by level" simjs simulateHtmlMouseEvent($1("[data-sort-by=level]"), "click")
 dndbbind: ctsr "Toggle sort-by range" simjs simulateHtmlMouseEvent($1("[data-sort-by=range]"), "click")
+dndbbind: ctSS "Search for current spell" cujs tri.excmds.open(`https://www.dndbeyond.com/spells?filter-search=${$1("h1.page-title").textContent.trim()}`)
 
 " | cx -- dndb/misc |
 dndbbind: cx<C-h> "(show bindings: dndb/misc)" dndbshowkeys cx
