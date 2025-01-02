@@ -37,6 +37,8 @@ const dndb = {
                 ".dice-toolbar--hover dice-toolbar__dropdown-die",
                 "span.ct-sidebar__control",
                 "div.special-select-item",
+                "div.ddb-site-banner--dismiss",
+                "div.show-more",
             ]
         });
     },
@@ -60,9 +62,9 @@ const dndb = {
             "c": 2,
             "d": 3,
             "p": 4,
-            "r": 5,
+            "r": 5, "R": 5, "g": 5,
             "s": 6,
-            "k": 7,
+            "k": 7, "W": 7,
             "w": 8,
         };
         return table[cls];
@@ -145,6 +147,12 @@ const dndb = {
             "sort=-cast": "sort=-casting-time",
             "sort=duration": "sort=spell-duration",
             "sort=-duration": "sort=-spell-duration",
+            "sort=name": "sort=name",
+            "sort=-name": "sort=-name",
+            "sort=level": "sort=level",
+            "sort=-level": "sort=-level",
+            "sort=range": "sort=range",
+            "sort=-range": "sort=-range",
             /* tags */
             "creation": "tags=1",
             "heal": "tags=2", "healing": "tags=2",
