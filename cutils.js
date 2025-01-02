@@ -583,6 +583,24 @@ var cutils = {
         return tri.excmds.jsb(`sprintf(...${JSON.stringify(args)})`);
     },
 
+    table2csv: function(table) {
+        let csvrows = [];
+        const rows = [...table.rows];
+        rows.forEach(r => {
+            const cells = [...r.cells];
+            csvrows.push(
+                cells.map(td=>{
+                    let s = td.innerText.trim();
+                    if (s.match(/"|,/)) {
+                        s = `"${s.replace("\"", "\"\"")}"`;
+                    }
+                    return s;
+                })
+            );
+        });
+        return csvrows.join("\n");
+    },
+
     timestampFilename: async function(title, opts={}) {
         opts = cutils.tri.parseOpts(opts, {
             castString: "extension",
@@ -1123,7 +1141,7 @@ window.R = R;
     "$$", "$1", "$$cls", "$1cls", "$id", "$$tag", "$1tag", "$$t", "$1t", "$$match",
     "blink", "click", "clickall", "click1", "scrollelt", "scrollNthIntoView",
     "get1", "getText", "getText1","txtcontent",
-    "getSelectionDOM", "getSelectionHtml",
+    "getSelectionDOM", "getSelectionHtml", "table2csv",
     "isolate", "jumpToHeading", "keep", "rm", "rmall", "setInput", "toggleprop", "togglepropWr",
     "urlopen",
     "SEL", "yankby", "yank1by", "yanknthby", "yankelt", "yankhint", "yankinput", "yankjs", "yankjsWr", "yankf",

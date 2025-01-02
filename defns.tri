@@ -809,6 +809,7 @@ command: cuhinttable "Load cutils.js and execute hint -Jc table -F" cujs ; hint 
 
 bind: yT<C-h> "(show bindings: yank/table)" showkeys yT
 bind: yTC<C-h> "(show bindings: yank/table/columns)" showkeys yTC
+bind: yTc "Yank table to CSV" hinttable t=>cutils.yank(cutils.table2csv(t))
 bind: yTCC "Copy table columns [HINT]" fillcmdline copytablecols
 bind: yTCS "Copy table columns (strict: omit rows without enough columns) [HINT]" fillcmdline copytablecols_strict
 bdoc yTT "Yank table contents [HINT]"
