@@ -752,6 +752,7 @@ bind: ym "Yank the current mouse position [X Y]" yankmousepos
 bind: yp "Yank paragraph/heading" yankhint p,code,pre,h1,h2,h3,h4,h5,h6,output,table,tr
 bind: ys "Yank element text by CSS selector [HINT]" fillcmdline yankhint
 bind: yS "Yank element text by CSS selector (all)" fillcmdline yankall
+bind: yT "Yank title" yanktitle
 
 bdoc y? "Yank the current tridactyl config as JSON"
 bind y? jsb tri.excmds.yank(JSON.stringify(tri.config.USERCONFIG))
@@ -803,21 +804,25 @@ bind yLL :: cuhint -Jc ul,ol -F l=>cutils.yank([...l.children].map(e=>e.textCont
 bdoc yLM "Yank list: multiline items [HINTS]"
 bind yLM :: cuhint -Jc ul,ol -F l=>cutils.yank([...l.children].map(e=>e.textContent.split("\n").map(s=>s.trim()).filter(s=>s).join("\t")).join("\n"))
 
-" | yT -- yank/table |
+" | yt -- yank/table |
 command: hinttable "Execute hint -Jc table -F" hint -Jc table -F
 command: cuhinttable "Load cutils.js and execute hint -Jc table -F" cujs ; hint -Jc table -F
 
-bind: yT<C-h> "(show bindings: yank/table)" showkeys yT
-bind: yTC<C-h> "(show bindings: yank/table/columns)" showkeys yTC
-bind: yTc "Yank table to CSV" hinttable t=>cutils.yank(cutils.table2csv(t))
-bind: yTCC "Copy table columns [HINT]" fillcmdline copytablecols
-bind: yTCS "Copy table columns (strict: omit rows without enough columns) [HINT]" fillcmdline copytablecols_strict
-bdoc yTT "Yank table contents [HINT]"
-bind yTT cuhinttable e=>cutils.yank([...e.rows].slice(1).map(r=>[...r.cells].map(txtcontent).join("\t")).join("\n"))
-bdoc yTH "Yank table column headings"
-bind yTH cuhinttable e=>cutils.yank([...e.querySelectorAll("tr:first-child>th")].map(c=>c.textContent).join("\n"))
-bdoc yTM "Yank table as markdown"
-bind yTM :: cujs -r js/table2md.js ; hinttable e=>cutils.yank(convertToMarkdown(convertToMatrix(e)))
+bind: yt<C-h> "(show bindings: yank/table)" showkeys yt
+bind: ytc<C-h> "(show bindings: yank/table/columns)" showkeys ytc
+bind: ytc "Yank table to CSV" hinttable t=>cutils.yank(cutils.table2csv(t))
+bind: ytcc "Copy table columns [HINT]" fillcmdline copytablecols
+bind: ytcs "Copy table columns (strict: omit rows without enough columns) [HINT]" fillcmdline copytablecols_strict
+bdoc ytd "Yank table cell [HINT]"
+bind ytd yankhint th,td
+bdoc ytr "Yank table row [HINT]"
+bind ytr yankhint tr
+bdoc ytt "Yank table contents [HINT]"
+bind ytt cuhinttable e=>cutils.yank([...e.rows].slice(1).map(r=>[...r.cells].map(txtcontent).join("\t")).join("\n"))
+bdoc yth "Yank table column headings"
+bind yth cuhinttable e=>cutils.yank([...e.querySelectorAll("tr:first-child>th")].map(c=>c.textContent).join("\n"))
+bdoc ytm "Yank table as markdown"
+bind ytm :: cujs -r js/table2md.js ; hinttable e=>cutils.yank(convertToMarkdown(convertToMatrix(e)))
 
 " | yu -- yank/URL |
 bind: yu<C-h> "(show bindings: yank/URL)" showkeys yu
