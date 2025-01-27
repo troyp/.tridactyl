@@ -601,6 +601,40 @@ var cutils = {
         return csvrows.join("\n");
     },
 
+    /* Add another column to a table that is computed using the other columns.
+     * f: A function taking an array of the numeric values in the cells of that row.
+     *    For example, tableCalc(t, cc=>c[1]/c[2]) adds a column with the ratio of the
+     *    first two columns.
+     */
+    tableCalc: function(table, f, opts={}) {
+        opts = cutils.tri.parseOpts(opts, {
+            castBoolean: "removeCommas",
+            castNumber: "fixed",
+            nullishDefaults: {
+                removeCommas: true,
+            },
+        });
+        const rows = [...table.tBodies[0].rows];
+        rows.forEach(r => {
+            let cells = [...r.cells].map(c=>c.textContent);
+            if (opts.removeCommas) {
+                cells = cells.map(c=>c.replace(/,(\d\d\d)/g, "$1"));
+            }
+            const cellnums = cells.map(c=>parseInt(c));
+            let res = f(cellnums);
+            if (opts.fixed != null) res = res.toFixed(opts.fixed);
+            const newcell = document.createElement("td");
+            newcell.textContent = res.toString();
+            r.appendChild(newcell);
+        });
+    },
+
+    tableCalcWr: function(table, s, opts={}) {
+        s = parseArgs(s, "str");
+        const expr = "cc=>" + s.replace(/\$(\d+)/g, "cc[$1]");
+        this.tableCalc(table, eval(expr), opts);
+    },
+
     timestampFilename: async function(title, opts={}) {
         opts = cutils.tri.parseOpts(opts, {
             castString: "extension",
