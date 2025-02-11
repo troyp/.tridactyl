@@ -242,7 +242,8 @@ var urls = {
 urls.mod = {
     graft: async function(splicetext, n=0, initurl) {
         initurl ||= await tri.controller.acceptExCmd(`js window.location.href`);
-        return [urls.getPathPrefix(n, initurl), splicetext].join("/").replace(/(?<!:)\/\/+/g, "/");
+        const pref = await urls.getPathPrefix(n, initurl);
+        return [pref, splicetext].join("/").replace(/(?<!:)\/\/+/g, "/");
     },
 
     /** graftOrSummon(splicetext, n, opts)    Graft the path SPLICETEXT onto current URL's domain,
@@ -250,7 +251,7 @@ urls.mod = {
      *                                        Options are only passed if called from background page (:jsb)
     */
     graftOrSummon: async function(splicetext, n=0, opts={}) {
-        const url = this.graft(splicetext, n);
+        const url = await this.graft(splicetext, n);
         if (window.location.protocol == "moz-extension:")
             await utils.tab.openOrSummon(url, opts);
         else
