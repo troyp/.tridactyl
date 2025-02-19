@@ -44,7 +44,7 @@ $$(".builder-sections a").forEach(l => {
 if (document.location.href.match(/https:\/\/www.dndbeyond.com\/characters\/[0-9]+/)) {
 
     zoom("104%");
-    scrollto("100");
+    // scrollto("100");
     rm("footer");
 
     const csheet_inner = document.querySelector(".ct-character-sheet__inner");

@@ -87,6 +87,12 @@ const options = [
     "sort=-cast:	sort=-casting-time",
     "sort=duration:	sort=spell-duration",
     "sort=-duration:	sort=-spell-duration",
+    "sort=level:	sort=level",
+    "sort=-level:	sort=-level",
+    "sort=name: sort=name",
+    "sort=-name: sort=-name",
+    "sort=range: sort=range",
+    "sort=-range: sort=-range",
     /* tags */
     "creation:	tags=1",
     "heal:	tags=2",

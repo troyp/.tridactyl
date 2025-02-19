@@ -59,8 +59,6 @@ command: dndbshowkeys "(show bindings: dndb)" showkeysurl dndbeyond.com
 
 definesearch dndbchar https://character-service.dndbeyond.com/character/v5/character/%s
 
-dndbbind: c<C-h> "(show bindings: dndb)" dndbshowkeys c
-
 dndbbind: <enter> "load dndb.auto.js" cujs -r sites/dndb.auto.js
 dndbbind: <S-enter> "Jump to heading" cujs jumpToHeading()
 dndbbind: <A-enter> "Jump to table" cujs jumpToHeading(".Table-Styles_Table-Title")
@@ -74,6 +72,7 @@ dndbbind: <C-PageDown> "Load More" cujs $1t("button", /load more/i).click()
 dndbbind c<C-h> showkeysurl dndbeyond.com c
 dndbbind: cc "Lists: open/close row" dndjs dnd.dndb.go()
 dndbbind: cf "Click category icon" hint .ddb-search-filter-item-wrapper>.icon
+dndbbind: cp "Pronounce entry" click .ddb-pronunciation-clip
 dndbbdoc cv "Toggle collapse Dice Notification"
 dndbbind cv hint -Jc .dice_notification_controls__collapse,.dice_notification_controls__uncollapse
 
@@ -93,7 +92,9 @@ dndbbind: clx "Library/Xanathar's" toposu https://www.dndbeyond.com/sources/xgte
 " | cl; -- dndb/library/2024 |
 dndbbind: cl;<C-h> "(show bindings: dndb/library/2024)" dndbshowkeys cl;
 dndbbind: cl;b "Library/Free Rules 2024" toposu https://www.dndbeyond.com/sources/dnd/free-rules
-dndbbind: cl;p "Library/PHB2024" toposu https://www.dndbeyond.com/sources/dnd/phb-2024
+dndbbind: cl;d "Library/DMG 2024" toposu https://www.dndbeyond.com/sources/dnd/dmg-2024
+dndbbind: cl;m "Library/MM 2024" toposu https://www.dndbeyond.com/sources/dnd/mm-2024
+dndbbind: cl;p "Library/PHB 2024" toposu https://www.dndbeyond.com/sources/dnd/phb-2024
 
 " | cm -- dndb/my |
 dndbbind: cm<C-h> "(show bindings: dndb/my)" dndbshowkeys cm
@@ -296,6 +297,7 @@ dndbbind: cs;s "Show matching spell entries" :fill `dndbsearch_spell ${COUNT?"he
 
 " | ct -- dndb/toggle |
 dndbbind: ct<C-h> "(show bindings: dndb/toggle)" dndbshowkeys ct
+dndbbind: cti "Toggle artwork" cujs $$(".compendium-art").forEach(i=>toggleprop(i.style, "display", "none"))
 dndbbind: ctn "Toggle all off" dndjs dnd.dndb.toggleOff()
 dndbbind: ctt "Toggle all" dndjs dnd.dndb.toggle()
 dndbbind: ctw "Toggle sidebar width" cujs toggleprop($1("div.ct-sidebar").style, "minWidth", "600px")
@@ -312,6 +314,7 @@ dndbbind: ctSS "Search for current spell" cujs tri.excmds.open(`https://www.dndb
 
 " | cx -- dndb/misc |
 dndbbind: cx<C-h> "(show bindings: dndb/misc)" dndbshowkeys cx
+dndbbind: cxc "Cleanup" cujs keep("#content")&&rm(".homebrew-comments")
 " | cxl -- dndb/misc/list |
 dndbbind: cxl<C-h> "(show bindings: dndb/misc/list)" dndbshowkeys cxl
 dndbbind: cxlc "Count list entries" cujs $1("ul.listing").children.length | show5
