@@ -79,8 +79,8 @@ bind gh jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goBack(t.id));
 bdoc gl "Open the next item in tab history in an adjacent tab"
 bind gl jsb tri.excmds.tabduplicate().then(t=>browser.tabs.goForward(t.id));
 bind: gs "Toggle page source" viewsource
-bind: gu "Go to nth parent URL" jsb_count utils.tab.open(urls.getNthParent(COUNT), "here")
-bind: gU "Go to URL nth from root domain" jsb_count utils.tab.open(urls.fromRoot(COUNT), "here")
+bind: gu "Go to nth parent URL" urlparent
+bind: gU "Go to URL nth from root domain" urlroot
 bind: g;u "Go to nth parent URL (new tab)" jsb_count utils.tab.open(urls.getNthParent(COUNT), "related")
 bind: g;U "Go to URL nth from root domain (new tab)" jsb_count utils.tab.open(urls.fromRoot(COUNT), "related")
 
