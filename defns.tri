@@ -363,6 +363,7 @@ bind: bde "Close tabs matching expression" fillcmdline tabrm
 bind: bdh "Close all tabs with the same hostname as current tab" tabrm t.location.hostname == t0.location.hostname
 bind: bdm "Close tabs matching string" fillcmdline tabrmstr
 bind: bds "Select tabs to close with rofi" jsb utils.tab.removeWithRofi();
+bind: bd. "Close tabs from current to ..." : tabrmrange .
 " | bd; -- tabs/delete/filter |
 bind: bd;<C-h> "(show bindings: tabs/delete/filter)" showkeys bd;
 bind: bd;e "Close tabs not matching expression" fillcmdline tabfilter
