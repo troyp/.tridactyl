@@ -300,8 +300,8 @@ unbind b
 
 command: tabrm "Close tabs matching expression" jsb -d¦ utils.tab.removeWr(JS_ARGS)¦
 command: tabfilter "Close tabs not matching expression" jsb -d¦ utils.tab.filterWr(JS_ARGS)¦
-command: tabrmstr "Close tabs matching string" jsb -p utils.tab.remove(t=>S.matchSC(JS_ARG, t.titleurl));
-command: tabfilterstr "Close tabs not matching string" jsb -p utils.tab.filter(t=>S.matchSC(JS_ARG, t.titleurl));
+command: tabrmstr "Close tabs matching string" jsb -d¦ utils.tab.remove(t=>S.matchSC(JS_ARGS, t.titleurl))¦
+command: tabfilterstr "Close tabs not matching string" jsb -d¦ utils.tab.filter(t=>S.matchSC(JS_ARGS, t.titleurl))¦
 commdoc tabrmstr_toright "Close tabs matching string to right"
 command tabrmstr_toright jsb -p utils.tab.remove((t, t0, i, i0)=>S.matchSC(JS_ARG, t.titleurl) && i>i0);
 commdoc tabfilterstr_toright "Close tabs not matching string to right"
