@@ -228,7 +228,7 @@ var cutils = {
         };
         /* pred */
         function pred(e) {
-            const match_ok  = !opts.match  || e[opts.textProperty].match(opts.match);
+            const match_ok  = !opts.match  || e[opts.textProperty]?.match(opts.match);
             const filter_ok = !opts.filter || opts.filter(e);
             return match_ok && filter_ok;
         }
@@ -424,7 +424,7 @@ var cutils = {
         const tableHeadingDescripts = tableHeadings.map(h=>`${indent(h.tagName)} ${h.textContent.trim()}`);
         const selectedIdx = await cutils.select(tableHeadingDescripts, {format: "i"});
         const selected = tableHeadings[selectedIdx];
-        selected.scrollIntoView();
+        selected?.scrollIntoView();
         return selected;
     },
 
@@ -878,9 +878,12 @@ cutils.css = {
     },
 
     text: function(id) {
-        return [...document.getElementById(id).sheet.cssRules]
+        const rules = document.getElementById(id)?.sheet?.cssRules;
+        if (rules) {
+        return [...rules]
             .map(r=>r.cssText)
             .join("\n");
+        } else { return null; }
     },
 
     toggle: function(id) {
