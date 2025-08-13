@@ -724,7 +724,7 @@ bdoc <C-h>f "Open list of Firefox Keyboard Shortcuts"
 bind <C-h>f tabopenorswitchc https://support.mozilla.org/en-US/kb/keyboard-shortcuts-perform-firefox-tasks-quickly
 bind: <C-h>h "Tridactyl help" fillcmdline help
 bind <C-h>i tabopen moz-extension://926899c1-24a3-4569-9789-2f53b837f92e/static/docs/globals.html
-bind: <C-h>k "View keybindings" fillcmdline bind
+bind: <C-h>k "View keybindings" gobble 1 bindshow | yank!
 bind <C-h>K tabopenorswitchc https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
 bdoc <C-h>o "Goto tridactyl options"
 bind <C-h>o tabopenorswitchc moz-extension://13341d1e-1f1e-485d-88cc-4d8e57599a91/static/docs/classes/_src_lib_config_.default_config.html
