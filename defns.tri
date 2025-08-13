@@ -26,7 +26,7 @@ command: bindurl: "bindurl with description" jsb -d¦ utils.tri.docBindUrl(JS_AR
 " ╭──────────────────────────╮
 " │ Browser-mode keybindings │
 " ╰──────────────────────────╯
-bind --mode=browser <A-,> tab #
+bind --mode=browser <A-,> tabswitchprev
 bind --mode=browser <AS-,> tabswitchprev!
 " available after changing FF accelerator key to another value via `setpref ui.key.accelKey`
 " see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values#modifier_keys
