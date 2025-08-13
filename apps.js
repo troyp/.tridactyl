@@ -69,6 +69,7 @@ var apps = {
     },
 
     openWith: async function(file, cmd) {
+        if (file.includes("'")) { file = file.replace(/'/g, "'\"'\"'"); }
         const resolved_cmd = sprintf(cmd, `'${file}'`);
         const final_cmd = resolved_cmd == cmd
               ? `${cmd} '${file}'`
